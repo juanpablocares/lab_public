@@ -1,0 +1,10 @@
+#angularjs
+asset 'angular'
+#twitter bootstrap
+asset 'bootstrap-sass-official'
+#fontawesome
+asset 'font-awesome'
+#angular bootstrap - libreria que permite animaciones de bootstrap sin jquery ui.angular
+asset 'angular-bootstrap'
+#libreria que ayuda al manejo de url en angular.
+asset 'angular-ui-router'
