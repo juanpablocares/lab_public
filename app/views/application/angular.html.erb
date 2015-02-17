@@ -1,13 +1,12 @@
-<div class="opacity">
+<div class="opacity" ng-controller="LoginController as loginCtrl">
 	<div class="login2">
 		<div class="login-wrapper">
 			<a href="./"><img width="100" height="30" src="images/logo-login@2x.png" /></a>
-			<form name="loginForm" ng-submit="loginCtrl.submitLoginForm()">
+			<form name="loginForm" ng-submit="loginCtrl.submitLoginForm(loginCtrl.login)">
 				<div class="form-group">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-						<input class="form-control" placeholder="Username or Email" type="text" ng-model="loginCtrl.login.user">
-						<h1>{{loginCtrl.login.user}}</h1>
+						<input class="form-control" placeholder="Email" type="text" ng-model="loginCtrl.login.email">
 					</div>
 				</div>
 				<div class="form-group">

@@ -11,7 +11,9 @@
 // about supported directives.
 //
 //= require angular/angular
-//= require main_angular
 //= require angular-bootstrap
+//= require angular-cookie
+//= require ng-token-auth
 //= require angular-ui-router
+//= require main_angular
 //= require_tree .

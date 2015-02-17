@@ -9,4 +9,4 @@ asset 'angular-bootstrap'
 #libreria que ayuda al manejo de url en angular.
 asset 'angular-ui-router'
 #libreria para manejar autentificacion con devise_token_auth 
-asset 'ng_token_auth'
+asset 'ng-token-auth'

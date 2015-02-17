@@ -5,6 +5,7 @@
     "bootstrap-sass-official": "latest",
     "font-awesome": "latest",
     "angular-bootstrap": "latest",
-    "angular-ui-router": "latest"
+    "angular-ui-router": "latest",
+    "ng-token-auth": "latest"
   }
 }
