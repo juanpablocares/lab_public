@@ -1,0 +1,172 @@
+<div id="navbar-menu">
+	<div class="navbar navbar-fixed-top scroll-hide">
+		<div class="container-fluid top-bar">
+			<div class="pull-right">
+				<ul class="nav navbar-nav pull-right">
+					</li>
+					<li ng-hide="signedIn()">
+						<a href="#/login">Log In</a>
+					</li>
+					<li ng-hide="signedIn()">
+						<a href="#/register">Register</a>
+					</li>
+					<li ng-show="signedIn()" class="dropdown user" dropdown>
+						<a class="dropdown-toggle" dropdown-toggle> <img width="34" height="34" src="<%= asset_path 'avatar-male.jpg' %>" />{{ user.username }}<b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu">
+							<li>
+								<a href="#"> <i class="fa fa-user"></i>My Account</a>
+							</li>
+							<li>
+								<a href="#"> <i class="fa fa-gear"></i>Account Settings</a>
+							</li>
+							<li ng-show="signedIn()">
+								<a ng-click="logout()"><i class="fa fa-sign-out"></i>Logout</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<button class="navbar-toggle">
+				<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+			</button><a class="logo" href="index.html">se7en</a>
+			<form class="navbar-form form-inline col-lg-2 hidden-xs">
+				<input class="form-control" placeholder="Search" type="text">
+			</form>
+
+		</div>
+		<div class="container-fluid main-nav clearfix">
+			<div class="nav-collapse">
+				<ul class="nav">
+					<li>
+						<a class="current" href="index.html"><span aria-hidden="true" class="se7en-home"></span>Dashboard</a>
+					</li>
+					<li class="dropdown">
+						<a data-toggle="dropdown" href="#"> <span aria-hidden="true" class="se7en-tables"></span>Tables<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="tables.html">Basic tables</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Navigation -->
+<!--div ng-controller="NavCtrl">
+<div class="navbar navbar-fixed-top scroll-hide">
+<div style="background: blue" class="container-fluid top-bar">
+<button class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+</button>
+<a class="logo" href="#/home">se7en</a>
+<div collapse="navCollapsed" class="pull-right nav-collapse navbar-responsive-collapse">
+<ul class="nav navbar-nav pull-right">
+<li class="dropdown notifications" dropdown>
+<a class="dropdown-toggle" dropdown-toggle> <span aria-hidden="true" class="se7en-flag"></span>
+<div class="sr-only">
+Notifications
+</div>
+<p class="counter">
+1
+</p> </a>
+<ul class="dropdown-menu" role="menu">
+<li>
+<a href="#">
+<div class="notifications label label-info">
+New
+</div>
+<p>
+New user added: Jane Smith
+</p></a>
+</li>
+</ul>
+</li>
+<li class="dropdown messages" dropdown>
+<a class="dropdown-toggle" dropdown-toggle><span aria-hidden="true" class="se7en-envelope"></span>
+<div class="sr-only">
+Messages
+</div>
+<p class="counter">
+1
+</p> </a>
+<ul class="dropdown-menu dropdown-menu-right" role="menu">
+<li>
+<a href="#"> <img width="34" height="34" src="<%= asset_path 'avatar-male2.png' %>" />Could we meet today? I wanted...</a>
+</li>
+</ul>
+</li>
+<li ng-hide="signedIn()">
+<a href="#/login">Log In</a>
+</li>
+<li ng-hide="signedIn()">
+<a href="#/register">Register</a>
+</li>
+<li ng-show="signedIn()" class="dropdown user" dropdown>
+<a class="dropdown-toggle" dropdown-toggle> <img width="34" height="34" src="<%= asset_path 'avatar-male.jpg' %>" />{{ user.username }}<b class="caret"></b></a>
+<ul class="dropdown-menu" role="menu">
+<li>
+<a href="#"> <i class="fa fa-user"></i>My Account</a>
+</li>
+<li>
+<a href="#"> <i class="fa fa-gear"></i>Account Settings</a>
+</li>
+<li ng-show="signedIn()">
+<a ng-click="logout()"><i class="fa fa-sign-out"></i>Logout</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div style="background: red" class="container-fluid main-nav clearfix">
+<div collapse="navCollapsed" class="nav-collapse">
+<ul class="nav">
+<li>
+<a class="current" href="index.html"><span aria-hidden="true" class="se7en-home"></span>Dashboard</a>
+</li>
+<li class="dropdown" dropdown>
+<a dropdown-toggle> <span aria-hidden="true" class="se7en-forms"></span>Forms<b class="caret"></b></a>
+<ul class="dropdown-menu" role="menu">
+<li>
+<a href="form-components.html">Form Components</a>
+</li>
+<li>
+<a href="form-advanced.html">Advanced Forms</a>
+</li>
+<li>
+<a href="xeditable.html"> <span class="notifications label label-warning">New</span>
+<p>
+X-Editable
+</p></a>
+
+</li>
+<li>
+<a href="file-upload.html">
+<div class="notifications label label-warning">
+New
+</div>
+<p>
+Multiple File Upload
+</p></a>
+
+</li>
+<li>
+<a href="dropzone-file-upload.html">
+<div class="notifications label label-warning">
+New
+</div>
+<p>
+Dropzone File Upload
+</p></a>
+
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div-->

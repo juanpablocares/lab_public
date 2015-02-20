@@ -46,3 +46,6 @@ gem 'bower-rails'
 
 #Gema intermedia entre modulo de angular ng-token-auth y devise. Esta gema utiliza devise como dependencia y no es necesaria la config de devise
 gem 'devise_token_auth'
+
+#Gema para poder utilizar los templates en la carpeta app/views en vez de en assets
+gem 'angular-rails-templates'

@@ -1,28 +1,29 @@
-angular.module('lab').controller('LoginController', function($auth)
+angular.module('lab').controller('LoginController', function($scope, $auth, $location)
 {
-	this.registerCredencial = {
-		email: "mailfalso@falsedad.com",
-		password: "passterrible",
-		password_confirmation: "passterrible"
-	}
-	this.login =
+	$scope.login =
 	{
 	};
+	$scope.errorMessage = false;
 
-	console.log(this.registerCredencial);
-	$auth.submitRegistration(this.registerCredencial);
+	console.log('loginController');
 
-	this.submitLoginForm = function(loginCredentials)
+	//Detectar cambios en el modelo login
+	$scope.$watchCollection('login', function(newCredentials, oldCredentials)
 	{
-		console.log(loginCredentials);
+		$scope.errorMessage = false;
+	});
+
+	$scope.submitLoginForm = function(loginCredentials)
+	{
 		$auth.submitLogin(loginCredentials).then(function(resp)
 		{
 			// handle success response
 			console.log(resp);
+			$location.path('/pirula');
 		}).catch(function(resp)
 		{
 			// handle error response
-			console.log(resp);
+			$scope.errorMessage = true;
 		});
 	};
-}); 
+});

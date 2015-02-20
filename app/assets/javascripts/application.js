@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require angular/angular
+//= require angular-rails-templates
 //= require angular-bootstrap
 //= require angular-cookie
 //= require ng-token-auth

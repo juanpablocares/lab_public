@@ -1,34 +1,5 @@
-<div class="opacity" ng-controller="LoginController as loginCtrl">
-	<div class="login2">
-		<div class="login-wrapper">
-			<a href="./"><img width="100" height="30" src="images/logo-login@2x.png" /></a>
-			<form name="loginForm" ng-submit="loginCtrl.submitLoginForm(loginCtrl.login)">
-				<div class="form-group">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-						<input class="form-control" placeholder="Email" type="text" ng-model="loginCtrl.login.email">
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-						<input class="form-control" placeholder="Password" type="text" ng-model="loginCtrl.login.password">
-					</div>
-				</div>
-				<a class="pull-right" href="#">Forgot password?</a>
-				<div class="text-left">
-					<label class="checkbox">
-						<input type="checkbox">
-						<span>Keep me logged in</span></label>
-				</div>
-				<input class="btn btn-lg btn-primary btn-block" type="submit" value="Ingresar">
-			</form>
-			<p>
-				Don't have an account yet?
-			</p>
-			<a class="btn btn-default-outline btn-block" href="signup2.html">Sign up now</a>
-		</div>
-		<!-- End Login Screen -->
-	</div>
-	<h1>{{loginCtrl.temporal}}</h1>
+<div>
+	<h1>Menu para todas las paginas Usar un directive que controle esto con su propio controlador y que muestre los menus dependiendo de los usuarios que sean</h1>
 </div>
+<nav-bar></nav-bar>
+<div ui-view></div>
