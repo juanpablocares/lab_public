@@ -1,9 +1,13 @@
 (function() {
-	var labs = angular.module('lab', ['ui.bootstrap', 'ui.router', 'templates', 'ng-token-auth']).config(function($authProvider) {
+	var labs = angular.module('lab', ['ui.bootstrap', 'ui.router', 'templates', 'ng-token-auth']);
+	
+	labs.config(function($authProvider) {
 		$authProvider.configure({
 			apiUrl : ''
 		});
-	}).config(function($stateProvider, $urlRouterProvider) {
+	});
+	
+	labs.config(function($stateProvider, $urlRouterProvider) {
 
 		$stateProvider.state('loginRequired', {
 			resolve : {
@@ -29,13 +33,17 @@
 		
 		$urlRouterProvider.otherwise('/home');
 		
-	}).directive('navBar', function() {
+	});
+	
+	labs.directive('navBar', function() {
 		return {
 			restrict : 'E',
 			templateUrl : 'widgets/navBar.html',
 			controller : 'NavBarController'
 		};
-	}).run(function($rootScope, $urlRouter, $auth, $location) {
+	});
+	
+	labs.run(function($rootScope, $urlRouter, $auth, $location) {
 		$rootScope.$on('$locationChangeSuccess', function(evt) {
 			evt.preventDefault();
 
