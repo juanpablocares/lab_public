@@ -1,5 +1,3 @@
-angular.module('lab').controller('NavBarController',
-function($scope)
+angular.module('lab').controller('NavBarController', function($rootScope, $scope, $auth)
 {
-	console.log('navBarController');
 });
