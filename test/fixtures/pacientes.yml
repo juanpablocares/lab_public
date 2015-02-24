@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  rut: MyString
+  rutdv: MyString
+  nombre: MyString
+  apellido_paterno: MyString
+  apellido_materno: MyString
+  celular: MyString
+  telefono: MyString
+  direccion: MyString
+  comuna_id: 
+  fecha_nacimiento: 2015-02-24
+  genero: 1
+  diagnostico: MyText
+  prevision_id: 
+  user_id: 
+  creado: 2015-02-24 12:05:53
+
+two:
+  rut: MyString
+  rutdv: MyString
+  nombre: MyString
+  apellido_paterno: MyString
+  apellido_materno: MyString
+  celular: MyString
+  telefono: MyString
+  direccion: MyString
+  comuna_id: 
+  fecha_nacimiento: 2015-02-24
+  genero: 1
+  diagnostico: MyText
+  prevision_id: 
+  user_id: 
+  creado: 2015-02-24 12:05:53

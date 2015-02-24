@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nombre: MyString
+  codigo: MyString
+  habilitada: false
+  creado: 2015-02-24 12:07:51
+
+two:
+  nombre: MyString
+  codigo: MyString
+  habilitada: false
+  creado: 2015-02-24 12:07:51

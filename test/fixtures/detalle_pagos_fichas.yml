@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ficha_id: 
+  tipo_pago_id: 
+  prevision_id: 
+  monto_pagado: 1
+  creado: 2015-02-24 12:04:50
+
+two:
+  ficha_id: 
+  tipo_pago_id: 
+  prevision_id: 
+  monto_pagado: 1
+  creado: 2015-02-24 12:04:50

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  codigo_fonasa: 1
+  nombre: MyString
+  codigo: MyString
+  externo: 1
+  creado: 2015-02-24 12:04:58
+
+two:
+  codigo_fonasa: 1
+  nombre: MyString
+  codigo: MyString
+  externo: 1
+  creado: 2015-02-24 12:04:58

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sustancia_id: 
+  minimo: 1
+  maximo: 1
+  nombre_rango: 1
+  creado: 2015-02-24 12:05:20
+
+two:
+  sustancia_id: 
+  minimo: 1
+  maximo: 1
+  nombre_rango: 1
+  creado: 2015-02-24 12:05:20

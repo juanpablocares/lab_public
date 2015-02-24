@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  rol_id: 
+  creado: 2015-02-24 12:10:27
+
+two:
+  user_id: 
+  rol_id: 
+  creado: 2015-02-24 12:10:27

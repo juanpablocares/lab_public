@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ficha_id: 
+  examen_id: 
+  perfil_examen_id: 
+  usuario_muestra_id: 
+  fecha_muestra: 2015-02-24 12:04:31
+  tipo_muestra_id: 
+  creado: 2015-02-24 12:04:31
+
+two:
+  ficha_id: 
+  examen_id: 
+  perfil_examen_id: 
+  usuario_muestra_id: 
+  fecha_muestra: 2015-02-24 12:04:31
+  tipo_muestra_id: 
+  creado: 2015-02-24 12:04:31
