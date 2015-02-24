@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :comunas
+	resources :comunas, :defaults => { :format => 'json' }
+	resources :previsiones, :defaults => { :format => 'json' }
+	resources :regiones, :defaults => { :format => 'json' }
 
   mount_devise_token_auth_for 'User', at: '/auth', skip: [:omniauth_callbacks]
   # The priority is based upon order of creation: first created -> highest priority.
