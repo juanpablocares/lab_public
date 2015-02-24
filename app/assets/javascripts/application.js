@@ -18,3 +18,5 @@
 //= require angular-ui-router
 //= require main_angular
 //= require_tree .
+//= require angular-rut
+//= require angular-ui-utils
