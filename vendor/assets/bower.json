@@ -6,6 +6,8 @@
     "font-awesome": "latest",
     "angular-bootstrap": "latest",
     "angular-ui-router": "latest",
-    "ng-token-auth": "latest"
+    "ng-token-auth": "latest",
+    "angular-rut": "latest",
+    "angular-ui-utils": "latest"
   }
 }

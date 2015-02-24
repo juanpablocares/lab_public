@@ -68,6 +68,7 @@ body {
   font-family: "Lato", sans-serif !important;
   color: #666666;
   min-height: 100%;
+  
   &.page-header-fixed {
     padding-top: 140px;
   }
@@ -92,6 +93,10 @@ body {
   &.bg-5 {
     background: url(bg-5.png) repeat 0 0;
   }
+}
+
+.margin-top-nav-bar{
+  margin-top: 140px;
 }
 
 .main-content {
@@ -4572,6 +4577,12 @@ body.fourofour {
     }
   }
 }
+@media (max-width: 960px) {
+  .margin-top-nav-bar{
+    margin-top: 15px;
+  }
+}
+
 
 @media (max-width: 600px) {
   body.login1 {

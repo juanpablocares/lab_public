@@ -1,0 +1,45 @@
+<div class="container-fluid">
+  <div class="panel panel-success">
+    <div class="panel-body">
+		<div>
+			Nombre completo: {{getFullName()}}
+		</div>
+		<form name="clientForm" ng-submit="saveRut(myrut, clientForm.$valid)">
+			Ingrese rut: <br>
+			<input ng-rut rut-format="live" type="text" ng-model="myrut" required>
+			<button ng-disabled="clientForm.$invalid" >Buscar</button>
+			<div>rutForm is {{clientForm.$valid}}</div>
+		</form>
+		<div>
+			<form name="initialDatesForm" ng-show="valido">
+				Rut:<br>
+				<input ng-rut rut-format="live" name="rut" ng-model="rut" type="text" ng-disabled="true" required><br>
+				Ingrese Nombres:<br>
+				<input name="nombres" type="text" required><br>
+				Ingrese Apellido Paterno:<br>
+				<input name="apellidoPaterno" type="text" required><br>
+				Ingrese Apellido Materno:<br>
+				<input name="apellidoMaterno" type="text" required><br>
+				Ingrese celular:<br>
+				<input name="phonenum" ui-mask="(9) 999-9999" ng-model="user.cc" required><br>
+				Ingrese Dirección:<br>
+				<input name="apellidoMaterno" type="text" required><br>
+				Seleccione Región:<br>
+				<select ng-model="selectedRegion" ng-options="region.nombre for region in regions | orderBy:'id'"></select><br>
+				Fecha de nacimiento:<br>
+				<input type="date" id="exampleInput" name="input" ng-model="value" placeholder="yyyy-MM-dd" required /><br>
+				<tt>value = {{value | date: "dd-MM-yyyy"}}</tt><br>
+				Edad:<br>
+				<div>{{calculateAge(value)}}</div>
+				Genero:<br>
+				<input type="radio" name="masculino" value="1" ng-model="checkboxSelection"/>Masculino
+				<input type="radio" name="femenino" value="2" ng-model="checkboxSelection"/>Femenino<br>
+				Seleccione Previsión:<br>
+				<select ng-model="selectedPlan" ng-options="plan.nombre for plan in plans | orderBy:'nombre'"></select><br>
+				Diagnóstico<br>
+				<input name="txtId" type="text" style="width:200px;height:150px">
+			</form>
+		</div>
+    </div>
+  </div>
+</div>

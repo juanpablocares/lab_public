@@ -11,3 +11,9 @@ asset 'angular-ui-router'
 #libreria para manejar autentificacion con devise_token_auth 
 asset 'ng-token-auth'
 
+
+#Agregadas por JP
+#Libreria para el manejo de rut
+asset 'angular-rut'
+#Librería para manejo de mascaras
+asset 'angular-ui-utils'
