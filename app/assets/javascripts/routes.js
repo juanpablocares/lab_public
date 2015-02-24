@@ -60,7 +60,7 @@
 		
 		$stateProvider.state('loginRequired.account', {
 			url : '/miCuenta',
-			templateUrl : "sessions/cuenta.html",
+			templateUrl : "sessions/cuenta/index.html",
 			controller : 'CuentaController',
 			resolve : {
 				test : function(){

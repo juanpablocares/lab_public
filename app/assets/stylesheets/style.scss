@@ -1,4 +1,4 @@
-/*----------------------------------------------------------------------------------- */
+/*----------------------------------------------------------------------------------- */
 /*  Mixins/variables */
 /*----------------------------------------------------------------------------------- */
 $blue: #007aff;
@@ -95,8 +95,8 @@ body {
   }
 }
 
-.margin-top-nav-bar{
-  margin-top: 140px;
+.main-view{  margin: 10px;
+  margin-top: 130px;
 }
 
 .main-content {
@@ -4578,8 +4578,8 @@ body.fourofour {
   }
 }
 @media (max-width: 960px) {
-  .margin-top-nav-bar{
-    margin-top: 15px;
+  .main-view{
+    margin: 10px;    margin-top: 15px;
   }
 }
 
