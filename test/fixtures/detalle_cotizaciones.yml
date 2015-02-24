@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cotizacion_id: 
+  examen_id: 
+  perfil_examen_id: 
+  creado: 2015-02-24 12:03:19
+
+two:
+  cotizacion_id: 
+  examen_id: 
+  perfil_examen_id: 
+  creado: 2015-02-24 12:03:19

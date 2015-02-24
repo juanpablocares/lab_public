@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  sucursal_id: 
+  creado: 2015-02-24 12:11:48
+
+two:
+  user_id: 
+  sucursal_id: 
+  creado: 2015-02-24 12:11:48

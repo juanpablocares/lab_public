@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  paciente_id: 
+  procedencia_id: 
+  user_id: 
+  creado: 2015-02-24 12:03:08
+
+two:
+  paciente_id: 
+  procedencia_id: 
+  user_id: 
+  creado: 2015-02-24 12:03:08

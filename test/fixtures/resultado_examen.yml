@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sustancia_id: 
+  detalle_ficha_id: 
+  cantidad_sustancia: 1
+  creado: 2015-02-24 12:10:10
+
+two:
+  sustancia_id: 
+  detalle_ficha_id: 
+  cantidad_sustancia: 1
+  creado: 2015-02-24 12:10:10

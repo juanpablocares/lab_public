@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  prevision_id: 
+  nombre: MyString
+  alerta: false
+  creado: 2015-02-24 12:11:06
+
+two:
+  prevision_id: 
+  nombre: MyString
+  alerta: false
+  creado: 2015-02-24 12:11:06

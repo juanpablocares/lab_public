@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nombre: MyString
+  unidad: MyString
+  creado: 2015-02-24 12:10:42
+
+two:
+  nombre: MyString
+  unidad: MyString
+  creado: 2015-02-24 12:10:42

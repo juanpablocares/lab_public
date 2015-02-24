@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tramo_id: 
+  examen_id: 
+  precio: 1
+  creado: 2015-02-24 12:07:42
+
+two:
+  tramo_id: 
+  examen_id: 
+  precio: 1
+  creado: 2015-02-24 12:07:42
