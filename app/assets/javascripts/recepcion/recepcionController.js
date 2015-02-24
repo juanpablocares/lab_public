@@ -4,6 +4,7 @@ angular.module('lab').controller('RecepcionController', [
 		{
 			$scope.valido = false;
 			$scope.rut = 0;
+			$scope.edad = 0;
 			$scope.firstName = 'Juan';
 			$scope.secondName = 'Pablo';
 		
@@ -16,8 +17,11 @@ angular.module('lab').controller('RecepcionController', [
 			}
 		
 			$scope.calculateAge = function calculateAge(birthday) { // birthday is a date
-				var ageDifMs = Date.now() - birthday.getTime();
+				var dateBirthday = new Date(birthday);
+				console.log(dateBirthday.getTime());
+				var ageDifMs = Date.now() - dateBirthday.getTime();
 				var ageDate = new Date(ageDifMs); // miliseconds from epoch
+				$scope.edad = Math.abs(ageDate.getUTCFullYear() - 1970);
 				return Math.abs(ageDate.getUTCFullYear() - 1970);
 			}
 		

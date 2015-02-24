@@ -27,10 +27,10 @@
 				Seleccione Región:<br>
 				<select ng-model="selectedRegion" ng-options="region.nombre for region in regions | orderBy:'id'"></select><br>
 				Fecha de nacimiento:<br>
-				<input type="date" id="exampleInput" name="input" ng-model="value" placeholder="yyyy-MM-dd" required /><br>
-				<tt>value = {{value | date: "dd-MM-yyyy"}}</tt><br>
-				Edad:<br>
-				<div>{{calculateAge(value)}}</div>
+				<input type="date" id="exampleInput" name="input" ng-model="valor" ng-change="calculateAge(valor)" required/><br>
+				<tt>valor = {{valor | date: "dd-MM-yyyy"}}</tt><br>
+				Edad: 
+				<div>{{edad}}</div>
 				Genero:<br>
 				<input type="radio" name="masculino" value="1" ng-model="checkboxSelection"/>Masculino
 				<input type="radio" name="femenino" value="2" ng-model="checkboxSelection"/>Femenino<br>
