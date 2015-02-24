@@ -18,7 +18,6 @@ angular.module('lab').controller('RecepcionController', [
 		
 			$scope.calculateAge = function calculateAge(birthday) { // birthday is a date
 				var dateBirthday = new Date(birthday);
-				console.log(dateBirthday.getTime());
 				var ageDifMs = Date.now() - dateBirthday.getTime();
 				var ageDate = new Date(ageDifMs); // miliseconds from epoch
 				$scope.edad = Math.abs(ageDate.getUTCFullYear() - 1970);

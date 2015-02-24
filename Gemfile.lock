@@ -40,9 +40,6 @@ GEM
       railties (>= 3.1)
       sprockets
       tilt
-    annotate (2.6.5)
-      activerecord (>= 2.3.0)
-      rake (>= 0.8.7)
     arel (6.0.0)
     bcrypt (3.1.10)
     binding_of_caller (0.7.2)
@@ -134,8 +131,6 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (~> 1.1)
-    schema_to_scaffold (0.7.2)
-      activesupport (>= 3.2.1)
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
@@ -173,7 +168,6 @@ PLATFORMS
 
 DEPENDENCIES
   angular-rails-templates
-  annotate
   bower-rails
   byebug
   coffee-rails (~> 4.1.0)
@@ -182,7 +176,6 @@ DEPENDENCIES
   pg
   rails (= 4.2.0)
   sass-rails (~> 5.0)
-  schema_to_scaffold
   sdoc (~> 0.4.0)
   spring
   turbolinks

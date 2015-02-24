@@ -49,9 +49,3 @@ gem 'devise_token_auth'
 
 #Gema para poder utilizar los templates en la carpeta app/views en vez de en assets
 gem 'angular-rails-templates'
-
-#Gema para crear modelos desde base de datos
-gem 'schema_to_scaffold'
-
-#Gema para crear documentacion de atributos en la base de datos
-gem 'annotate'
