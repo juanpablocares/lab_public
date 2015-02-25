@@ -7,7 +7,7 @@
 						<a class="dropdown-toggle" dropdown-toggle> <img width="34" height="34" src="<%= asset_path 'avatar-male.jpg' %>" />{{ user.email }}<b class="caret"></b></a>
 						<ul class="dropdown-menu" role="menu">
 							<li>
-								<a href="#/miCuenta"> <i class="fa fa-user"></i>My Account</a>
+								<a ui-sref="loginRequired.account.info"> <i class="fa fa-user"></i>My Account</a>
 							</li>
 							<li>
 								<a href="#"> <i class="fa fa-gear"></i>Account Settings</a>
@@ -30,7 +30,7 @@
 			<div class="nav-collapse">
 				<ul class="nav">
 					<li>
-						<a class="current" ng-href="#"><span aria-hidden="true" class="se7en-home"></span>Dashboard</a>
+						<a ng-href="#"><span aria-hidden="true" class="se7en-home"></span>Dashboard</a>
 					</li>
 					<li class="dropdown" dropdown>
 						<a data-toggle="dropdown" dropdown-toggle> <span aria-hidden="true" class="se7en-tables"></span>Tables<b class="caret"></b></a>
@@ -44,7 +44,7 @@
 						<a data-toggle="dropdown" dropdown-toggle> <span aria-hidden="true" class="fa fa-fw fa-cog fa-2x"></span>Administración<b class="caret"></b></a>
 						<ul class="dropdown-menu" role="menu">
 							<li>
-								<a ng-href="#/admin/usuarios">Ver usuarios</a>
+								<a ui-sref="#/admin/usuarios">Ver usuarios</a>
 							</li>
 						</ul>
 					</li>

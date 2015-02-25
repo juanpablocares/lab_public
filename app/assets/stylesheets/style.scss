@@ -2,7 +2,7 @@
 /*  Mixins/variables */
 /*----------------------------------------------------------------------------------- */
 $blue: #007aff;
-
+$gray: #666666;
 @mixin css-gradient($from, $to, $start, $end) {
   background: $to;
   background: -webkit-linear-gradient(top, $from $start, $to $end);
@@ -66,7 +66,7 @@ html {
 
 body {
   font-family: "Lato", sans-serif !important;
-  color: #666666;
+  color: $gray;
   min-height: 100%;
   
   &.page-header-fixed {
@@ -79,7 +79,7 @@ body {
     }
   }
   &.bg-1 {
-    background: #e8e8e8;
+    background: #eeeeee;
   }
   &.bg-2 {
     background: url(bg-2.png) repeat 0 0;
@@ -126,7 +126,7 @@ strong {
 a {
   color: $blue;
   &:hover {
-    color: #666666;
+    color: $gray;
     text-decoration: none;
   }
 }
@@ -1422,7 +1422,7 @@ th:active {
   margin-bottom: 0;
   padding: 0;
   a {
-    color: #666666;
+    color: $gray;
     display: block;
     padding: 0 0 0 15px;
     &:hover {
@@ -2506,7 +2506,7 @@ th:active {
           color: #888888;
           &:hover {
             background-color: #e6e6e6;
-            color: #666666;
+            color: $gray;
           }
         }
         img {
@@ -2540,7 +2540,7 @@ th:active {
       line-height: 32px;
       border-radius: 5px;
       margin-bottom: 0 !important;
-      color: #666666;
+      color: $gray;
       @include transition(all 0.2s);
       [class^="fa"], [class*="fa"] {
         width: 32px;
@@ -2554,7 +2554,7 @@ th:active {
         margin-top: -5px;
         width: 32px;
         font-size: 14px;
-        text-align: center;
+        textlign: center;
         margin-right: 10px;
         vertical-align: middle;
         @include transition(all 0.12s);
@@ -2599,7 +2599,7 @@ th:active {
   display: none;
   background: white;
   background: rgba(255, 255, 255, 0.95);
-  color: #666666;
+  color: $gray;
   font-size: smaller;
   font-weight: 300;
   padding: 4px 6px;
@@ -3447,7 +3447,7 @@ button.close {
   &.label-default {
     background-color: lighten(#999999, 30%);
     border-left: 2px solid #999999;
-    color: #666666;
+    color: $gray;
   }
   &.label-info {
     background-color: lighten(#5bc0de, 32%);
@@ -3494,7 +3494,7 @@ button.close {
     &.label-default {
       background-color: lighten(#999999, 30%);
       border-left: 2px solid #999999;
-      color: #666666;
+      color: $gray;
     }
     &.label-info {
       background-color: lighten(#5bc0de, 32%);

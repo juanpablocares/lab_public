@@ -9,7 +9,6 @@
 
 	labs.config(function($stateProvider, $urlRouterProvider) {
 
-
 		/*
 		 * Login State
 		 * No necesita estar logueado para poder ser visto. De hecho es la única url permitida sin login.
@@ -20,13 +19,13 @@
 			templateUrl : "sessions/login.html",
 		});
 
-		/* 
+		/*
 		 * LoginRequired State
 		 * Estado base para las url que requieren estar logueado.
 		 * Debe ser precargado mediante loginRequired.nombreEstado
 		 * OJO: Son solo comprobaciones clientside, igual debe hacerse comprobación en serverside.
 		 */
-		
+
 		$stateProvider.state('loginRequired', {
 			templateUrl : 'widgets/navBar.html',
 			resolve : {
@@ -41,12 +40,12 @@
 				}
 			}
 		});
-		
+
 		$stateProvider.state('loginRequired.logout', {
 			url : '/logout',
 			controller : 'LogoutController'
 		});
-		
+
 		$stateProvider.state('loginRequired.index', {
 			url : '',
 			templateUrl : "recepcion/recepcion.html",
@@ -57,16 +56,29 @@
 				}
 			}
 		});
-		
+
 		$stateProvider.state('loginRequired.account', {
 			url : '/miCuenta',
-			templateUrl : "sessions/cuenta/index.html",
-			controller : 'CuentaController',
+			templateUrl : "sessions/cuenta/menu.html",
+			controller : 'CuentaMenuController',
 			resolve : {
-				test : function(){
-					console.log("Index test");
+				test : function() {
 				}
 			}
+		});
+
+		$stateProvider.state('loginRequired.account.info', {
+			url : '/informacion',
+			templateUrl : "sessions/cuenta/index.html",
+			controller : 'CuentaIndexController',
+		});
+
+		$stateProvider.state('loginRequired.account.changePassword', {
+			url : '/password',
+			templateUrl : "sessions/cuenta/changePassword.html",
+			controller : function() {
+				console.log('account.info.password');
+			},
 		});
 
 		$urlRouterProvider.otherwise('');
