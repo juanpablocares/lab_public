@@ -1,29 +1,8 @@
-angular.module('lab').controller('CuentaIndexController', function($scope, $auth, $state) {
+angular.module('lab').controller('CuentaIndexController', ['$scope', '$auth', '$state', '$http', function($scope, $auth, $state, $http) {
 	$scope.user.editing = false;
-	$scope.user.attributes = [{
-		name : 'Rut',
-		value : '12.312.312-3',
-		editable : false,
-		type : 'text',
-	}, {
-		name : 'Nombre',
-		value : 'Carlos Benner B.',
-		editable : false,
-		type : 'text',
-	}, {
-		name : 'Email',
-		value : 'email@email.com',
-		editable : false,
-		type : 'email',
-	}, {
-		name : 'Dirección',
-		value : 'Calle falsa 123',
-		editable : true,
-		type : 'text',
-	}, {
-		name : 'Teléfono',
-		value : '123123123',
-		editable : true,
-		type : 'text',
-	}];
-});
+	$http.get('/api/users/accountAttributes').success(function(data, status, headers, config) {
+		$scope.user.attributes = data;
+	}).error(function(data, status, headers, config) {
+		$scope.user.error = true;
+	});
+}]);
