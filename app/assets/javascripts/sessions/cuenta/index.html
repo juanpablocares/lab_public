@@ -2,26 +2,74 @@
 	<div class="heading">
 		Información personal
 	</div>
-	<div class="widget-content padded" ng-hide="user.editing">
+	<div class="widget-content padded" ng-show="user.editing">
 		<table class="table">
-			<tr ng-repeat="attribute in user.attributes">
-				<th class="col-sm-2 text-right">{{attribute.name}}</th><td>{{attribute.value}}</td>
+			<tr>
+				<th class="col-sm-2 text-right">Rut</th><td>{{rutToTexto(userModel)}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Nombre</th><td>{{userModel.nombre?userModel.nombre:"" +" "+ userModel.apellido_paterno?userModel.apellido_paterno:"" +" "+ userModel.apellido_materno?userModel.apellido_materno:""}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Email</th><td>{{userModel.email}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Dirección</th><td>{{userModel.direccion}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Teléfono</th><td>{{userModel.telefono}}</td>
 			</tr>
 		</table>
 		<div class="row form-group">
 			<div class="col-sm-11 text-right">
-				<button type="button" class="btn btn-primary" ng-click="user.editing = !user.editing">
+				<button type="button" class="btn btn-primary" ng-click="cambiarVentanaSinCambios()">
 					Editar mi información
 				</button>
 			</div>
 		</div>
 	</div>
-	<div class="widget-content padded" ng-show="user.editing">
-		<form class="form-horizontal">
-			<div class="form-group" ng-repeat="attribute in user.attributes">
-				<label for="{{attribute.name}}" class="col-sm-2 control-label"><strong>{{attribute.name}}</strong></label>
+	<div class="widget-content padded" ng-show="!user.editing">
+		<form class="form-horizontal" ng-submit="guardarDatosPersonales(userModel)">
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><strong>Rut</strong></label>
 				<div class="col-sm-10">
-					<input type="{{attribute.type}}" class="form-control" id="{{attribute.name}}" value="{{attribute.value}}" ng-disabled="{{!attribute.editable}}">
+					<input type="text" class="form-control" ng-rut rut-format="live" ng-model="userModel.rutCompleto" required disabled>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="user_nombre" class="col-sm-2 control-label"><strong>Nombre</strong></label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="user_nombre" ng-model="userModel.nombre" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="user_apellido_paterno" class="col-sm-2 control-label"><strong>Apellido paterno</strong></label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="user_apellido_paterno"  ng-model="userModel.apellido_paterno" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="user_apellido_materno" class="col-sm-2 control-label"><strong>Apellido materno</strong></label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="user_apellido_materno"  ng-model="userModel.apellido_materno">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="user_email" class="col-sm-2 control-label"><strong>Email</strong></label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="user_email" ng-disabled="true" ng-model="userModel.email" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="user_direccion" class="col-sm-2 control-label"><strong>Dirección</strong></label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="user_direccion" ng-model="userModel.direccion">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="user_telefono" class="col-sm-2 control-label"><strong>Teléfono</strong></label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="user_telefono" ng-model="userModel.telefono">
 				</div>
 			</div>
 			<div class="form-group">
@@ -29,7 +77,7 @@
 					<button type="submit" class="btn btn-primary">
 						Guardar mis datos
 					</button>
-					<button type="button" class="btn btn-danger" ng-click="user.editing = !user.editing">
+					<button type="button" class="btn btn-danger" ng-click="cambiarVentanaSinCambios()">
 						Volver sin guardar
 					</button>
 				</div>

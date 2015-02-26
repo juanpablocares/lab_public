@@ -2672,9 +2672,9 @@ input[type="text"] {
     border-color: $blue;
     box-shadow: none;
   }
-  &.has-error, &.error {
+  &.has-error, &.error ,&.ng-invalid.ng-dirty{
     border-color: #d9534f;
-  }
+  }  &.ng-valid.ng-dirty  {    border-color: #088A08;  }
 }
 
 .form-group {

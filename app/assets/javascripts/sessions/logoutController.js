@@ -1,9 +1,8 @@
-angular.module('lab').controller('LogoutController', function($scope, $auth, $state) {
+angular.module('lab').controller('LogoutController', function($scope, $auth, $state, $http) {
 	$auth.signOut().then(function() {
-		console.log("Usuario deslogueado satisfactoriamente.");
-		$state.go('loginRequired.index');
+		//console.log("Usuario deslogueado satisfactoriamente.");
+		$state.go('login');
 	}).catch(function() {
-		console.log("Error al desloguear al usuario");
-		$state.go('loginRequired.index');
+		alert("Error al desloguear al usuario");
 	});
-}); 
+});
