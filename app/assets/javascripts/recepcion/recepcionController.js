@@ -36,10 +36,22 @@ angular.module('lab').controller('RecepcionController', [
 		
 			$scope.saveRut = function(value, valido){
 				if(valido){
+				
+					var request = $http({
+                        method: "get",
+                        url: "api/users/rut/:rut",
+                        method: "GET",
+                        params: {
+                            rut: value,
+                        }
+                    });
+				
+					console.log("Entro");
 					$scope.rut = value;
 					$scope.valido = true;
 					$scope.tipo = 1;
 					$scope.myrut = null;
+					console.log(request);
 				}
 			}
 		
@@ -90,7 +102,7 @@ angular.module('lab').controller('RecepcionController', [
 					// log error
 				});
 			
-			$http.get('/api/users').
+			$http.get('/api/users/rut').
 				success(function(data) {
 					$scope.ruts = data;
 				}).
