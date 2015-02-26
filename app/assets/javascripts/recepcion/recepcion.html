@@ -1,45 +1,229 @@
 <div class="container-fluid">
-  <div class="panel panel-success">
-    <div class="panel-body">
-		<div>
-			Nombre completo: {{getFullName()}}
-		</div>
-		<form name="clientForm" ng-submit="saveRut(myrut, clientForm.$valid)">
-			Ingrese rut: <br>
-			<input ng-rut rut-format="live" type="text" ng-model="myrut" required>
-			<button ng-disabled="clientForm.$invalid" >Buscar</button>
-			<div>rutForm is {{clientForm.$valid}}</div>
-		</form>
-		<div>
-			<form name="initialDatesForm" ng-show="valido">
-				Rut:<br>
-				<input ng-rut rut-format="live" name="rut" ng-model="rut" type="text" ng-disabled="true" required><br>
-				Ingrese Nombres:<br>
-				<input name="nombres" type="text" required><br>
-				Ingrese Apellido Paterno:<br>
-				<input name="apellidoPaterno" type="text" required><br>
-				Ingrese Apellido Materno:<br>
-				<input name="apellidoMaterno" type="text" required><br>
-				Ingrese celular:<br>
-				<input name="phonenum" ui-mask="(9) 999-9999" ng-model="user.cc" required><br>
-				Ingrese Dirección:<br>
-				<input name="apellidoMaterno" type="text" required><br>
-				Seleccione Región:<br>
-				<select ng-model="selectedRegion" ng-options="region.nombre for region in regions | orderBy:'id'"></select><br>
-				Fecha de nacimiento:<br>
-				<input type="date" id="exampleInput" name="input" ng-model="valor" ng-change="calculateAge(valor)" required/><br>
-				<tt>valor = {{valor | date: "dd-MM-yyyy"}}</tt><br>
-				Edad: 
-				<div>{{edad}}</div>
-				Genero:<br>
-				<input type="radio" name="masculino" value="1" ng-model="checkboxSelection"/>Masculino
-				<input type="radio" name="femenino" value="2" ng-model="checkboxSelection"/>Femenino<br>
-				Seleccione Previsión:<br>
-				<select ng-model="selectedPlan" ng-options="plan.nombre for plan in plans | orderBy:'nombre'"></select><br>
-				Diagnóstico<br>
-				<input name="txtId" type="text" style="width:200px;height:150px">
+	<div class="panel panel-success">
+		<div class="panel-body">
+			<form class="form-horizontal" name="clientForm" ng-submit="saveRut(myrut, clientForm.$valid)">
+				<div class="form-group">
+					<label class="control-label col-md-2">Rut</label>
+					<div class="col-md-7">
+						<div class="input-group">
+							<input class="form-control" ng-rut rut-format="live" ng-model="myrut" type="text" required><span class="input-group-btn">
+							<button ng-disabled="clientForm.$invalid" class="btn btn-default" type="submit">Buscar</button></span>
+						</div>
+					</div>
+				</div>
+			</form>
+			<form class="form-horizontal" name="nuevoCliente" ng-submit="storeData()">
+				<div class="row" ng-show="tipo == 1">
+				  <div class="col-lg-12">
+					<div class="widget-container fluid-height clearfix">
+					  <div class="heading">
+						<i class="fa fa-bars"></i>Paciente nuevo
+					  </div>
+					  <div class="widget-content padded">
+						<form action="#" class="form-horizontal">
+						  <fieldset disabled="">
+							<div class="form-group">
+							  <label class="control-label col-md-2" for="disabledInput">Rut</label>
+							  <div class="col-md-7">
+								<input ng-rut rut-format="live" ng-model="rut" class="form-control" id="disabledInput" type="text">
+							  </div>
+							</div>
+						  </fieldset>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Nombres</label>
+							<div class="col-md-7">
+							  <input class="form-control" placeholder="Ingrese nombres" type="text" ng-model="nombres" required>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Apellido Paterno</label>
+							<div class="col-md-7">
+							  <input class="form-control" placeholder="Ingrese apellido paterno" type="text" ng-model="paterno" required>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Apellido Materno</label>
+							<div class="col-md-7">
+							  <input class="form-control" placeholder="Ingrese apellido materno" type="text" ng-model="materno" required>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Celular</label>
+							<div class="col-md-7">
+							  <input class="form-control" type="text" ui-mask="(9) 999-9999" ng-model="celular" required>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Dirección</label>
+							<div class="col-md-7">
+							  <input class="form-control" placeholder="Ingrese dirección" type="text" ng-model="direccion" required>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Región</label>
+							<div class="col-md-7">
+							  <select class="form-control" ng-model="region" ng-options="r.nombre for r in regions | orderBy:'nombre'"></select>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Comuna</label>
+							<div class="col-md-7">
+							  <!--<select class="form-control" ng-model="comuna" ng-options="comuna.nombre for comuna in comuns | orderBy:'id'"></select>-->
+							  <select class="form-control" ng-model="comuna" ng-options="c.nombre for c in region.comunas | orderBy:'nombre'"></select>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Fecha de nacimiento</label>
+							<div class="col-md-3">
+							  <div class="input-group date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
+								<input class="form-control" type="date" id="exampleInput" name="input" ng-model="fechaNacimiento" ng-change="calculateAge(fechaNacimiento)" required/><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+							  </div>
+							</div>
+						  </div>
+						  <fieldset disabled="">
+							<div class="form-group">
+							  <label class="control-label col-md-2" for="disabledInput">Edad</label>
+							  <div class="col-md-7">
+								<input ng-model="edad" class="form-control" id="disabledInput" type="text">
+							  </div>
+							</div>
+						  </fieldset>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Género</label>
+							<div class="col-md-6">
+							  <label class="radio" ><input id="masculino" name="optionsRadios1" type="radio" value="masculino"><span>Masculino</span></label><label class="radio"><input checked="" name="optionsRadios1" type="radio" value="femenino"><span>Femenino</span></label>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Previsión</label>
+							<div class="col-md-7">
+							  <select class="form-control" ng-model="prevision" ng-options="plan.nombre for plan in plans | orderBy:'nombre'"></select>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Diagnóstico</label>
+							<div class="col-md-7">
+							  <textarea ng-model="diagnostico" class="form-control" rows="3"></textarea>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2"></label>
+							<div class="col-md-7">
+							  <button class="btn btn-primary" type="submit">Guardar</button><button class="btn btn-default-outline">Cancelar</button>
+							</div>
+						  </div>
+						</form>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			</form>
+			<form class="form-horizontal" name="nuevoCliente" ng-submit="storeData()">
+				<div class="row" ng-show="tipo == 2">
+				  <div class="col-lg-12">
+					<div class="widget-container fluid-height clearfix">
+					  <div class="heading">
+						<i class="fa fa-bars"></i>Editar paciente
+					  </div>
+					  <div class="widget-content padded">
+						<form action="#" class="form-horizontal">
+						  <fieldset disabled="">
+							<div class="form-group">
+							  <label class="control-label col-md-2" for="disabledInput">Rut</label>
+							  <div class="col-md-7">
+								<input ng-rut rut-format="live" ng-model="rut" class="form-control" id="disabledInput" type="text">
+							  </div>
+							</div>
+						  </fieldset>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Nombres</label>
+							<div class="col-md-7">
+							  <input class="form-control" placeholder="Ingrese nombres" type="text" ng-model="nombres" required>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Apellido Paterno</label>
+							<div class="col-md-7">
+							  <input class="form-control" placeholder="Ingrese apellido paterno" type="text" ng-model="paterno" required>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Apellido Materno</label>
+							<div class="col-md-7">
+							  <input class="form-control" placeholder="Ingrese apellido materno" type="text" ng-model="materno" required>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Celular</label>
+							<div class="col-md-7">
+							  <input class="form-control" type="text" ui-mask="(9) 999-9999" ng-model="celular" required>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Dirección</label>
+							<div class="col-md-7">
+							  <input class="form-control" placeholder="Ingrese dirección" type="text" ng-model="direccion" required>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Región</label>
+							<div class="col-md-7">
+							  <select class="form-control" ng-model="region" ng-options="region.nombre for region in regions | orderBy:'id'"></select>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Comuna</label>
+							<div class="col-md-7">
+							  <!--<select class="form-control" ng-model="comuna" ng-options="comuna.nombre for comuna in comuns | orderBy:'id'"></select>-->
+							  <select class="form-control" ng-model="comuna" ng-options="comuna.nombre for comuna in comuns"></select>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Fecha de nacimiento</label>
+							<div class="col-md-3">
+							  <div class="input-group date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
+								<input class="form-control" type="date" id="exampleInput" name="input" ng-model="fechaNacimiento" ng-change="calculateAge(fechaNacimiento)" required/><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+							  </div>
+							</div>
+						  </div>
+						  <fieldset disabled="">
+							<div class="form-group">
+							  <label class="control-label col-md-2" for="disabledInput">Edad</label>
+							  <div class="col-md-7">
+								<input ng-model="edad" class="form-control" id="disabledInput" type="text">
+							  </div>
+							</div>
+						  </fieldset>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Género</label>
+							<div class="col-md-6">
+							  <label class="radio" ><input id="masculino" name="optionsRadios1" type="radio" value="masculino"><span>Masculino</span></label><label class="radio"><input checked="" name="optionsRadios1" type="radio" value="femenino"><span>Femenino</span></label>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Previsión</label>
+							<div class="col-md-7">
+							  <select class="form-control" ng-model="prevision" ng-options="plan.nombre for plan in plans | orderBy:'nombre'"></select>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2">Diagnóstico</label>
+							<div class="col-md-7">
+							  <textarea ng-model="diagnostico" class="form-control" rows="3"></textarea>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="control-label col-md-2"></label>
+							<div class="col-md-7">
+							  <button class="btn btn-primary" type="submit">Guardar</button><button class="btn btn-default-outline">Cancelar</button>
+							</div>
+						  </div>
+						</form>
+					  </div>
+					</div>
+				  </div>
+				</div>
 			</form>
 		</div>
-    </div>
-  </div>
+	</div>
 </div>
