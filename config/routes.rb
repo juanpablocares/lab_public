@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 	namespace :api do
+		get 'users/rut/:rut', to: 'users#search', defaults: {format: 'json'}
 		resources :comunas, :defaults => { :format => 'json' }
 		resources :previsiones, :defaults => { :format => 'json' }
 		resources :regiones, :defaults => { :format => 'json' }

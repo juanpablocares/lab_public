@@ -1,5 +1,14 @@
 class Api::UsersController < ActionController::Base
 	before_filter:authenticate_user!
+	def index
+		render json: User.all
+	end
+	
+	def search
+		@results = User.find_by(rut: params[:rut])
+		render json: @results
+	end
+	
 	def accountAttributes
 		render json:
      	[
