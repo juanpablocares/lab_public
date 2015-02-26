@@ -16,9 +16,10 @@
 //= require angular-cookie
 //= require ng-token-auth
 //= require angular-ui-router
-//= require_tree .
 //= require angular-rut
 //= require angular-ui-utils
 //= require main
 //= require routes
 //= require directives
+//= require_tree .
+

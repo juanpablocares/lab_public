@@ -9,15 +9,7 @@
 
 	labs.config(function($stateProvider, $urlRouterProvider) {
 
-		/*
-		 * Login State
-		 * No necesita estar logueado para poder ser visto. De hecho es la única url permitida sin login.
-		 */
-		$stateProvider.state('login', {
-			url : '/login',
-			controller : 'LoginController',
-			templateUrl : "sessions/login.html",
-		});
+		
 
 		/*
 		 * LoginRequired State
@@ -41,13 +33,9 @@
 			}
 		});
 
-		$stateProvider.state('loginRequired.logout', {
-			url : '/logout',
-			controller : 'LogoutController'
-		});
-
+		
 		$stateProvider.state('loginRequired.index', {
-			url : '',
+			url : '/',
 			templateUrl : "recepcion/recepcion.html",
 			controller : 'RecepcionController',
 			resolve : {
@@ -80,8 +68,36 @@
 				console.log('account.info.password');
 			},
 		});
+		
+		/*
+		 * Login State
+		 * No necesita estar logueado para poder ser visto. De hecho es la única url permitida sin login.
+		 */
+		$stateProvider.state('login', {
+			url : '/login',
+			controller : 'LoginController',
+			templateUrl : "sessions/login.html",
+			resolve : {
+				auth : function($auth, $state) {
+					return !$auth.validateUser().then(function() {
+						// redirect if logged in
+						$state.go('loginRequired.index');
+					});
+				}
+			}
+		});
+		
+		/*
+		 * Logout State
+		 */
+		
+		$stateProvider.state('loginRequired.logout', {
+			url : '/logout',
+			controller : 'LogoutController'
+		});
 
-		$urlRouterProvider.otherwise('');
+
+		$urlRouterProvider.otherwise('/');
 
 	});
 })();
