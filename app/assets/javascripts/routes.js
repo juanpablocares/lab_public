@@ -64,9 +64,7 @@
 		$stateProvider.state('loginRequired.account.changePassword', {
 			url : '/password',
 			templateUrl : "sessions/cuenta/changePassword.html",
-			controller : function() {
-				console.log('account.info.password');
-			},
+			controller : 'CuentaPasswordController',
 		});
 		
 		/*

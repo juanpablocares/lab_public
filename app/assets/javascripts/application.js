@@ -12,7 +12,7 @@
 //
 //= require angular/angular
 //= require angular-rails-templates
-//= require angular-bootstrap
+// require angular-bootstrap
 //= require angular-cookie
 //= require ng-token-auth
 //= require angular-ui-router

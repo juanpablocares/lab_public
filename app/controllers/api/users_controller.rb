@@ -26,6 +26,6 @@ class Api::UsersController < ActionController::Base
 	end
 	
 	def accountAttributes
-		render json: current_user
+		
 	end
 end
