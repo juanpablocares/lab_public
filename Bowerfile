@@ -21,3 +21,5 @@ asset 'ng-token-auth'
 asset 'angular-rut'
 #Librería para manejo de mascaras
 asset 'angular-ui-utils'
+#Libreria resources para manejo de creación, modificación, búsquedas
+asset 'angular-resource'

@@ -22,4 +22,4 @@
 //= require routes
 //= require directives
 //= require_tree .
-
+//= require angular-resource

@@ -1,9 +1,8 @@
 angular.module('lab').controller('RecepcionController', [
-	'$scope', '$http',
-		function($scope, $http)
+	'$scope', '$http', 'Pacientes',
+		function($scope, $http, Pacientes)
 		{
 			$scope.tipo = 0;
-		
 			$scope.valido = false;
 			$scope.rut = 0;
 			$scope.edad = 'Ingrese fecha';
@@ -17,6 +16,9 @@ angular.module('lab').controller('RecepcionController', [
 			$scope.genero = '';
 			$scope.prevision = '';
 			$scope.diagnostico = '';
+			
+			var tmp = Pacientes.show({rut: 12312312});
+			console.log(tmp);
 			
 			$scope.clean = function(){
 				$scope.valido = false;
@@ -35,23 +37,13 @@ angular.module('lab').controller('RecepcionController', [
 			}
 		
 			$scope.saveRut = function(value, valido){
-				if(valido){
-				
-					var request = $http({
-                        method: "get",
-                        url: "api/users/rut/:rut",
-                        method: "GET",
-                        params: {
-                            rut: value,
-                        }
-                    });
-				
+				if(valido){				
 					console.log("Entro");
 					$scope.rut = value;
 					$scope.valido = true;
 					$scope.tipo = 1;
 					$scope.myrut = null;
-					console.log(request);
+					//console.log(Paciente.show(12312312));
 				}
 			}
 		
@@ -68,6 +60,9 @@ angular.module('lab').controller('RecepcionController', [
 				console.log($scope.genero);
 				console.log($scope.prevision);
 				console.log($scope.diagnostico);
+				//if confirm("Agregar los datos?"){
+					//$scope.posts.push Post.save title: $scope.post.title, body: $scope.post.body
+				//}
 			}
 		
 			$scope.calculateAge = function calculateAge(birthday) { // birthday is a date
@@ -102,7 +97,7 @@ angular.module('lab').controller('RecepcionController', [
 					// log error
 				});
 			
-			$http.get('/api/users/rut').
+			$http.get('/api/users').
 				success(function(data) {
 					$scope.ruts = data;
 				}).

@@ -1,13 +1,23 @@
 Rails.application.routes.draw do
 
+  resources :pruebas
+
 	namespace :api do
 		get 'users/rut/:rut', to: 'users#search', defaults: {format: 'json'}
 		get 'users/nombre/:nombre', to: 'users#search_nombre', defaults: {format: 'json'}
 		get 'users/paterno/:paterno', to: 'users#search_paterno', defaults: {format: 'json'}
 		get 'users/paterno/:materno', to: 'users#search_materno', defaults: {format: 'json'}
+		
+		#Controladores de pacientes
+		get 'pacientes/rut/:rut', to: 'pacientes#search', defaults: {format: 'json'}
+		get 'pacientes/nombre/:nombre', to: 'pacientes#search_nombre', defaults: {format: 'json'}
+		get 'pacientes/paterno/:paterno', to: 'pacientes#search_paterno', defaults: {format: 'json'}
+		get 'pacientes/paterno/:materno', to: 'pacientes#search_materno', defaults: {format: 'json'}
+		
 		resources :comunas, :defaults => { :format => 'json' }
 		resources :previsiones, :defaults => { :format => 'json' }
 		resources :regiones, :defaults => { :format => 'json' }
+		resources :pacientes, :defaults => { :format => 'json' }
 		resources :users, :defaults => { :format => 'json' } do
 			collection do
 				get 'accountAttributes'
