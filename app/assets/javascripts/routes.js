@@ -92,7 +92,6 @@
 			controller : 'LogoutController'
 		});
 
-
 		$urlRouterProvider.otherwise('/');
 
 	});

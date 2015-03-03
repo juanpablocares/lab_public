@@ -33,11 +33,17 @@ class Api::PacientesController < ApplicationController
 		
 		respond_to do |format|
 			if @paciente.save
-				format.html { redirect_to @paciente, notice: 'paciente was successfully created.' }
-				format.json { render :show, status: :created, location: @paciente }
+				render json: {
+		          success: true,
+		          message: 'Paciente successfully created',
+		          paciente: @paciente,
+		        }, status: 200
 			else
-				format.html { render :new }
-				format.json { render json: @paciente.errors, status: :unprocessable_entity }
+				render json: {
+		          success: false,
+		          message: 'Paciente cannot be created',
+		          errors: @paciente.errors,
+		        }, status: 500
 			end
 		end
 	end
