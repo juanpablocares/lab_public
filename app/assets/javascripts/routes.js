@@ -9,8 +9,6 @@
 
 	labs.config(function($stateProvider, $urlRouterProvider) {
 
-		
-
 		/*
 		 * LoginRequired State
 		 * Estado base para las url que requieren estar logueado.

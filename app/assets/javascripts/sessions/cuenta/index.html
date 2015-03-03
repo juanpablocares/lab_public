@@ -2,16 +2,16 @@
 	<div class="heading">
 		Información personal
 	</div>
-	<div class="widget-content padded" ng-show="user.editing">
+	<div class="widget-content padded" ng-hide="!user.editing">
 		<table class="table">
 			<tr>
 				<th class="col-sm-2 text-right">Rut</th><td>{{rutToTexto(userModel)}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-2 text-right">Nombre</th><td>{{userModel.nombre?userModel.nombre:"" +" "+ userModel.apellido_paterno?userModel.apellido_paterno:"" +" "+ userModel.apellido_materno?userModel.apellido_materno:""}}</td>
+				<th class="col-sm-2 text-right">Nombre</th><td>{{userModel.nombre?userModel.nombre:""}} {{userModel.apellido_paterno?userModel.apellido_paterno:""}} {{userModel.apellido_materno?userModel.apellido_materno:""}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-2 text-right">Email</th><td>{{userModel.email}}</td>
+				<th class="col-sm-2 text-right">Email</th><td>{{email}}</td>
 			</tr>
 			<tr>
 				<th class="col-sm-2 text-right">Dirección</th><td>{{userModel.direccion}}</td>
@@ -28,12 +28,12 @@
 			</div>
 		</div>
 	</div>
-	<div class="widget-content padded" ng-show="!user.editing">
+	<div class="widget-content padded" ng-hide="user.editing">
 		<form class="form-horizontal" ng-submit="guardarDatosPersonales(userModel)">
 			<div class="form-group">
 				<label class="col-sm-2 control-label"><strong>Rut</strong></label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" ng-rut rut-format="live" ng-model="userModel.rutCompleto" required disabled>
+					<input type="text" class="form-control" ng-rut rut-format="live" ng-model="rutCompleto" required disabled>
 				</div>
 			</div>
 			<div class="form-group">
@@ -57,7 +57,7 @@
 			<div class="form-group">
 				<label for="user_email" class="col-sm-2 control-label"><strong>Email</strong></label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="user_email" ng-disabled="true" ng-model="userModel.email" required>
+					<input type="text" class="form-control" id="user_email" ng-disabled="true" ng-model="email" required>
 				</div>
 			</div>
 			<div class="form-group">
@@ -74,7 +74,7 @@
 			</div>
 			<div class="form-group">
 				<div class="col-sm-11 text-right">
-					<button type="submit" class="btn btn-primary">
+					<button type="submit" class="btn btn-primary" ng-disabled="buttonSubmit">
 						Guardar mis datos
 					</button>
 					<button type="button" class="btn btn-danger" ng-click="cambiarVentanaSinCambios()">

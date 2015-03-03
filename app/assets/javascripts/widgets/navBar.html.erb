@@ -10,9 +10,6 @@
 								<a ui-sref="loginRequired.account.info"> <i class="fa fa-user"></i>My Account</a>
 							</li>
 							<li>
-								<a href="#"> <i class="fa fa-gear"></i>Account Settings</a>
-							</li>
-							<li>
 								<a ng-href="#/logout"><i class="fa fa-sign-out"></i>Logout</a>
 							</li>
 						</ul>
@@ -21,7 +18,7 @@
 			</div>
 			<button class="navbar-toggle">
 				<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-			</button><a class="logo" href="/">se7en</a>
+			</button><a class="logo" ui-sref="loginRequired.index">se7en</a>
 			<form class="navbar-form form-inline col-lg-2 hidden-xs">
 				<input class="form-control" placeholder="Search" type="text">
 			</form>
@@ -30,7 +27,7 @@
 			<div class="nav-collapse">
 				<ul class="nav">
 					<li>
-						<a ng-href="#"><span aria-hidden="true" class="se7en-home"></span>Dashboard</a>
+						<a ui-sref="loginRequired.index"><span aria-hidden="true" class="se7en-home"></span>Dashboard</a>
 					</li>
 					<li class="dropdown" dropdown>
 						<a data-toggle="dropdown" dropdown-toggle> <span aria-hidden="true" class="se7en-tables"></span>Tables<b class="caret"></b></a>
@@ -44,7 +41,7 @@
 						<a data-toggle="dropdown" dropdown-toggle> <span aria-hidden="true" class="fa fa-fw fa-cog fa-2x"></span>Administración<b class="caret"></b></a>
 						<ul class="dropdown-menu" role="menu">
 							<li>
-								<a ui-sref="#/admin/usuarios">Ver usuarios</a>
+								<a ui-sref="loginRequired.admin.users">Ver usuarios</a>
 							</li>
 						</ul>
 					</li>
