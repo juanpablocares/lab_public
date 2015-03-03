@@ -1,14 +1,17 @@
 Rails.application.routes.draw do
 
-  resources :pruebas
-
 	namespace :api do
+		get 'users', to: 'users#index', defaults: {format: 'json'}
 		get 'users/rut/:rut', to: 'users#search', defaults: {format: 'json'}
 		get 'users/nombre/:nombre', to: 'users#search_nombre', defaults: {format: 'json'}
 		get 'users/paterno/:paterno', to: 'users#search_paterno', defaults: {format: 'json'}
 		get 'users/paterno/:materno', to: 'users#search_materno', defaults: {format: 'json'}
 		
 		#Controladores de pacientes
+		get 'pacientes/:id', to: 'pacientes#index', defaults: {format: 'json'}
+		get 'pacientes/new', to: 'pacientes#new', defaults: {format: 'json'}
+		post 'pacientes', to: 'pacientes#create', defaults: {format: 'json'}
+		delete 'pacientes/:id', to: 'pacientes#destroy', defaults: {format: 'json'}
 		get 'pacientes/rut/:rut', to: 'pacientes#search', defaults: {format: 'json'}
 		get 'pacientes/nombre/:nombre', to: 'pacientes#search_nombre', defaults: {format: 'json'}
 		get 'pacientes/paterno/:paterno', to: 'pacientes#search_paterno', defaults: {format: 'json'}

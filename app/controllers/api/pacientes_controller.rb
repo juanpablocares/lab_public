@@ -24,9 +24,13 @@ class Api::PacientesController < ApplicationController
 		render json: @results
 	end
 	
+	def new
+		@paciente = Paciente.new
+	end
+	
 	def create
-		@paciente = paciente.new(paciente_params)
-
+		@paciente = Paciente.new(paciente_params)
+		
 		respond_to do |format|
 			if @paciente.save
 				format.html { redirect_to @paciente, notice: 'paciente was successfully created.' }
@@ -38,12 +42,28 @@ class Api::PacientesController < ApplicationController
 		end
 	end
 	
-	def create
-		@paciente = Paciente.new(params[:nombre])
+	def update
+		respond_to do |format|
+		if @paciente.update(paciente_params)
+			format.html { redirect_to @paciente, notice: 'paciente was successfully updated.' }
+			format.json { render :show, status: :ok, location: @paciente }
+		else
+			format.html { render :edit }
+			format.json { render json: @paciente.errors, status: :unprocessable_entity }
+		end
+		end
+	end
+	
+	def destroy
+		@paciente.destroy
+		respond_to do |format|
+			format.html { redirect_to pruebas_url, notice: 'paciente was successfully destroyed.' }
+			format.json { head :no_content }
+		end
 	end
 	
   private
 	def paciente_params
-      params.require(:paciente).permit(:rut, :rutdv, :nombre, :apellido_paterno, :apellido_materno, :celular, :direccion, :comuna_id, :fecha_nacimiento, :genero, :diagnostico, :prevision_id, :user_id)
+      params.permit(:rut, :rutdv, :nombre, :apellido_paterno, :apellido_materno, :celular, :direccion, :comuna_id, :fecha_nacimiento, :genero, :diagnostico, :prevision_id, :user_id)
     end
 end
