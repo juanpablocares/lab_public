@@ -6,7 +6,7 @@
 		return $resource("/api/pacientes/rut/:rut", { rut: "@rut" },
 		{
 		  'show':    { method: 'GET', isArray: false },
-		  'update':  { method: 'PUT' },
+		  'update_byrut':  { method: 'PUT' },
 		  'destroy': { method: 'DELETE' }
 		});
 	}]);

@@ -48,16 +48,9 @@ class Api::PacientesController < ApplicationController
 		end
 	end
 	
-	def update
-		respond_to do |format|
-		if @paciente.update(paciente_params)
-			format.html { redirect_to @paciente, notice: 'paciente was successfully updated.' }
-			format.json { render :show, status: :ok, location: @paciente }
-		else
-			format.html { render :edit }
-			format.json { render json: @paciente.errors, status: :unprocessable_entity }
-		end
-		end
+	def update_byrut		
+		@paciente = Paciente.find_by(rut: params[:rut])
+		@paciente.update_attributes(paciente_params)
 	end
 	
 	def destroy
