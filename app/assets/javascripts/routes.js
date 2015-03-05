@@ -31,7 +31,6 @@
 			}
 		});
 
-		
 		$stateProvider.state('loginRequired.index', {
 			url : '/',
 			templateUrl : "recepcion/recepcion.html",
@@ -64,7 +63,23 @@
 			templateUrl : "sessions/cuenta/changePassword.html",
 			controller : 'CuentaPasswordController',
 		});
+
+		$stateProvider.state('loginRequired.pacientes', {
+			url : '/pacientes/:paciente_id',
+			templateUrl : "pacientes/menu.html",
+			params : {
+				paciente : null
+			},
+			controller : 'PacientesMenuController',
+			
+		});
 		
+		$stateProvider.state('loginRequired.pacientes.info', {
+			url : '/informacion',
+			templateUrl : "pacientes/index.html",
+			controller : 'PacientesIndexController',
+		});
+
 		/*
 		 * Login State
 		 * No necesita estar logueado para poder ser visto. De hecho es la única url permitida sin login.
@@ -82,11 +97,11 @@
 				}
 			}
 		});
-		
+
 		/*
 		 * Logout State
 		 */
-		
+
 		$stateProvider.state('loginRequired.logout', {
 			url : '/logout',
 			controller : 'LogoutController'

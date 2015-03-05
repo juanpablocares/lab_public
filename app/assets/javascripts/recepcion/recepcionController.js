@@ -1,5 +1,5 @@
-angular.module('lab').controller('RecepcionController', ['$scope','$auth','$resource', '$http', 'Pacientes',
-function($scope, $auth, $resource, $http, Pacientes) {
+angular.module('lab').controller('RecepcionController', ['$scope','$auth','$resource', '$http', 'Pacientes','$state',
+function($scope, $auth, $resource, $http, Pacientes, $state) {
 	$scope.tipo = 0;
 	$scope.paciente = {};
 	
@@ -24,28 +24,12 @@ function($scope, $auth, $resource, $http, Pacientes) {
 			rut : parseInt((value) / 10)
 		}, function(datos) {
 			if (datos.rut == null) {
+				//borrar esto en recepcion.html
 				$scope.tipo = 1;
 			}
 			else {
-				$scope.tipo = 2;
-				//Tiene que ser "a mano" la entrega de datos por problemas con la fecha, sino no es recibida en angular
-				$scope.paciente.rut = datos.rut;
-				$scope.paciente.rutdv = datos.rutdv;
-				$scope.paciente.nombre = datos.nombre;
-				$scope.paciente.apellido_paterno = datos.apellido_paterno;
-				$scope.paciente.apellido_materno = datos.apellido_materno;
-				$scope.paciente.celular = datos.celular;
-				$scope.paciente.direccion = datos.direccion;
-				$scope.paciente.fecha_nacimiento = new Date(datos.fecha_nacimiento);
-				//Tiene problemas con el retorno de la fecha, siempre retorna un día menos, por eso lo agrego
-				$scope.paciente.fecha_nacimiento.setDate($scope.paciente.fecha_nacimiento.getDate() + 1);
-				//Calculo de la edad
-				var ageDifMs = Date.now() - $scope.paciente.fecha_nacimiento.getTime();
-				var ageDate = new Date(ageDifMs);
-				// miliseconds from epoch
-				$scope.edad = Math.abs(ageDate.getUTCFullYear() - 1970);
-				$scope.paciente.genero = datos.genero;
-				$scope.paciente.diagnostico = datos.diagnostico;
+				paciente = datos.toJSON();
+				$state.go('loginRequired.pacientes.info',{ paciente_id: paciente.id, paciente: paciente});
 			}
 		});
 	}

@@ -8,11 +8,11 @@ Rails.application.routes.draw do
 		get 'users/paterno/:materno', to: 'users#search_materno', defaults: {format: 'json'}
 		
 		#Controladores de pacientes
-		get 'pacientes/:id', to: 'pacientes#index', defaults: {format: 'json'}
-		get 'pacientes/new', to: 'pacientes#new', defaults: {format: 'json'}
+		#get 'pacientes/:id', to: 'pacientes#index', defaults: {format: 'json'}
+		#get 'pacientes/new', to: 'pacientes#new', defaults: {format: 'json'}
 		put 'pacientes/rut/:rut', to: 'pacientes#update_byrut', defaults: {format: 'json'}
-		post 'pacientes', to: 'pacientes#create', defaults: {format: 'json'}
-		delete 'pacientes/:id', to: 'pacientes#destroy', defaults: {format: 'json'}
+		#post 'pacientes', to: 'pacientes#create', defaults: {format: 'json'}
+		#delete 'pacientes/:id', to: 'pacientes#destroy', defaults: {format: 'json'}
 		get 'pacientes/rut/:rut', to: 'pacientes#search', defaults: {format: 'json'}
 		get 'pacientes/nombre/:nombre', to: 'pacientes#search_nombre', defaults: {format: 'json'}
 		get 'pacientes/paterno/:paterno', to: 'pacientes#search_paterno', defaults: {format: 'json'}

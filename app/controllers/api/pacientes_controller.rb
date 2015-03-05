@@ -1,9 +1,10 @@
 class Api::PacientesController < ApplicationController
 
-	def index
-		render json: Paciente.all
+	def show
+		@paciente = Paciente.find(params[:id])
+		render json: @paciente
 	end
-  
+
 	def search
 		@results = Paciente.find_by(rut: params[:rut])
 		render json: @results
@@ -22,10 +23,6 @@ class Api::PacientesController < ApplicationController
 	def search_materno
 		@results = Paciente.find_by(apellido_materno: params[:materno])
 		render json: @results
-	end
-	
-	def new
-		@paciente = Paciente.new
 	end
 	
 	def create
