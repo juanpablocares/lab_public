@@ -5,7 +5,7 @@
 	<div class="widget-content padded" ng-hide="!user.editing">
 		<table class="table">
 			<tr>
-				<th class="col-sm-2 text-right">Rut</th><td>{{paciente.rut}}</td>
+				<th class="col-sm-2 text-right">Rut</th><td>{{paciente.getRutCompleto()}}</td>
 			</tr>
 			<tr>
 				<th class="col-sm-2 text-right">Nombre</th><td>{{paciente.nombre?paciente.nombre:""}} {{paciente.apellido_paterno?paciente.apellido_paterno:""}} {{paciente.apellido_materno?paciente.apellido_materno:""}}</td>
@@ -23,7 +23,7 @@
 		<div class="row form-group">
 			<div class="col-sm-11 text-right">
 				<button type="button" class="btn btn-primary" ng-click="cambiarVentanaSinCambios()">
-					Editar mi información
+					Editar información
 				</button>
 			</div>
 		</div>
@@ -34,10 +34,10 @@
 			<div class="form-group">
 				<div class="col-sm-11 text-right">
 					<button type="submit" class="btn btn-primary" ng-disabled="buttonSubmit">
-						Guardar mis datos
+						Editar
 					</button>
 					<button type="button" class="btn btn-danger" ng-click="cambiarVentanaSinCambios()">
-						Volver sin guardar
+						Volver
 					</button>
 				</div>
 			</div>
