@@ -2,22 +2,19 @@
 	<div class="heading">
 		Información personal
 	</div>
-	<div class="widget-content padded" ng-hide="!user.editing">
+	<div class="widget-content padded" ng-show="!pacienteEditing">
 		<table class="table">
 			<tr>
-				<th class="col-sm-2 text-right">Rut</th><td>{{paciente.getRutCompleto()}}</td>
+				<th class="col-sm-2 text-right">Rut</th><td>{{masterPaciente.rut_completo}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-2 text-right">Nombre</th><td>{{paciente.nombre?paciente.nombre:""}} {{paciente.apellido_paterno?paciente.apellido_paterno:""}} {{paciente.apellido_materno?paciente.apellido_materno:""}}</td>
+				<th class="col-sm-2 text-right">Nombre</th><td>{{masterPaciente.nombre_completo}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-2 text-right">Email</th><td>{{email}}</td>
+				<th class="col-sm-2 text-right">Dirección</th><td>{{masterPaciente.direccion}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-2 text-right">Dirección</th><td>{{paciente.direccion}}</td>
-			</tr>
-			<tr>
-				<th class="col-sm-2 text-right">Celular</th><td>{{paciente.celular}}</td>
+				<th class="col-sm-2 text-right">Celular</th><td>{{masterPaciente.celular}}</td>
 			</tr>
 		</table>
 		<div class="row form-group">
@@ -28,7 +25,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="widget-content padded" ng-hide="user.editing">
+	<div class="widget-content padded" ng-show="pacienteEditing">
 		<form class="form-horizontal" ng-submit="guardarDatosPersonales(paciente)">
 			<div ng-include="'pacientes/_edit_form_fields.html'"></div>
 			<div class="form-group">

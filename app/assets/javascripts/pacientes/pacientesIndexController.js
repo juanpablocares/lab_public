@@ -1,31 +1,64 @@
-angular.module('lab').controller('PacientesIndexController', ['$scope', '$auth', '$state', '$http', '$stateParams',
-function($scope, $auth, $state, $http, $stateParams) {
-	console.log($stateParams);
-	$scope.buttonSubmit = false;
-	$scope.user.editing = true;
+angular.module('lab').controller('PacientesIndexController', function($scope, $auth, $state, $http, $stateParams, Pacientes) {
+
+	$scope.$on('pacienteJSON', function(event, data) {
+		$scope.paciente = data;
+		$scope.masterPaciente = angular.copy($scope.paciente);
+		$http.get('/api/regiones').success(function(data) {
+			$scope.regiones = data;
+			angular.forEach(data, function(region, key) {
+				if (region.id == $scope.paciente.region_id) {
+					$scope.paciente.region = region;
+					$scope.paciente.comuna = {
+						id : $scope.paciente.comuna_id
+					};
+					$scope.masterPaciente = angular.copy($scope.paciente);
+				}
+			});
+		}).error(function(data) {
+			// log error
+		});
+
+		$http.get('/api/previsiones').success(function(data) {
+			$scope.plans = data;
+		}).error(function(data) {
+			// log error
+		});
+	});
+
+	$scope.pacienteEditing = false;
+
+	$scope.updatePaciente = function() {
+		$scope.masterPaciente = angular.copy($scope.paciente);
+	};
+
+	$scope.resetPaciente = function() {
+		$scope.paciente = angular.copy($scope.masterPaciente);
+	};
 
 	$scope.cambiarVentanaSinCambios = function() {
-		$scope.user.editing = !$scope.user.editing;
-		$scope.userModel = {
-			nombre : $auth.user.nombre,
-			apellido_paterno : $auth.user.apellido_paterno,
-			apellido_materno : $auth.user.apellido_materno,
-			direccion : $auth.user.direccion,
-			telefono : $auth.user.telefono,
-		};
-		$scope.rutCompleto = $auth.user.rut + "" + $auth.user.rutdv;
+		$scope.pacienteEditing = !$scope.pacienteEditing;
+		$scope.resetPaciente();
 	};
 
-	$scope.guardarDatosPersonales = function(model) {
-		$scope.buttonSubmit = true;
-		$auth.updateAccount(model).then(function(resp) {
-			// handle success response
-			console.log("datos actualizados");
-			$scope.buttonSubmit = false;
-			$scope.user.editing = true;
-		}).catch(function(resp) {
-			// handle error response
-			console.log('Error actualizando datos');
+	$scope.guardarDatosPersonales = function(paciente) {
+		
+		paciente.prevision_id = paciente.prevision.id;
+		paciente.comuna_id = paciente.comuna.id;
+		
+		Pacientes.show({
+			rut : paciente.rut
+		}, function(datos) {
+			Pacientes.update_byrut({
+				rut : datos.rut
+			}, paciente).success(function(response) {
+				console.log(response);
+				$scope.updatePaciente();
+				$scope.pacienteEditing = !$scope.pacienteEditing;
+			}).errors(function(response) {
+				$scope.resetPaciente();
+				console.log("ERROR editando paciente");
+				console.log(response);
+			});
 		});
 	};
-}]);
+});

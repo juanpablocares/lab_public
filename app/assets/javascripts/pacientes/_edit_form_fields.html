@@ -37,21 +37,20 @@
 <div class="form-group">
 	<label class="control-label col-md-2">Región</label>
 	<div class="col-md-7">
-		<select class="form-control" ng-model="paciente.region" ng-options="r.nombre for r in regiones | orderBy:'nombre'"></select>
+		<select class="form-control" ng-model="paciente.region" ng-selected="paciente.region_id" ng-options="r.nombre for r in regiones track by r.id| orderBy:'nombre'"></select>
 	</div>
 </div>
 <div class="form-group">
 	<label class="control-label col-md-2">Comuna</label>
 	<div class="col-md-7">
-		<!--<select class="form-control" ng-model="comuna" ng-options="comuna.nombre for comuna in comuns | orderBy:'id'"></select>-->
-		<select class="form-control" ng-model="paciente.comuna" ng-options="c.nombre for c in paciente.region.comunas | orderBy:'nombre'"></select>
+		<select class="form-control" ng-model="paciente.comuna" ng-options="c.nombre for c in paciente.region.comunas track by c.id| orderBy:'nombre'"></select>
 	</div>
 </div>
 <div class="form-group">
 	<label class="control-label col-md-2">Fecha de nacimiento</label>
 	<div class="col-md-3">
 		<div class="input-group date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
-			<input class="form-control" type="date" id="exampleInput" name="input" ng-model="paciente.fecha_nacimiento" ng-change="calculateAge(paciente.fecha_nacimiento)" required/>
+			<input class="form-control" type="date" id="exampleInput" name="input" ng-model="paciente.fecha_nacimiento" ng-change="paciente.edad = paciente.getEdad()" required/>
 			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 		</div>
 	</div>
@@ -76,7 +75,7 @@
 <div class="form-group">
 	<label class="control-label col-md-2">Previsión</label>
 	<div class="col-md-7">
-		<select class="form-control" ng-model="paciente.prevision" ng-options="plan.nombre for plan in plans | orderBy:'nombre'"></select>
+		<select class="form-control" ng-model="paciente.prevision" ng-options="plan.nombre for plan in plans track by plan.id | orderBy:'nombre'"></select>
 	</div>
 </div>
 <div class="form-group">

@@ -67,13 +67,9 @@
 		$stateProvider.state('loginRequired.pacientes', {
 			url : '/pacientes/:paciente_id',
 			templateUrl : "pacientes/menu.html",
-			params : {
-				paciente : null
-			},
 			controller : 'PacientesMenuController',
-			
 		});
-		
+
 		$stateProvider.state('loginRequired.pacientes.info', {
 			url : '/informacion',
 			templateUrl : "pacientes/index.html",
