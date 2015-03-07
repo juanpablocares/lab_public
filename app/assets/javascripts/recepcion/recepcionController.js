@@ -1,8 +1,8 @@
-angular.module('lab').controller('RecepcionController', ['$scope','$auth','$resource', '$http', 'Pacientes','$state',
+angular.module('lab').controller('RecepcionController', ['$scope', '$auth', '$resource', '$http', 'Pacientes', '$state',
 function($scope, $auth, $resource, $http, Pacientes, $state) {
 	$scope.tipo = 0;
 	$scope.paciente = {};
-	
+
 	$scope.calculateAge = function calculateAge(birthday) {// birthday is a date
 		var dateBirthday = new Date(birthday);
 		var ageDifMs = Date.now() - dateBirthday.getTime();
@@ -11,32 +11,14 @@ function($scope, $auth, $resource, $http, Pacientes, $state) {
 		$scope.edad = Math.abs(ageDate.getUTCFullYear() - 1970);
 		return Math.abs(ageDate.getUTCFullYear() - 1970);
 	}
-	
+
 	$scope.clean = function() {
 		$scope.paciente = {};
 	}
 
-	$scope.searchByRut = function(value) {
-		$scope.paciente.rut_completo = value;
-		$scope.searchForm.$setPristine();
-
-		Pacientes.show({
-			rut : parseInt((value) / 10)
-		}, function(datos) {
-			if (datos.rut == null) {
-				//borrar esto en recepcion.html
-				$scope.tipo = 1;
-			}
-			else {
-				paciente = datos.toJSON();
-				$state.go('loginRequired.pacientes.info',{ paciente_id: paciente.id, paciente: paciente});
-			}
-		});
-	}
-
 	$scope.storeData = function(value) {
-
-		var Paciente = $resource('/api/pacientes', $scope.paciente);
+		
+		var Paciente = $resource('/api/pacientes', $scope.paciente.toJSON());
 		var paciente = new Paciente();
 		paciente.rut = parseInt(($scope.paciente.rut_completo) / 10);
 		paciente.rutdv = parseInt(($scope.paciente.rut_completo) % 10);
@@ -52,10 +34,12 @@ function($scope, $auth, $resource, $http, Pacientes, $state) {
 		}, function(datos) {
 			datos.diagnostico = $scope.paciente.diagnostico;
 			console.log($scope.paciente.diagnostico);
-			Pacientes.update_byrut({rut:datos.rut}, datos);
+			Pacientes.update_byrut({
+				rut : datos.rut
+			}, datos);
 		});
 	}
-	
+
 	$http.get('/api/previsiones').success(function(data) {
 		$scope.plans = data;
 	}).error(function(data) {
@@ -70,4 +54,5 @@ function($scope, $auth, $resource, $http, Pacientes, $state) {
 	}).error(function(data) {
 		// log error
 	});
-}]); 
+}]);
+

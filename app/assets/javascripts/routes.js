@@ -18,10 +18,8 @@
 
 		$stateProvider.state('loginRequired', {
 			templateUrl : 'widgets/navBar.html',
+			controller: 'NavBarController',
 			resolve : {
-				test : function() {
-					console.log("loginRequired Test Message");
-				},
 				auth : function($auth, $state) {
 					return $auth.validateUser().catch(function() {
 						// redirect unauthorized users to the login page
@@ -62,6 +60,13 @@
 			url : '/password',
 			templateUrl : "sessions/cuenta/changePassword.html",
 			controller : 'CuentaPasswordController',
+		});
+
+		$stateProvider.state('loginRequired.nuevo_paciente', {
+			url : '/pacientes/nuevo',
+			templateUrl : "pacientes/new.html",
+			controller : 'PacientesNewController',
+			params: {rut_completo: null}
 		});
 
 		$stateProvider.state('loginRequired.pacientes', {

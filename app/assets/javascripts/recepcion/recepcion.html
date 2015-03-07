@@ -1,12 +1,40 @@
 <div class="col-sm-12">
 	<div class="widget-container fluid-height clearfix">
 		<div class="widget-content padded">
-			<form class="form-horizontal" name="searchForm" ng-submit="searchByRut(searchForm.valor)">
+			<form class="form-horizontal" name="searchFormTemp" ng-show="showSearchTempForm">
+				<div class="form-group">
+					<label class="control-label col-md-2">Temp</label>
+					<div class="col-md-7">
+						<div class="input-group">
+							<input class="form-control" id="searchBoxTemp" ng-model="searchForm.valor" type="text" ng-change="checkSearchInput(searchForm.valor)">
+							<span class="input-group-btn">
+								<button ng-disabled="true" class="btn btn-default" type="submit">
+									Buscar
+								</button></span>
+						</div>
+					</div>
+				</div>
+			</form>
+			<form class="form-horizontal" name="searchTextForm" ng-submit="searchByRut(searchForm.valor)" ng-show="showSearchTextForm">
+				<div class="form-group">
+					<label class="control-label col-md-2">Texto</label>
+					<div class="col-md-7">
+						<div class="input-group">
+							<input class="form-control" id="searchBoxText" ng-model="searchForm.text_value" type="text" ng-change="checkEmptySearchInput(searchForm.text_value)">
+							<span class="input-group-btn">
+								<button ng-disabled="clientForm.$invalid" class="btn btn-default" type="submit">
+									Buscar
+								</button></span>
+						</div>
+					</div>
+				</div>
+			</form>
+			<form class="form-horizontal" name="searchRutForm" ng-submit="searchByRut(searchForm.valor)" ng-show="showSearchRutForm">
 				<div class="form-group">
 					<label class="control-label col-md-2">Rut</label>
 					<div class="col-md-7">
 						<div class="input-group">
-							<input class="form-control" ng-rut rut-format="live" ng-model="searchForm.valor" type="text" required>
+							<input class="form-control" id="searchBoxRut" ng-rut rut-format="live" ng-model="searchForm.rut_value" type="text" ng-change="checkEmptySearchInput(searchForm.rut_value)">
 							<span class="input-group-btn">
 								<button ng-disabled="clientForm.$invalid" class="btn btn-default" type="submit">
 									Buscar
