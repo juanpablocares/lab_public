@@ -1,0 +1,43 @@
+<div class="widget-container fluid-height">
+	<div class="heading">
+		Fichas del paciente
+	</div>
+	<div class="widget-content padded" ng-show="!pacienteEditing">
+		<table class="table">
+			<tr>
+				<th class="col-sm-2 text-right">Rut</th><td>{{masterPaciente.rut_completo}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Nombre</th><td>{{masterPaciente.nombre_completo}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Dirección</th><td>{{masterPaciente.direccion}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Celular</th><td>{{masterPaciente.celular}}</td>
+			</tr>
+		</table>
+		<div class="row form-group">
+			<div class="col-sm-11 text-right">
+				<button type="button" class="btn btn-primary" ng-click="cambiarVentanaSinCambios()">
+					Editar información
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="widget-content padded" ng-show="pacienteEditing">
+		<form class="form-horizontal" ng-submit="guardarDatosPersonales(paciente)">
+			<div ng-include="'pacientes/_edit_form_fields.html'"></div>
+			<div class="form-group">
+				<div class="col-sm-11 text-right">
+					<button type="submit" class="btn btn-primary" ng-disabled="buttonSubmit">
+						Editar
+					</button>
+					<button type="button" class="btn btn-danger" ng-click="cambiarVentanaSinCambios()">
+						Volver
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
