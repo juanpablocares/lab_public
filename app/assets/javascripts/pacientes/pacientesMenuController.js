@@ -29,11 +29,15 @@ angular.module('lab').controller('PacientesMenuController', function($scope, $ht
 			return this.rut + "" + this.rutdv;
 		};
 		$stateParams.paciente.getEdad = function() {
+			console.log(this.fecha_nacimiento);
+			var nac = new Date(this.fecha_nacimiento);
+			
+			console.log(nac);
+			
+			
 			var birthday = +new Date(this.fecha_nacimiento);
 			var anios = ((Date.now() - birthday) / (31556926000));
-			//var meses = (anios % 1) * 12;
 			return ~~anios + " Años.";
-			// + ~~meses+  " meses.";
 		};
 
 		//Set data that needs specific format

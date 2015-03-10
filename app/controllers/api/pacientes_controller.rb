@@ -61,21 +61,18 @@ class Api::PacientesController < ApplicationController
 
 	def create
 		@paciente = Paciente.new(paciente_params)
-
-		respond_to do |format|
-			if @paciente.save
-				render json: {
-		          success: true,
-		          message: 'Paciente successfully created',
-		          paciente: @paciente,
-		        }, status: 200
-			else
-				render json: {
-		          success: false,
-		          message: 'Paciente cannot be created',
-		          errors: @paciente.errors,
-		        }, status: 500
-			end
+		if @paciente.save
+			render json: {
+	          success: true,
+	          message: 'Paciente successfully created',
+	          paciente: @paciente,
+	        }, status: 200
+		else
+			render json: {
+	          success: false,
+	          message: 'Paciente cannot be created',
+	          errors: @paciente.errors,
+	        }, status: 500
 		end
 	end
 
