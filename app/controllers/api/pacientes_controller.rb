@@ -43,9 +43,16 @@ class Api::PacientesController < ApplicationController
 		@results = Paciente.find_by(rut: params[:rut])
 		render json: @results
 	end
+	
+	def search_texto
+		value = params[:nombre]
+		@results = Paciente.joins(:prevision).select('pacientes.*, (rut||rutdv) as rut_completo, previsiones.nombre as prevision_nombre').where("pacientes.nombre LIKE ? OR apellido_paterno LIKE ? OR apellido_materno LIKE ?","#{value}%","#{value}%","#{value}%")
+		render json: @results 
+	end
 
 	def search_nombre
-		@results = Paciente.find_by(nombre: params[:nombre])
+		value = params[:nombre]
+		@results = Paciente.where("nombre LIKE ? OR apellido_paterno LIKE ? OR apellido_materno LIKE ?",value,value,value)
 		render json: @results
 	end
 

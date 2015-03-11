@@ -1,0 +1,23 @@
+<div class="col-sm-12">
+	<div class="widget-container fluid-height clearfix">
+		<div class="widget-content padded">
+			<form class="form-horizontal" >
+				<div class="form-group">
+					<label class="control-label col-md-2">Temp</label>
+					<div class="col-md-7">
+						<div class="input-group">
+							<input class="form-control" type="text">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="submit">
+									Buscar
+								</button></span>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="widget-content padded" ng-if="resultadosBusqueda != []" >
+			<div ng-include="'pacientes/_search_results.html'"></div>
+		</div>
+	</div>
+</div>

@@ -45,10 +45,10 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 		paciente.prevision_id = paciente.prevision.id;
 		paciente.comuna_id = paciente.comuna.id;
 		
-		Pacientes.show({
+		Pacientes.by_rut.show({
 			rut : paciente.rut
 		}, function(datos) {
-			Pacientes.update_byrut({
+			Pacientes.by_rut.update({
 				rut : datos.rut
 			}, paciente).success(function(response) {
 				console.log(response);

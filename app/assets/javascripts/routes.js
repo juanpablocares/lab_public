@@ -18,7 +18,7 @@
 
 		$stateProvider.state('loginRequired', {
 			templateUrl : 'widgets/navBar.html',
-			controller: 'NavBarController',
+			controller : 'NavBarController',
 			resolve : {
 				auth : function($auth, $state) {
 					return $auth.validateUser().catch(function() {
@@ -66,7 +66,24 @@
 			url : '/pacientes/nuevo',
 			templateUrl : "pacientes/new.html",
 			controller : 'PacientesNewController',
-			params: {rut_completo: null}
+			params : {
+				rut_completo : null
+			}
+		});
+
+		$stateProvider.state('loginRequired.busqueda_paciente', {
+			url : '/pacientes/buscar',
+			templateUrl : "pacientes/search.html",
+			controller : 'PacientesSearchController',
+			params : {
+				rut_completo : null,
+				text : null,
+				rut: null,
+				nombre : null,
+				apellido_paterno : null,
+				apellido_materno : null,
+				prevision : null
+			}
 		});
 
 		$stateProvider.state('loginRequired.pacientes', {
