@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 		get 'pacientes/paterno/:paterno', to: 'pacientes#search_paterno', defaults: {format: 'json'}
 		get 'pacientes/paterno/:materno', to: 'pacientes#search_materno', defaults: {format: 'json'}
 		
+		get 'pacientes/:id/fichas', to: 'pacientes#show_fichas', defaults: {format: 'json'}
+		
 		resources :comunas, :defaults => { :format => 'json' }
 		resources :previsiones, :defaults => { :format => 'json' }
 		resources :regiones, :defaults => { :format => 'json' }

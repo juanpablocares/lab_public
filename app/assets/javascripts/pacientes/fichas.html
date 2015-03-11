@@ -1,43 +1,136 @@
-<div class="widget-container fluid-height">
-	<div class="heading">
-		Fichas del paciente
-	</div>
-	<div class="widget-content padded" ng-show="!pacienteEditing">
-		<table class="table">
-			<tr>
-				<th class="col-sm-2 text-right">Rut</th><td>{{masterPaciente.rut_completo}}</td>
-			</tr>
-			<tr>
-				<th class="col-sm-2 text-right">Nombre</th><td>{{masterPaciente.nombre_completo}}</td>
-			</tr>
-			<tr>
-				<th class="col-sm-2 text-right">Dirección</th><td>{{masterPaciente.direccion}}</td>
-			</tr>
-			<tr>
-				<th class="col-sm-2 text-right">Celular</th><td>{{masterPaciente.celular}}</td>
-			</tr>
-		</table>
-		<div class="row form-group">
-			<div class="col-sm-11 text-right">
-				<button type="button" class="btn btn-primary" ng-click="cambiarVentanaSinCambios()">
-					Editar información
-				</button>
-			</div>
-		</div>
-	</div>
-	<div class="widget-content padded" ng-show="pacienteEditing">
-		<form class="form-horizontal" ng-submit="guardarDatosPersonales(paciente)">
-			<div ng-include="'pacientes/_edit_form_fields.html'"></div>
-			<div class="form-group">
-				<div class="col-sm-11 text-right">
-					<button type="submit" class="btn btn-primary" ng-disabled="buttonSubmit">
-						Editar
-					</button>
-					<button type="button" class="btn btn-danger" ng-click="cambiarVentanaSinCambios()">
-						Volver
-					</button>
+<div class="row">
+  <div class="col-lg-12">
+	<div class="widget-container fluid-height clearfix">
+	  <div class="heading">
+		<i class="fa fa-table"></i>DataTable with Sorting
+	  </div>
+	  <div class="widget-content padded clearfix">
+		<div id="dataTable1_wrapper" class="dataTables_wrapper" role="grid"><div id="dataTable1_length" class="dataTables_length"><label>Show <select size="1" name="dataTable1_length" aria-controls="dataTable1"><option value="10" selected="selected">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div><div class="dataTables_filter" id="dataTable1_filter"><label>Search: <input type="text" aria-controls="dataTable1"></label></div><table class="table table-bordered table-striped dataTable" id="dataTable1" aria-describedby="dataTable1_info">
+		  <thead>
+			<tr role="row"><th class="check-header hidden-xs sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="
+			  
+			" style="width: 17px;">
+			  <label><input id="checkAll" name="checkAll" type="checkbox"><span></span></label>
+			</th><th class="sorting" role="columnheader" tabindex="0" aria-controls="dataTable1" rowspan="1" colspan="1" aria-label="
+			  First Name
+			: activate to sort column ascending" style="width: 183px;">
+			  First Name
+			</th><th class="sorting" role="columnheader" tabindex="0" aria-controls="dataTable1" rowspan="1" colspan="1" aria-label="
+			  Last Name
+			: activate to sort column ascending" style="width: 177px;">
+			  Last Name
+			</th><th class="hidden-xs sorting" role="columnheader" tabindex="0" aria-controls="dataTable1" rowspan="1" colspan="1" aria-label="
+			  Email
+			: activate to sort column ascending" style="width: 312px;">
+			  Email
+			</th><th class="hidden-xs sorting" role="columnheader" tabindex="0" aria-controls="dataTable1" rowspan="1" colspan="1" aria-label="
+			  Date Added
+			: activate to sort column ascending" style="width: 198px;">
+			  Date Added
+			</th><th class="hidden-xs sorting" role="columnheader" tabindex="0" aria-controls="dataTable1" rowspan="1" colspan="1" aria-label="
+			  Status
+			: activate to sort column ascending" style="width: 202px;">
+			  Status
+			</th><th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="" style="width: 72px;"></th></tr></thead>
+		  
+		<tbody role="alert" aria-live="polite" aria-relevant="all"><tr class="odd">
+			  <td class="check hidden-xs  sorting_1">
+				<label><input name="optionsRadios1" type="checkbox" value="option1"><span></span></label>
+			  </td>
+			  <td class=" ">
+				Robert
+			  </td>
+			  <td class=" ">
+				Kelso
+			  </td>
+			  <td class="hidden-xs ">
+				robert@gmail.com
+			  </td>
+			  <td class="hidden-xs ">
+				8-15-2013
+			  </td>
+			  <td class="hidden-xs ">
+				<span class="label label-success">Approved</span>
+			  </td>
+			  <td class="actions ">
+				<div class="action-buttons">
+				  <a class="table-actions" href=""><i class="fa fa-eye"></i></a><a class="table-actions" href=""><i class="fa fa-pencil"></i></a><a class="table-actions" href=""><i class="fa fa-trash-o"></i></a>
 				</div>
-			</div>
-		</form>
+			  </td>
+			</tr><tr class="even">
+			  <td class="check hidden-xs  sorting_1">
+				<label><input name="optionsRadios1" type="checkbox" value="option1"><span></span></label>
+			  </td>
+			  <td class=" ">
+				John
+			  </td>
+			  <td class=" ">
+				Dorian
+			  </td>
+			  <td class="hidden-xs ">
+				john@gmail.com
+			  </td>
+			  <td class="hidden-xs ">
+				8-15-2013
+			  </td>
+			  <td class="hidden-xs ">
+				<span class="label label-warning">Pending</span>
+			  </td>
+			  <td class="actions ">
+				<div class="action-buttons">
+				  <a class="table-actions" href=""><i class="fa fa-eye"></i></a><a class="table-actions" href=""><i class="fa fa-pencil"></i></a><a class="table-actions" href=""><i class="fa fa-trash-o"></i></a>
+				</div>
+			  </td>
+			</tr><tr class="odd">
+			  <td class="check hidden-xs  sorting_1">
+				<label><input name="optionsRadios1" type="checkbox" value="option1"><span></span></label>
+			  </td>
+			  <td class=" ">
+				Olivia
+			  </td>
+			  <td class=" ">
+				Benson
+			  </td>
+			  <td class="hidden-xs ">
+				olivia@gmail.com
+			  </td>
+			  <td class="hidden-xs ">
+				8-15-2013
+			  </td>
+			  <td class="hidden-xs ">
+				<span class="label label-success">Approved</span>
+			  </td>
+			  <td class="actions ">
+				<div class="action-buttons">
+				  <a class="table-actions" href=""><i class="fa fa-eye"></i></a><a class="table-actions" href=""><i class="fa fa-pencil"></i></a><a class="table-actions" href=""><i class="fa fa-trash-o"></i></a>
+				</div>
+			  </td>
+			</tr><tr class="even">
+			  <td class="check hidden-xs  sorting_1">
+				<label><input name="optionsRadios1" type="checkbox" value="option1"><span></span></label>
+			  </td>
+			  <td class=" ">
+				Elliot
+			  </td>
+			  <td class=" ">
+				Stabler
+			  </td>
+			  <td class="hidden-xs ">
+				elliot@gmail.com
+			  </td>
+			  <td class="hidden-xs ">
+				8-15-2013
+			  </td>
+			  <td class="hidden-xs ">
+				<span class="label label-success">Approved</span>
+			  </td>
+			  <td class="actions ">
+				<div class="action-buttons">
+				  <a class="table-actions" href=""><i class="fa fa-eye"></i></a><a class="table-actions" href=""><i class="fa fa-pencil"></i></a><a class="table-actions" href=""><i class="fa fa-trash-o"></i></a>
+				</div>
+			  </td>
+			</tr></tbody></table><div class="dataTables_info" id="dataTable1_info">Showing 1 to 10 of 14 entries</div><div class="dataTables_paginate paging_full_numbers" id="dataTable1_paginate"><a tabindex="0" class="first paginate_button paginate_button_disabled" id="dataTable1_first">First</a><a tabindex="0" class="previous paginate_button paginate_button_disabled" id="dataTable1_previous">Previous</a><span><a tabindex="0" class="paginate_active">1</a><a tabindex="0" class="paginate_button">2</a></span><a tabindex="0" class="next paginate_button" id="dataTable1_next">Next</a><a tabindex="0" class="last paginate_button" id="dataTable1_last">Last</a></div></div>
+	  </div>
 	</div>
+  </div>
 </div>
