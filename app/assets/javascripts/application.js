@@ -23,3 +23,4 @@
 //= require directives
 //= require_tree .
 //= require angular-resource
+//= require angular-smart-table

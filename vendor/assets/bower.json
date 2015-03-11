@@ -8,6 +8,7 @@
     "ng-token-auth": "latest",
     "angular-rut": "latest",
     "angular-ui-utils": "latest",
-    "angular-resource": "latest"
+    "angular-resource": "latest",
+    "angular-smart-table": "latest"
   }
 }

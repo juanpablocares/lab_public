@@ -5,6 +5,16 @@ class Api::PacientesController < ApplicationController
 		render json: @paciente.to_json(:methods => :region_id)
 	end
 
+	def show_fichas
+		@paciente = Paciente.find(params[:id])
+		@paciente = @paciente.includes(:fichas)
+		render json: {
+		          success: true,
+		          message: 'Paciente successfully modified',
+		          paciente: @paciente,
+		        }, status: 200
+	end
+	
 	def update
 		@paciente = Paciente.find(params[:id])
 		if @paciente.update_attributes(paciente_params)

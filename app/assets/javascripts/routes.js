@@ -97,6 +97,12 @@
 			templateUrl : "pacientes/index.html",
 			controller : 'PacientesIndexController',
 		});
+		
+		$stateProvider.state('loginRequired.pacientes.fichas', {
+			url : '/informacion',
+			templateUrl : "pacientes/fichas.html",
+			controller : 'PacientesFichasController',
+		});
 
 		/*
 		 * Login State

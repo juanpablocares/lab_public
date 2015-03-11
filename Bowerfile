@@ -23,3 +23,5 @@ asset 'angular-rut'
 asset 'angular-ui-utils'
 #Libreria resources para manejo de creación, modificación, búsquedas
 asset 'angular-resource'
+#Librería para manejo de mallas/tablas
+asset 'angular-smart-table'
