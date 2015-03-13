@@ -96,12 +96,14 @@
 			url : '/informacion',
 			templateUrl : "pacientes/index.html",
 			controller : 'PacientesIndexController',
+			params: {paciente: null}
 		});
 		
 		$stateProvider.state('loginRequired.pacientes.fichas', {
 			url : '/informacion',
 			templateUrl : "pacientes/fichas.html",
 			controller : 'PacientesFichasController',
+			params: {paciente: null}
 		});
 
 		/*
