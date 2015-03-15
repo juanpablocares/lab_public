@@ -1,6 +1,7 @@
 angular.module('lab').controller('PacientesIndexController', function($scope, $auth, $state, $http, $stateParams, Pacientes) {
 
 	$scope.$on('pacienteFromMenu', function(event, data) {
+		
 		$scope.paciente = data;
 		$scope.masterPaciente = angular.copy($scope.paciente);
 		$http.get('/api/regiones').success(function(data) {
@@ -20,14 +21,18 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 	});
 
 	$http.get('/api/previsiones').success(function(data) {
+		console.log("Cargar previsiones");
 		$scope.plans = data;
 	}).error(function(data) {
 		// log error
 	});
 
 	if ($stateParams.paciente != null) {
+		console.log("Paciente desde $stateParams");
 		$scope.paciente = $stateParams.paciente;
+		$scope.masterPaciente = angular.copy($scope.paciente);
 		$http.get('/api/regiones').success(function(data) {
+			console.log("Cargar Regiones");
 			$scope.regiones = data;
 			angular.forEach(data, function(region, key) {
 				if (region.id == $scope.paciente.region_id) {
@@ -65,6 +70,7 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 	};
 
 	$scope.guardarDatosPersonales = function(paciente) {
+		console.log("Guardar cambios en paciente");
 		paciente.prevision_id = paciente.prevision.id;
 		paciente.comuna_id = paciente.comuna.id;
 		Pacientes.by_rut.show({

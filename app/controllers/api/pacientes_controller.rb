@@ -2,7 +2,9 @@ class Api::PacientesController < ApplicationController
 	def show
 		@paciente = Paciente.find(params[:id])
 		@paciente.region_id = @paciente.comuna.region_id
-		render json: @paciente.to_json(:methods => :region_id)
+		@paciente.prevision_nombre = @paciente.prevision.nombre
+		@paciente.comuna_nombre = @paciente.comuna.nombre
+		render json: @paciente.to_json(:methods => [:region_id, :prevision_nombre, :comuna_nombre])
 	end
 
 	def show_fichas

@@ -37,12 +37,16 @@ angular.module('lab').controller('PacientesMenuController', function($scope, $ht
 		$scope.paciente.getRutCompleto = function() {
 			return this.rut + "" + this.rutdv;
 		};
+		
 		$scope.paciente.getEdad = function() {
-			console.log("paciente get edad");
-			var nac = new Date(this.fecha_nacimiento);
-			var birthday = +new Date(this.fecha_nacimiento);
-			var anios = ((Date.now() - birthday) / (31556926000));
-			return ~~anios + " Años.";
+			if($scope.paciente != null)
+			{
+				console.log("paciente get edad");
+				var nac = new Date(this.fecha_nacimiento);
+				var birthday = +new Date(this.fecha_nacimiento);
+				var anios = ((Date.now() - birthday) / (31556926000));
+				return ~~anios + " Años";
+			}
 		};
 		$scope.paciente.rut_completo = $scope.paciente.getRutCompleto();
 		$scope.paciente.nombre_completo = $scope.paciente.getNombreCompleto();

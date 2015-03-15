@@ -13,6 +13,8 @@ function($scope, $auth, $state, $http) {
 		apellido_materno : $auth.user.apellido_materno,
 		direccion : $auth.user.direccion,
 		telefono : $auth.user.telefono,
+		rutCompleto : $auth.user.rut + "" + $auth.user.rutdv,
+		email : $auth.user.email
 	};
 
 	$scope.rutToTexto = function(mod) {

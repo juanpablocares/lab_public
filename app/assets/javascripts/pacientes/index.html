@@ -5,16 +5,28 @@
 	<div class="widget-content padded" ng-show="!pacienteEditing">
 		<table class="table">
 			<tr>
-				<th class="col-sm-2 text-right">Rut</th><td>{{masterPaciente.rut_completo}}</td>
+				<th class="col-sm-2 text-right">Rut</th><td><phy-rut rut='masterPaciente.rut_completo'></phy-rut></td>
 			</tr>
 			<tr>
 				<th class="col-sm-2 text-right">Nombre</th><td>{{masterPaciente.nombre_completo}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-2 text-right">Dirección</th><td>{{masterPaciente.direccion}}</td>
+				<th class="col-sm-2 text-right">Celular</th><td>{{masterPaciente.celular}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-2 text-right">Celular</th><td>{{masterPaciente.celular}}</td>
+				<th class="col-sm-2 text-right">Dirección</th><td>{{masterPaciente.direccion+', '+masterPaciente.comuna_nombre}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Fecha de nacimiento</th><td>{{masterPaciente.fecha_nacimiento}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Edad</th><td>{{masterPaciente.edad}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Género</th><td>{{masterPaciente.genero?'Masculino':'Femenino'}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Previsión</th><td>{{masterPaciente.prevision_nombre}}</td>
 			</tr>
 		</table>
 		<div class="row form-group">
