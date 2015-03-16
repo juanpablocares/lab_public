@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150218193942) do
+ActiveRecord::Schema.define(version: 20150316144338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 20150218193942) do
     t.string  "nombre",    limit: 200, null: false
     t.integer "region_id", limit: 8,   null: false
   end
+
+  add_index "comunas", ["nombre"], name: "comuna_unica", unique: true, using: :btree
 
   create_table "cotizaciones", force: :cascade do |t|
     t.integer  "paciente_id",    limit: 8,                                 null: false
@@ -53,6 +55,12 @@ ActiveRecord::Schema.define(version: 20150218193942) do
     t.datetime "creado",                 default: '2015-02-20 15:08:40', null: false
   end
 
+  create_table "especialidades", force: :cascade do |t|
+    t.string "nombre"
+    t.string "codigo"
+    t.text   "descripcion"
+  end
+
   create_table "examenes", force: :cascade do |t|
     t.integer  "codigo_fonasa",                                             null: false
     t.string   "nombre",        limit: 200,                                 null: false
@@ -83,6 +91,12 @@ ActiveRecord::Schema.define(version: 20150218193942) do
     t.datetime "creado",                 default: '2015-02-20 15:08:40', null: false
   end
 
+  create_table "instituciones", force: :cascade do |t|
+    t.string "nombre"
+    t.string "codigo"
+    t.text   "descripcion"
+  end
+
   create_table "laboratorios", force: :cascade do |t|
     t.string   "nombre", limit: 100,                                 null: false
     t.datetime "creado",             default: '2015-02-20 15:08:40', null: false
@@ -94,7 +108,11 @@ ActiveRecord::Schema.define(version: 20150218193942) do
     t.string   "nombre",           limit: 100,                                 null: false
     t.string   "apellido_paterno", limit: 100,                                 null: false
     t.string   "apellido_materno", limit: 100
-    t.datetime "creado",                       default: '2015-02-20 15:08:40', null: false
+    t.datetime "creado",                       default: '2015-02-20 15:08:40'
+    t.integer  "especialidad_id"
+    t.integer  "institucion_id"
+    t.string   "telefono"
+    t.string   "direccion"
   end
 
   create_table "ordenes_medicas", force: :cascade do |t|
@@ -113,7 +131,7 @@ ActiveRecord::Schema.define(version: 20150218193942) do
     t.string   "telefono",         limit: 30
     t.string   "direccion",        limit: 500
     t.integer  "comuna_id",        limit: 8,                                   null: false
-    t.date     "fecha_nacimiento",                                             null: false
+    t.datetime "fecha_nacimiento",                                             null: false
     t.integer  "genero",                                                       null: false
     t.text     "diagnostico"
     t.integer  "prevision_id",                                                 null: false
@@ -278,6 +296,8 @@ ActiveRecord::Schema.define(version: 20150218193942) do
   add_foreign_key "fichas", "procedencias", name: "fichas_procedencia_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "fichas", "users", column: "usuario_creador_id", name: "fichas_usuario_creador_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "indicadores", "sustancias", name: "indicadores_sustancia_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "medicos", "especialidades", column: "especialidad_id"
+  add_foreign_key "medicos", "instituciones", column: "institucion_id"
   add_foreign_key "ordenes_medicas", "medicos", name: "ordenes_medicas_medico_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "ordenes_medicas", "pacientes", name: "ordenes_medicas_paciente_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "pacientes", "comunas", name: "pacientes_comuna_id_fkey", on_update: :cascade, on_delete: :cascade
