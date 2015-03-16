@@ -1,0 +1,47 @@
+<table st-table="resultadosBusqueda" class="table table-striped">
+	<thead>
+		<tr>
+			<th st-sort="rut_completo">Rut</th>
+			<th st-sort="nombre">Nombre</th>
+			<th st-sort="apellido_paterno">Apellido paterno</th>
+			<th st-sort="apellido_materno">Apellido materno</th>
+			<th st-sort="fecha_nacimiento">Fecha de nacimiento</th>
+			<th st-sort="prevision">Previsión</th>
+		</tr>
+		<tr>
+			<th>
+			<input st-search="rut_completo"/>
+			</th>
+			<th>
+			<input st-search="nombre"/>
+			</th>
+			<th>
+			<input st-search="apellido_paterno"/>
+			</th>
+			<th>
+			<input st-search="apellido_materno"/>
+			</th>
+			<th>
+			<input st-search="fecha_nacimiento"/>
+			</th>
+			<th>
+			<input st-search="prevision"/>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="row in resultadosBusqueda">
+			<td><a ui-sref="loginRequired.pacientes({paciente_id: row.id})">{{row.rut_completo}}</a></td>
+			<td>{{row.nombre}}</td>
+			<td>{{row.apellido_paterno}}</td>
+			<td>{{row.apellido_materno}}</td>
+			<td>{{row.fecha_nacimiento | date}}</td>
+			<td>{{row.prevision_nombre}}</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="5" class="text-center"><div st-pagination="" st-items-by-page="10" st-displayed-pages="4"></div></td>
+		</tr>
+	</tfoot>
+</table>

@@ -2,7 +2,9 @@ class Api::PacientesController < ApplicationController
 	def show
 		@paciente = Paciente.find(params[:id])
 		@paciente.region_id = @paciente.comuna.region_id
-		render json: @paciente.to_json(:methods => :region_id)
+		@paciente.prevision_nombre = @paciente.prevision.nombre
+		@paciente.comuna_nombre = @paciente.comuna.nombre
+		render json: @paciente.to_json(:methods => [:region_id, :prevision_nombre, :comuna_nombre])
 	end
 
 	def show_fichas
@@ -52,9 +54,16 @@ class Api::PacientesController < ApplicationController
 		@results = Paciente.find_by(rut: params[:rut])
 		render json: @results
 	end
+	
+	def search_texto
+		value = params[:nombre]
+		@results = Paciente.joins(:prevision).select('pacientes.*, (rut||rutdv) as rut_completo, previsiones.nombre as prevision_nombre').where("pacientes.nombre LIKE ? OR apellido_paterno LIKE ? OR apellido_materno LIKE ?","#{value}%","#{value}%","#{value}%")
+		render json: @results 
+	end
 
 	def search_nombre
-		@results = Paciente.find_by(nombre: params[:nombre])
+		value = params[:nombre]
+		@results = Paciente.where("nombre LIKE ? OR apellido_paterno LIKE ? OR apellido_materno LIKE ?",value,value,value)
 		render json: @results
 	end
 

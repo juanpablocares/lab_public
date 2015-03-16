@@ -6,14 +6,14 @@
 			by_rut : $resource("/api/pacientes/rut/:rut", {
 				rut : "@rut"
 			}, {
-				'show' : {
+				show : {
 					method : 'GET',
 					isArray : false
 				},
-				'update' : {
+				update : {
 					method : 'PUT'
 				},
-				'destroy' : {
+				destroy : {
 					method : 'DELETE'
 				}
 			}),

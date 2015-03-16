@@ -5,7 +5,7 @@
 	<div class="widget-content padded" ng-hide="!user.editing">
 		<table class="table">
 			<tr>
-				<th class="col-sm-2 text-right">Rut</th><td>{{rutToTexto(userModel)}}</td>
+				<th class="col-sm-2 text-right">Rut</th><td><phy-rut rut='userModel.rutCompleto'></phy-rut></td>
 			</tr>
 			<tr>
 				<th class="col-sm-2 text-right">Nombre</th><td>{{userModel.nombre?userModel.nombre:""}} {{userModel.apellido_paterno?userModel.apellido_paterno:""}} {{userModel.apellido_materno?userModel.apellido_materno:""}}</td>

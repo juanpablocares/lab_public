@@ -1,6 +1,7 @@
 angular.module('lab').controller('PacientesIndexController', function($scope, $auth, $state, $http, $stateParams, Pacientes) {
 
-	$scope.$on('pacienteJSON', function(event, data) {
+	$scope.$on('pacienteFromMenu', function(event, data) {
+		
 		$scope.paciente = data;
 		$scope.masterPaciente = angular.copy($scope.paciente);
 		$http.get('/api/regiones').success(function(data) {
@@ -17,21 +18,49 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 		}).error(function(data) {
 			// log error
 		});
+	});
 
-		$http.get('/api/previsiones').success(function(data) {
-			$scope.plans = data;
+	$http.get('/api/previsiones').success(function(data) {
+		console.log("Cargar previsiones");
+		$scope.plans = data;
+	}).error(function(data) {
+		// log error
+	});
+
+	if ($stateParams.paciente != null) {
+		console.log("Paciente desde $stateParams");
+		$scope.paciente = $stateParams.paciente;
+		$scope.masterPaciente = angular.copy($scope.paciente);
+		$http.get('/api/regiones').success(function(data) {
+			console.log("Cargar Regiones");
+			$scope.regiones = data;
+			angular.forEach(data, function(region, key) {
+				if (region.id == $scope.paciente.region_id) {
+					$scope.paciente.region = region;
+					$scope.paciente.comuna = {
+						id : $scope.paciente.comuna_id
+					};
+					$scope.masterPaciente = angular.copy($scope.paciente);
+				}
+			});
 		}).error(function(data) {
 			// log error
 		});
-	});
+	}
 
 	$scope.pacienteEditing = false;
 
 	$scope.updatePaciente = function() {
+		$scope.paciente.rut_completo = $scope.paciente.getRutCompleto();
+		$scope.paciente.nombre_completo = $scope.paciente.getNombreCompleto();
+		$scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
+		$scope.paciente.edad = $scope.paciente.getEdad(); 
 		$scope.masterPaciente = angular.copy($scope.paciente);
+		$scope.$emit('pacienteFromEdit',$scope.paciente);
 	};
 
 	$scope.resetPaciente = function() {
+		$scope.pacienteEditingForm.$setPristine();
 		$scope.paciente = angular.copy($scope.masterPaciente);
 	};
 
@@ -41,23 +70,22 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 	};
 
 	$scope.guardarDatosPersonales = function(paciente) {
-		
+		console.log("Guardar cambios en paciente");
 		paciente.prevision_id = paciente.prevision.id;
 		paciente.comuna_id = paciente.comuna.id;
-		
-		Pacientes.show({
+		Pacientes.by_rut.show({
 			rut : paciente.rut
 		}, function(datos) {
-			Pacientes.update_byrut({
+			Pacientes.by_rut.update({
 				rut : datos.rut
-			}, paciente).success(function(response) {
-				console.log(response);
+			}, paciente).
+			$promise.
+			then(function(response) {
 				$scope.updatePaciente();
 				$scope.pacienteEditing = !$scope.pacienteEditing;
-			}).errors(function(response) {
+			}, function(response) {
 				$scope.resetPaciente();
 				console.log("ERROR editando paciente");
-				console.log(response);
 			});
 		});
 	};

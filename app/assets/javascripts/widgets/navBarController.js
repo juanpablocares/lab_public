@@ -69,44 +69,18 @@ angular.module('lab').controller('NavBarController', function($rootScope, $state
 	};
 
 	$scope.searchByRut = function(value) {
-		console.log(value);
 		$scope.searchForm.rut_value = null;
 		$scope.searchFormTemp.$setPristine();
-		Pacientes.show({
-			rut : parseInt((value) / 10)
-		}, function(datos) {
-			if (datos.rut == null) {
-				$rootScope.rut_completo = value;
-				$state.go('loginRequired.nuevo_paciente',{rut_completo: value});
-			}
-			else {
-				paciente = datos.toJSON();
-				$state.go('loginRequired.pacientes.info', {
-					paciente_id : paciente.id,
-					paciente : paciente
-				});
-			}
+		$state.go('loginRequired.busqueda_paciente', {
+			rut_completo : value
 		});
 	};
-	$scope.searchByTexto = function(value) {
-		console.log("SearchByTexto");
-		$scope.paciente.rut_completo = value;
-		$scope.searchForm.$setPristine();
 
-		Pacientes.show({
-			rut : parseInt((value) / 10)
-		}, function(datos) {
-			if (datos.rut == null) {
-				//borrar esto en recepcion.html
-				$scope.tipo = 1;
-			}
-			else {
-				paciente = datos.toJSON();
-				$state.go('loginRequired.pacientes.info', {
-					paciente_id : paciente.id,
-					paciente : paciente
-				});
-			}
+	$scope.searchByText = function(value) {
+		$scope.searchForm.text_value = null;
+		$scope.searchFormTemp.$setPristine();
+		$state.go('loginRequired.busqueda_paciente', {
+			text : value
 		});
 	};
 });
