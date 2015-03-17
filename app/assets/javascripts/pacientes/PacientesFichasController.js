@@ -1,20 +1,20 @@
-angular.module('lab').controller('PacientesFichasController', ['Resource', '$scope', function(service, $scope) {
+angular.module('lab').controller('PacientesFichasController', ['$scope', '$stateParams', 'Fichas', '$http', function($scope, $stateParams, Fichas, $http) {
 
-	var ctrl = $scope;
+	$scope.isData = false;
 	
-	$scope.displayed = [];
-	$scope.callServer = function callServer(tableState) {
-		ctrl.isLoading = true;
+	$http.get('/api/fichas/paciente/' + $stateParams.paciente_id).success(function(data) {
+		$scope.rowCollection = data.fichas;
+		
+		if(data.fichas.length == 0){
+			$scope.isData = false;
+		}
+		else{
+			$scope.isData = true;
+			}
 
-		var pagination = tableState.pagination;
-
-		var start = pagination.start || 0;     // This is NOT the page number, but the index of item in the list that you want to use to display the table.
-		var number = pagination.number || 10;  // Number of entries showed per page.
-
-		service.getPage(start, number, tableState).then(function (result) {
-			ctrl.displayed = result.data;
-			tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
-			ctrl.isLoading = false;
-		});
-	};
+	}).error(function(data) {
+		$state.go('loginRequired.index');
+	});
+	
+	console.log($scope.isData);
 }]);

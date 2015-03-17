@@ -28,6 +28,14 @@
 					method : 'GET',
 					isArray: true,
 				}
+			}),
+			by_paciente : $resource("/api/fichas/paciente/:id", {
+				id : "@id"
+			}, {
+				'show_bypaciente' : {
+					method : 'GET',
+					isArray : true
+				},
 			})
 		};
 	});

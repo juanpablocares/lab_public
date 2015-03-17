@@ -3,6 +3,14 @@
 
 	labs.factory('Fichas', function($resource) {
 		return {
+			by_paciente : $resource("/api/fichas/paciente/:id", {
+				id : "@id",
+			}, {
+				'show_bypaciente' : {
+					method : 'GET',
+					isArray : true
+				},
+			}),
 			search : $resource("/api/comunas/buscartest/:start/:number", {
 				start : "@start",
 				number : "@number",

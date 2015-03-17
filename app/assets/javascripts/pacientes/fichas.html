@@ -1,35 +1,28 @@
-<table class="table" st-pipe="callServer" st-table="displayed">
+<table st-table="rowCollection" class="table table-striped" ng-show="isData">
 	<thead>
 	<tr>
-		<th st-sort="id">id</th>
-		<th st-sort="name">procedencia</th>
-		<th st-sort="age">orden médica</th>
-		<th st-sort="saved">creado por</th>
-	</tr>
-	<tr>
-		<th><input st-search="id"/></th>
-		<th><input st-search="name"/></th>
-		<th><input st-search="age"/></th>
-		<th><input st-search="saved"/></th>
+		<th>Número de ficha</th>
+		<th>Procedencia</th>
+		<th>Orden Médica</th>
+		<th>Creado por</th>
+		<th>Fecha</th>
 	</tr>
 	</thead>
-	<tbody ng-show="!isLoading">
-	<tr ng-repeat="row in displayed">
+	<tbody>
+	<tr ng-repeat="row in rowCollection">
 		<td>{{row.id}}</td>
-		<td>{{row.name}}</td>
-		<td>{{row.age}}</td>
-		<td>{{row.saved}}</td>
+		<td>{{row.procedencia_id}}</td>
+		<td>{{row.ordenmedica_id}}</td>
+		<td>{{row.usuario_creador_id}}</td>
+		<td>{{row.creado}}</td>
 	</tr>
 	</tbody>
-	<tbody ng-show="isLoading">
+</table>
+<table st-table="rowCollection" class="table table-striped" ng-hide="isData">
+	<thead>
 	<tr>
-		<td colspan="4" class="text-center">Loading ... </td>
+		<th>No hay fichas para el paciente seleccionado</th>
 	</tr>
-	</tbody>
-	<tfoot>
-	<tr>
-		<td class="text-center" st-pagination="" st-items-by-page="10" colspan="4">
-		</td>
-	</tr>
-	</tfoot>
+	</thead>
+	<tbody>
 </table>
