@@ -1,15 +1,16 @@
-<table st-table="resultadosBusqueda" class="table table-striped" st-pipe="callServer">
+<table st-table="displayed" class="table table-striped" st-pipe="callServer">
 	<thead>
 		<tr>
 			<th st-sort="id">ID</th>
-			<th st-sort="region">Region</th>
+			<th st-sort="region_id">Region</th>
 			<th st-sort="nombre">Comuna</th>
 		</tr>
 		<tr>
+			<th>
 			<input st-search="id"/>
 			</th>
 			<th>
-			<input st-search="region"/>
+			<input st-search="region_id"/>
 			</th>
 			<th>
 			<input st-search="nombre"/>
@@ -17,9 +18,9 @@
 		</tr>
 	</thead>
 	<tbody ng-show="!isLoading">
-		<tr ng-repeat="row in resultadosBusqueda">
+		<tr ng-repeat="row in displayed">
 			<td>{{row.id}}</td>
-			<td>{{row.region}}</td>
+			<td>{{row.region_id}}</td>
 			<td>{{row.nombre}}</td>
 		</tr>
 	</tbody>
@@ -30,7 +31,7 @@
 	</tbody>
 	<tfoot>
 		<tr>
-			<td colspan="5" class="text-center"><div st-pagination="" st-items-by-page="3" st-displayed-pages="4"></div></td>
+			<td colspan="5" class="text-center"><div st-pagination="" st-items-by-page="3" st-displayed-pages="10"></div></td>
 		</tr>
 	</tfoot>
 </table>

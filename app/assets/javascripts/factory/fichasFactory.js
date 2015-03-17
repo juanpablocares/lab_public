@@ -10,7 +10,7 @@
 			{
 				advanced : {
 					method : 'POST',
-					isArray: true,
+					isArray: false,
 					// no es necesario agregar params, se agregan dentro de la funcion cuando se llame. Ficha.buscar(params);
 				}
 			})
