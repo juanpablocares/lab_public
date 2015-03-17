@@ -1,0 +1,54 @@
+<div class="widget-container fluid-height">
+	<div class="heading">
+		Información ficha
+	</div>
+	<div class="widget-content padded">
+		<div ng-if="mostrarInfoUsuario">
+			<table class="table">
+				<tr>
+					<th class="col-sm-2 text-right">Rut</th><td><phy-rut rut='paciente.rut_completo'></phy-rut></td>
+				</tr>
+				<tr>
+					<th class="col-sm-2 text-right">Nombre</th><td>{{paciente.nombre_completo}}</td>
+				</tr>
+				<tr>
+					<th class="col-sm-2 text-right">Previsión</th><td>{{paciente.prevision_nombre}}</td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<table class="table table-striped">
+				<thead>
+					<th>Examen</th>
+					<th class="col-sm-2">Valor a pagar</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Inmunoglobina</td>
+						<td class="col-sm-2">$15.000</td>
+					</tr>
+					<tr>
+						<td>Perfil Biométrico
+						<table class="table borderless">
+							<tbody>
+								<tr><td>Inmunoglobina</td></tr>
+								<tr><td>Inmunoglobina2</td></tr>
+								<tr><td>Inmunoglobina3</td></tr>
+								<tr><td>Inmunoglobina4</td></tr>
+							</tbody>
+						</table></td>
+						<td class="col-sm-2">$75.000</td>
+					</tr>
+					<tr>
+						<td>asdasd</td>
+						<td class="col-sm-2">$15.000</td>
+					</tr>
+					<tr>
+						<td>qweqwe</td>
+						<td class="col-sm-2">$15.000</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

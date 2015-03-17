@@ -8,11 +8,12 @@ class Api::PacientesController < ApplicationController
 	end
 
 	def show_fichas
-		@paciente = Paciente.includes(:fichas).find(params[:id])
+		#@paciente = Paciente.includes(:fichas).find(params[:id])
+		@fichas = Paciente.find(params[:id]).fichas
 		render json: {
 		          success: true,
-		          message: 'Paciente encontrado con sus respectivas fichas',
-		          paciente: @paciente,
+		          message: 'Fichas del paciente',
+		          paciente: @fichas,
 		        }, status: 200
 	end
 	

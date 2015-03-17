@@ -61,6 +61,21 @@
 			templateUrl : "sessions/cuenta/changePassword.html",
 			controller : 'CuentaPasswordController',
 		});
+		
+		$stateProvider.state('loginRequired.busqueda_ficha', {
+			url : '/fichas/buscar',
+			templateUrl : "fichas/search.html",
+			controller : 'FichasSearchController',
+			params : {
+				rut_completo : null,
+				text : null,
+				rut: null,
+				nombre : null,
+				apellido_paterno : null,
+				apellido_materno : null,
+				prevision : null
+			}
+		});
 
 		$stateProvider.state('loginRequired.nuevo_paciente', {
 			url : '/pacientes/nuevo',
@@ -85,7 +100,7 @@
 				prevision : null
 			}
 		});
-
+		
 		$stateProvider.state('loginRequired.pacientes', {
 			url : '/pacientes/:paciente_id',
 			templateUrl : "pacientes/menu.html",
@@ -104,6 +119,12 @@
 			templateUrl : "pacientes/fichas.html",
 			controller : 'PacientesFichasController',
 			params: {paciente: null}
+		});
+		
+		$stateProvider.state('loginRequired.fichas', {
+			url : '/fichas/:fichas_id',
+			templateUrl : "fichas/index.html",
+			controller : 'FichasIndexController',
 		});
 
 		/*

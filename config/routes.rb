@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 		get 'pacientes/:id/fichas', to: 'pacientes#show_fichas', defaults: {format: 'json'}
 		
 		resources :comunas, :defaults => { :format => 'json' }
+		get 'comunas/buscartest/:start/:number', to: 'comunas#buscartest',defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ }
 		resources :previsiones, :defaults => { :format => 'json' }
 		resources :regiones, :defaults => { :format => 'json' }
 		resources :pacientes, :defaults => { :format => 'json' }

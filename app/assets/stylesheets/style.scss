@@ -3059,7 +3059,7 @@ input[type="text"] {
     }
   }
 }
-
+.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {    border: none;}
 .select2-container-active .select2-choice, .select2-container-active .select2-choices {
   border-color: $blue;
 }
@@ -4812,4 +4812,4 @@ body.fourofour {
       }
     }
   }
-}
+}.fa-stack-icon{  position:absolute;  left: 0;  width: 100%;  text-align: center;}.fa-stack-corner-icon{  color: lightgrey;  font-size: 0.6em;  left: 6px;  bottom: -2px;}

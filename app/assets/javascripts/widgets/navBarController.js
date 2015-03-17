@@ -25,6 +25,7 @@ angular.module('lab').controller('NavBarController', function($rootScope, $state
 
 	$scope.$watch('searchForm.valor', function(newValue, oldValue) {
 		$scope.checkSearchInput(newValue);
+		$scope.checkEmptySearchInput(newValue);
 	});
 
 	$scope.$watch('searchForm.rut_value', function(newValue, oldValue) {
@@ -69,15 +70,15 @@ angular.module('lab').controller('NavBarController', function($rootScope, $state
 	};
 
 	$scope.searchByRut = function(value) {
-		$scope.searchForm.rut_value = null;
+		$scope.searchForm.rut_value = "";
 		$scope.searchFormTemp.$setPristine();
-		$state.go('loginRequired.busqueda_paciente', {
+		$state.go('loginRequired.busqueda_paciente', { 
 			rut_completo : value
 		});
 	};
 
 	$scope.searchByText = function(value) {
-		$scope.searchForm.text_value = null;
+		$scope.searchForm.text_value = "";
 		$scope.searchFormTemp.$setPristine();
 		$state.go('loginRequired.busqueda_paciente', {
 			text : value
