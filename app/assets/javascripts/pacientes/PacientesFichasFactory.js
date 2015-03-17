@@ -1,9 +1,10 @@
-angular.module('lab').factory('Resource', ['$q', '$filter', '$timeout', function ($q, $filter, $timeout) {
+angular.module('lab').factory('Resource', ['$q', '$filter', '$timeout', function ($q, $filter, $timeout, $resource) {
+
 	//this would be the service to call your server, a standard bridge between your model an $http
 
 	// the database (normally on your server)
 	var randomsItems = [];
-
+	
 	function createRandomItem(id) {
 		var heroes = ['Batman', 'Superman', 'Robin', 'Thor', 'Hulk', 'Niki Larson', 'Stark', 'Bob Leponge'];
 		return {

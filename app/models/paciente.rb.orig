@@ -1,0 +1,11 @@
+class Paciente < ActiveRecord::Base
+<<<<<<< HEAD
+	attr_accessor :region_id 
+	has_many :fichas
+=======
+	attr_accessor :region_id, :prevision_nombre, :comuna_nombre
+>>>>>>> 2d3ea963fbbec49d9ed47a108d462b163bb6b8b5
+	belongs_to :comuna
+	belongs_to :prevision
+	belongs_to :user
+end
