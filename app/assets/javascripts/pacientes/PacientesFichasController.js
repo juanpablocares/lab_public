@@ -2,19 +2,18 @@ angular.module('lab').controller('PacientesFichasController', ['$scope', '$state
 
 	$scope.isData = false;
 	
-	$http.get('/api/fichas/paciente/' + $stateParams.paciente_id).success(function(data) {
-		$scope.rowCollection = data.fichas;
+	Fichas.by_paciente.paciente_id({
+			id : $stateParams.paciente_id
+		}, function(datos) {
 		
-		if(data.fichas.length == 0){
-			$scope.isData = false;
-		}
-		else{
-			$scope.isData = true;
+			$scope.rowCollection = datos.fichas;
+			if(datos.fichas.length == 0){
+				$scope.isData = false;
 			}
-
-	}).error(function(data) {
-		$state.go('loginRequired.index');
-	});
+			else{
+				$scope.isData = true;
+				}
+		});
 	
 	console.log($scope.isData);
 }]);

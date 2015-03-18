@@ -6,9 +6,9 @@
 			by_paciente : $resource("/api/fichas/paciente/:id", {
 				id : "@id",
 			}, {
-				'show_bypaciente' : {
+				paciente_id : {
 					method : 'GET',
-					isArray : true
+					isArray : false
 				},
 			}),
 			search : $resource("/api/comunas/buscartest/:start/:number", {

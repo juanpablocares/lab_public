@@ -1,28 +1,30 @@
-<table st-table="rowCollection" class="table table-striped" ng-show="isData">
-	<thead>
-	<tr>
-		<th>Número de ficha</th>
-		<th>Procedencia</th>
-		<th>Orden Médica</th>
-		<th>Creado por</th>
-		<th>Fecha</th>
-	</tr>
-	</thead>
-	<tbody>
-	<tr ng-repeat="row in rowCollection">
-		<td>{{row.id}}</td>
-		<td>{{row.procedencia_id}}</td>
-		<td>{{row.ordenmedica_id}}</td>
-		<td>{{row.usuario_creador_id}}</td>
-		<td>{{row.creado}}</td>
-	</tr>
-	</tbody>
-</table>
-<table st-table="rowCollection" class="table table-striped" ng-hide="isData">
-	<thead>
-	<tr>
-		<th>No hay fichas para el paciente seleccionado</th>
-	</tr>
-	</thead>
-	<tbody>
-</table>
+<div class="widget-container fluid-height">
+	<table st-table="rowCollection" class="table table-striped" ng-show="isData">
+		<thead>
+		<tr>
+			<th>Número de ficha</th>
+			<th>Procedencia</th>
+			<th>Orden Médica</th>
+			<th>Creado por</th>
+			<th>Fecha</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr ng-repeat="row in rowCollection">
+			<td>{{row.id}}</td>
+			<td>{{row.procedencia_id}}</td>
+			<td>{{row.ordenmedica_id}}</td>
+			<td>{{row.usuario_creador_id}}</td>
+			<td>{{row.creado}}</td>
+		</tr>
+		</tbody>
+	</table>
+	<table st-table="rowCollection" class="table table-striped" ng-hide="isData">
+		<thead>
+		<tr>
+			<center><th>No hay fichas para el paciente seleccionado</th></center>
+		</tr>
+		</thead>
+		<tbody>
+	</table>
+</div>
