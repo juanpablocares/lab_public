@@ -121,6 +121,12 @@
 			params: {paciente: null}
 		});
 		
+		$stateProvider.state('loginRequired.pacientes.asignarExamenes', {
+			url : '/asignarExamenes',
+			templateUrl : "fichas/new.html",
+			controller : 'FichasNewController',
+		});
+		
 		$stateProvider.state('loginRequired.fichas', {
 			url : '/fichas/:fichas_id',
 			templateUrl : "fichas/index.html",
