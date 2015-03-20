@@ -24,6 +24,8 @@ Rails.application.routes.draw do
 		resources :previsiones, :defaults => { :format => 'json' }
 		resources :regiones, :defaults => { :format => 'json' }
 		resources :pacientes, :defaults => { :format => 'json' }
+		resources :examenes, :defaults => { :format => 'json' }
+		resources :perfiles, :defaults => { :format => 'json' }
 		resources :users, :defaults => { :format => 'json' } do
 			collection do
 				get 'accountAttributes'

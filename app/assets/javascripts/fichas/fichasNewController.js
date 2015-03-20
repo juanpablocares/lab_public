@@ -8,124 +8,58 @@
  Cada vez que en la vista se agreguen examenes, se agregarán de ésta forma al model "listado"
  y luego listado es lo que se enviará a la api, ademas de los datos del paciente
 
- var asd = {
- perfiles : [{
- id : 1,
- nombre : 'Perfil Biométrico',
- codigo : 'code',
- examenes : [{
- id : 1,
- codigo_fonasa : '0303043',
- nombre : 'Examen1',
- codigo : '0303043',
- externo : true,
- }, {
- id : 4,
- codigo_fonasa : '0303063',
- nombre : 'Examen4',
- codigo : '0303063',
- externo : false,
- }],
- }],
- examenes : [{
- id : 1,
- codigo_fonasa : '0303043',
- nombre : 'Examen1',
- codigo : '0303043',
- externo : true,
- }, {
- id : 4,
- codigo_fonasa : '0303063',
- nombre : 'Examen4',
- codigo : '0303063',
- externo : false,
- }]
- };
-
  */
 
-angular.module('lab').filter('propsFilter', function() {
-	return function(items, props) {
-		var out = [];
+angular.module('lab').controller('FichasNewController', function($scope, $auth, $state, $http, $resource, $stateParams, Examenes, Perfiles) {
 
-		if (angular.isArray(items)) {
-			items.forEach(function(item) {
-				var itemMatches = false;
+	$scope.selectModel = {};
+	$scope.examenes = {};
+	$scope.perfiles = {};
+	$scope.examenesArray = [];
+	$scope.examenesSeleccionados = [];
 
-				var keys = Object.keys(props);
-				for (var i = 0; i < keys.length; i++) {
-					var prop = keys[i];
-					var text = props[prop].toLowerCase();
-					if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
-						itemMatches = true;
-						break;
-					}
-				}
+	Examenes.buscar.todos().$promise.then(function(response) {
+		$scope.examenes = response.data;
+		$scope.crearExamenesArray();
+	}, function(response) {
+		console.log("ERROR obteniendo examenes");
+	});
 
-				if (itemMatches) {
-					out.push(item);
-				}
-			});
-		}
-		else {
-			// Let the output be the input untouched
-			out = items;
-		}
+	Perfiles.buscar.todos().$promise.then(function(response) {
+		$scope.perfiles = response.data;
+		$scope.crearExamenesArray();
+	}, function(response) {
+		console.log("ERROR obteniendo perfiles");
+	});
 
-		return out;
+	$scope.crearExamenesArray = function() {
+		$scope.examenesArray = [];
+		angular.forEach($scope.perfiles, function(value, key) {
+			value.perfil = true;
+			$scope.examenesArray.push(value);
+		});
+		angular.forEach($scope.examenes, function(value, key) {
+			value.perfil = false;
+			$scope.examenesArray.push(value);
+		});
 	};
-});
-angular.module('lab').controller('FichasNewController', function($scope, $auth, $state, $http, $resource, $stateParams) {
-	$scope.person = {};
-	$scope.people = [{
-		name : 'Adam',
-		email : 'adam@email.com',
-		age : 12,
-		country : 'United States'
-	}, {
-		name : 'Amalie',
-		email : 'amalie@email.com',
-		age : 12,
-		country : 'Argentina'
-	}, {
-		name : 'Estefanía',
-		email : 'estefania@email.com',
-		age : 21,
-		country : 'Argentina'
-	}, {
-		name : 'Adrian',
-		email : 'adrian@email.com',
-		age : 21,
-		country : 'Ecuador'
-	}, {
-		name : 'Wladimir',
-		email : 'wladimir@email.com',
-		age : 30,
-		country : 'Ecuador'
-	}, {
-		name : 'Samantha',
-		email : 'samantha@email.com',
-		age : 30,
-		country : 'United States'
-	}, {
-		name : 'Nicole',
-		email : 'nicole@email.com',
-		age : 43,
-		country : 'Colombia'
-	}, {
-		name : 'Natasha',
-		email : 'natasha@email.com',
-		age : 54,
-		country : 'Ecuador'
-	}, {
-		name : 'Michael',
-		email : 'michael@email.com',
-		age : 15,
-		country : 'Colombia'
-	}, {
-		name : 'Nicolás',
-		email : 'nicolas@email.com',
-		age : 43,
-		country : 'Colombia'
-	}];
+
+	$scope.quitarExamenSeleccionado = function(item) {
+		var index = $scope.examenesSeleccionados.indexOf(item);
+		$scope.examenesSeleccionados.splice(index, 1);
+	};
+
+	$scope.agruparPerfiles = function(item) {
+		if (item.perfil)
+			return 'Perfiles';
+		else
+			return 'Exámenes';
+	};
+
+	$scope.seleccionarExamen = function(model, select) {
+		console.log(model);
+		console.log(select);
+		$scope.examenesSeleccionados.push(model);
+		select.selected = "";
+	}
 });

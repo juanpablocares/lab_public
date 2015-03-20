@@ -1,54 +1,56 @@
+<style>
+	
+</style>
+
 <div class="widget-container fluid-height">
 	<div class="heading">
 		Información ficha
 	</div>
+	<p>Selected: {{selectModel.selected}}</p>
 	<div class="widget-content padded">
-		<div ng-if="mostrarInfoUsuario">
-			<table class="table">
-				<tr>
-					<th class="col-sm-2 text-right">Rut</th><td><phy-rut rut='paciente.rut_completo'></phy-rut></td>
-				</tr>
-				<tr>
-					<th class="col-sm-2 text-right">Nombre</th><td>{{paciente.nombre_completo}}</td>
-				</tr>
-				<tr>
-					<th class="col-sm-2 text-right">Previsión</th><td>{{paciente.prevision_nombre}}</td>
-				</tr>
-			</table>
-		</div>
+		<ui-select ng-model="selectModel.selected" theme="bootstrap" reset-search-input="true" on-select="seleccionarExamen($item, $select)">
+			<ui-select-match placeholder="Seleccione un examen o perfil para agregar">
+				{{$select.selected.nombre}}
+			</ui-select-match>
+			<ui-select-choices group-by="agruparPerfiles" repeat="item in examenesArray | filter: $select.search">
+				<strong ng-bind-html="item.codigo | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span>
+			</ui-select-choices>
+		</ui-select>
 		<div>
-			<table class="table table-striped">
+			<table class="table table-striped" ng-if="examenesSeleccionados.length != 0">
 				<thead>
 					<th>Examen</th>
-					<th class="col-sm-2">Valor a pagar</th>
+					<th class="col-sm-1">Opciones</th>
 				</thead>
 				<tbody>
-					<tr>
-						<td>Inmunoglobina</td>
-						<td class="col-sm-2">$15.000</td>
-					</tr>
-					<tr>
-						<td>Perfil Biométrico
-						<table class="table borderless">
+					<tr ng-repeat="item in examenesSeleccionados track by $index" ng-if="item.perfil">
+						<td> {{item.nombre}}
+						<table class="table borderless" style="background: none;" >
 							<tbody>
-								<tr><td>Inmunoglobina</td></tr>
-								<tr><td>Inmunoglobina2</td></tr>
-								<tr><td>Inmunoglobina3</td></tr>
-								<tr><td>Inmunoglobina4</td></tr>
+								<tr ng-repeat="examen in item.examenes">
+									<td> {{examen.nombre}} </td>
+								</tr>
 							</tbody>
 						</table></td>
-						<td class="col-sm-2">$75.000</td>
+						<td><a href="#"   class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar perfil"><i class="fa fa-trash-o fa-lg"></i></a></td>
 					</tr>
-					<tr>
-						<td>asdasd</td>
-						<td class="col-sm-2">$15.000</td>
-					</tr>
-					<tr>
-						<td>qweqwe</td>
-						<td class="col-sm-2">$15.000</td>
+					<tr ng-repeat="item in examenesSeleccionados track by $index" ng-if="!item.perfil">
+						<td>{{item.nombre}}</td>
+						<td><a href="#" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar examen"><i class="fa fa-trash-o fa-lg"></i></a></td>
 					</tr>
 				</tbody>
 			</table>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<button class="btn btn-primary">
+				Crear cotización
+			</button>
+			<button class="btn btn-danger">
+				Procesar pedido de exámenes
+			</button>
 		</div>
 	</div>
 </div>
