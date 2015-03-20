@@ -8,6 +8,9 @@ Rails.application.routes.draw do
 		get 'users/paterno/:materno', to: 'users#search_materno', defaults: {format: 'json'}
 		
 		#Controladores de pacientes
+		get 'pacientes', to: 'pacientes#index', defaults: {format: 'json'}
+		post 'pacientes/range/:start/:number', to: 'pacientes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
+		get 'pacientes/:id', to: 'pacientes#show', defaults: {format: 'json'}
 		put 'pacientes/rut/:rut', to: 'pacientes#update_byrut', defaults: {format: 'json'}
 		get 'pacientes/rut/:rut', to: 'pacientes#search', defaults: {format: 'json'}
 		get 'pacientes/buscar/:rut', to: 'pacientes#search', defaults: {format: 'json'}, constraints: { :rut => /[0-9]+/ }
