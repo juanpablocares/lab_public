@@ -11,7 +11,7 @@
 					isArray : false
 				},
 			}),
-			search : $resource("/api/comunas/buscartest/:start/:number", {
+			search : $resource("/api/fichas/range/:start/:number", {
 				start : "@start",
 				number : "@number",
 			},

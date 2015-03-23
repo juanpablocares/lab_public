@@ -21,6 +21,12 @@ Rails.application.routes.draw do
 		
 		#Controladores de fichas
 		get 'fichas/paciente/:id', to: 'fichas#show_bypaciente', defaults: {format: 'json'}
+		post 'fichas/range/:start/:number', to: 'fichas#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
+		
+		#Controladores de examenes
+		get 'examenes', to: 'examenes#show', defaults: {format: 'json'}
+		get 'examenes/:id', to: 'examenes#show_byid', defaults: {format: 'json'}
+		post 'examenes/range/:start/:number', to: 'examenes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		
 		resources :comunas, :defaults => { :format => 'json' }
 		post 'comunas/buscartest/:start/:number', to: 'comunas#buscartest', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 

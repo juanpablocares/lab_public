@@ -2,36 +2,31 @@
 	<thead>
 		<tr>
 			<th st-sort="id">ID</th>
-			<th st-sort="region_id">Region</th>
-			<th st-sort="nombre">Comuna</th>
+			<th st-sort="paciente_id">Paciente id</th>
 		</tr>
 		<tr>
 			<th>
-			<input st-search="id"/>
+			<input st-search="id" class="input-sm form-control"/>
 			</th>
 			<th>
-			<input st-search="region_id"/>
-			</th>
-			<th>
-			<input st-search="nombre"/>
+			<input st-search="paciente_id" class="input-sm form-control"/>
 			</th>
 		</tr>
 	</thead>
 	<tbody ng-show="!isLoading">
 		<tr ng-repeat="row in displayed">
 			<td>{{row.id}}</td>
-			<td>{{row.region_id}}</td>
-			<td>{{row.nombre}}</td>
+			<td>{{row.paciente_id}}</td>
 		</tr>
 	</tbody>
 	<tbody ng-show="isLoading">
 		<tr>
-		<td colspan="3" class="text-center"><i class="fa fa-spinner fa-pulse"></i></td>
+		<td colspan="2" class="text-center"><i class="fa fa-spinner fa-pulse"></i></td>
 	</tr>
 	</tbody>
 	<tfoot>
 		<tr>
-			<td colspan="5" class="text-center"><div st-pagination="" st-items-by-page="3" st-displayed-pages="10"></div></td>
+			<td colspan="2" class="text-center"><div st-pagination="" st-items-by-page="3" st-displayed-pages="10"></div></td>
 		</tr>
 	</tfoot>
 </table>

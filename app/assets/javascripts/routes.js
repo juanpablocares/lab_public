@@ -62,6 +62,12 @@
 			controller : 'CuentaPasswordController',
 		});
 		
+		$stateProvider.state('loginRequired.busqueda_examen', {
+			url : '/examenes/buscar',
+			templateUrl : "examenes/search.html",
+			controller : 'ExamenesSearchController'
+		});
+		
 		$stateProvider.state('loginRequired.busqueda_ficha', {
 			url : '/fichas/buscar',
 			templateUrl : "fichas/search.html",

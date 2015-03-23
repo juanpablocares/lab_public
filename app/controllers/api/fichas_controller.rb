@@ -9,4 +9,26 @@ class Api::FichasController < ApplicationController
 		        }, status: 200
 	end
 	
+	def range
+				
+		if params[:search] && params[:search][:predicateObject] && params[:search][:predicateObject][:id]
+			@results = Ficha.where(id: params[:search][:predicateObject][:id].to_i)
+			@numberOfPages = @results.length / params[:number].to_i
+			render json: {
+		          data:  @results,
+		          message: 'Resultado correcto',
+		          numberOfPages: 0
+		        }, status: 200
+		else
+			@results = Ficha.limit(params[:number].to_i).offset(params[:start].to_i)
+			@numberOfPages = @results.length / params[:number].to_i
+			render json: {
+				success: true,
+				data:  @results,
+		        message: 'Resultado correcto',
+		        numberOfPages: @numberOfPages,
+		    }, status: 200,
+			include: [:comuna, :prevision]
+		end
+	end
 end
