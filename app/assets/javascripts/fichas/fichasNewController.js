@@ -10,13 +10,21 @@
 
  */
 
-angular.module('lab').controller('FichasNewController', function($scope, $auth, $state, $http, $resource, $stateParams, Examenes, Perfiles) {
+angular.module('lab').controller('FichasNewController', function($scope, $auth, $state, $http, $resource, $stateParams, Examenes, Perfiles, Cotizaciones, Procedencias, Fichas) {
 
 	$scope.selectModel = {};
+	$scope.procedencia = {};
 	$scope.examenes = {};
-	$scope.perfiles = {};
+	$scope.perfiles = {}; 
+	$scope.procedenciasArray = [];
 	$scope.examenesArray = [];
 	$scope.examenesSeleccionados = [];
+
+	Procedencias.buscar.todos().$promise.then(function(response) {
+		$scope.procedenciasArray = response.data;
+	}, function(response) {
+		console.log("ERROR obteniendo procedencias");
+	}); 
 
 	Examenes.buscar.todos().$promise.then(function(response) {
 		$scope.examenes = response.data;
@@ -57,9 +65,36 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	};
 
 	$scope.seleccionarExamen = function(model, select) {
-		console.log(model);
-		console.log(select);
 		$scope.examenesSeleccionados.push(model);
 		select.selected = "";
-	}
+	};
+
+	$scope.crearCotizacion = function() {
+		data = {
+			paciente_id : $stateParams.paciente_id,
+			procedencia_id: $scope.procedencia.selected.id,
+			examenes : $scope.examenesSeleccionados,
+		};
+		Cotizaciones.root.new(data).$promise.then(function(response) {
+			$state.go('loginRequired.pacientes',{paciente_id: $stateParams.paciente_id}); 
+		}, function(response) { 
+			console.log("ERROR creando cotización");
+		});
+
+	};
+	
+	$scope.crearFicha = function() {
+		data = {
+			paciente_id : $stateParams.paciente_id,
+			procedencia_id: $scope.procedencia.selected.id,
+			examenes : $scope.examenesSeleccionados,
+		};
+		Fichas.root.new(data).$promise.then(function(response) {
+			//$state.go('loginRequired.pacientes',{paciente_id: $stateParams.paciente_id}); 
+			$state.go('LoginRequired.pacientes.ver_ficha',{paciente_id: $stateParams.paciente_id});
+		}, function(response) {
+			console.log("ERROR creando ficha");
+		});
+
+	};
 });

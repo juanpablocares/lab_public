@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 20150316144338) do
     t.integer  "paciente_id",        limit: 8,                                 null: false
     t.integer  "procedencia_id",     limit: 8,                                 null: false
     t.integer  "orden_medica_id",    limit: 8
-    t.integer  "usuario_creador_id", limit: 8,                                 null: false
+    t.integer  "user_id",			 limit: 8,                                 null: false
     t.datetime "creado",                       default: '2015-02-20 15:08:40', null: false
   end
 
