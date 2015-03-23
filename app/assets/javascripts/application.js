@@ -12,7 +12,6 @@
 //
 //= require angular/angular
 //= require angular-rails-templates
-// require angular-bootstrap
 //= require angular-cookie
 //= require ng-token-auth
 //= require angular-ui-router
@@ -24,3 +23,5 @@
 //= require_tree .
 //= require angular-resource
 //= require angular-smart-table
+//= require angular-sanitize
+//= require angular-ui-select

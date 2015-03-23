@@ -1,5 +1,7 @@
 class Api::FichasController < ApplicationController
 
+	before_action :authenticate_user!
+	
 	def show_bypaciente
 		@fichas = Ficha.where(paciente_id: params[:id])
 		render json: {
@@ -8,7 +10,7 @@ class Api::FichasController < ApplicationController
 		          fichas: @fichas,
 		        }, status: 200
 	end
-	
+
 	def range
 				
 		if params[:search] && params[:search][:predicateObject] && params[:search][:predicateObject][:id]
@@ -29,6 +31,49 @@ class Api::FichasController < ApplicationController
 		        numberOfPages: @numberOfPages,
 		    }, status: 200,
 			include: [:comuna, :prevision]
+		end
+	end
+
+	def create
+		ficha = Ficha.new
+		ficha.paciente_id = params[:paciente_id]
+		ficha.procedencia_id = params[:procedencia_id]
+		ficha.orden_medica_id = nil
+		ficha.user_id = current_user.id
+
+		if params[:examenes] != nil && params[:examenes].length > 0
+			if !ficha.save
+				raise "Error saving ficha"
+			else
+				params[:examenes].each do |ex|
+					if ex[:perfil]
+						ex[:examenes].each do |exa|
+							detalle = DetalleFicha.new
+							detalle.ficha_id = ficha.id
+							detalle.examen_id = exa[:id]
+							detalle.perfil_examen_id = ex[:id]
+							if !detalle.save
+								raise "Error saving detalle_ficha"
+							end
+						end
+					else
+						detalle = DetalleFicha.new
+						detalle.ficha_id = ficha.id
+						detalle.examen_id = ex[:id]
+						detalle.perfil_examen_id = nil
+						if !detalle.save
+							raise "Error saving detalle_ficha"
+						end
+					end
+				end
+				render json:
+				{
+					data:  ficha,
+		        	message: 'ficha creada',
+		        }, status: 200
+			end
+		else
+			raise "No hay exámenes"
 		end
 	end
 end

@@ -29,10 +29,14 @@ Rails.application.routes.draw do
 		post 'examenes/range/:start/:number', to: 'examenes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		
 		resources :comunas, :defaults => { :format => 'json' }
-		post 'comunas/buscartest/:start/:number', to: 'comunas#buscartest', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
+		resources :fichas, :defaults => { :format => 'json' }
 		resources :previsiones, :defaults => { :format => 'json' }
 		resources :regiones, :defaults => { :format => 'json' }
 		resources :pacientes, :defaults => { :format => 'json' }
+		resources :examenes, :defaults => { :format => 'json' }
+		resources :cotizaciones, :defaults => { :format => 'json' }
+		resources :procedencias, :defaults => { :format => 'json' }
+		resources :perfiles, :defaults => { :format => 'json' }
 		resources :users, :defaults => { :format => 'json' } do
 			collection do
 				get 'accountAttributes'

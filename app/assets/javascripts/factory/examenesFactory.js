@@ -19,6 +19,13 @@
 					method : 'POST',
 					isArray: false,
 				}
+			}),
+			buscar : $resource("/api/examenes", {
+			}, {
+				todos : {
+					method : 'GET',
+					isArray: false,
+				},
 			})
 		};
 	});

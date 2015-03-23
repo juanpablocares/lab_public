@@ -3,6 +3,13 @@
 
 	labs.factory('Fichas', function($resource) {
 		return {
+			root : $resource("/api/fichas", {
+			}, {
+				new : {
+					method : 'POST',
+					isArray: false,
+				},
+			}),
 			by_paciente : $resource("/api/fichas/paciente/:id", {
 				id : "@id",
 			}, {
