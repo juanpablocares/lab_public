@@ -31,7 +31,7 @@
 			</tr>
 		</thead>
 		<tbody ng-show="!isLoading">
-			<tr ng-repeat="row in displayed" ui-sref="loginRequired.index">
+			<tr ng-repeat="row in displayed" ui-sref="loginRequired.pacientes.info({paciente_id: row.id})">
 				<td>{{row.id}}</td>
 				<td>{{row.nombre}}</td>
 				<td>{{row.apellido_paterno}}</td>
