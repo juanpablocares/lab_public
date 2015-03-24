@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150316144338) do
+ActiveRecord::Schema.define(version: 20150324124129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,11 +62,13 @@ ActiveRecord::Schema.define(version: 20150316144338) do
   end
 
   create_table "examenes", force: :cascade do |t|
-    t.integer  "codigo_fonasa",                                             null: false
+    t.string   "codigo_fonasa", limit: 10,                                  null: false
     t.string   "nombre",        limit: 200,                                 null: false
-    t.string   "codigo",        limit: 500,                                 null: false
-    t.integer  "externo",                                                   null: false
+    t.string   "codigo",        limit: 500
+    t.integer  "externo"
     t.datetime "creado",                    default: '2015-02-20 15:08:40', null: false
+    t.string   "procedencia",   limit: 5
+    t.integer  "indicacion_id"
   end
 
   create_table "examenes_perfil", id: false, force: :cascade do |t|
@@ -75,12 +77,20 @@ ActiveRecord::Schema.define(version: 20150316144338) do
     t.datetime "creado",              default: '2015-02-20 15:08:40', null: false
   end
 
+  add_index "examenes_perfil", ["examen_id", "perfil_id"], name: "examenes_perfil_examen_id_perfil_id_key", unique: true, using: :btree
+
   create_table "fichas", force: :cascade do |t|
-    t.integer  "paciente_id",        limit: 8,                                 null: false
-    t.integer  "procedencia_id",     limit: 8,                                 null: false
-    t.integer  "orden_medica_id",    limit: 8
-    t.integer  "user_id",			 limit: 8,                                 null: false
-    t.datetime "creado",                       default: '2015-02-20 15:08:40', null: false
+    t.integer  "paciente_id",     limit: 8,                                 null: false
+    t.integer  "procedencia_id",  limit: 8,                                 null: false
+    t.integer  "orden_medica_id", limit: 8
+    t.integer  "user_id",         limit: 8,                                 null: false
+    t.datetime "creado",                    default: '2015-02-20 15:08:40', null: false
+  end
+
+  create_table "indicaciones", force: :cascade do |t|
+    t.string  "tipo",        limit: 5
+    t.integer "codigo"
+    t.text    "descripcion"
   end
 
   create_table "indicadores", force: :cascade do |t|
@@ -294,7 +304,7 @@ ActiveRecord::Schema.define(version: 20150316144338) do
   add_foreign_key "fichas", "ordenes_medicas", column: "orden_medica_id", name: "fichas_orden_medica_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "fichas", "pacientes", name: "fichas_paciente_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "fichas", "procedencias", name: "fichas_procedencia_id_fkey", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "fichas", "users", column: "usuario_creador_id", name: "fichas_usuario_creador_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "fichas", "users", name: "fichas_usuario_creador_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "indicadores", "sustancias", name: "indicadores_sustancia_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "medicos", "especialidades", column: "especialidad_id"
   add_foreign_key "medicos", "instituciones", column: "institucion_id"

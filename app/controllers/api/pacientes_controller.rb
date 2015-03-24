@@ -9,46 +9,46 @@ class Api::PacientesController < ApplicationController
 				
 		if params[:search] && params[:search][:predicateObject] && params[:search][:predicateObject][:id]
 			@results = Paciente.where(id: params[:search][:predicateObject][:id].to_i)
-			@numberOfPages = @results.length / params[:number].to_i
+			@numberOfPages = Paciente.count / params[:number].to_i
 			render json: {
 		          data:  @results,
 		          message: 'Resultado correcto',
-		          numberOfPages: 0
+		          numberOfPages: @numberOfPages,
 		        }, status: 200,
 				include: [:comuna, :prevision]
 		elsif params[:search] && params[:search][:predicateObject] && params[:search][:predicateObject][:nombre]
 			@results = Paciente.where(Paciente.arel_table[:nombre].matches("%#{params[:search][:predicateObject][:nombre]}%"))
 			#@results = Paciente.where("nombre LIKE ?", params[:search][:predicateObject][:nombre])
-			@numberOfPages = @results.length / params[:number].to_i
+			@numberOfPages = Paciente.count / params[:number].to_i
 			render json: {
 		          data:  @results,
 		          message: 'Resultado correcto',
-		          numberOfPages: 0
+		          numberOfPages: @numberOfPages,
 		        }, status: 200,
 				include: [:comuna, :prevision]
 		elsif params[:search] && params[:search][:predicateObject] && params[:search][:predicateObject][:apellido_paterno]
 			@results = Paciente.where(Paciente.arel_table[:apellido_paterno].matches("%#{params[:search][:predicateObject][:apellido_paterno]}%"))
 			#@results = Paciente.where("nombre LIKE ?", params[:search][:predicateObject][:nombre])
-			@numberOfPages = @results.length / params[:number].to_i
+			@numberOfPages = Paciente.count / params[:number].to_i
 			render json: {
 		          data:  @results,
 		          message: 'Resultado correcto',
-		          numberOfPages: 0
+		          numberOfPages: @numberOfPages,
 		        }, status: 200,
 				include: [:comuna, :prevision]
 		elsif params[:search] && params[:search][:predicateObject] && params[:search][:predicateObject][:apellido_materno]
 			@results = Paciente.where(Paciente.arel_table[:apellido_materno].matches("%#{params[:search][:predicateObject][:apellido_materno]}%"))
 			#@results = Paciente.where("nombre LIKE ?", params[:search][:predicateObject][:nombre])
-			@numberOfPages = @results.length / params[:number].to_i
+			@numberOfPages = Paciente.count / params[:number].to_i
 			render json: {
 		          data:  @results,
 		          message: 'Resultado correcto',
-		          numberOfPages: 0
+		          numberOfPages: @numberOfPages,
 		        }, status: 200,
 				include: [:comuna, :prevision]
 		else
 			@results = Paciente.limit(params[:number].to_i).offset(params[:start].to_i).includes(:prevision, :comuna => [:region])
-			@numberOfPages = @results.length / params[:number].to_i
+			@numberOfPages = Paciente.count / params[:number].to_i
 			render json: {
 				success: true,
 				data:  @results,
