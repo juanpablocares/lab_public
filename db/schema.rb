@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324124129) do
+ActiveRecord::Schema.define(version: 20150324142858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,13 +62,14 @@ ActiveRecord::Schema.define(version: 20150324124129) do
   end
 
   create_table "examenes", force: :cascade do |t|
-    t.string   "codigo_fonasa", limit: 10,                                  null: false
-    t.string   "nombre",        limit: 200,                                 null: false
-    t.string   "codigo",        limit: 500
+    t.string   "codigo_fonasa",  limit: 10,                                  null: false
+    t.string   "nombre",         limit: 200,                                 null: false
+    t.string   "codigo",         limit: 500
     t.integer  "externo"
-    t.datetime "creado",                    default: '2015-02-20 15:08:40', null: false
-    t.string   "procedencia",   limit: 5
+    t.datetime "creado",                     default: '2015-02-20 15:08:40', null: false
+    t.string   "procedencia",    limit: 5
     t.integer  "indicacion_id"
+    t.integer  "tipo_examen_id"
   end
 
   create_table "examenes_perfil", id: false, force: :cascade do |t|
@@ -88,7 +89,6 @@ ActiveRecord::Schema.define(version: 20150324124129) do
   end
 
   create_table "indicaciones", force: :cascade do |t|
-    t.string  "tipo",        limit: 5
     t.integer "codigo"
     t.text    "descripcion"
   end
@@ -225,6 +225,11 @@ ActiveRecord::Schema.define(version: 20150324124129) do
     t.datetime "creado",             default: '2015-02-20 15:08:40', null: false
   end
 
+  create_table "tipo_examenes", force: :cascade do |t|
+    t.string "codigo", limit: 5
+    t.text   "nombre"
+  end
+
   create_table "tipos_muestras", force: :cascade do |t|
     t.string   "muestra", limit: 200,                                 null: false
     t.string   "codigo",  limit: 100,                                 null: false
@@ -299,6 +304,7 @@ ActiveRecord::Schema.define(version: 20150324124129) do
   add_foreign_key "detalles_pagos_ficha", "fichas", name: "detalles_pagos_ficha_ficha_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_pagos_ficha", "previsiones", name: "detalles_pagos_ficha_prevision_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_pagos_ficha", "tipos_pago", column: "tipo_pago_id", name: "detalles_pagos_ficha_tipo_pago_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "examenes", "indicaciones", name: "examenes_indicacion_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes_perfil", "examenes", name: "examenes_perfil_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes_perfil", "perfiles", name: "examenes_perfil_perfil_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "fichas", "ordenes_medicas", column: "orden_medica_id", name: "fichas_orden_medica_id_fkey", on_update: :cascade, on_delete: :cascade

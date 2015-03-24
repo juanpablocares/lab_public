@@ -19,7 +19,7 @@
 			}, tableState).
 			$promise.then(function(result) {
 				$scope.displayed = result.data;
-				console.log(result.numberOfPages);
+				console.log(result.data);
 				tableState.pagination.numberOfPages = result.numberOfPages;
 				//set the number of pages so the pagination can update
 				$scope.isLoading = false;
