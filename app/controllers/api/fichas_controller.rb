@@ -1,6 +1,14 @@
 class Api::FichasController < ApplicationController
-
-	before_action :authenticate_user!
+	
+	def show
+		if @results = Ficha.find(params[:id])
+			render json: {
+		          success: true,
+		          message: 'Ficha encontrada',
+		          ficha: @results,
+		        }, status: 200, include: [:paciente, :orden_medica]
+		end
+	end
 	
 	def show_bypaciente
 		@fichas = Ficha.where(paciente_id: params[:id])
@@ -15,22 +23,21 @@ class Api::FichasController < ApplicationController
 				
 		if params[:search] && params[:search][:predicateObject] && params[:search][:predicateObject][:id]
 			@results = Ficha.where(id: params[:search][:predicateObject][:id].to_i)
-			@numberOfPages = @results.length / params[:number].to_i
+			@numberOfPages = Ficha.count / params[:number].to_i
 			render json: {
 		          data:  @results,
 		          message: 'Resultado correcto',
-		          numberOfPages: 0
-		        }, status: 200
+		          numberOfPages: @numberOfPages
+		        }, status: 200, include: [:paciente, :orden_medica]
 		else
 			@results = Ficha.limit(params[:number].to_i).offset(params[:start].to_i)
-			@numberOfPages = @results.length / params[:number].to_i
+			@numberOfPages = Ficha.count / params[:number].to_i
 			render json: {
 				success: true,
 				data:  @results,
 		        message: 'Resultado correcto',
 		        numberOfPages: @numberOfPages,
-		    }, status: 200,
-			include: [:comuna, :prevision]
+		    }, status: 200, include: [:paciente, :orden_medica]
 		end
 	end
 

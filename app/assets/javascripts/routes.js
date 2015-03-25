@@ -135,12 +135,25 @@
 			controller : 'FichasNewController',
 		});
 		
+		$stateProvider.state('loginRequired.pacientes.ficha', {
+			url : '/ficha/:ficha_id',
+			templateUrl : "pacientes/ficha.html",
+			controller : 'PacientesFichaController',
+		});
+		
 		/*Rutas de fichas*/
 		
 		$stateProvider.state('loginRequired.fichas', {
-			url : '/fichas/:fichas_id',
+			url : '/fichas/:ficha_id',
+			templateUrl : "fichas/menu.html",
+			controller : 'FichasMenuController',
+		});
+		
+		$stateProvider.state('loginRequired.fichas.info', {
+			url : '/informacion',
 			templateUrl : "fichas/index.html",
 			controller : 'FichasIndexController',
+			params: {ficha: null}
 		});
 
 		/*Rutas de examenes*/

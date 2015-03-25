@@ -52,7 +52,6 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 	$scope.examenEditing = false;
 	
 	if ($stateParams.examen != null) {
-		console.log("Examen desde $stateParams");
 		$scope.examen = $stateParams.examen;
 		$scope.masterExamen = angular.copy($scope.examen);
 	}
@@ -73,7 +72,6 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 	};
 
 	$scope.guardarDatosExamen = function(examen) {
-		console.log(examen);
 		examen.procedencia = examen.procesa.label;
 		examen.indicacion_id = examen.indicacion.id;
 		examen.tipo_examen_id = examen.tipo_examen.id;

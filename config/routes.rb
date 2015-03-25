@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 		get 'pacientes/paterno/:materno', to: 'pacientes#search_materno', defaults: {format: 'json'}
 		
 		#Controladores de fichas
+		get 'fichas', to: 'fichas#index', defaults: {format: 'json'}
+		get 'fichas/:id', to: 'fichas#show', defaults: {format: 'json'}
 		get 'fichas/paciente/:id', to: 'fichas#show_bypaciente', defaults: {format: 'json'}
 		post 'fichas/range/:start/:number', to: 'fichas#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		

@@ -1,0 +1,28 @@
+<div class="row">
+	<div class="col-sm-12">
+		<div class="widget-container fluid-height">
+			<div class="widget-content padded clearfix text-center">
+				<h3><strong>{{ficha.id}}</strong> - {{ficha.paciente.nombre}} {{ficha.paciente.apellido_paterno}}</h3>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-3">
+		<div class="widget-container fluid-height">
+			<div class="heading">
+				<i class="fa fa-fw fa-user"></i> Ficha
+			</div>
+			<ul class="list-group">
+				<li class="list-group-item" ng-repeat="tab in tabs" ng-class="{active: state.current.name === tab.id}">
+					<a ui-sref="{{tab.state}}">
+					<p>
+						<span class="badge" ng-if="tab.badge">{{tab.badge}}</span>{{tab.name}}
+					</p> </a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div ui-view class="col-sm-9"></div>
+</div>

@@ -1,4 +1,4 @@
-angular.module('lab').controller('FichasIndexController', function($scope, $auth, $state, $http, $stateParams, Examen) {
+angular.module('lab').controller('PacientesFichaController', function($scope, $auth, $state, $http, $stateParams, Examen) {
 
 	$scope.$on('fichaFromMenu', function(event, data) {
 		console.log('fichaFromMenu');
