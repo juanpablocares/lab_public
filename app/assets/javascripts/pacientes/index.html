@@ -17,7 +17,7 @@
 				<th class="col-sm-2 text-right">Dirección</th><td>{{masterPaciente.direccion+', '+masterPaciente.comuna_nombre}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-2 text-right">Fecha de nacimiento</th><td>{{masterPaciente.fecha_nacimiento}}</td>
+				<th class="col-sm-2 text-right">Fecha de nacimiento</th><td>{{masterPaciente.fecha_nacimiento | date : 'dd-MM-yyyy'}}</td>
 			</tr>
 			<tr>
 				<th class="col-sm-2 text-right">Edad</th><td>{{masterPaciente.edad}}</td>

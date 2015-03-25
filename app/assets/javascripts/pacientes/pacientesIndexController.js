@@ -1,7 +1,7 @@
 angular.module('lab').controller('PacientesIndexController', function($scope, $auth, $state, $http, $stateParams, Pacientes) {
 
 	$scope.$on('pacienteFromMenu', function(event, data) {
-		
+		data.fecha_nacimiento = new Date(data.fecha_nacimiento.getUTCFullYear(), data.fecha_nacimiento.getUTCMonth(),data.fecha_nacimiento.getUTCDate());
 		$scope.paciente = data;
 		$scope.masterPaciente = angular.copy($scope.paciente);
 		$http.get('/api/regiones').success(function(data) {

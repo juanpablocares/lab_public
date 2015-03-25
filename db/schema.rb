@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324142858) do
+ActiveRecord::Schema.define(version: 20150325162959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,7 +141,7 @@ ActiveRecord::Schema.define(version: 20150324142858) do
     t.string   "telefono",         limit: 30
     t.string   "direccion",        limit: 500
     t.integer  "comuna_id",        limit: 8,                                   null: false
-    t.datetime "fecha_nacimiento",                                             null: false
+    t.date     "fecha_nacimiento",                                             null: false
     t.integer  "genero",                                                       null: false
     t.text     "diagnostico"
     t.integer  "prevision_id",                                                 null: false
@@ -305,6 +305,7 @@ ActiveRecord::Schema.define(version: 20150324142858) do
   add_foreign_key "detalles_pagos_ficha", "previsiones", name: "detalles_pagos_ficha_prevision_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_pagos_ficha", "tipos_pago", column: "tipo_pago_id", name: "detalles_pagos_ficha_tipo_pago_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes", "indicaciones", name: "examenes_indicacion_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "examenes", "tipo_examenes", name: "examenes_tipo_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes_perfil", "examenes", name: "examenes_perfil_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes_perfil", "perfiles", name: "examenes_perfil_perfil_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "fichas", "ordenes_medicas", column: "orden_medica_id", name: "fichas_orden_medica_id_fkey", on_update: :cascade, on_delete: :cascade
