@@ -1,21 +1,13 @@
 class Api::ExamenesController < ApplicationController
 
 	def show
-		@results = Examen.all
-		render json: {
-		          success: true,
-		          message: 'Examenes encontrados',
-		          examenes: @results,
-		        }, status: 200, include: [:precios]
-	end
-
-	def show_byid
-		@results = Examenes.find(id: params[:id])
-		render json: {
+		if @results = Examen.find(params[:id])
+			render json: {
 		          success: true,
 		          message: 'Examen encontrado',
-		          fichas: @results,
-		        }, status: 200
+		          examen: @results,
+		        }, status: 200, include: [:precios, :indicacion, :tipo_examen]
+		end
 	end
 	
 	def range
@@ -80,5 +72,26 @@ class Api::ExamenesController < ApplicationController
 		          message: 'Listado de examenes encontrado',
 		          data: @examenes,
 		        }, status: 200
+	end
+	
+	def update
+		@results = Examen.find(params[:id])
+		if @results.update_attributes(examen_params)
+			render json: {
+		          success: true,
+		          message: 'Examen successfully modified',
+		          examen: @results,
+		        }, status: 200
+		else
+			render json: {
+		          success: false,
+		          message: 'Examen cannot be updated',
+		          errors: @results.errors,
+		        }, status: 500
+		end
+	end
+	
+	def examen_params
+		params.permit(:codigo_fonasa, :nombre, :codigo, :externo, :procedencia, :indicacion_id, :tipo_examen_id)
 	end
 end

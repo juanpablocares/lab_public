@@ -107,6 +107,8 @@
 			}
 		});
 		
+		/*Rutas de pacientes*/
+		
 		$stateProvider.state('loginRequired.pacientes', {
 			url : '/pacientes/:paciente_id',
 			templateUrl : "pacientes/menu.html",
@@ -121,7 +123,7 @@
 		});
 		
 		$stateProvider.state('loginRequired.pacientes.fichas', {
-			url : '/informacion',
+			url : '/fichas',
 			templateUrl : "pacientes/fichas.html",
 			controller : 'PacientesFichasController',
 			params: {paciente: null}
@@ -133,12 +135,29 @@
 			controller : 'FichasNewController',
 		});
 		
+		/*Rutas de fichas*/
+		
 		$stateProvider.state('loginRequired.fichas', {
 			url : '/fichas/:fichas_id',
 			templateUrl : "fichas/index.html",
 			controller : 'FichasIndexController',
 		});
 
+		/*Rutas de examenes*/
+		
+		$stateProvider.state('loginRequired.examenes', {
+			url : '/examenes/:examen_id',
+			templateUrl : "examenes/menu.html",
+			controller : 'ExamenesMenuController',
+		});
+		
+		$stateProvider.state('loginRequired.examenes.info', {
+			url : '/informacion',
+			templateUrl : "examenes/index.html",
+			controller : 'ExamenesIndexController',
+			params: {examen: null}
+		});
+		
 		/*
 		 * Login State
 		 * No necesita estar logueado para poder ser visto. De hecho es la única url permitida sin login.

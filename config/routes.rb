@@ -24,12 +24,13 @@ Rails.application.routes.draw do
 		post 'fichas/range/:start/:number', to: 'fichas#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		
 		#Controladores de examenes
-		get 'examenes', to: 'examenes#show', defaults: {format: 'json'}
-		get 'examenes/:id', to: 'examenes#show_byid', defaults: {format: 'json'}
+		get 'examenes/:id', to: 'examenes#show', defaults: {format: 'json'}
+		put 'examenes/:id', to: 'examenes#update', defaults: {format: 'json'}
 		post 'examenes/range/:start/:number', to: 'examenes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		
 		resources :comunas, :defaults => { :format => 'json' }
 		resources :fichas, :defaults => { :format => 'json' }
+		resources :indicaciones, :defaults => { :format => 'json' }
 		resources :previsiones, :defaults => { :format => 'json' }
 		resources :regiones, :defaults => { :format => 'json' }
 		resources :pacientes, :defaults => { :format => 'json' }
@@ -37,6 +38,7 @@ Rails.application.routes.draw do
 		resources :cotizaciones, :defaults => { :format => 'json' }
 		resources :procedencias, :defaults => { :format => 'json' }
 		resources :perfiles, :defaults => { :format => 'json' }
+		resources :tipo_examenes, :defaults => { :format => 'json' }
 		resources :users, :defaults => { :format => 'json' } do
 			collection do
 				get 'accountAttributes'

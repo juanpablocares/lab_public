@@ -1,5 +1,5 @@
 <div class="widget-container fluid-height">
-	<table st-table="displayed" class="table table-striped" st-pipe="callServer">
+	<table st-table="displayed" class="table table-hover table-striped" st-pipe="callServer">
 		<thead>
 			<tr>
 				<th st-sort="nombre">Nombre</th>
@@ -31,7 +31,7 @@
 			</tr>
 		</thead>
 		<tbody ng-show="!isLoading">
-			<tr ng-repeat="row in displayed" ui-sref="loginRequired.index">
+			<tr ng-repeat="row in displayed" ui-sref="loginRequired.examenes.info({examen_id: row.id})">
 				<td>{{row.nombre}}</td>
 				<td>{{row.codigo_fonasa}}</td>
 				

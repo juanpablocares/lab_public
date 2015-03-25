@@ -35,7 +35,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   	inflect.irregular 'rol', 'roles'
   	inflect.irregular 'rolUser', 'rolesUser'
   	inflect.irregular 'sucursal', 'sucursales'
-	inflect.irregular 'tipoExamen', 'tiposExamenes'
+	inflect.irregular 'tipoExamen', 'tipoExamenes'
   	inflect.irregular 'tipoMuestra', 'tiposMuestras'
   	inflect.irregular 'tipoPago', 'tiposPagos'
   	inflect.irregular 'userSucursal', 'usersSucursal'
