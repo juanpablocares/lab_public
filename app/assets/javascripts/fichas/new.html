@@ -1,6 +1,3 @@
-<style>
-</style>
-
 <div class="widget-container fluid-height">
 	<div class="heading">
 		Información ficha
@@ -28,37 +25,14 @@
 							{{$select.selected.nombre}}
 						</ui-select-match>
 						<ui-select-choices group-by="agruparPerfiles" repeat="item in examenesArray | filter: $select.search">
-							<strong ng-bind-html="item.codigo | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span>
+							<div ng-if="item.codigo_fonasa == null"><strong ng-bind-html="item.codigo | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span></div>
+							<div ng-if="item.codigo != null && item.codigo_fonasa != null"><strong ng-bind-html="item.codigo_fonasa+'-'+item.codigo | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span></div>
+							<div ng-if="item.codigo === null" ><strong ng-bind-html="item.codigo_fonasa| highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span></div>
 						</ui-select-choices>
 					</ui-select>
 				</div>
 			</div>
-
-			<div>
-				<table class="table table-striped" ng-if="examenesSeleccionados.length != 0">
-					<thead>
-						<th>Examen</th>
-						<th class="col-sm-1">Opciones</th>
-					</thead>
-					<tbody>
-						<tr ng-repeat="item in examenesSeleccionados track by $index" ng-if="item.perfil">
-							<td> {{item.nombre}}
-							<table class="table borderless" style="background: none;" >
-								<tbody>
-									<tr ng-repeat="examen in item.examenes">
-										<td> {{examen.nombre}} </td>
-									</tr>
-								</tbody>
-							</table></td>
-							<td><a href="#"   class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar perfil"><i class="fa fa-trash-o fa-lg"></i></a></td>
-						</tr>
-						<tr ng-repeat="item in examenesSeleccionados track by $index" ng-if="!item.perfil">
-							<td>{{item.nombre}}</td>
-							<td><a href="#" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar examen"><i class="fa fa-trash-o fa-lg"></i></a></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+			<div ng-include="'fichas/_examenes_table.html'"></div>
 			<div class="row form-group">
 				<div class="col-sm-11 text-right">
 					<button ng-click="crearCotizacion()" class="btn btn-primary">

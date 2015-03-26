@@ -5,8 +5,8 @@ class Api::FichasController < ApplicationController
 			render json: {
 		          success: true,
 		          message: 'Ficha encontrada',
-		          ficha: @results,
-		        }, status: 200, include: [:paciente, :orden_medica]
+		          data: @results,
+		        }, status: 200, include: [:paciente, :orden_medica, :procedencia, :detalles_ficha]
 		end
 	end
 	

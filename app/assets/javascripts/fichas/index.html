@@ -1,42 +1,23 @@
 <div class="widget-container fluid-height">
 	<div class="heading">
-		Informacion ficha
+		Información ficha
 	</div>
-	<div class="widget-content padded" ng-show="!fichaEditing">
-		<table class="table">
-			<tr>
-				<tr>
-					<th class="col-sm-2 text-right">ID</th><td>{{masterFicha.id}}</td>
-				</tr>
-				<tr>
-					<th class="col-sm-2 text-right">Nombre</th><td>{{masterFicha.paciente.nombre}}</td>
-				</tr>
-				<tr>
-					<th class="col-sm-2 text-right">Apellido Paterno</th><td>{{masterFicha.paciente.apellido_paterno}}</td>
-				</tr>
-				<tr>
-					<th class="col-sm-2 text-right">Apellido Materno</th><td>{{masterFicha.paciente.apellido_materno}}</td>
-				</tr>
-			</tr>
-		</table>
-		<div class="row form-group">
-			<div class="col-sm-11 text-right">
-				<button type="button" class="btn btn-primary" ng-click="cambiarVentanaSinCambios()">
-					Editar ficha
-				</button>
-			</div>
-		</div>
-	</div>
-	<div class="widget-content padded" ng-show="fichaEditing">
-		<form class="form-horizontal" ng-submit="guardarDatosFicha(ficha)" name="fichaEditingForm">
-			<div ng-include="'fichas/_edit_form_fields.html'"></div>
+	<div class="widget-content padded">
+		<form class="form-horizontal">
 			<div class="form-group">
+				<label  class=" control-label col-sm-2"><strong>Procedencia:</strong></label>
+				<label class="text-left control-label col-sm-10">
+					{{ficha.procedencia.nombre}}
+				</label>
+			</div>
+			<div ng-include="'fichas/_examenes_table.html'"></div>
+			<div class="row form-group">
 				<div class="col-sm-11 text-right">
-					<button type="submit" class="btn btn-primary" ng-disabled="buttonSubmit">
-						Editar
+					<button ng-click="crearCotizacion()" class="btn btn-primary">
+						Crear cotización
 					</button>
-					<button type="button" class="btn btn-danger" ng-click="cambiarVentanaSinCambios()">
-						Volver
+					<button ng-click="crearFicha()" class="btn btn-danger">
+						Procesar pedido de exámenes
 					</button>
 				</div>
 			</div>

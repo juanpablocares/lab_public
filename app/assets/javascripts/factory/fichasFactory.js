@@ -7,8 +7,16 @@
 			}, {
 				new : {
 					method : 'POST',
-					isArray: false,
+					isArray : false,
 				},
+			}),
+			id : $resource("/api/fichas/:id", {
+				id : '@id'
+			}, {
+				get : {
+					method : 'GET',
+					isArray : false
+				}
 			}),
 			by_paciente : $resource("/api/fichas/paciente/:id", {
 				id : "@id",
@@ -21,11 +29,10 @@
 			search : $resource("/api/fichas/range/:start/:number", {
 				start : "@start",
 				number : "@number",
-			},
-			{
+			}, {
 				advanced : {
 					method : 'POST',
-					isArray: false,
+					isArray : false,
 					// no es necesario agregar params, se agregan dentro de la funcion cuando se llame. Ficha.buscar(params);
 				}
 			})

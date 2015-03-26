@@ -1,5 +1,6 @@
 angular.module('lab').controller('PacientesMenuController', function($scope, $http, $stateParams, $auth, $state) {
 
+	if($stateParams.paciente_id==null)$state.go('loginRequired.index');
 	$scope.state = $state;
 
 	$scope.tabs = [{

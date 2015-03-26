@@ -1,47 +1,37 @@
-angular.module('lab').controller('FichasIndexController', function($scope, $auth, $state, $http, $stateParams, Examen) {
+angular.module('lab').controller('FichasIndexController', function($scope, $auth, $state, $http, $stateParams, Fichas) {
 
-	$scope.$on('fichaFromMenu', function(event, data) {
-		console.log('fichaFromMenu');
-		console.log(data);
-		$scope.ficha = data;		
-		$scope.masterFicha = angular.copy($scope.ficha);
+	$scope.editExamenes = false;
+	$scope.ficha = {};
+	//Sin ficha, enviar al home
+	if ($stateParams.ficha_id == null)
+		$state.go('loginRequired.index');
+
+	//Obtener ficha buscada
+	Fichas.id.get({
+		id : $stateParams.ficha_id
+	}).$promise.then(function(result) {
+		console.log(result);
+		if ($stateParams.paciente_id == null)
+		{
+			$state.go('loginRequired.paciente.ficha', {
+				paciente_id : result.data.paciente_id,
+				ficha_id : result.data.id
+			});
+		}
+		else
+		{
+			$scope.ficha = result.data;
+		}
+
+	}).catch(function(response) {
+		console.error('Error al obtener ficha');
+		$state.go('loginRequired.index');
 	});
 
-	$scope.fichaEditing = false;
-	
-	if ($stateParams.ficha != null) {
-		$scope.ficha = $stateParams.ficha;
-		$scope.masterFicha = angular.copy($scope.ficha);
-	}
-	
-	$scope.resetFicha = function() {
-		$scope.fichaEditingForm.$setPristine();
-		$scope.ficha = angular.copy($scope.masterFicha);
-	};
+	//Recobrar paciente desde el menu
+	$scope.$on('pacienteFromMenu', function(event, data) {
+		data.fecha_nacimiento = new Date(data.fecha_nacimiento.getUTCFullYear(), data.fecha_nacimiento.getUTCMonth(), data.fecha_nacimiento.getUTCDate());
+		$scope.paciente = data;
+	});
 
-	$scope.cambiarVentanaSinCambios = function() {
-		$scope.fichaEditing = !$scope.fichaEditing;
-		$scope.resetFicha();
-	};
-
-	$scope.updateExamen = function() { 
-		$scope.masterExamen = angular.copy($scope.examen);
-		$scope.$emit('examenFromEdit',$scope.examen);
-	};
-
-	$scope.guardarDatosExamen = function(examen) {
-		examen.procedencia = examen.procesa.label;
-		examen.indicacion_id = examen.indicacion.id;
-		examen.tipo_examen_id = examen.tipo_examen.id;
-		Examen.update({id:examen.id}, examen).
-			$promise.
-				then(function(response) {
-					$scope.masterExamen = angular.copy($scope.examen);
-					$scope.$emit('examenFromEdit',$scope.examen);
-					$scope.examenEditing = !$scope.examenEditing;
-				}, function(response) {
-					$scope.resetExamen();
-					console.log("ERROR editando examen");
-				});
-	};
 });

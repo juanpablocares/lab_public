@@ -19,6 +19,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	$scope.procedenciasArray = [];
 	$scope.examenesArray = [];
 	$scope.examenesSeleccionados = [];
+	$scope.editExamenes = true;
 
 	Procedencias.buscar.todos().$promise.then(function(response) {
 		$scope.procedenciasArray = response.data;
@@ -91,10 +92,11 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		};
 		Fichas.root.new(data).$promise.then(function(response) {
 			//$state.go('loginRequired.pacientes',{paciente_id: $stateParams.paciente_id}); 
-			$state.go('LoginRequired.pacientes.ver_ficha',{paciente_id: $stateParams.paciente_id});
+			$state.go('LoginRequired.pacientes.ficha',{paciente_id: $stateParams.paciente_id});
 		}, function(response) {
 			console.log("ERROR creando ficha");
 		});
 
 	};
 });
+
