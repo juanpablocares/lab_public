@@ -1,5 +1,15 @@
 class Api::FichasController < ApplicationController
 	
+	def index
+		if @results = Ficha.all
+			render json: {
+		          success: true,
+		          message: 'Fichas encontradas',
+		          data: @results,
+		        }, status: 200, include: [:paciente, :orden_medica, :procedencia, :detalles_ficha]
+		end
+	end
+	
 	def show
 		if @results = Ficha.find(params[:id])
 			render json: {
@@ -19,14 +29,15 @@ class Api::FichasController < ApplicationController
 		        }, status: 200
 	end
 
-	def show_muestras
-		if @results = Ficha.all(:user_id => nil)
-			render json: {
-		          success: true,
-		          message: 'Ficha encontrada',
-		          data: @results,
-		        }, status: 200, include: [:paciente, :orden_medica, :procedencia, :detalles_ficha]
-		end
+	def muestras
+		@results = Ficha.where(:user_id => nil)
+		@numberOfPages = Ficha.where(:user_id => nil).count / params[:number].to_i
+		render json: {
+			  success: true,
+			  message: 'Muestras encontradas',
+			  numberOfPages: @numberOfPages,
+			  data: @results,
+			}, status: 200, include: [:paciente, :orden_medica, :procedencia, :detalles_ficha]
 	end
 	
 	def range

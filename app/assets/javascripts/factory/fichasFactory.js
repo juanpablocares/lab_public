@@ -35,6 +35,16 @@
 					isArray : false,
 					// no es necesario agregar params, se agregan dentro de la funcion cuando se llame. Ficha.buscar(params);
 				}
+			}),
+			muestras : $resource("/api/fichas/muestras/:start/:number", {
+				start : "@start",
+				number : "@number",
+			}, {
+				advanced : {
+					method : 'POST',
+					isArray : false,
+					// no es necesario agregar params, se agregan dentro de la funcion cuando se llame. Ficha.buscar(params);
+				}
 			})
 		};
 	});

@@ -1,5 +1,5 @@
 (function() {
-	angular.module('lab').controller('MuestrasSearchController', function($scope, $auth, $state, $http, $stateParams, Examenes) {
+	angular.module('lab').controller('MuestrasSearchController', function($scope, $auth, $state, $http, $stateParams, Fichas) {
 
 		$scope.displayed = [];
 		$scope.callServer = function callServer(tableState) {
@@ -13,7 +13,7 @@
 			var number = pagination.number || 10;
 			// Number of entries showed per page.
 			
-			Examenes.range.advanced({
+			Fichas.muestras.advanced({
 				start : start,
 				number : number
 			}, tableState).

@@ -43,10 +43,18 @@ angular.module('lab').controller('PacientesMenuController', function($scope, $ht
 			if($scope.paciente != null)
 			{
 				console.log("paciente get edad");
+				this.fecha_nacimiento = new Date(this.fecha_nacimiento.getUTCFullYear(), this.fecha_nacimiento.getUTCMonth(),this.fecha_nacimiento.getUTCDate());
+				
+				var d = new Date();
+				var meses = 0;
+				if(this.fecha_nacimiento.getUTCMonth() - d.getMonth() > 0)
+					meses += 12 - this.fecha_nacimiento.getUTCMonth() + d.getMonth();
+				else
+					meses = Math.abs(this.fecha_nacimiento.getUTCMonth() - d.getMonth());
 				var nac = new Date(this.fecha_nacimiento);
 				var birthday = +new Date(this.fecha_nacimiento);
 				var anios = ((Date.now() - birthday) / (31556926000));
-				return ~~anios + " Años";
+				return ~~anios + " Años " + ~~meses + " meses";
 			}
 		};
 		$scope.paciente.rut_completo = $scope.paciente.getRutCompleto();
