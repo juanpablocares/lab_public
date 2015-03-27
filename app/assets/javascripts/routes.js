@@ -83,6 +83,21 @@
 			}
 		});
 
+		$stateProvider.state('loginRequired.busqueda_muestras', {
+			url : '/muestras/buscar',
+			templateUrl : "muestras/search.html",
+			controller : 'MuestrasSearchController',
+			params : {
+				rut_completo : null,
+				text : null,
+				rut: null,
+				nombre : null,
+				apellido_paterno : null,
+				apellido_materno : null,
+				prevision : null
+			}
+		});
+		
 		$stateProvider.state('loginRequired.nuevo_paciente', {
 			url : '/pacientes/nuevo',
 			templateUrl : "pacientes/new.html",
@@ -163,6 +178,9 @@
 			controller : 'ExamenesIndexController',
 			params: {examen: null}
 		});
+		
+		/*Rutas de muestras*/
+		
 		
 		/*
 		 * Login State

@@ -19,6 +19,16 @@ class Api::FichasController < ApplicationController
 		        }, status: 200
 	end
 
+	def show_muestras
+		if @results = Ficha.all(:user_id => nil)
+			render json: {
+		          success: true,
+		          message: 'Ficha encontrada',
+		          data: @results,
+		        }, status: 200, include: [:paciente, :orden_medica, :procedencia, :detalles_ficha]
+		end
+	end
+	
 	def range
 				
 		if params[:search] && params[:search][:predicateObject] && params[:search][:predicateObject][:id]
