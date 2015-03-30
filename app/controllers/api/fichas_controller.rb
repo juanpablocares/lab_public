@@ -1,12 +1,12 @@
 class Api::FichasController < ApplicationController
 	
 	def show
-		if @results = Ficha.find(params[:id])
+		if @results = Ficha.includes([:paciente, :orden_medica, :procedencia, {:detalles_ficha => :examen}]).find(params[:id])
 			render json: {
 		          success: true,
 		          message: 'Ficha encontrada',
 		          data: @results,
-		        }, status: 200, include: [:paciente, :orden_medica, :procedencia, :detalles_ficha]
+		        }, status: 200, include: [:paciente, :orden_medica, :procedencia, {:detalles_ficha =>{ include: [:perfil,:examen]}}]
 		end
 	end
 	

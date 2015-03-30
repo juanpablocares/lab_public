@@ -3,4 +3,6 @@ class OrdenMedica < ActiveRecord::Base
   
   belongs_to :paciente
   belongs_to :medico
+  
+  self.table_name = "ordenes_medicas"
 end
