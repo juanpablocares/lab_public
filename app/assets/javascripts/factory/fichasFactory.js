@@ -16,6 +16,13 @@
 				get : {
 					method : 'GET',
 					isArray : false
+				},
+				getPagosRealizados : {
+					url: "/api/fichas/pagos/:id",
+					params :  {
+						id : '@id'
+					},
+					isArray : false,
 				}
 			}),
 			by_paciente : $resource("/api/fichas/paciente/:id", {

@@ -1,0 +1,32 @@
+<div class="heading">
+	Pagos realizados
+</div>
+<div class="widget-content padded">
+	<div ng-if="detallePagos.length == 0">
+		<h4>
+			No hay pagos realizados aún.
+		</h4>
+	</div>
+	<div ng-if="detallePagos.length != 0">
+		<table class="table">
+			<thead>
+				<th>
+					Fecha
+				</th>
+				<th>
+					Medio de pago
+				</th>
+				<th>
+					Monto
+				</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="pago in detallePagos">
+					<td>{{pago.creado}}</td>
+					<td>{{pago.tipo_pago.nombre}}</td>
+					<td>{{pago.monto_pagado}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
