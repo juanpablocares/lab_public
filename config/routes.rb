@@ -43,6 +43,13 @@ Rails.application.routes.draw do
 		resources :procedencias, :defaults => { :format => 'json' }
 		resources :perfiles, :defaults => { :format => 'json' }
 		resources :tipo_examenes, :defaults => { :format => 'json' }
+		resources :tipos_pago , :defaults => { :format => 'json' }
+		resources :detalles_pago_ficha, :defaults => { :format => 'json' }
+		get 'detalles_pago_ficha/ficha/:id', to: 'detalles_pago_ficha#getAllByFicha', defaults: {format: 'json'}
+		
+		
+		
+		
 		resources :users, :defaults => { :format => 'json' } do
 			collection do
 				get 'accountAttributes'

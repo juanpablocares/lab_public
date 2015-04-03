@@ -81,7 +81,6 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		}, function(response) { 
 			console.log("ERROR creando cotización");
 		});
-
 	};
 	
 	$scope.crearFicha = function() {

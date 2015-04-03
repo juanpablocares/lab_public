@@ -21,7 +21,7 @@ class Api::FichasController < ApplicationController
 	end
 	
 	def pagos
-		if @results = DetallePagosFicha.includes(:tipo_pago).where(	ficha_id: params[:id])
+		if @results = DetallePagoFicha.includes(:tipo_pago).where(	ficha_id: params[:id])
 			render json: {
 		          success: true,
 		          message: '[pagos] Pagos encontrados',

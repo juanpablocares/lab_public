@@ -1,9 +1,11 @@
-angular.module('lab').controller('FichasIndexController', function($scope, $auth, $state, $http, $stateParams, Fichas, Perfiles) {
+angular.module('lab').controller('FichasIndexController', function($scope, $auth, $state, $http, $stateParams, Fichas, Perfiles, TiposPago, DetallesPagoFicha) {
 
 	//Recobrar paciente desde el menu
 	$scope.$on('pacienteFromMenu', function(event, data) {
+		console.log("recibir paciente");
 		data.fecha_nacimiento = new Date(data.fecha_nacimiento.getUTCFullYear(), data.fecha_nacimiento.getUTCMonth(), data.fecha_nacimiento.getUTCDate());
 		$scope.paciente = data;
+		console.log($scope.paciente);
 	});
 
 	//Sin ficha, enviar al home
@@ -29,6 +31,13 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 	}).catch(function(response) {
 		console.error('Error al obtener ficha');
 		$state.go('loginRequired.index');
+	});
+
+	//Obtener tipos de pago para select
+	TiposPago.root.get({}).$promise.then(function(result) {
+		$scope.tiposPagoArray = result.data;
+	}).catch(function(response) {
+		console.error('Error al obtener tipos de pago');
 	});
 
 	$scope.setInfoTab = function() {
@@ -79,17 +88,54 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 	/* TAB PAGOS */
 
 	$scope.detallePagos = [];
+	$scope.nuevoPago = {};
 
 	Fichas.id.getPagosRealizados({
 		id : $stateParams.ficha_id
 	}).$promise.then(function(result) {
-		console.log(result);
 		$scope.detallePagos = result.data;
-		console.log($scope.detallePagos);
 	}).catch(function(response) {
 		console.error("Error al cargar detalle pagos");
 	});
 
+	$scope.resetIngresarPagoForm = function(f) {
+		$scope.nuevoPago = {};
+		f.$setPristine();
+		f.$setUntouched();
+	}
+
+	$scope.submitIngresarPagoForm = function(f) {
+
+		if (f.$valid && confirm('Confirme ingreso de pago.')) {
+			data = {
+				ficha_id : $stateParams.ficha_id,
+				tipo_pago_id : $scope.nuevoPago.tipo_pago.id,
+				monto_pagado : $scope.nuevoPago.monto,
+			};
+			DetallesPagoFicha.root.new(data).$promise.then(function(response) {
+				DetallesPagoFicha.by_ficha_id.all({
+					id : $stateParams.ficha_id
+				}).$promise.then(function(result) {
+					$scope.detallePagos = result.data;
+					$scope.resetIngresarPagoForm();
+				}).catch(function(response) {
+					console.error("Error al cargar detalle pagos");
+				});
+			}, function(response) {
+				alert("Error creando el pago");
+			});
+		}
+	}
+
+	$scope.getTotalPagos = function() {
+		var total = 0;
+		var i = 0;
+		while (i < $scope.detallePagos.length) {
+			total = total + $scope.detallePagos[i].monto_pagado;
+			i++;
+		}
+		return total;
+	}
 	/* END TAB PAGOS */
 
 });
