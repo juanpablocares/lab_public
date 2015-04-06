@@ -1,0 +1,50 @@
+<div class="heading">
+		Información ficha
+	</div>
+	<div class="widget-content padded">
+		<form>
+			<div class="form-group">
+				<label class="control-label col-sm-2"><strong>Procedencia:</strong></label>
+				<label class="control-label col-sm-10"> {{ficha.procedencia.nombre}} </label>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2"><strong>Previsión:</strong></label>
+				<label class="control-label col-sm-10"> {{paciente.prevision_nombre}} </label>
+			</div>
+			<div>
+				<table class="table table-striped" ng-if="examenesSeleccionados.length != 0">
+					<thead>
+						<th>Examen</th>
+						<th class="col-sm-1" ng-if="editExamenes">Opciones</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in examenesSeleccionados track by $index" ng-if="item.perfil">
+							<td> {{item.nombre}}
+							<table class="table borderless" style="background: none;">
+								<tbody>
+									<tr ng-repeat="detalle in item.detalles_ficha">
+										<td> {{detalle.examen.nombre}}hola </td>
+									</tr>
+								</tbody>
+							</table></td>
+							<td ng-if="editExamenes" class="text-center"><a href="#" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar perfil"><i class="fa fa-trash-o fa-lg"></i></a></td>
+						</tr>
+						<tr ng-repeat="item in examenesSeleccionados track by $index" ng-if="!item.perfil">
+							<td>{{item.examen.nombre}}</td>
+							<td ng-if="editExamenes" class="text-center"><a href="#" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar examen"><i class="fa fa-trash-o fa-lg"></i></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="row form-group">
+				<div class="col-sm-11 text-right">
+					<button ng-click="crearCotizacion()" class="btn btn-primary">
+						Crear cotización
+					</button>
+					<button ng-click="crearFicha()" class="btn btn-danger">
+						Procesar pedido de exámenes
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>

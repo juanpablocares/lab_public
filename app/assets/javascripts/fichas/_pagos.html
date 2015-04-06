@@ -1,0 +1,64 @@
+<div class="heading">
+	Pagos realizados
+</div>
+<div class="widget-content padded">
+	<div >
+		<h3>Realizar pago</h3>
+		<form class="form-horizontal" name="ingresarPagoForm" novalidate>
+			<div class="form-group" ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_tipo_pago.$error.required)}">
+				<label class="col-sm-2 control-label">Tipo de pago</label>
+				<div class="col-sm-10">
+					<ui-select ng-model="nuevoPago.tipo_pago" name="nuevo_pago_tipo_pago" theme="bootstrap" required>
+						<ui-select-match placeholder="Seleccione tipo de pago">
+							{{$select.selected.nombre}}
+						</ui-select-match>
+						<ui-select-choices repeat="item in tiposPagoArray | filter: $select.search">
+							<span ng-bind-html="item.nombre | highlight: $select.search"></span>
+						</ui-select-choices>
+					</ui-select>
+					<label class="error" ng-if="(ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_tipo_pago.$error.required)">Seleccione un tipo de pago.</label>
+				</div>
+			</div>
+			<div class="form-group" ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_monto.$error.required)}">
+				<label class="col-sm-2 control-label">Monto a pagar:</label>
+				<div class="col-sm-10">
+					<input class="form-control" ng-model="nuevoPago.monto" name="nuevo_pago_monto" type="number" required>
+					<label class="error" ng-if="(ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_monto.$error.required)">Ingrese el monto pagado.</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-11 text-right">
+					<button type="submit" ng-click="submitIngresarPagoForm(ingresarPagoForm)" class="btn btn-primary">
+						Ingresar pago
+					</button>
+					<button type="button" ng-click="resetIngresarPagoForm(ingresarPagoForm)" class="btn btn-danger">
+						Limpiar
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="row">
+		<div class="col-sm-12" ng-if="detallePagos.length == 0">
+			<h4> No hay pagos realizados aún. </h4>
+		</div>
+		<div class="col-sm-12" ng-if="detallePagos.length != 0">
+			<table class="table">
+				<thead>
+					<th> Fecha </th>
+					<th> Medio de pago </th>
+					<th> Monto </th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="pago in detallePagos">
+						<td>{{pago.creado}}</td>
+						<td>{{pago.tipo_pago.nombre}}</td>
+						<td>{{pago.monto_pagado}}</td>
+					</tr>
+					<tr><td></td><td><strong>Total</strong></td><td><strong>{{getTotalPagos()}}</strong></td></tr>
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

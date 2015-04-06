@@ -1,26 +1,9 @@
+<ul class="nav nav-tabs">
+  <li ng-class="{active: tabs.infoTab}" ><a ng-click="setInfoTab()">Información</a></li>
+  <li ng-class="{active: tabs.pagosTab}" ><a ng-click="setPagosTab()" >Pagos</a></li>
+</ul>
+
 <div class="widget-container fluid-height">
-	<div class="heading">
-		Información ficha
-	</div>
-	<div class="widget-content padded">
-		<form class="form-horizontal">
-			<div class="form-group">
-				<label  class=" control-label col-sm-2"><strong>Procedencia:</strong></label>
-				<label class="text-left control-label col-sm-10">
-					{{ficha.procedencia.nombre}}
-				</label>
-			</div>
-			<div ng-include="'fichas/_examenes_table.html'"></div>
-			<div class="row form-group">
-				<div class="col-sm-11 text-right">
-					<button ng-click="crearCotizacion()" class="btn btn-primary">
-						Crear cotización
-					</button>
-					<button ng-click="crearFicha()" class="btn btn-danger">
-						Procesar pedido de exámenes
-					</button>
-				</div>
-			</div>
-		</form>
-	</div>
+	<div ng-include="'fichas/_info.html'" ng-if="tabs.infoTab"></div>
+	<div ng-include="'fichas/_pagos.html'" ng-if="tabs.pagosTab"></div>
 </div>

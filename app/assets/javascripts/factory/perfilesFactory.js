@@ -9,6 +9,14 @@
 					method : 'GET',
 					isArray: false,
 				},
+			}),
+			id : $resource("/api/perfiles/:id", {
+				id: '@id',
+			}, {
+				get : {
+					method : 'GET',
+					isArray: false,
+				},
 			})
 		};
 	});

@@ -20,6 +20,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   	inflect.irregular 'detalleCotizacion', 'detallesCotizacion'
   	inflect.irregular 'detalleFicha', 'detallesFicha'
   	inflect.irregular 'detallePagoFicha', 'detallesPagosFicha'
+  	inflect.irregular 'detalle_pago_ficha', 'detalles_pago_ficha'
   	inflect.irregular 'examen', 'examenes'
   	inflect.irregular 'examenPerfil', 'examenesPerfil'
   	inflect.irregular 'examen_perfil', 'examenes_perfil'
@@ -37,6 +38,9 @@ ActiveSupport::Inflector.inflections do |inflect|
   	inflect.irregular 'sucursal', 'sucursales'
 	inflect.irregular 'tipoExamen', 'tipoExamenes'
   	inflect.irregular 'tipoMuestra', 'tiposMuestras'
-  	inflect.irregular 'tipoPago', 'tiposPagos'
+  	inflect.irregular 'tipoPago', 'tiposPago'
+  	inflect.irregular 'tipo_pago', 'tipos_pago'
+  	inflect.irregular 'tramoExamen', 'tramosExamen'
+  	inflect.irregular 'tramo_examen', 'tramos_examen'
   	inflect.irregular 'userSucursal', 'usersSucursal'
 end

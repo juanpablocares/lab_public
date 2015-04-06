@@ -5,19 +5,19 @@ angular.module('lab').controller('PacientesMenuController', function($scope, $ht
 
 	$scope.tabs = [{
 		name : 'Información personal',
-		state : 'loginRequired.pacientes.info({paciente: paciente})',
+		state : 'loginRequired.pacientes.info()',
 		id : 'loginRequired.pacientes.info',
 	}, {
 		name : 'Fichas',
-		state : 'loginRequired.pacientes.fichas({paciente: paciente})',
+		state : 'loginRequired.pacientes.fichas()',
 		id : 'loginRequired.pacientes.fichas',
 	}, {
 		name : 'Cotizaciones',
-		state : 'loginRequired.pacientes.cotizaciones({paciente: paciente})',
+		state : 'loginRequired.pacientes.cotizaciones()',
 		id : 'loginRequired.pacientes.cotizaciones',
 	}, {
 		name : 'Exámenes',
-		state : 'loginRequired.pacientes.examenes({paciente: paciente})',
+		state : 'loginRequired.pacientes.examenes()',
 		id : 'loginRequired.pacientes.examenes',
 	}];
 
@@ -66,8 +66,17 @@ angular.module('lab').controller('PacientesMenuController', function($scope, $ht
 		};
 		$scope.paciente.region_id = data.region_id;
 		$scope.paciente.comuna_id = data.comuna_id;
-		$scope.$broadcast('pacienteFromMenu', $scope.paciente);
+		$scope.mandarPaciente();
 	}).error(function(data) {
 		$state.go('loginRequired.index');
 	});
+	
+	$scope.$on('PedirPacienteFromMenu', function(event, data) {
+		$scope.mandarPaciente();
+	});
+
+	$scope.mandarPaciente = function()
+	{
+		$scope.$broadcast('pacienteFromMenu', $scope.paciente);
+	}
 });

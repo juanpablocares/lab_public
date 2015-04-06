@@ -1,7 +1,9 @@
 angular.module('lab').controller('PacientesIndexController', function($scope, $auth, $state, $http, $stateParams, Pacientes) {
 
+	$scope.masterPaciente = {};
+
 	$scope.$on('pacienteFromMenu', function(event, data) {
-		data.fecha_nacimiento = new Date(data.fecha_nacimiento.getUTCFullYear(), data.fecha_nacimiento.getUTCMonth(),data.fecha_nacimiento.getUTCDate());
+		data.fecha_nacimiento = new Date(data.fecha_nacimiento.getUTCFullYear(), data.fecha_nacimiento.getUTCMonth(), data.fecha_nacimiento.getUTCDate());
 		$scope.paciente = data;
 		$scope.masterPaciente = angular.copy($scope.paciente);
 		$http.get('/api/regiones').success(function(data) {
@@ -19,34 +21,12 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 			// log error
 		});
 	});
-
+	$scope.$emit('PedirPacienteFromMenu');
 	$http.get('/api/previsiones').success(function(data) {
-		console.log("Cargar previsiones");
 		$scope.plans = data;
 	}).error(function(data) {
 		// log error
 	});
-
-	if ($stateParams.paciente != null) {
-		console.log("Paciente desde $stateParams");
-		$scope.paciente = $stateParams.paciente;
-		$scope.masterPaciente = angular.copy($scope.paciente);
-		$http.get('/api/regiones').success(function(data) {
-			console.log("Cargar Regiones");
-			$scope.regiones = data;
-			angular.forEach(data, function(region, key) {
-				if (region.id == $scope.paciente.region_id) {
-					$scope.paciente.region = region;
-					$scope.paciente.comuna = {
-						id : $scope.paciente.comuna_id
-					};
-					$scope.masterPaciente = angular.copy($scope.paciente);
-				}
-			});
-		}).error(function(data) {
-			// log error
-		});
-	}
 
 	$scope.pacienteEditing = false;
 
@@ -54,9 +34,9 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 		$scope.paciente.rut_completo = $scope.paciente.getRutCompleto();
 		$scope.paciente.nombre_completo = $scope.paciente.getNombreCompleto();
 		$scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
-		$scope.paciente.edad = $scope.paciente.getEdad(); 
+		$scope.paciente.edad = $scope.paciente.getEdad();
 		$scope.masterPaciente = angular.copy($scope.paciente);
-		$scope.$emit('pacienteFromEdit',$scope.paciente);
+		$scope.$emit('pacienteFromEdit', $scope.paciente);
 	};
 
 	$scope.resetPaciente = function() {
@@ -78,9 +58,7 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 		}, function(datos) {
 			Pacientes.by_rut.update({
 				rut : datos.rut
-			}, paciente).
-			$promise.
-			then(function(response) {
+			}, paciente).$promise.then(function(response) {
 				$scope.updatePaciente();
 				$scope.pacienteEditing = !$scope.pacienteEditing;
 			}, function(response) {

@@ -1,4 +1,4 @@
-class DetallePagosFicha < ActiveRecord::Base
+class DetallePagoFicha < ActiveRecord::Base
   belongs_to :ficha
   belongs_to :tipo_pago
   belongs_to :prevision

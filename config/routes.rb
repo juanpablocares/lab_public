@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 		#Controladores de fichas
 		get 'fichas', to: 'fichas#index', defaults: {format: 'json'}
 		get 'fichas/:id', to: 'fichas#show', defaults: {format: 'json'}
+		get 'fichas/pagos/:id', to: 'fichas#pagos', defaults: {format: 'json'}
 		get 'fichas/paciente/:id', to: 'fichas#show_bypaciente', defaults: {format: 'json'}
 		post 'fichas/range/:start/:number', to: 'fichas#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		post 'fichas/muestras/:start/:number', to: 'fichas#muestras', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
@@ -42,6 +43,13 @@ Rails.application.routes.draw do
 		resources :procedencias, :defaults => { :format => 'json' }
 		resources :perfiles, :defaults => { :format => 'json' }
 		resources :tipo_examenes, :defaults => { :format => 'json' }
+		resources :tipos_pago , :defaults => { :format => 'json' }
+		resources :detalles_pago_ficha, :defaults => { :format => 'json' }
+		get 'detalles_pago_ficha/ficha/:id', to: 'detalles_pago_ficha#getAllByFicha', defaults: {format: 'json'}
+		
+		
+		
+		
 		resources :users, :defaults => { :format => 'json' } do
 			collection do
 				get 'accountAttributes'

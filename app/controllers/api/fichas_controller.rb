@@ -4,19 +4,29 @@ class Api::FichasController < ApplicationController
 		if @results = Ficha.all
 			render json: {
 		          success: true,
-		          message: 'Fichas encontradas',
+		          message: '[index] Fichas encontradas',
 		          data: @results,
 		        }, status: 200, include: [:paciente, :orden_medica, :procedencia, :detalles_ficha]
 		end
 	end
 	
 	def show
-		if @results = Ficha.find(params[:id])
+		if @results = Ficha.includes([:paciente, :orden_medica, :procedencia, {:detalles_ficha => :examen}]).find(params[:id])
 			render json: {
 		          success: true,
-		          message: 'Ficha encontrada',
+		          message: '[show] Ficha encontrada',
 		          data: @results,
-		        }, status: 200, include: [:paciente, :orden_medica, :procedencia, :detalles_ficha]
+		        }, status: 200, include: [:paciente, :orden_medica, :procedencia, {:detalles_ficha =>{ include: [:perfil,:examen]}}]
+		end
+	end
+	
+	def pagos
+		if @results = DetallePagoFicha.includes(:tipo_pago).where(	ficha_id: params[:id])
+			render json: {
+		          success: true,
+		          message: '[pagos] Pagos encontrados',
+		          data: @results,
+		        }, status: 200, include: [:tipo_pago]
 		end
 	end
 	
