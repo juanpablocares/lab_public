@@ -32,7 +32,7 @@
 		</thead>
 		<tbody ng-show="!isLoading">
 			<tr ng-repeat="row in displayed" ui-sref="loginRequired.examenes.info({examen_id: row.id})">
-				<td>{{row.nombre}}</td>
+				<td>{{row.paciente.nombre}}</td>
 				<td>{{row.codigo_fonasa}}</td>
 				
 					<td ng-if="row.codigo">{{row.codigo}}</td>

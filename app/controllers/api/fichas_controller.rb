@@ -30,8 +30,8 @@ class Api::FichasController < ApplicationController
 	end
 
 	def muestras
-		@results = Ficha.where(:user_id => nil)
-		@numberOfPages = Ficha.where(:user_id => nil).count / params[:number].to_i
+		@results = Ficha.includes(:detalles_ficha).where(:detalles_ficha => {:usuario_muestra_id => nil})
+		@numberOfPages = Ficha.includes(:detalles_ficha).where(:detalles_ficha => {:usuario_muestra_id => nil}).count / params[:number].to_i
 		render json: {
 			  success: true,
 			  message: 'Muestras encontradas',
