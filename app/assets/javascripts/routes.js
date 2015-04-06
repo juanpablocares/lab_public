@@ -179,6 +179,27 @@
 			params: {examen: null}
 		});
 		
+		/*Rutas tipos tarifas*/
+		
+		$stateProvider.state('loginRequired.busqueda_tarifas', {
+			url : '/tarifas/buscar',
+			templateUrl : "tarifas/search.html",
+			controller : 'TarifasSearchController',
+		});
+		
+		$stateProvider.state('loginRequired.tarifas', {
+			url : '/tarifas/:tarifa_id',
+			templateUrl : "tarifas/menu.html",
+			controller : 'TarifasMenuController',
+		});
+		
+		$stateProvider.state('loginRequired.tarifas.info', {
+			url : '/informacion',
+			templateUrl : "tarifas/index.html",
+			controller : 'TarifasIndexController',
+			params: {tarifa: null}
+		});
+		
 		/*Rutas de muestras*/
 		
 		

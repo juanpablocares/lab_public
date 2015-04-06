@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150325162959) do
+ActiveRecord::Schema.define(version: 20150406132320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20150325162959) do
   create_table "detalles_ficha", force: :cascade do |t|
     t.integer  "ficha_id",           limit: 8,                                 null: false
     t.integer  "examen_id",          limit: 8,                                 null: false
-    t.integer  "perfil_examen_id",   limit: 8
+    t.integer  "perfil_id",          limit: 8
     t.integer  "usuario_muestra_id", limit: 8
     t.datetime "fecha_muestra"
     t.integer  "tipo_muestra_id",    limit: 8
@@ -50,7 +50,6 @@ ActiveRecord::Schema.define(version: 20150325162959) do
   create_table "detalles_pagos_ficha", force: :cascade do |t|
     t.integer  "ficha_id",     limit: 8,                                 null: false
     t.integer  "tipo_pago_id", limit: 8,                                 null: false
-    t.integer  "prevision_id", limit: 8,                                 null: false
     t.integer  "monto_pagado", limit: 8,                                 null: false
     t.datetime "creado",                 default: '2015-02-20 15:08:40', null: false
   end
@@ -168,20 +167,12 @@ ActiveRecord::Schema.define(version: 20150325162959) do
 
   add_index "permisos_rol", ["rol_id", "permiso_id"], name: "permisos_rol_rol_id_permiso_id_key", unique: true, using: :btree
 
-  create_table "precios", id: false, force: :cascade do |t|
-    t.integer  "tramo_id",  limit: 8,                                 null: false
-    t.integer  "examen_id", limit: 8,                                 null: false
-    t.integer  "precio",                                              null: false
-    t.datetime "creado",              default: '2015-02-20 15:08:40', null: false
-  end
-
-  add_index "precios", ["tramo_id", "examen_id"], name: "tramo_examen", unique: true, using: :btree
-
   create_table "previsiones", force: :cascade do |t|
     t.string   "nombre",     limit: 100,                                 null: false
     t.string   "codigo",     limit: 10,                                  null: false
     t.boolean  "habilitada",                                             null: false
     t.datetime "creado",                 default: '2015-02-20 15:08:40', null: false
+    t.integer  "tarifa_id"
   end
 
   create_table "procedencias", force: :cascade do |t|
@@ -225,6 +216,22 @@ ActiveRecord::Schema.define(version: 20150325162959) do
     t.datetime "creado",             default: '2015-02-20 15:08:40', null: false
   end
 
+  create_table "tarifas", force: :cascade do |t|
+    t.string   "nombre", limit: 100,                                 null: false
+    t.boolean  "alerta",                                             null: false
+    t.datetime "creado",             default: '2015-02-20 15:08:40', null: false
+  end
+
+  create_table "tarifas_examen", id: false, force: :cascade do |t|
+    t.integer  "tarifa_id",     limit: 8,                                 null: false
+    t.integer  "examen_id",     limit: 8,                                 null: false
+    t.integer  "precio",                                                  null: false
+    t.datetime "creado",                  default: '2015-02-20 15:08:40', null: false
+    t.integer  "precio_fonasa"
+  end
+
+  add_index "tarifas_examen", ["tarifa_id", "examen_id"], name: "tramo_examen", unique: true, using: :btree
+
   create_table "tipo_examenes", force: :cascade do |t|
     t.string "codigo", limit: 5
     t.text   "nombre"
@@ -239,13 +246,6 @@ ActiveRecord::Schema.define(version: 20150325162959) do
   create_table "tipos_pago", force: :cascade do |t|
     t.string   "nombre", limit: 50,                                 null: false
     t.datetime "creado",            default: '2015-02-20 15:08:40', null: false
-  end
-
-  create_table "tramos", force: :cascade do |t|
-    t.integer  "prevision_id", limit: 8,                                   null: false
-    t.string   "nombre",       limit: 100,                                 null: false
-    t.boolean  "alerta",                                                   null: false
-    t.datetime "creado",                   default: '2015-02-20 15:08:40', null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -298,12 +298,11 @@ ActiveRecord::Schema.define(version: 20150325162959) do
   add_foreign_key "detalles_cotizacion", "perfiles", column: "perfil_examen_id", name: "detalles_cotizacion_perfil_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_ficha", "examenes", name: "detalles_ficha_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_ficha", "fichas", name: "detalles_ficha_ficha_id_fkey", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "detalles_ficha", "perfiles", column: "perfil_examen_id", name: "detalles_ficha_perfil_examen_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "detalles_ficha", "perfiles", name: "detalles_ficha_perfil_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_ficha", "tipos_muestras", column: "tipo_muestra_id", name: "detalles_ficha_tipo_muestra_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_ficha", "users", column: "usuario_muestra_id", name: "detalles_ficha_usuario_muestra_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_pagos_ficha", "fichas", name: "detalles_pagos_ficha_ficha_id_fkey", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "detalles_pagos_ficha", "previsiones", name: "detalles_pagos_ficha_prevision_id_fkey", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "detalles_pagos_ficha", "tipos_pago", column: "tipo_pago_id", name: "detalles_pagos_ficha_tipo_pago_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "detalles_pagos_ficha", "tipos_pago", name: "detalles_pagos_ficha_tipo_pago_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes", "indicaciones", name: "examenes_indicacion_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes", "tipo_examenes", name: "examenes_tipo_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes_perfil", "examenes", name: "examenes_perfil_examen_id_fkey", on_update: :cascade, on_delete: :cascade
@@ -322,15 +321,13 @@ ActiveRecord::Schema.define(version: 20150325162959) do
   add_foreign_key "pacientes", "users", name: "pacientes_user_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "permisos_rol", "permisos", name: "permisos_rol_permiso_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "permisos_rol", "roles", name: "permisos_rol_rol_id_fkey", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "precios", "examenes", name: "precios_examen_id_fkey", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "precios", "tramos", name: "precios_tramo_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "resultados_examen", "detalles_ficha", column: "detalle_ficha_id", name: "resultados_examen_detalle_ficha_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "resultados_examen", "sucursales", column: "sustancia_id", name: "resultados_examen_sustancia_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "roles_usuario", "roles", name: "roles_usuario_rol_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "roles_usuario", "users", name: "roles_usuario_user_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "sucursales", "comunas", name: "sucursales_comuna_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "sucursales", "laboratorios", name: "sucursales_laboratorio_id_fkey", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "tramos", "previsiones", name: "tramos_prevision_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "tarifas_examen", "examenes", name: "precios_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "users_sucursal", "sucursales", name: "users_sucursal_sucursal_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "users_sucursal", "users", name: "users_sucursal_user_id_fkey", on_update: :cascade, on_delete: :cascade
 end
