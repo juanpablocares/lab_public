@@ -82,21 +82,6 @@
 				prevision : null
 			}
 		});
-
-		$stateProvider.state('loginRequired.busqueda_muestras', {
-			url : '/muestras/buscar',
-			templateUrl : "muestras/search.html",
-			controller : 'MuestrasSearchController',
-			params : {
-				rut_completo : null,
-				text : null,
-				rut: null,
-				nombre : null,
-				apellido_paterno : null,
-				apellido_materno : null,
-				prevision : null
-			}
-		});
 		
 		$stateProvider.state('loginRequired.nuevo_paciente', {
 			url : '/pacientes/nuevo',
@@ -202,6 +187,39 @@
 		
 		/*Rutas de muestras*/
 		
+		$stateProvider.state('loginRequired.busqueda_muestras', {
+			url : '/muestras/buscar',
+			templateUrl : "muestras/search.html",
+			controller : 'MuestrasSearchController',
+			params : {
+				rut_completo : null,
+				text : null,
+				rut: null,
+				nombre : null,
+				apellido_paterno : null,
+				apellido_materno : null,
+				prevision : null
+			}
+		});
+		
+		$stateProvider.state('loginRequired.muestras', {
+			url : '/muestras/:ficha_id',
+			templateUrl : "muestras/menu.html",
+			controller : 'MuestrasMenuController',
+		});
+		
+		$stateProvider.state('loginRequired.muestras.info', {
+			url : '/informacion',
+			templateUrl : "muestras/index.html",
+			controller : 'MuestrasIndexController',
+			params: {muestra: null}
+		});
+		
+		$stateProvider.state('loginRequired.muestras.examenes', {
+			url : '/examenes',
+			templateUrl : "muestras/examenes.html",
+			controller : 'MuestrasExamenesController',
+		});
 		
 		/*
 		 * Login State
