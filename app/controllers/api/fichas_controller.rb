@@ -11,13 +11,21 @@ class Api::FichasController < ApplicationController
 	end
 	
 	def show
-		if @results = Ficha.includes([:paciente, :orden_medica, :procedencia, {:detalles_ficha => :examen}]).find(params[:id])
-			render json: {
+		@results = Ficha.includes({:detalles_ficha => [{:examen => [:tarifas_examen]}]}).find(params[:id])
+		#if @results = Ficha.includes([:paciente, :orden_medica, :procedencia, {:detalles_ficha => [{:examen => :tarifas_examen}]}]).where(tarifas_examen: {id: examen.id}).find(params[:id])
+		#		render json: {
+		#          success: true,
+		#          message: '[show] Ficha encontrada',
+		#          data: @results,
+		#        }, status: 200, include: [:paciente, :orden_medica, :procedencia, {:detalles_ficha =>{ include: [:perfil,{:examen => { include: [:tarifas_examen]}}]}}]
+		#end
+		render json: {
 		          success: true,
 		          message: '[show] Ficha encontrada',
 		          data: @results,
-		        }, status: 200, include: [:paciente, :orden_medica, :procedencia, {:detalles_ficha =>{ include: [:perfil,:examen]}}]
-		end
+		        }, status: 200, include: [:paciente, :orden_medica, :procedencia, {:detalles_ficha =>{ include: [:perfil,{:examen => { include: [:tarifas_examen]}}]}}]
+		#Article.includes(:comments).where(comments: { visible: true })
+		#Agregar tarifa examen al include de examen where tarifa_examen.examen_id = examen.id 
 	end
 	
 	def pagos

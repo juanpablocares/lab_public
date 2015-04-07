@@ -45,18 +45,19 @@
 		<div class="col-sm-12" ng-if="detallePagos.length != 0">
 			<table class="table">
 				<thead>
+					<th> Código </th>
 					<th> Fecha </th>
 					<th> Medio de pago </th>
 					<th> Monto </th>
 				</thead>
 				<tbody>
 					<tr ng-repeat="pago in detallePagos">
+						<td>{{pago.id}}</td>
 						<td>{{pago.creado}}</td>
 						<td>{{pago.tipo_pago.nombre}}</td>
 						<td>{{pago.monto_pagado}}</td>
 					</tr>
 					<tr><td></td><td><strong>Total</strong></td><td><strong>{{getTotalPagos()}}</strong></td></tr>
-					
 				</tbody>
 			</table>
 		</div>

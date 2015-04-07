@@ -14,16 +14,16 @@
 			<div>
 				<table class="table table-striped" ng-if="examenesSeleccionados.length != 0">
 					<thead>
-						<th>Examen</th>
+							<th>Examen</th>
 						<th class="col-sm-1" ng-if="editExamenes">Opciones</th>
 					</thead>
 					<tbody>
 						<tr ng-repeat="item in examenesSeleccionados track by $index" ng-if="item.perfil">
-							<td> {{item.nombre}}
+							<td> <strong>{{item.nombre}}</strong>
 							<table class="table borderless" style="background: none;">
 								<tbody>
 									<tr ng-repeat="detalle in item.detalles_ficha">
-										<td> {{detalle.examen.nombre}}hola </td>
+										<td> {{detalle.examen.nombre}}</td>
 									</tr>
 								</tbody>
 							</table></td>
