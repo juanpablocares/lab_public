@@ -1,6 +1,6 @@
 class Examen < ActiveRecord::Base
 
-	has_many	:tramos_examen
+	has_many	:tarifas_examen
 	belongs_to 	:indicacion 
 	belongs_to 	:tipo_examen
 

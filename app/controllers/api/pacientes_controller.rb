@@ -1,12 +1,11 @@
 class Api::PacientesController < ApplicationController
-
 	def index
 		@paciente = Paciente.includes(:prevision, :comuna => [:region]).all
 		render json: @paciente.to_json(:methods => [:region, :comuna, :prevision])
 	end
 
 	def range
-				
+
 		if params[:search] && params[:search][:predicateObject] && params[:search][:predicateObject][:id]
 			@results = Paciente.where(id: params[:search][:predicateObject][:id].to_i)
 			@numberOfPages = Paciente.count / params[:number].to_i
@@ -58,14 +57,15 @@ class Api::PacientesController < ApplicationController
 			include: [:comuna, :prevision]
 		end
 	end
-	
+
 	def show
-		@paciente = Paciente.find(params[:id])
-		@paciente.region_id = @paciente.comuna.region_id
-		@paciente.region_nombre = @paciente.comuna.region.nombre
-		@paciente.prevision_nombre = @paciente.prevision.nombre
-		@paciente.comuna_nombre = @paciente.comuna.nombre
-		render json: @paciente.to_json(:methods => [:region_id, :region_nombre, :prevision_nombre, :comuna_nombre])
+		if @paciente = Paciente.includes({:comuna =>[:region]}, :prevision).find(params[:id])
+			render json: {
+				success: true,
+	        	message: '[show] Paciente obtenido',
+				data: @paciente
+			}, status: 200, include: [{:comuna => {include: [:region]}}, :prevision]
+		end
 	end
 
 	def show_fichas
@@ -77,7 +77,7 @@ class Api::PacientesController < ApplicationController
 		          fichas: @paciente,
 		        }, status: 200
 	end
-	
+
 	def update
 		@paciente = Paciente.find(params[:id])
 		if @paciente.update_attributes(paciente_params)
@@ -94,7 +94,7 @@ class Api::PacientesController < ApplicationController
 		        }, status: 500
 		end
 	end
-	
+
 	def update_byrut
 		@paciente = Paciente.find_by(rut: params[:rut])
 		if @paciente.update_attributes(paciente_params)
@@ -116,12 +116,12 @@ class Api::PacientesController < ApplicationController
 		@results = Paciente.find_by(rut: params[:rut])
 		render json: @results
 	end
-	
+
 	def search_texto
 		value = params[:nombre]
 		@results = Paciente.joins(:prevision).select('pacientes.*, (rut||rutdv) as rut_completo, previsiones.nombre as prevision_nombre')
 		.where("pacientes.nombre LIKE ? OR apellido_paterno LIKE ? OR apellido_materno LIKE ?","#{value}%","#{value}%","#{value}%")
-		render json: @results 
+		render json: @results
 	end
 
 	def search_nombre

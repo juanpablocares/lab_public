@@ -27,10 +27,8 @@ angular.module('lab').controller('PacientesMenuController', function($scope, $ht
 
 	//Get paciente object from db
 	$http.get('/api/pacientes/' + $stateParams.paciente_id).success(function(data) {
-
 		//Set of received data to parent paciente object.
-		$scope.paciente = data;
-
+		$scope.paciente = data.data;
 		//Functions of paciente object
 		$scope.paciente.getNombreCompleto = function() {
 			return this.nombre + " " + this.apellido_paterno + " " + this.apellido_materno;
@@ -42,7 +40,6 @@ angular.module('lab').controller('PacientesMenuController', function($scope, $ht
 		$scope.paciente.getEdad = function() {
 			if($scope.paciente != null)
 			{
-				console.log("paciente get edad");
 				this.fecha_nacimiento = new Date(this.fecha_nacimiento.getUTCFullYear(), this.fecha_nacimiento.getUTCMonth(),this.fecha_nacimiento.getUTCDate());
 				
 				var d = new Date();
@@ -57,15 +54,13 @@ angular.module('lab').controller('PacientesMenuController', function($scope, $ht
 				return ~~anios + " Años " + ~~meses + " meses";
 			}
 		};
+		
 		$scope.paciente.rut_completo = $scope.paciente.getRutCompleto();
 		$scope.paciente.nombre_completo = $scope.paciente.getNombreCompleto();
-		$scope.paciente.fecha_nacimiento = new Date(data.fecha_nacimiento);
+		$scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
 		$scope.paciente.edad = $scope.paciente.getEdad();
-		$scope.paciente.prevision = {
-			id : data.prevision_id
-		};
-		$scope.paciente.region_id = data.region_id;
-		$scope.paciente.comuna_id = data.comuna_id;
+		$scope.paciente.comuna_id = $scope.paciente.comuna.id;
+		$scope.paciente.region_id = $scope.paciente.comuna.region.id;
 		$scope.mandarPaciente();
 	}).error(function(data) {
 		$state.go('loginRequired.index');

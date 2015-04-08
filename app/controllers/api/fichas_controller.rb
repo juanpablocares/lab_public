@@ -1,5 +1,4 @@
 class Api::FichasController < ApplicationController
-	
 	def index
 		if @results = Ficha.all
 			render json: {
@@ -9,17 +8,26 @@ class Api::FichasController < ApplicationController
 		        }, status: 200, include: [:paciente, :orden_medica, :procedencia, :detalles_ficha]
 		end
 	end
-	
+
 	def show
-		if @results = Ficha.includes([:paciente, :orden_medica, :procedencia, {:detalles_ficha => :examen}]).find(params[:id])
+		if @results = Ficha.includes({
+			:paciente => [:prevision]},
+			:orden_medica,
+			:procedencia, {
+			:detalles_ficha => [
+				:perfil, {
+				:examen => [
+					:tarifas_examen]}
+			   	]})
+			   .find(params[:id])
 			render json: {
 		          success: true,
 		          message: '[show] Ficha encontrada',
 		          data: @results,
-		        }, status: 200, include: [:paciente, :orden_medica, :procedencia, {:detalles_ficha =>{ include: [:perfil,:examen]}}]
+		        }, status: 200, include: [{:paciente => {include: [:prevision]}}, :orden_medica, :procedencia, {:detalles_ficha =>{ include: [:perfil,{:examen => { include: [:tarifas_examen]}}]}}]
 		end
 	end
-	
+
 	def pagos
 		if @results = DetallePagoFicha.includes(:tipo_pago).where(	ficha_id: params[:id])
 			render json: {
@@ -29,7 +37,7 @@ class Api::FichasController < ApplicationController
 		        }, status: 200, include: [:tipo_pago]
 		end
 	end
-	
+
 	def show_bypaciente
 		@fichas = Ficha.where(paciente_id: params[:id])
 		render json: {
@@ -49,9 +57,9 @@ class Api::FichasController < ApplicationController
 			  data: @results,
 			}, status: 200, include: [:paciente, :orden_medica, :procedencia, :detalles_ficha]
 	end
-	
+
 	def range
-				
+
 		if params[:search] && params[:search][:predicateObject] && params[:search][:predicateObject][:id]
 			@results = Ficha.where(id: params[:search][:predicateObject][:id].to_i)
 			@numberOfPages = Ficha.count / params[:number].to_i

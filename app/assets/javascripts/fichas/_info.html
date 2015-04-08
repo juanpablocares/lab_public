@@ -9,28 +9,30 @@
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-2"><strong>Previsión:</strong></label>
-				<label class="control-label col-sm-10"> {{paciente.prevision_nombre}} </label>
+				<label class="control-label col-sm-10"> {{paciente.prevision.nombre}} </label>
 			</div>
 			<div>
 				<table class="table table-striped" ng-if="examenesSeleccionados.length != 0">
 					<thead>
-						<th>Examen</th>
+							<th>Examen</th>
+							<th>Precio</th>
 						<th class="col-sm-1" ng-if="editExamenes">Opciones</th>
 					</thead>
 					<tbody>
 						<tr ng-repeat="item in examenesSeleccionados track by $index" ng-if="item.perfil">
-							<td> {{item.nombre}}
+							<td> <strong>{{item.nombre}}</strong>
 							<table class="table borderless" style="background: none;">
 								<tbody>
 									<tr ng-repeat="detalle in item.detalles_ficha">
-										<td> {{detalle.examen.nombre}}hola </td>
+										<td> {{detalle.examen.nombre}}</td><td>{{detalle.precio}}</td>
 									</tr>
 								</tbody>
-							</table></td>
+							</table></td><td>{{item.precio_total}}</td>
 							<td ng-if="editExamenes" class="text-center"><a href="#" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar perfil"><i class="fa fa-trash-o fa-lg"></i></a></td>
 						</tr>
 						<tr ng-repeat="item in examenesSeleccionados track by $index" ng-if="!item.perfil">
 							<td>{{item.examen.nombre}}</td>
+							<td>{{item.precio}}</td>
 							<td ng-if="editExamenes" class="text-center"><a href="#" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar examen"><i class="fa fa-trash-o fa-lg"></i></a></td>
 						</tr>
 					</tbody>
