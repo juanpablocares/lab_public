@@ -6,14 +6,12 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 		data.fecha_nacimiento = new Date(data.fecha_nacimiento.getUTCFullYear(), data.fecha_nacimiento.getUTCMonth(), data.fecha_nacimiento.getUTCDate());
 		$scope.paciente = data;
 		$scope.masterPaciente = angular.copy($scope.paciente);
+		console.log($scope.paciente);
 		$http.get('/api/regiones').success(function(data) {
 			$scope.regiones = data;
 			angular.forEach(data, function(region, key) {
-				if (region.id == $scope.paciente.region_id) {
+				if (region.id == $scope.paciente.comuna.region.id) {
 					$scope.paciente.region = region;
-					$scope.paciente.comuna = {
-						id : $scope.paciente.comuna_id
-					};
 					$scope.masterPaciente = angular.copy($scope.paciente);
 				}
 			});
@@ -22,6 +20,7 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 		});
 	});
 	$scope.$emit('PedirPacienteFromMenu');
+	
 	$http.get('/api/previsiones').success(function(data) {
 		$scope.plans = data;
 	}).error(function(data) {
