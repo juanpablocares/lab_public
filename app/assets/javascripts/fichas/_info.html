@@ -35,18 +35,20 @@
 							<td>{{item.precio}}</td>
 							<td ng-if="editExamenes" class="text-center"><a href="#" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar examen"><i class="fa fa-trash-o fa-lg"></i></a></td>
 						</tr>
+						<tr>
+							<td><strong>Precio total</strong></td>
+							<td class="text-danger">{{precio_total}}</td>
+						</tr>
+						<tr>
+							<td><strong>Pagado</strong></td>
+							<td class="text-success">{{getTotalPagos()}}</td>
+						</tr>
+						<tr>
+							<td><strong>Total</strong></td>
+							<td ng-class="{'text-success': precio_total < getTotalPagos(), 'text-danger': precio_total > getTotalPagos()}">{{precio_total - getTotalPagos()}}</td>
+						</tr>
 					</tbody>
 				</table>
-			</div>
-			<div class="row form-group">
-				<div class="col-sm-11 text-right">
-					<button ng-click="crearCotizacion()" class="btn btn-primary">
-						Crear cotización
-					</button>
-					<button ng-click="crearFicha()" class="btn btn-danger">
-						Procesar pedido de exámenes
-					</button>
-				</div>
 			</div>
 		</form>
 	</div>
