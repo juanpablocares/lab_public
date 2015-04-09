@@ -1,5 +1,7 @@
 angular.module('lab').controller('FichasIndexController', function($scope, $auth, $state, $http, $stateParams, Fichas, Perfiles, TiposPago, DetallesPagoFicha) {
 
+	$scope.precio_total=0;
+	
 	//Recobrar paciente desde el menu
 	$scope.$on('pacienteFromMenu', function(event, data) {
 		if (data != undefined) {
@@ -38,16 +40,26 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 					value2.precio = $scope.getPrecioDetalleFicha($scope.paciente.prevision.tarifa_id, value2.examen);
 					value.precio_total += value2.precio;
 				});
+				$scope.precio_total += value.precio_total;
 			}
 			else {
 				value.precio = $scope.getPrecioDetalleFicha($scope.paciente.prevision.tarifa_id, value.examen);
+				$scope.precio_total += value.precio;
 			}
+			
 		});
 	}
 
 	$scope.getPrecioDetalleFicha = function(tarifa_id, examen) {
-		return 1000;
+		for ( i = 0; i < examen.tarifas_examen.length; i++) {
+			var value= examen.tarifas_examen[i];
+			if (value.tarifa_id == tarifa_id) {
+				return value.precio;
+			}
+		}
+		return 0;
 	}
+	
 	//Sin ficha, enviar al home
 	if ($stateParams.ficha_id == null)
 		$state.go('loginRequired.index');
@@ -105,7 +117,6 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 			i++;
 		}
 		$scope.setPreciosExamenes();
-		console.log($scope.examenesSeleccionados);
 	};
 
 	/* END TAB INFO */
