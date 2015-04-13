@@ -25,3 +25,4 @@
 //= require angular-smart-table
 //= require angular-sanitize
 //= require angular-ui-select
+//= require ng-csv

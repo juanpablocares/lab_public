@@ -185,6 +185,13 @@
 			params: {tarifa: null}
 		});
 		
+		$stateProvider.state('loginRequired.tarifas.examenes', {
+			url : '/examenes',
+			templateUrl : "tarifas/examenes.html",
+			controller : 'TarifasExamenesController',
+			params: {tarifa: null}
+		});
+		
 		/*Rutas de muestras*/
 		
 		$stateProvider.state('loginRequired.busqueda_muestras', {

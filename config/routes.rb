@@ -39,7 +39,14 @@ Rails.application.routes.draw do
 		
 		#Controladores de tarifas
 		get 'tarifas/', to: 'tarifas#index', defaults: {format: 'json'}
+		get 'tarifas/examenes', to: 'tarifas#examenes', defaults: {format: 'json'}
+		get 'tarifas/:id', to: 'tarifas#show', defaults: {format: 'json'}
+		put 'tarifas/:id', to: 'tarifas#update', defaults: {format: 'json'}
 		post 'tarifas/range/:start/:number', to: 'tarifas#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
+		
+		#Controladores de tarifas examenes
+		get 'tarifas_examen/', to: 'tarifas_examen#index', defaults: {format: 'json'}
+		get 'tarifas_examen/examen/:examen_id', to: 'tarifas_examen#show_examen', defaults: {format: 'json'}
 		
 		resources :comunas, :defaults => { :format => 'json' }
 		resources :detalles_ficha , :defaults => { :format => 'json' }

@@ -40,7 +40,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   	inflect.irregular 'tipoMuestra', 'tiposMuestras'
   	inflect.irregular 'tipoPago', 'tiposPago'
   	inflect.irregular 'tipo_pago', 'tipos_pago'
+	inflect.irregular 'tarifa', 'tarifas'
   	inflect.irregular 'tarifaExamen', 'tarifasExamen'
-  	inflect.irregular 'tarifa_examen', 'tarifas_examen'
   	inflect.irregular 'userSucursal', 'usersSucursal'
 end

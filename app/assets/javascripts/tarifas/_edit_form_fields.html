@@ -1,0 +1,23 @@
+<div class="form-group">
+	<label class="control-label col-md-2">id</label>
+	<div class="col-md-7">
+		<input ng-model="tarifa.id" class="form-control" type="text" ng-disabled="tarifa.id">
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-md-2">Nombre</label>
+	<div class="col-md-7">
+		<input ng-model="tarifa.nombre" class="form-control" type="text"="tarifa.nombre">
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-md-2">Alerta</label>
+	<div ng-init="tarifa.alerta" class="col-md-6">
+		<label class="radio" >
+			<input ng-model="tarifa.alerta" name="seleccionar_alerta" type="radio" value="1">
+			<span>Verdadero</span></label>
+		<label class="radio">
+			<input ng-model="tarifa.alerta" name="seleccionar_alerta" type="radio" value="0">
+			<span>Falso</span> </label>
+	</div>
+</div>

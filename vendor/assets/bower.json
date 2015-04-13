@@ -12,6 +12,6 @@
     "angular-ui-utils": "latest",
     "angular-resource": "latest",
     "angular-smart-table": "latest",
-    "angular-toggle-switch": "latest"
+    "ng-csv": "latest"
   }
 }
