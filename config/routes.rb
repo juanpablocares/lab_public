@@ -32,14 +32,14 @@ Rails.application.routes.draw do
 		put 'examenes/:id', to: 'examenes#update', defaults: {format: 'json'}
 		post 'examenes/range/:start/:number', to: 'examenes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		
-		#Controladores de detalles_ficha
-		get 'detalle_ficha/', to: 'detalle_ficha#index', defaults: {format: 'json'}
-		get 'detalle_ficha/:id', to: 'detalle_ficha#show', defaults: {format: 'json'}
-		put 'detalle_ficha/:id', to: 'detalle_ficha#update', defaults: {format: 'json'}
-		
 		#Controladores de tarifas
 		get 'tarifas/', to: 'tarifas#index', defaults: {format: 'json'}
 		post 'tarifas/range/:start/:number', to: 'tarifas#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
+		
+		#Controladores detalle_ficha
+		post 'detalles_ficha/muestras_tomadas/:start/:number', to: 'detalles_ficha#muestras_tomadas', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
+		get 'detalles_ficha/paciente/:id/:start/:number', to: 'detalles_ficha#get_by_paciente', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/, :start=> /[0-9]+/, :number=> /[0-9]+/ }
+		
 		
 		resources :comunas, :defaults => { :format => 'json' }
 		resources :detalles_ficha , :defaults => { :format => 'json' }
