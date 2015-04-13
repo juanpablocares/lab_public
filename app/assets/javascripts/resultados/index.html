@@ -1,0 +1,24 @@
+<div class="widget-container fluid-height">
+	<div class="heading">
+		Informacion toma muestra
+	</div>
+	<div class="widget-content padded" ng-show="!fichaEditing">
+		<table class="table">
+			<tr>
+				<th class="col-sm-2 text-right">Nombre</th><td>{{masterFicha.paciente.nombre}} {{masterFicha.paciente.apellido_paterno}} {{masterFicha.paciente.apellido_materno}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Fecha nacimiento</th><td>{{masterFicha.paciente.fecha_nacimiento | date : 'dd-MM-yyyy'}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Edad</th><td>{{masterFicha.paciente.edad}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Diagnóstico</th><td>{{masterFicha.paciente.diagnostico}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Género</th><td>{{masterFicha.paciente.genero?'Masculino':'Femenino'}}</td>
+			</tr>
+		</table>
+	</div>
+</div>

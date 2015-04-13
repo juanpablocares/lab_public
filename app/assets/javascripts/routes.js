@@ -129,6 +129,13 @@
 			params: {paciente: null}
 		});
 		
+		$stateProvider.state('loginRequired.pacientes.examenes', {
+			url : '/examenes',
+			templateUrl : "pacientes/examenes.html",
+			controller : 'PacientesExamenesController',
+			params: {paciente: null}
+		});
+		
 		$stateProvider.state('loginRequired.pacientes.asignarExamenes', {
 			url : '/asignarExamenes',
 			templateUrl : "fichas/new.html",
@@ -227,6 +234,22 @@
 			templateUrl : "muestras/examenes.html",
 			controller : 'MuestrasExamenesController',
 		});
+		
+		$stateProvider.state('loginRequired.muestras.ingresar_resultados', {
+			url : '/examenes',
+			templateUrl : "muestras/examenes.html",
+			controller : 'MuestrasExamenesController',
+		});
+		
+		//Lista de muestras tomadas disponibles para ingreso de resultados
+		
+		$stateProvider.state('loginRequired.lista_ingreso_resultados_examen', {
+			url : '/resultados/muestras',
+			templateUrl : "resultados/muestras_tomadas_search.html",
+			controller : 'ResultadosMuestrasTomadasController',
+		});
+		
+		
 		
 		/*
 		 * Login State
