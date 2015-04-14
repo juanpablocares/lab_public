@@ -1,9 +1,52 @@
-<ul class="nav nav-tabs">
-  <li ng-class="{active: tabs.infoTab}" ><a ng-click="setInfoTab()">Información</a></li>
-  <li ng-class="{active: tabs.pagosTab}" ><a ng-click="setPagosTab()" >Pagos</a></li>
-</ul>
-
 <div class="widget-container fluid-height">
-	<div ng-include="'fichas/_info.html'" ng-if="tabs.infoTab"></div>
-	<div ng-include="'fichas/_pagos.html'" ng-if="tabs.pagosTab"></div>
+	<div class="heading">
+		Información ficha
+	</div>
+	<div class="widget-content padded">
+		<form>
+			<div>
+				<table class="table table-striped" ng-if="examenesSeleccionados.length != 0">
+					<thead>
+						<th>Código</th>
+						<th>Código Fonasa</th>
+						<th>Examen</th>
+						<th>Precio</th>
+						<th class="col-sm-1" ng-if="editExamenes">Opciones</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in examenesSeleccionados track by $index" ng-if="item.perfil">
+							<td colspan="3"><strong>{{item.nombre}}</strong>
+							<table class="table borderless" style="background: none;">
+								<tbody>
+									<tr ng-repeat="detalle in item.detalles_ficha">
+										<td> {{detalle.examen.id}}</td><td> {{detalle.examen.codigo_fonasa}}</td><td> {{detalle.examen.nombre}}</td><td>{{detalle.precio}}</td>
+									</tr>
+								</tbody>
+							</table></td><td>{{item.precio_total}}</td>
+							<td ng-if="editExamenes" class="text-center"><a href="#" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar perfil"><i class="fa fa-trash-o fa-lg"></i></a></td>
+						</tr>
+						<tr ng-repeat="item in examenesSeleccionados track by $index" ng-if="!item.perfil">
+							<td>{{item.examen.id}}</td>
+							<td>{{item.examen.codigo_fonasa}}</td>
+							<td>{{item.examen.nombre}}</td>
+							<td>{{item.precio}}</td>
+							<td ng-if="editExamenes" class="text-center"><a href="#" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar examen"><i class="fa fa-trash-o fa-lg"></i></a></td>
+						</tr>
+						<tr>
+							<td colspan="3"><strong>Precio total</strong></td>
+							<td class="text-danger">{{precio_total}}</td>
+						</tr>
+						<tr>
+							<td colspan="3"><strong>Pagado</strong></td>
+							<td class="text-success">{{getTotalPagos()}}</td>
+						</tr>
+						<tr>
+							<td colspan="3"><strong>Total</strong></td>
+							<td ng-class="{'text-success': precio_total < getTotalPagos(), 'text-danger': precio_total > getTotalPagos()}">{{precio_total - getTotalPagos()}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+	</div>
 </div>

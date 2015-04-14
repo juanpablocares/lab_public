@@ -31,13 +31,41 @@ function($scope, $stateParams, DetallesFicha) {
 			if(result.data.length > 0)	$scope.isData = true;
 			tableState.pagination.numberOfPages = result.numberOfPages;
 			$scope.isLoading = false;
+			$scope.setEstadoExamenes();
 		});
 	};
-	$scope.getEstado = function(detalle_ficha)
+	$scope.setEstadoExamenes = function()
 	{
-		if(detalle_ficha.usuario_muestra_id == null)return "Muestra no tomada";
-		if(detalle_ficha.usuario_muestra_id != null)return "Muestra tomada";
-		
+		for(i = 0; i < $scope.examenesPacienteArray.length; i++ )
+		{
+			value = $scope.examenesPacienteArray[i];
+			
+			value.estado = {};
+			
+			if(value.usuario_muestra_id == null)
+			{
+				value.estado.class = 'warning';
+				value.estado.texto = 'Toma de Muestra';
+			}
+			else
+			{
+				if(value.resultados_examen.length == value.examen.sustancias.length)
+				{
+					value.estado.texto = 'Resultados ingresados';
+					value.estado.class = 'info';
+				}
+				else if(value.resultados_examen.length < value.examen.sustancias.length  || value.resultados_examen.length == 0)
+				{
+					value.estado.class = 'success';
+					value.estado.texto = 'Ingreso de resultados';
+				}
+				else
+				{
+					value.estado.class = 'danger';
+					value.estado.texto = 'Error en resultados';
+				}
+			}
+		}
 	};
 }]);
 

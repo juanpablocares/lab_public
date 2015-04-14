@@ -35,7 +35,7 @@
 				<td>{{row.id}}</td>
 				<td>{{row.examen.id}}</td>
 				<td>{{row.examen.nombre}}</td>
-				<td>{{getEstado(row)}}</td>
+				<td><label class="label label-{{row.estado.class}}">{{row.estado.texto}}</label></td>
 				<td>{{row.creado}}</td>
 				<td>{{row.fecha_muestra}}</td>
 			</tr>

@@ -14,7 +14,7 @@ class Api::DetallesFichaController < ApplicationController
 			  message: 'Muestras por paciente encontradas',
 			  numberOfPages: numberOfPages,
 			  data: results,
-			}, status: 200, include: [:examen, :perfil, {:ficha => {include: [:paciente]}}]
+			}, status: 200, include: [{:examen=> {include: [:sustancias]}}, :perfil, :resultados_examen, {:ficha => {include: [:paciente]}}]
 	end
 
 	def muestras_tomadas
