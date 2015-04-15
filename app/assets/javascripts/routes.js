@@ -128,6 +128,13 @@
 			params: {ficha: null}
 		});
 		
+		$stateProvider.state('loginRequired.fichas.examenes', {
+			url : '/examenes',
+			templateUrl : "fichas/examenes.html",
+			controller : 'FichasExamenesController',
+			params: {ficha: null}
+		});
+		
 		/*Rutas de pacientes*/
 		
 		$stateProvider.state('loginRequired.pacientes', {

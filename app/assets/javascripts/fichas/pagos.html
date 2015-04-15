@@ -59,7 +59,16 @@
 							<td>{{pago.monto_pagado}}</td>
 						</tr>
 						<tr>
-							<td></td><td><strong>Total</strong></td><td></td><td><strong>{{getTotalPagos()}}</strong></td>
+							<td colspan="3"><strong>Precio total</strong></td>
+							<td class="text-danger">{{precio_total}}</td>
+						</tr>
+						<tr>
+							<td colspan="3"><strong>Pagado</strong></td>
+							<td class="text-success">{{getTotalPagos()}}</td>
+						</tr>
+						<tr>
+							<td colspan="3"><strong>Total</strong></td>
+							<td ng-class="{'text-success': precio_total < getTotalPagos(), 'text-danger': precio_total > getTotalPagos()}">{{precio_total - getTotalPagos()}}</td>
 						</tr>
 					</tbody>
 				</table>

@@ -3,10 +3,12 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 	$scope.masterPaciente = {};
 
 	$scope.$on('pacienteFromMenu', function(event, data) {
-		data.fecha_nacimiento = new Date(data.fecha_nacimiento.getUTCFullYear(), data.fecha_nacimiento.getUTCMonth(), data.fecha_nacimiento.getUTCDate());
+		
+		if (data.fecha_nacimiento != undefined) {
+			data.fecha_nacimiento = new Date(data.fecha_nacimiento.getUTCFullYear(), data.fecha_nacimiento.getUTCMonth(), data.fecha_nacimiento.getUTCDate());
+		}
 		$scope.paciente = data;
 		$scope.masterPaciente = angular.copy($scope.paciente);
-		console.log($scope.paciente);
 		$http.get('/api/regiones').success(function(data) {
 			$scope.regiones = data;
 			angular.forEach(data, function(region, key) {
@@ -20,7 +22,7 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 		});
 	});
 	$scope.$emit('PedirPacienteFromMenu');
-	
+
 	$http.get('/api/previsiones').success(function(data) {
 		$scope.plans = data;
 	}).error(function(data) {

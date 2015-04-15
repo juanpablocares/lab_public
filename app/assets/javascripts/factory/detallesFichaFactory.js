@@ -38,7 +38,16 @@
 				number : "@number",
 			}, {
 				get : {
-					method : 'GET',
+					method : 'POST',
+				},
+			}),
+			by_ficha : $resource("/api/detalles_ficha/ficha/:id/:start/:number", {
+				id : '@id',
+				start : "@start",
+				number : "@number",
+			}, {
+				get : {
+					method : 'POST',
 				},
 			}),
 		};

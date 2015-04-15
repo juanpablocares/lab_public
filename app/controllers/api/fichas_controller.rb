@@ -42,9 +42,9 @@ class Api::FichasController < ApplicationController
 		@fichas = Ficha.where(paciente_id: params[:id])
 		render json: {
 		          success: true,
-		          message: 'Paciente encontrado con sus respectivas fichas',
+		          message: '[Paciente] Fichas del paciente indicado encontradas',
 		          fichas: @fichas,
-		        }, status: 200
+		        }, status: 200, include: [:orden_medica, :procedencia]
 	end
 
 	def muestras

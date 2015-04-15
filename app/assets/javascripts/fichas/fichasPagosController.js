@@ -35,11 +35,13 @@ angular.module('lab').controller('FichasPagosController', function($scope, $auth
 		return 0;
 	}
 	
-	$scope.ordenarExamenes = function(tarifa_id) {
+		$scope.ordenarExamenes = function(tarifa_id) {
 		var i = 0;
-		while (i < $scope.ficha.detalles_ficha.length) {
-			value = $scope.ficha.detalles_ficha[i];
-			if (value.perfil_id != 	null) { 
+		detalles = angular.copy($scope.ficha.detalles_ficha);
+		
+		while (i < detalles.length) {
+			value = detalles[i];
+			if (value.perfil_id != null) {
 
 				//es perfil
 
@@ -47,13 +49,13 @@ angular.module('lab').controller('FichasPagosController', function($scope, $auth
 				perfilTemp.detalles_ficha = [];
 				perfilTemp.perfil = true;
 				var j = 0;
-				while (j < $scope.ficha.detalles_ficha.length) {
-					value2 = $scope.ficha.detalles_ficha[j];
+				while (j < detalles.length) {
+					value2 = detalles[j];
 					if (value.perfil_id == value2.perfil_id) {
 						perfilTemp.detalles_ficha.push(value2);
 						if (value.id == value2.id)
 							i--;
-						$scope.ficha.detalles_ficha.splice(j, 1);
+						detalles.splice(j, 1);
 					}
 					else
 						j++;
@@ -67,6 +69,8 @@ angular.module('lab').controller('FichasPagosController', function($scope, $auth
 		}
 		$scope.setPreciosExamenes();
 	};
+
+
 	//Recobrar ficha desde el menu
 	$scope.$on('fichaFromMenu', function(event, data) {
 		console.log("fichaFromMenu");
