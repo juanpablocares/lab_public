@@ -1,5 +1,5 @@
 class Indicacion < ActiveRecord::Base
 
-	has_many :examenes
+	belongs_to :examen
 
 end

@@ -17,6 +17,7 @@ class Api::FichasController < ApplicationController
 			:detalles_ficha => [
 				:perfil, {
 				:examen => [
+					:indicaciones,
 					:tarifas_examen]}
 			   	]})
 			   .find(params[:id])
@@ -24,7 +25,7 @@ class Api::FichasController < ApplicationController
 		          success: true,
 		          message: '[show] Ficha encontrada',
 		          data: @results,
-		        }, status: 200, include: [{:paciente => {include: [:prevision]}}, :orden_medica, :procedencia, {:detalles_ficha =>{ include: [:perfil,{:examen => { include: [:tarifas_examen]}}]}}]
+		        }, status: 200, include: [{:paciente => {include: [:prevision]}}, :orden_medica, :procedencia, {:detalles_ficha =>{ include: [:perfil,{:examen => { include: [:indicaciones,:tarifas_examen]}}]}}]
 		end
 	end
 
@@ -97,7 +98,7 @@ class Api::FichasController < ApplicationController
 							detalle = DetalleFicha.new
 							detalle.ficha_id = ficha.id
 							detalle.examen_id = exa[:id]
-							detalle.perfil_examen_id = ex[:id]
+							detalle.perfil_id = ex[:id]
 							if !detalle.save
 								raise "Error saving detalle_ficha"
 							end
@@ -106,7 +107,7 @@ class Api::FichasController < ApplicationController
 						detalle = DetalleFicha.new
 						detalle.ficha_id = ficha.id
 						detalle.examen_id = ex[:id]
-						detalle.perfil_examen_id = nil
+						detalle.perfil_id = nil
 						if !detalle.save
 							raise "Error saving detalle_ficha"
 						end
