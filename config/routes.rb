@@ -49,6 +49,7 @@ Rails.application.routes.draw do
 		post 'detalles_ficha/muestras_tomadas/:start/:number', to: 'detalles_ficha#muestras_tomadas', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		post 'detalles_ficha/paciente/:id/:start/:number', to: 'detalles_ficha#get_by_paciente', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/, :start=> /[0-9]+/, :number=> /[0-9]+/ }
 		post 'detalles_ficha/ficha/:id/:start/:number', to: 'detalles_ficha#get_by_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/, :start=> /[0-9]+/, :number=> /[0-9]+/ }
+		get 'detalles_ficha/ficha/:id', to: 'detalles_ficha#get_by_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/}
 		
 		resources :comunas, :defaults => { :format => 'json' }
 		resources :detalles_ficha , :defaults => { :format => 'json' }

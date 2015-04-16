@@ -10,24 +10,24 @@
 				<th>Fecha muestra</th>
 			</tr>
 		</thead>
-		<tbody ng-show="!isLoading">
-			<tr ng-repeat="row in examenesFichaArray" ui-sref="loginRequired.examenes.estado({detalle_ficha_id: row.id})">
-				<table>
-					<tr>
-						<td>{{row.id}}</td>
-						<td>{{row.examen.id}}</td>
-						<td>{{row.examen.nombre}}</td>
-						<td><label class="label label-{{row.estado.class}}">{{row.estado.texto}}</label></td>
-						<td>{{row.creado}}</td>
-						<td>{{row.fecha_muestra}}</td>
-					</tr>
-					<tr>
-						<td colspan="6">Indicaciones toma de muestra</td>
-					</tr>
-					<tr ng-repeat="cond in row.examen.indicaciones">
-						
-					</tr>
-				</table>
+		<tbody ng-repeat="row in examenesFichaArray" ui-sref="loginRequired.examenes.estado({detalle_ficha_id: row.id})">
+			<tr>
+				<td>{{row.id}}</td>
+				<td>{{row.examen.id}}</td>
+				<td>{{row.examen.nombre}}</td>
+				<td><label class="label label-{{row.estado.class}}">{{row.estado.texto}}</label></td>
+				<td>{{row.creado}}</td>
+				<td>{{row.fecha_muestra}}</td>
+			</tr>
+			<tr class="borderless"  ng-if="row.examen.indicaciones.length > 0">
+				<td></td>
+				<td colspan="5"><strong>Indicaciones toma de muestra:</strong></td>
+			</tr>
+			<tr class="borderless" ng-repeat="cond in row.examen.indicaciones" ng-if="row.examen.indicaciones.length > 0">
+				<td colspan="2"></td>
+				<td colspan="4">
+					{{cond.descripcion}}
+				</td>
 			</tr>
 		</tbody>
 	</table>
