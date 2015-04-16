@@ -1,8 +1,8 @@
 (function() {
 	var labs = angular.module('lab');
 
-	labs.factory('Examen', function($resource) {
-		return $resource("/api/examenes/:id", {id: "@id"},
+	labs.factory('Tarifa', function($resource) {
+		return $resource("/api/tarifas/:id", {id: "@id"},
 			{
 				get : {
 					method : 'GET',

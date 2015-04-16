@@ -1,12 +1,18 @@
 class Api::ExamenesController < ApplicationController
 
 	def show
-		if @results = Examen.find(params[:id])
+		if @results = Examen.find_by_id(params[:id])
 			render json: {
 		          success: true,
 		          message: 'Examen encontrado',
 		          examen: @results,
 		        }, status: 200, include: [:tarifas_examen, :indicacion, :tipo_examen]
+		else
+			render json: {
+		          success: false,
+		          message: 'Examen no encontrado',
+		          examen: @results,
+		        }, status: 500
 		end
 	end
 	
@@ -70,8 +76,20 @@ class Api::ExamenesController < ApplicationController
 		render json: {
 		          success: true,
 		          message: 'Listado de examenes encontrado',
-		          data: @examenes,
+		          examenes: @examenes,
 		        }, status: 200
+	end
+	
+	def select
+		#@examenes = Examen.select(:id, :codigo_fonasa, :codigo, :nombre, :tarifas_examen.tarifa_id, :tarifas_examen.precio).includes(:tarifas_examen).all
+
+		@examenes = Examen.select(:id, :codigo_fonasa, :codigo, :nombre).all
+		
+		render json: {
+		          success: true,
+		          message: 'Listado de examenes encontrado',
+		          examenes: @examenes,
+		        }, status: 200, include: [:tarifas_examen]
 	end
 	
 	def update

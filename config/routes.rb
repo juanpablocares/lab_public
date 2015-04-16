@@ -28,19 +28,27 @@ Rails.application.routes.draw do
 		post 'fichas/muestras/:start/:number', to: 'fichas#muestras', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		
 		#Controladores de examenes
+		get 'examenes/select', to: 'examenes#select', defaults: {format: 'json'}
 		get 'examenes/:id', to: 'examenes#show', defaults: {format: 'json'}
 		put 'examenes/:id', to: 'examenes#update', defaults: {format: 'json'}
 		post 'examenes/range/:start/:number', to: 'examenes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		
 		#Controladores de tarifas
 		get 'tarifas/', to: 'tarifas#index', defaults: {format: 'json'}
+		get 'tarifas/examenes', to: 'tarifas#examenes', defaults: {format: 'json'}
+		get 'tarifas/:id', to: 'tarifas#show', defaults: {format: 'json'}
+		put 'tarifas/:id', to: 'tarifas#update', defaults: {format: 'json'}
 		post 'tarifas/range/:start/:number', to: 'tarifas#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		
+
+		#Controladores de tarifas examenes
+		get 'tarifas_examen/', to: 'tarifas_examen#index', defaults: {format: 'json'}
+		get 'tarifas_examen/examen/:examen_id', to: 'tarifas_examen#show_examen', defaults: {format: 'json'}
+
 		#Controladores detalle_ficha
 		post 'detalles_ficha/muestras_tomadas/:start/:number', to: 'detalles_ficha#muestras_tomadas', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		post 'detalles_ficha/paciente/:id/:start/:number', to: 'detalles_ficha#get_by_paciente', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/, :start=> /[0-9]+/, :number=> /[0-9]+/ }
 		post 'detalles_ficha/ficha/:id/:start/:number', to: 'detalles_ficha#get_by_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/, :start=> /[0-9]+/, :number=> /[0-9]+/ }
-		
 		
 		resources :comunas, :defaults => { :format => 'json' }
 		resources :detalles_ficha , :defaults => { :format => 'json' }

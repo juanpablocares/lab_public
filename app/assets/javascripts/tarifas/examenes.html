@@ -1,0 +1,15 @@
+<div class="widget-container fluid-height">
+		<div ng-show="isLoading">
+			<div class="text-center"><i class="fa fa-spinner fa-pulse"></i></div>
+		</div>
+		<div class="col-md-5" ng-show="!isLoading">
+			<button class="btn btn-success" ng-csv="getArray" csv-header="getHeader()" field-separator="," filename="tarifas.csv"><i class="fa fa-download"></i>
+				Descargar archivo
+			</button>
+		</div>
+		<div class="col-md-8" ng-show="!isLoading">
+			<button class="btn btn-primary start"><i class="fa fa-upload"></i>
+				<span>Subir archivo</span>
+			</button>
+		</div>
+</div>
