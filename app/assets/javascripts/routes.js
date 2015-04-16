@@ -63,13 +63,13 @@
 		});
 		
 		$stateProvider.state('loginRequired.busqueda_examen', {
-			url : '/examenes/buscar',
-			templateUrl : "examenes/search.html",
-			controller : 'ExamenesSearchController'
+			url : '/lista_examenes/buscar',
+			templateUrl : "lista_examenes/search.html",
+			controller : 'ListaExamenesSearchController'
 		});
 		
 		$stateProvider.state('loginRequired.busqueda_ficha', {
-			url : '/fichas/buscar',
+			url : '/fichas',
 			templateUrl : "fichas/search.html",
 			controller : 'FichasSearchController',
 			params : {
@@ -105,6 +105,34 @@
 				apellido_materno : null,
 				prevision : null
 			}
+		});
+		/* Rutas de Fichas*/
+		$stateProvider.state('loginRequired.fichas', {
+			url : '/fichas/:ficha_id',
+			templateUrl : "fichas/menu.html",
+			controller : 'FichasMenuController',
+			params: {paciente: null}
+		});
+		
+		$stateProvider.state('loginRequired.fichas.info', {
+			url : '/informacion',
+			templateUrl : "fichas/index.html",
+			controller : 'FichasIndexController',
+			params: {ficha: null}
+		});
+		
+		$stateProvider.state('loginRequired.fichas.pagos', {
+			url : '/pagos',
+			templateUrl : "fichas/pagos.html",
+			controller : 'FichasPagosController',
+			params: {ficha: null}
+		});
+		
+		$stateProvider.state('loginRequired.fichas.examenes', {
+			url : '/examenes',
+			templateUrl : "fichas/examenes.html",
+			controller : 'FichasExamenesController',
+			params: {ficha: null}
 		});
 		
 		/*Rutas de pacientes*/
@@ -148,18 +176,25 @@
 			controller : 'FichasIndexController',
 		});
 		
-		/*Rutas de fichas*/
+		/*Rutas de listado de examenes */
 		
-		$stateProvider.state('loginRequired.fichas', {
-			url : '/fichas/:ficha_id',
-			templateUrl : "fichas/index.html",
-			controller : 'FichasIndexController',
+		$stateProvider.state('loginRequired.lista_examenes', {
+			url : '/lista_examenes/:examen_id',
+			templateUrl : "lista_examenes/menu.html",
+			controller : 'ListaExamenesMenuController',
 		});
-
-		/*Rutas de examenes*/
+		
+		$stateProvider.state('loginRequired.lista_examenes.info', {
+			url : '/informacion',
+			templateUrl : "lista_examenes/index.html",
+			controller : 'ListaExamenesIndexController',
+			params: {examen: null}
+		});
+		
+		/*Rutas de examenes a pacientes*/
 		
 		$stateProvider.state('loginRequired.examenes', {
-			url : '/examenes/:examen_id',
+			url : '/examenes/:id',
 			templateUrl : "examenes/menu.html",
 			controller : 'ExamenesMenuController',
 		});

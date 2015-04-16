@@ -1,16 +1,14 @@
-angular.module('lab').controller('PacientesExamenesController', ['$scope', '$stateParams', 'DetallesFicha', '$http',
+angular.module('lab').controller('FichasExamenesController', ['$scope', '$stateParams', 'DetallesFicha', '$http',
 function($scope, $stateParams, DetallesFicha) {
 
-	$scope.paciente = {};
-
-	$scope.$on('pacienteFromMenu', function(event, data) {
-		data.fecha_nacimiento = new Date(data.fecha_nacimiento.getUTCFullYear(), data.fecha_nacimiento.getUTCMonth(), data.fecha_nacimiento.getUTCDate());
-		$scope.paciente = data;
+	$scope.ficha = {};
+	//Recobrar ficha desde el menu
+	$scope.$on('fichaFromMenu', function(event, data) {
+		if (data != undefined) {
+			$scope.ficha = data;
+		}
 	});
-
-	$scope.isData = false;
-	//Descomentar para pedir datos del paciente desde el controlador paciente menu
-	$scope.$emit('PedirPacienteFromMenu');
+	$scope.$emit('PedirFichaFromMenu');
 	
 	$scope.callServer = function callServer(tableState) {
 		$scope.isLoading = true;
@@ -22,12 +20,12 @@ function($scope, $stateParams, DetallesFicha) {
 		var number = pagination.number || 10;
 		// Number of entries showed per page.
 
-		DetallesFicha.by_paciente.get({
-			id : $stateParams.paciente_id,
+		DetallesFicha.by_ficha.get({
+			id : $stateParams.ficha_id,
 			start : start,
 			number : number
 		}, function(result) {
-			$scope.examenesPacienteArray = result.data;
+			$scope.examenesFichaArray = result.data;
 			if(result.data.length > 0)	$scope.isData = true;
 			tableState.pagination.numberOfPages = result.numberOfPages;
 			$scope.isLoading = false;
@@ -36,9 +34,9 @@ function($scope, $stateParams, DetallesFicha) {
 	};
 	$scope.setEstadoExamenes = function()
 	{
-		for(i = 0; i < $scope.examenesPacienteArray.length; i++ )
+		for(i = 0; i < $scope.examenesFichaArray.length; i++ )
 		{
-			value = $scope.examenesPacienteArray[i];
+			value = $scope.examenesFichaArray[i];
 			
 			value.estado = {};
 			

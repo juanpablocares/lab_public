@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150406132320) do
+ActiveRecord::Schema.define(version: 20150413134401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,10 +48,10 @@ ActiveRecord::Schema.define(version: 20150406132320) do
   end
 
   create_table "detalles_pagos_ficha", force: :cascade do |t|
-    t.integer  "ficha_id",     limit: 8,                                 null: false
-    t.integer  "tipo_pago_id", limit: 8,                                 null: false
-    t.integer  "monto_pagado", limit: 8,                                 null: false
-    t.datetime "creado",                 default: '2015-02-20 15:08:40', null: false
+    t.integer  "ficha_id",     limit: 8,                   null: false
+    t.integer  "tipo_pago_id", limit: 8,                   null: false
+    t.integer  "monto_pagado", limit: 8,                   null: false
+    t.datetime "creado",                 default: "now()", null: false
   end
 
   create_table "especialidades", force: :cascade do |t|
@@ -216,10 +216,20 @@ ActiveRecord::Schema.define(version: 20150406132320) do
     t.datetime "creado",             default: '2015-02-20 15:08:40', null: false
   end
 
+  create_table "sustancias_examen", force: :cascade do |t|
+    t.integer  "sustancia_id"
+    t.integer  "examen_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "sustancias_examen", ["examen_id"], name: "index_sustancias_examen_on_examen_id", using: :btree
+  add_index "sustancias_examen", ["sustancia_id"], name: "index_sustancias_examen_on_sustancia_id", using: :btree
+
   create_table "tarifas", force: :cascade do |t|
-    t.string   "nombre", limit: 100,                                 null: false
-    t.boolean  "alerta",                                             null: false
-    t.datetime "creado",             default: '2015-02-20 15:08:40', null: false
+    t.string   "nombre", limit: 100,                   null: false
+    t.boolean  "alerta",                               null: false
+    t.datetime "creado",             default: "now()", null: false
   end
 
   create_table "tarifas_examen", id: false, force: :cascade do |t|
@@ -327,7 +337,10 @@ ActiveRecord::Schema.define(version: 20150406132320) do
   add_foreign_key "roles_usuario", "users", name: "roles_usuario_user_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "sucursales", "comunas", name: "sucursales_comuna_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "sucursales", "laboratorios", name: "sucursales_laboratorio_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "sustancias_examen", "examenes"
+  add_foreign_key "sustancias_examen", "sustancias"
   add_foreign_key "tarifas_examen", "examenes", name: "precios_examen_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "tarifas_examen", "tarifas", name: "tarifas_examen_tarifa_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "users_sucursal", "sucursales", name: "users_sucursal_sucursal_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "users_sucursal", "users", name: "users_sucursal_user_id_fkey", on_update: :cascade, on_delete: :cascade
 end

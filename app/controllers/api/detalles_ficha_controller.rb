@@ -14,7 +14,21 @@ class Api::DetallesFichaController < ApplicationController
 			  message: 'Muestras por paciente encontradas',
 			  numberOfPages: numberOfPages,
 			  data: results,
-			}, status: 200, include: [:examen, :perfil, {:ficha => {include: [:paciente]}}]
+			}, status: 200, include: [{:examen=> {include: [:sustancias]}}, :perfil, :resultados_examen, {:ficha => {include: [:paciente]}}]
+	end
+	
+	def get_by_ficha
+		
+		results = DetalleFicha.joins(ficha: :paciente).joins(:examen).where(fichas: {id: params[:id]})
+		
+		results.order(fecha_muestra: :desc).limit(params[:number].to_i).offset(params[:start].to_i)
+		numberOfPages = results.count / params[:number].to_i
+		render json: {
+			  success: true,
+			  message: 'Muestras por ficha encontradas',
+			  numberOfPages: numberOfPages,
+			  data: results,
+			}, status: 200, include: [{:examen=> {include: [:sustancias]}}, :perfil, :resultados_examen, {:ficha => {include: [:paciente]}}]
 	end
 
 	def muestras_tomadas
