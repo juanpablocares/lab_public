@@ -17,7 +17,8 @@
 				}
 				else {
 					$state.go('loginRequired.nuevo_paciente', {
-						rut_completo : value
+						rut_completo : value,
+						desde_barra: true 
 					});
 				}
 			});

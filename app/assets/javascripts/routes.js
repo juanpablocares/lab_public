@@ -82,13 +82,14 @@
 				prevision : null
 			}
 		});
-		
+		 
 		$stateProvider.state('loginRequired.nuevo_paciente', {
 			url : '/pacientes/nuevo',
 			templateUrl : "pacientes/new.html",
 			controller : 'PacientesNewController',
 			params : {
-				rut_completo : null
+				rut_completo : null,
+				desde_barra: false,
 			}
 		});
 

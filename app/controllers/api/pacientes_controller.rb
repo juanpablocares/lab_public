@@ -93,7 +93,7 @@ class Api::PacientesController < ApplicationController
 		          errors: @paciente.errors,
 		        }, status: 500
 		end
-	end
+	end 
 
 	def update_byrut
 		@paciente = Paciente.find_by(rut: params[:rut])
@@ -146,13 +146,13 @@ class Api::PacientesController < ApplicationController
 			render json: {
 	          success: true,
 	          message: 'Paciente successfully created',
-	          paciente: @paciente,
+	          data: @paciente,
 	        }, status: 200
 		else
 			render json: {
 	          success: false,
 	          message: 'Paciente cannot be created',
-	          errors: @paciente.errors,
+	          data: @paciente.errors,
 	        }, status: 500
 		end
 	end

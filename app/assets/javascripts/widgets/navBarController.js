@@ -19,7 +19,7 @@ angular.module('lab').controller('NavBarController', function($rootScope, $state
 		$scope.showSearchTempForm = false;
 		$scope.showSearchTextForm = false;
 		$scope.showSearchRutForm = true;
-	}
+	} 
 
 	$scope.showTempForm();
 
