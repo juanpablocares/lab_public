@@ -80,6 +80,18 @@ class Api::ExamenesController < ApplicationController
 		        }, status: 200
 	end
 	
+	def select
+		#@examenes = Examen.select(:id, :codigo_fonasa, :codigo, :nombre, :tarifas_examen.tarifa_id, :tarifas_examen.precio).includes(:tarifas_examen).all
+
+		@examenes = Examen.select(:id, :codigo_fonasa, :codigo, :nombre).all
+		
+		render json: {
+		          success: true,
+		          message: 'Listado de examenes encontrado',
+		          examenes: @examenes,
+		        }, status: 200, include: [:tarifas_examen]
+	end
+	
 	def update
 		@results = Examen.find(params[:id])
 		if @results.update_attributes(examen_params)

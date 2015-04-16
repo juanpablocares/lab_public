@@ -4,7 +4,7 @@ class Api::TarifasExamenController < ApplicationController
   end
   
   def show_examen
-		if @results = TarifaExamen.find_by(examen_id: params[:examen_id])
+		if @results = TarifaExamen.where(examen_id: params[:examen_id])
 			render json: {
 		          success: true,
 		          message: 'Tarifa examen encontrado',
