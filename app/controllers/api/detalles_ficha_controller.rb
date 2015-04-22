@@ -105,8 +105,8 @@ class Api::DetallesFichaController < ApplicationController
 			render json: {
 		          success: true,
 		          message: 'Detalles Ficha encontrado',
-		          detalle_ficha: @results,
-		        }, status: 200
+		          data: @results,
+		        }, status: 200, include: [{:examen=> {include: [:sustancias,:indicaciones]}}, :perfil, :resultados_examen, {:ficha => {include: [:paciente]}}]
 		end
 	end
 
@@ -116,13 +116,13 @@ class Api::DetallesFichaController < ApplicationController
 			render json: {
 		          success: true,
 		          message: 'Detalle ficha successfully modified',
-		          detalle_ficha: @results,
+		          data: @results,
 		        }, status: 200
 		else
 			render json: {
 		          success: false,
 		          message: 'Detalle ficha cannot be updated',
-		          errors: @results.errors,
+		          data: @results.errors,
 		        }, status: 500
 		end
 	end

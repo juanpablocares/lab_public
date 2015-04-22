@@ -39,7 +39,7 @@
 			</tr>
 		</thead>
 		<tbody ng-show="!isLoading">
-			<tr ng-repeat="row in muestras" ui-sref="loginRequired.muestras.ingresar_resultados({examen_id: row.id})">
+			<tr ng-repeat="row in muestras" ui-sref="loginRequired.ordenes_examen.ingreso_resultados({detalle_ficha_id: row.id})">
 				<td>{{row.id}}</td>
 				<td>{{row.ficha.id}}</td>
 				<td><phy-rut rut='row.ficha.paciente.rut + row.ficha.paciente.rutdv'></phy-rut></td>

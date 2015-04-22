@@ -10,7 +10,7 @@
 				<th>Fecha muestra</th>
 			</tr>
 		</thead>
-		<tbody ng-repeat="row in examenesFichaArray" ui-sref="loginRequired.examenes.estado({detalle_ficha_id: row.id})">
+		<tbody ng-repeat="row in examenesFichaArray" ui-sref="loginRequired.ordenes_examen.info({detalle_ficha_id: row.id})">
 			<tr>
 				<td>{{row.id}}</td>
 				<td>{{row.examen.id}}</td>
