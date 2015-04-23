@@ -26,3 +26,4 @@
 //= require angular-sanitize
 //= require angular-ui-select
 //= require ng-csv
+//= require papa.parse

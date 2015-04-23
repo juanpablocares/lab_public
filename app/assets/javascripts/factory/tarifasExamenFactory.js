@@ -3,11 +3,11 @@
 
 	labs.factory('TarifasExamen', function($resource) {
 		return {
-			examen : $resource("/api/tarifas_examen/examen/:examen_id", {
-				examen_id: '@examen_id',
+			examenes : $resource("/api/tarifas_examen/", {
+				
 			}, {
-				get : {
-					method : 'GET',
+				update : {
+					method : 'PUT',
 				},
 			})
 		};

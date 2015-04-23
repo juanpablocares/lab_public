@@ -43,6 +43,7 @@ Rails.application.routes.draw do
 
 		#Controladores de tarifas examenes
 		get 'tarifas_examen/', to: 'tarifas_examen#index', defaults: {format: 'json'}
+		put 'tarifas_examen/', to: 'tarifas_examen#update', defaults: {format: 'json'}
 		get 'tarifas_examen/examen/:examen_id', to: 'tarifas_examen#show_examen', defaults: {format: 'json'}
 
 		#Controladores detalle_ficha

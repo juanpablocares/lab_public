@@ -8,8 +8,10 @@
 			</button>
 		</div>
 		<div class="col-md-8" ng-show="!isLoading">
-			<button class="btn btn-primary start"><i class="fa fa-upload"></i>
+			<input type="file" file-reader="fileContent">
+			<button class="btn btn-primary start" ng-click="processCSV()" ><i class="fa fa-upload"></i>
 				<span>Subir archivo</span>
 			</button>
+			{{estadoCSV}}
 		</div>
 </div>

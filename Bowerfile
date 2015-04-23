@@ -29,3 +29,5 @@ asset 'angular-resource'
 asset 'angular-smart-table'
 #Librería para manejo de CSV
 asset 'ng-csv'
+#Libreria para subir archivos
+asset 'papa.parse'
