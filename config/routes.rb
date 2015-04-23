@@ -50,7 +50,18 @@ Rails.application.routes.draw do
 		post 'detalles_ficha/muestras_tomadas/:start/:number', to: 'detalles_ficha#muestras_tomadas', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		post 'detalles_ficha/paciente/:id/:start/:number', to: 'detalles_ficha#get_by_paciente', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/, :start=> /[0-9]+/, :number=> /[0-9]+/ }
 		post 'detalles_ficha/ficha/:id/:start/:number', to: 'detalles_ficha#get_by_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/, :start=> /[0-9]+/, :number=> /[0-9]+/ }
+		get 'detalles_ficha/ficha/:id', to: 'detalles_ficha#get_by_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/}
 		
+		#Controladores sustancias_examen
+		get 'sustancias_examen/examen/:id', to: 'sustancias_examen#get_by_examen', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/}
+		
+		#Controladores sustancias_examen
+		get 'resultados_examen/detalle_ficha/:id', to: 'resultados_examen#get_by_detalle_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/}
+		post 'resultados_examen/detalle_ficha/:id', to: 'resultados_examen#save_batch_by_detalle_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/}
+		
+		
+		resources :resultados_examen, :defaults => { :format => 'json' }
+		resources :sustancias_examen, :defaults => { :format => 'json' }
 		resources :comunas, :defaults => { :format => 'json' }
 		resources :detalles_ficha , :defaults => { :format => 'json' }
 		resources :fichas, :defaults => { :format => 'json' }
@@ -66,9 +77,6 @@ Rails.application.routes.draw do
 		resources :tipos_pago , :defaults => { :format => 'json' }
 		resources :detalles_pago_ficha, :defaults => { :format => 'json' }
 		get 'detalles_pago_ficha/ficha/:id', to: 'detalles_pago_ficha#getAllByFicha', defaults: {format: 'json'}
-		
-		
-		
 		
 		resources :users, :defaults => { :format => 'json' } do
 			collection do

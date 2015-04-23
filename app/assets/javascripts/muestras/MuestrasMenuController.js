@@ -10,12 +10,7 @@ angular.module('lab').controller('MuestrasMenuController', function($scope, $htt
 		name : 'Examenes',
 		state : 'loginRequired.muestras.examenes({muestra: muestra})',
 		id : 'loginRequired.muestras.examenes',
-	},{
-		name : 'Agregar resultados',
-		state : 'loginRequired.muestras.tomadas({muestra: muestra})',
-		id : 'loginRequired.muestras.tomadas',
-	}
-	];
+	}];
 
 	$scope.$on('fichaFromEdit', function(event, data) {
 		$scope.ficha = data;

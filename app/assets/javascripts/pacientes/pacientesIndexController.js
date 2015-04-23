@@ -41,7 +41,7 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 	};
 
 	$scope.resetPaciente = function() {
-		$scope.pacienteEditingForm.$setPristine();
+		$scope.paciente_form.$setPristine();
 		$scope.paciente = angular.copy($scope.masterPaciente);
 	};
 
@@ -51,21 +51,24 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 	};
 
 	$scope.guardarDatosPersonales = function(paciente) {
-		console.log("Guardar cambios en paciente");
-		paciente.prevision_id = paciente.prevision.id;
-		paciente.comuna_id = paciente.comuna.id;
-		Pacientes.by_rut.show({
-			rut : paciente.rut
-		}, function(datos) {
-			Pacientes.by_rut.update({
-				rut : datos.rut
-			}, paciente).$promise.then(function(response) {
-				$scope.updatePaciente();
-				$scope.pacienteEditing = !$scope.pacienteEditing;
-			}, function(response) {
-				$scope.resetPaciente();
-				console.log("ERROR editando paciente");
+		if($scope.paciente_form.$valid)
+		{
+			console.log("Guardar cambios en paciente");
+			paciente.prevision_id = paciente.prevision.id;
+			paciente.comuna_id = paciente.comuna.id;
+			Pacientes.by_rut.show({
+				rut : paciente.rut
+			}, function(datos) {
+				Pacientes.by_rut.update({
+					rut : datos.rut
+				}, paciente).$promise.then(function(response) {
+					$scope.updatePaciente();
+					$scope.pacienteEditing = !$scope.pacienteEditing;
+				}, function(response) {
+					$scope.resetPaciente();
+					console.log("ERROR editando paciente");
+				});
 			});
-		});
+		}
 	};
 });

@@ -1,9 +1,12 @@
 (function() {
-	angular.module('lab').controller('MuestrasSearchController', function($scope, $auth, $state, $http, $stateParams, Fichas) {
+	angular.module('lab').controller('FichasSearchController', function($scope, $auth, $state, $http, $stateParams, Fichas) {
+
+		$scope.resultadosBusqueda = null;
 
 		$scope.displayed = [];
+
 		$scope.callServer = function callServer(tableState) {
-			$scope.displayed = [];
+
 			$scope.isLoading = true;
 
 			var pagination = tableState.pagination;
@@ -12,8 +15,8 @@
 			// This is NOT the page number, but the index of item in the list that you want to use to display the table.
 			var number = pagination.number || 10;
 			// Number of entries showed per page.
-			
-			Fichas.muestras.advanced({
+
+			Fichas.search.advanced({
 				start : start,
 				number : number
 			}, tableState).

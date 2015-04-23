@@ -1,7 +1,7 @@
 class Examen < ActiveRecord::Base
 
-	has_many	:tarifas_examen, class_name: 'TarifaExamen'
-	belongs_to 	:indicacion 
+	has_many	:tarifas_examen, :class_name => 'TarifaExamen'
+	has_many 	:indicaciones
 	belongs_to 	:tipo_examen
 
 

@@ -6,9 +6,17 @@ class Api::DetallesFichaController < ApplicationController
 	def get_by_paciente
 		
 		results = DetalleFicha.joins(ficha: :paciente).joins(:examen).where(pacientes: {id: params[:id]})
+		results = results.order(fecha_muestra: :desc)
+		numberOfPages = 1
 		
-		results.order(fecha_muestra: :desc).limit(params[:number].to_i).offset(params[:start].to_i)
-		numberOfPages = results.count / params[:number].to_i
+		if params.has_key?(:start)
+			results = results.offset(params[:start].to_i)
+		end
+		
+		if params.has_key?(:number)
+			results = results.limit(params[:number].to_i)
+			numberOfPages = results.count / params[:number].to_i
+		end
 		render json: {
 			  success: true,
 			  message: 'Muestras por paciente encontradas',
@@ -20,15 +28,24 @@ class Api::DetallesFichaController < ApplicationController
 	def get_by_ficha
 		
 		results = DetalleFicha.joins(ficha: :paciente).joins(:examen).where(fichas: {id: params[:id]})
+		results = results.order(fecha_muestra: :desc)
 		
-		results.order(fecha_muestra: :desc).limit(params[:number].to_i).offset(params[:start].to_i)
-		numberOfPages = results.count / params[:number].to_i
+		numberOfPages = 1
+		
+		if params.has_key?(:start)
+			results = results.offset(params[:start].to_i)
+		end
+		
+		if params.has_key?(:number)
+			results = results.limit(params[:number].to_i)
+			numberOfPages = results.count / params[:number].to_i
+		end
 		render json: {
 			  success: true,
 			  message: 'Muestras por ficha encontradas',
 			  numberOfPages: numberOfPages,
 			  data: results,
-			}, status: 200, include: [{:examen=> {include: [:sustancias]}}, :perfil, :resultados_examen, {:ficha => {include: [:paciente]}}]
+			}, status: 200, include: [{:examen=> {include: [:sustancias,:indicaciones]}}, :perfil, :resultados_examen, {:ficha => {include: [:paciente]}}]
 	end
 
 	def muestras_tomadas
@@ -88,8 +105,8 @@ class Api::DetallesFichaController < ApplicationController
 			render json: {
 		          success: true,
 		          message: 'Detalles Ficha encontrado',
-		          detalle_ficha: @results,
-		        }, status: 200
+		          data: @results,
+		        }, status: 200, include: [{:examen=> {include: [:sustancias,:indicaciones]}}, :perfil, :resultados_examen, {:ficha => {include: [:paciente]}}]
 		end
 	end
 
@@ -99,13 +116,13 @@ class Api::DetallesFichaController < ApplicationController
 			render json: {
 		          success: true,
 		          message: 'Detalle ficha successfully modified',
-		          detalle_ficha: @results,
+		          data: @results,
 		        }, status: 200
 		else
 			render json: {
 		          success: false,
 		          message: 'Detalle ficha cannot be updated',
-		          errors: @results.errors,
+		          data: @results.errors,
 		        }, status: 500
 		end
 	end

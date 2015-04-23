@@ -1,0 +1,27 @@
+<div class="widget-container fluid-height">
+	<div class="heading">
+		Ingreso toma de muestra
+	</div>
+	<div class="widget-content padded">
+		<form>
+			<div>
+				<table class="table table-striped">
+					<thead>
+						<th class="col-md-2">id</th>
+						<th class="col-md-7">Exámenes</th>
+						<th class="col-md-3">Estado muestra</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td>{{detalleFicha.id}}</td>
+							<td>{{detalleFicha.examen.nombre}}</td>
+							<td>
+								<button type="button" class="btn btn-{{detalleFicha.estado.class}}" ng-click="cambiarEstadoBoton(detalleFicha.id)"><i class="fa fa-pulse fa-spinner" ng-if="detalleFicha.estado.class=='info'"></i> {{detalleFicha.estado.texto}}</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+	</div>
+</div>

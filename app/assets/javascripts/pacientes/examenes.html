@@ -31,7 +31,7 @@
 			</tr>
 		</thead>
 		<tbody ng-show="!isLoading">
-			<tr ng-repeat="row in examenesPacienteArray" ui-sref="loginRequired.examenes.estado({detalle_ficha_id: row.id})">
+			<tr ng-repeat="row in examenesPacienteArray" ui-sref="loginRequired.ordenes_examen.info({detalle_ficha_id: row.id})">
 				<td>{{row.id}}</td>
 				<td>{{row.examen.id}}</td>
 				<td>{{row.examen.nombre}}</td>

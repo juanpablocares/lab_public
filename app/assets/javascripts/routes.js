@@ -63,7 +63,7 @@
 		});
 		
 		$stateProvider.state('loginRequired.busqueda_examen', {
-			url : '/lista_examenes/buscar',
+			url : '/lista_examenes',
 			templateUrl : "lista_examenes/search.html",
 			controller : 'ListaExamenesSearchController'
 		});
@@ -82,18 +82,19 @@
 				prevision : null
 			}
 		});
-		
+		 
 		$stateProvider.state('loginRequired.nuevo_paciente', {
 			url : '/pacientes/nuevo',
 			templateUrl : "pacientes/new.html",
 			controller : 'PacientesNewController',
 			params : {
-				rut_completo : null
+				rut_completo : null,
+				desde_barra: false,
 			}
 		});
 
 		$stateProvider.state('loginRequired.busqueda_paciente', {
-			url : '/pacientes/buscar',
+			url : '/pacientes',
 			templateUrl : "pacientes/search.html",
 			controller : 'PacientesSearchController',
 			params : {
@@ -193,16 +194,37 @@
 		
 		/*Rutas de examenes a pacientes*/
 		
-		$stateProvider.state('loginRequired.examenes', {
-			url : '/examenes/:id',
-			templateUrl : "examenes/menu.html",
-			controller : 'ExamenesMenuController',
+		$stateProvider.state('loginRequired.ordenes_examen', {
+			url : '/orden/:detalle_ficha_id',
+			templateUrl : "ordenes/menu.html",
+			controller : 'OrdenesExamenMenuController',
 		});
 		
-		$stateProvider.state('loginRequired.examenes.info', {
+		$stateProvider.state('loginRequired.ordenes_examen.info', {
 			url : '/informacion',
-			templateUrl : "examenes/index.html",
-			controller : 'ExamenesIndexController',
+			templateUrl : "ordenes/index.html",
+			controller : 'OrdenesExamenIndexController',
+			params: {examen: null}
+		});
+		
+		$stateProvider.state('loginRequired.ordenes_examen.ingreso_muestra', {
+			url : '/ingreso_muestra',
+			templateUrl : "ordenes/ingreso_muestra.html",
+			controller : 'OrdenesExamenIngresoMuestraController',
+			params: {examen: null}
+		});
+		
+		$stateProvider.state('loginRequired.ordenes_examen.resultados', {
+			url : '/resultados',
+			templateUrl : "ordenes/resultados.html",
+			controller : 'OrdenesExamenResultadosController',
+			params: {examen: null}
+		});
+		
+		$stateProvider.state('loginRequired.ordenes_examen.ingreso_resultados', {
+			url : '/ingreso_resultados',
+			templateUrl : "ordenes/ingreso_resultados.html",
+			controller : 'OrdenesExamenIngresoResultadosController',
 			params: {examen: null}
 		});
 		

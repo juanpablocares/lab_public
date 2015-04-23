@@ -14,7 +14,7 @@
 				<th class="col-sm-2 text-right">Celular</th><td>{{masterPaciente.celular}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-2 text-right">Dirección</th><td>{{masterPaciente.direccion+', '+masterPaciente.comuna_nombre}}</td>
+				<th class="col-sm-2 text-right">Dirección</th><td>{{masterPaciente.direccion+', '+masterPaciente.comuna.nombre}}</td>
 			</tr>
 			<tr>
 				<th class="col-sm-2 text-right">Fecha de nacimiento</th><td>{{masterPaciente.fecha_nacimiento | date : 'dd-MM-yyyy'}}</td>
@@ -38,7 +38,7 @@
 		</div>
 	</div>
 	<div class="widget-content padded" ng-show="pacienteEditing">
-		<form class="form-horizontal" ng-submit="guardarDatosPersonales(paciente)" name="pacienteEditingForm">
+		<form class="form-horizontal" ng-submit="guardarDatosPersonales(paciente)" name="paciente_form" novalidate>
 			<div ng-include="'pacientes/_edit_form_fields.html'"></div>
 			<div class="form-group">
 				<div class="col-sm-11 text-right">

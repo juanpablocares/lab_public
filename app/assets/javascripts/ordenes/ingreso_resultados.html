@@ -1,0 +1,33 @@
+<div class="widget-container fluid-height">
+	<div class="heading">
+		Ingreso manual resultados examen
+	</div>
+	<div class="widget-content padded">
+		<form class="form-horizontal" ng-submit="guardarResultados()" name="formResultados" novalidate>
+			<div>
+				<div ng-if="formResultados.$submitted && !formResultados.$valid" class="panel panel-danger">
+					Debe agregar todos los resultados del examen
+				</div>
+				<table class="table table-striped">
+					<thead>
+						<th>Nombre sustancia</th>
+						<th>Cantidad</th>
+						<th>Unidades</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in resultsForm.sustancias">
+							<td>{{item.nombre}}</td>
+							<td><input class="form-control" type="text" ng-model="item.input_value" name="cantidad" required/></td>
+							<td>{{item.unidad}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div>
+				<button class="btn btn-primary">
+					Guardar resultados
+				</button>
+			</div>
+		</form>
+	</div>
+</div>

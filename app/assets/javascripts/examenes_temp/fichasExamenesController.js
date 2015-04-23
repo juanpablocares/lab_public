@@ -1,7 +1,6 @@
 angular.module('lab').controller('FichasExamenesController', ['$scope', '$stateParams', 'DetallesFicha', '$http',
 function($scope, $stateParams, DetallesFicha) {
-	$scope.isData = false;
-	
+
 	$scope.ficha = {};
 	//Recobrar ficha desde el menu
 	$scope.$on('fichaFromMenu', function(event, data) {
@@ -11,22 +10,30 @@ function($scope, $stateParams, DetallesFicha) {
 	});
 	$scope.$emit('PedirFichaFromMenu');
 	
-	DetallesFicha.by_ficha.get({
-		id : $stateParams.ficha_id,
-		start : 0,
-		number : 1000
-	}, function(result) {
-		$scope.examenesFichaArray = result.data;
-		if($scope.examenesFichaArray.length > 0)
-		{
-			$scope.isData = true;
-			$scope.setEstadoExamenes();
-		}
-	});
+	$scope.callServer = function callServer(tableState) {
+		$scope.isLoading = true;
 	
+		var pagination = tableState.pagination;
+	
+		var start = pagination.start || 0;
+		// This is NOT the page number, but the index of item in the list that you want to use to display the table.
+		var number = pagination.number || 10;
+		// Number of entries showed per page.
+
+		DetallesFicha.by_ficha.get({
+			id : $stateParams.ficha_id,
+			start : start,
+			number : number
+		}, function(result) {
+			$scope.examenesFichaArray = result.data;
+			if(result.data.length > 0)	$scope.isData = true;
+			tableState.pagination.numberOfPages = result.numberOfPages;
+			$scope.isLoading = false;
+			$scope.setEstadoExamenes();
+		});
+	};
 	$scope.setEstadoExamenes = function()
 	{
-		console.log($scope.examenesFichaArray );
 		for(i = 0; i < $scope.examenesFichaArray.length; i++ )
 		{
 			value = $scope.examenesFichaArray[i];
@@ -36,7 +43,7 @@ function($scope, $stateParams, DetallesFicha) {
 			if(value.usuario_muestra_id == null)
 			{
 				value.estado.class = 'warning';
-				value.estado.texto = 'Toma de muestra pendiente';
+				value.estado.texto = 'Toma de Muestra';
 			}
 			else
 			{
@@ -44,8 +51,8 @@ function($scope, $stateParams, DetallesFicha) {
 				{
 					value.estado.texto = 'Resultados ingresados';
 					value.estado.class = 'info';
-				} 
-				else if(value.resultados_examen.length < value.examen.sustancias.length || value.examen.sustancias.length == 0)
+				}
+				else if(value.resultados_examen.length < value.examen.sustancias.length  || value.resultados_examen.length == 0)
 				{
 					value.estado.class = 'success';
 					value.estado.texto = 'Ingreso de resultados';
