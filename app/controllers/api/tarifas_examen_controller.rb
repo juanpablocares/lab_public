@@ -23,11 +23,20 @@ class Api::TarifasExamenController < ApplicationController
 		@result = params[:tarifas_examen]
 		@result.each do |r|
 			@tmp = TarifaExamen.where(examen_id: r["examen_id"]).where(tarifa_id: r["tarifa_id"]).first
-			@tmp.precio = r[:precio]
-			if r[:precio_fonasa] != nil
-				@tmp.precio_fonasa = r[:precio_fonasa]
+			if @tmp != nil
+				@tmp.precio = r[:precio]
+				if r[:precio_fonasa] != nil
+					@tmp.precio_fonasa = r[:precio_fonasa]
+				end
+				@tmp.save
+			else
+				tarifa = TarifaExamen.new
+				tarifa.examen_id = r["examen_id"]
+				tarifa.tarifa_id = r["tarifa_id"]
+				tarifa.precio = r["precio"]
+				tarifa.precio_fonasa = r["precio_fonasa"]
+				tarifa.save
 			end
-			@tmp.save
 		end
 		render json: {
 			  success: true,

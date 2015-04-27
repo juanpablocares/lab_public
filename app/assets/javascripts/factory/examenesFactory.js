@@ -8,6 +8,9 @@
 				'index' : {
 					method : 'GET',
 					isArray : true
+				},
+				'update' : {
+					method : 'PUT'
 				}
 			}),
 			range : $resource("/api/examenes/range/:start/:number", {

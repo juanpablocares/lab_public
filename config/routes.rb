@@ -29,6 +29,7 @@ Rails.application.routes.draw do
 		
 		#Controladores de examenes
 		get 'examenes/select', to: 'examenes#select', defaults: {format: 'json'}
+		put 'examenes/', to: 'examenes#update_all', defaults: {format: 'json'}
 		get 'examenes/:id', to: 'examenes#show', defaults: {format: 'json'}
 		put 'examenes/:id', to: 'examenes#update', defaults: {format: 'json'}
 		post 'examenes/range/:start/:number', to: 'examenes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 

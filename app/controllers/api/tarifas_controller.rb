@@ -1,6 +1,6 @@
 class Api::TarifasController < ApplicationController
   def index
-	render json: Tarifa.all
+	render json: Tarifa.order(id: :asc).all
   end
   
   def show
@@ -68,7 +68,7 @@ class Api::TarifasController < ApplicationController
 		          numberOfPages: 0
 		        }, status: 200
 		else
-			@results = Tarifa.limit(params[:number].to_i).offset(params[:start].to_i).order("nombre ASC")
+			@results = Tarifa.limit(params[:number].to_i).offset(params[:start].to_i).order("id ASC")
 			@numberOfPages = Tarifa.count / params[:number].to_i
 			render json: {
 				success: true,

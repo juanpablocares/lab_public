@@ -1,4 +1,4 @@
-angular.module('lab').controller('TarifasExamenesController', function($scope, $auth, $state, $http, $stateParams, TarifasExamen) {
+angular.module('lab').controller('TarifasExamenesController', function($scope, $auth, $state, $http, $stateParams, TarifasExamen, Examenes) {
 	$scope.estadoCSV = false;
 	$scope.fileReader = [];
 	$scope.examenes = [];
@@ -48,9 +48,17 @@ angular.module('lab').controller('TarifasExamenesController', function($scope, $
 				console.log('update tarifas');
 				console.log(result);
 			});
+			
+		Examenes.all.update({
+				examenes : examenes_update,
+			}).
+			$promise.then(function(result) {
+				console.log('update examenes');
+				console.log(result);
+			});
 		
 		//console.log(examenes_update);
-		console.log(tarifas_update);
+		//console.log(tarifas_update);
 	}
 	
 	var query = $http.get('/api/examenes/select').success(function(data) {
