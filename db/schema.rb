@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150423181357) do
+ActiveRecord::Schema.define(version: 20150427162859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20150423181357) do
   end
 
   create_table "examenes", force: :cascade do |t|
-    t.string   "codigo_fonasa",  limit: 10,                                  null: false
+    t.string   "codigo_fonasa",  limit: 10
     t.string   "nombre",         limit: 200,                                 null: false
     t.string   "codigo",         limit: 500
     t.integer  "externo"
@@ -84,7 +84,12 @@ ActiveRecord::Schema.define(version: 20150423181357) do
     t.integer  "orden_medica_id", limit: 8
     t.integer  "user_id",         limit: 8,                                 null: false
     t.datetime "creado",                    default: '2015-02-20 15:08:40', null: false
+    t.string   "observaciones"
+    t.integer  "prevision_id"
+    t.integer  "precio_total"
   end
+
+  add_index "fichas", ["prevision_id"], name: "index_fichas_on_prevision_id", using: :btree
 
   create_table "indicaciones", force: :cascade do |t|
     t.text    "descripcion"
@@ -143,7 +148,6 @@ ActiveRecord::Schema.define(version: 20150423181357) do
     t.integer  "comuna_id",        limit: 8,                                   null: false
     t.date     "fecha_nacimiento",                                             null: false
     t.integer  "genero",                                                       null: false
-    t.text     "diagnostico"
     t.integer  "prevision_id",                                                 null: false
     t.integer  "user_id",          limit: 8,                                   null: false
     t.datetime "creado",                       default: '2015-02-20 15:08:40', null: false
@@ -237,7 +241,7 @@ ActiveRecord::Schema.define(version: 20150423181357) do
   create_table "tarifas_examen", force: :cascade do |t|
     t.integer  "tarifa_id",     limit: 8,                   null: false
     t.integer  "examen_id",     limit: 8,                   null: false
-    t.integer  "precio",                                    null: false
+    t.integer  "precio"
     t.datetime "creado",                  default: "now()"
     t.integer  "precio_fonasa"
   end
@@ -320,6 +324,7 @@ ActiveRecord::Schema.define(version: 20150423181357) do
   add_foreign_key "examenes_perfil", "perfiles", name: "examenes_perfil_perfil_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "fichas", "ordenes_medicas", column: "orden_medica_id", name: "fichas_orden_medica_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "fichas", "pacientes", name: "fichas_paciente_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "fichas", "previsiones"
   add_foreign_key "fichas", "procedencias", name: "fichas_procedencia_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "fichas", "users", name: "fichas_usuario_creador_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "indicaciones", "examenes"

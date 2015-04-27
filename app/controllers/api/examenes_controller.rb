@@ -50,7 +50,7 @@ class Api::ExamenesController < ApplicationController
 		          data:  @results,
 		          message: 'Resultado correcto',
 		          numberOfPages: 0
-		        }, status: 200, include: [:tarifas_examen, :indicacion, :tipo_examen]
+		        }, status: 200, include: [:tarifas_examen, :tipo_examen]
 		elsif params[:search] && params[:search][:predicateObject] && params[:search][:predicateObject][:codigo]
 			@results = Examen.where(Examen.arel_table[:codigo].matches("%#{params[:search][:predicateObject][:codigo]}%"))
 			@numberOfPages = Examen.count / params[:number].to_i
@@ -58,7 +58,7 @@ class Api::ExamenesController < ApplicationController
 		          data:  @results,
 		          message: 'Resultado correcto',
 		          numberOfPages: 0
-		        }, status: 200, include: [:tarifas_examen, :indicacion, :tipo_examen]
+		        }, status: 200, include: [:tarifas_examen, :tipo_examen]
 		else
 			@results = Examen.limit(params[:number].to_i).offset(params[:start].to_i).order("nombre ASC")
 			@numberOfPages = Examen.count / params[:number].to_i
@@ -67,7 +67,7 @@ class Api::ExamenesController < ApplicationController
 				data:  @results,
 		        message: 'Resultado correcto',
 		        numberOfPages: @numberOfPages,
-		    }, status: 200, include: [:tarifas_examen, :indicacion, :tipo_examen]
+		    }, status: 200, include: [:tarifas_examen, :tipo_examen]
 		end
 	end
 
@@ -76,7 +76,7 @@ class Api::ExamenesController < ApplicationController
 		render json: {
 		          success: true,
 		          message: 'Listado de examenes encontrado',
-		          examenes: @examenes,
+		          data: @examenes,
 		        }, status: 200
 	end
 	

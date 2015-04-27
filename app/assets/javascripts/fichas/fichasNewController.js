@@ -51,6 +51,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 			value.perfil = false;
 			$scope.examenesArray.push(value);
 		});
+		console.log($scope.examenesArray);
 	};
 
 	$scope.quitarExamenSeleccionado = function(item) {

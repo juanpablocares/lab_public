@@ -49,6 +49,9 @@ function($scope, $stateParams, DetallesFicha) {
 			}
 			else
 			{
+				console.log(value.examen.nombre);
+				console.log(value.resultados_examen);
+				console.log(value.examen.sustancias);
 				if(value.resultados_examen.length == value.examen.sustancias.length)
 				{
 					value.estado.texto = 'Resultados ingresados';

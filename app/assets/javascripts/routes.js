@@ -63,9 +63,9 @@
 		});
 		
 		$stateProvider.state('loginRequired.busqueda_examen', {
-			url : '/lista_examenes',
-			templateUrl : "lista_examenes/search.html",
-			controller : 'ListaExamenesSearchController'
+			url : '/examenes',
+			templateUrl : "examenes/search.html",
+			controller : 'ExamenesSearchController'
 		});
 		
 		$stateProvider.state('loginRequired.busqueda_ficha', {
@@ -180,7 +180,7 @@
 		/*Rutas de listado de examenes */
 		
 		$stateProvider.state('loginRequired.lista_examenes', {
-			url : '/lista_examenes/:examen_id',
+			url : '/examenes/:examen_id',
 			templateUrl : "lista_examenes/menu.html",
 			controller : 'ListaExamenesMenuController',
 		});
