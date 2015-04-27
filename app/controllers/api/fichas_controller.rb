@@ -10,11 +10,13 @@ class Api::FichasController < ApplicationController
 	end
 
 	def show
-		if @results = Ficha.includes({
-			:paciente => [:prevision]},
-			:orden_medica,
-			:procedencia, {
-			:detalles_ficha => [
+		if @results = Ficha.includes(
+			{:paciente => [:prevision,:comuna]},
+			{:orden_medica => [:medico]},
+			:user,
+			:prevision,
+			:procedencia,
+			{:detalles_ficha => [
 				:perfil, {
 				:examen => [
 					:indicaciones,
@@ -25,7 +27,13 @@ class Api::FichasController < ApplicationController
 		          success: true,
 		          message: '[show] Ficha encontrada',
 		          data: @results,
-		        }, status: 200, include: [{:paciente => {include: [:prevision]}}, :orden_medica, :procedencia, {:detalles_ficha =>{ include: [:perfil,{:examen => { include: [:indicaciones,:tarifas_examen]}}]}}]
+		        }, status: 200, include: [
+		        	{:paciente => {include: [:prevision, :comuna]}},
+		        	{:orden_medica => {include: [:medico]}},
+		        	:user,
+		        	:prevision,
+		        	:procedencia,
+		        	{:detalles_ficha => {include: [:perfil,{:examen => { include: [:indicaciones,:tarifas_examen]}}]}}]
 		end
 	end
 

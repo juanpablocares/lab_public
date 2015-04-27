@@ -48,7 +48,7 @@ class Api::ExamenesController < ApplicationController
 		render json: {
 		          success: true,
 		          message: 'Listado de examenes encontrado',
-		          examenes: @examenes,
+		          data: @examenes,
 		        }, status: 200
 	end
 	

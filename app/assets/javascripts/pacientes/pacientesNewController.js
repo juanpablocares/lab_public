@@ -5,7 +5,6 @@ angular.module('lab').controller('PacientesNewController', function($scope, $aut
 	$scope.paciente.rut_completo = $stateParams.rut_completo;
 
 	$scope.paciente.getEdad = function() {
-		console.log("getEdad");
 		var birthday = +new Date(this.fecha_nacimiento);
 		var anios = ((Date.now() - birthday) / (31556926000));
 		return ~~anios + " Años.";

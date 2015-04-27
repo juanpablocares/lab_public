@@ -1,34 +1,83 @@
 <div class="row">
-	<div class="col-sm-12">
+	<div class="col-sm-6">
 		<div class="widget-container fluid-height">
 			<div class="widget-content padded clearfix text-center">
-				<h4>
-					<strong>Número de ficha: </strong>
-					{{ficha.id}}
-				</h4>
-				<h4><strong>Paciente: </strong>{{ficha.paciente.nombre}} {{ficha.paciente.apellido_paterno}}</h4>
-				<h4><strong>Previsión: </strong>{{ficha.paciente.prevision.nombre}}</h4>
-				<h4><strong>Médico solicitante: </strong>{{ficha.procedencia.nombre}}</h4>
+				<table class="table table-condensed">
+					<tbody>
+						<tr>
+							<td><strong>Rut</strong></td>
+							<td><phy-rut rut='ficha.paciente.rut_completo'></phy-rut></td>
+						</tr>
+						<tr>
+							<td><strong>Paciente</strong></td>
+							<td>{{ficha.paciente.nombre}} {{ficha.paciente.apellido_paterno}} {{ficha.paciente.apellido_materno}}</td>
+						</tr>
+						<tr>
+							<td><strong>Fecha Nacimiento</strong></td>
+							<td>{{ficha.paciente.fecha_nacimiento | date:'dd/MM/yyyy'}} - {{ficha.paciente.getEdad()}}</td>
+						</tr>
+						<tr>
+							<td><strong>Teléfono</strong></td>
+							<td>{{ficha.paciente.celular}}</td>
+						</tr>
+						<tr>
+							<td><strong>Dirección</strong></td>
+							<td>{{ficha.paciente.direccion}} {{ficha.paciente.comuna.nombre}}</td>
+						</tr>
+						<tr>
+							<td><strong>Email</strong></td>
+							<td>{{ficha.paciente.email}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="widget-container fluid-height">
+			<div class="widget-content padded clearfix text-center">
+				<table class="table table-condensed">
+					<tbody>
+						<tr>
+							<td><strong>Fecha ingreso</strong></td>
+							<td>{{ficha.creado | date:'dd/MM/yyyy HH:mm' }}</td>
+						</tr>
+						<tr>
+							<td><strong>Recepcionista</strong></td>
+							<td>{{ficha.user.nombre}} {{ficha.user.apellido_paterno}}</td>
+						</tr>
+						<tr>
+							<td><strong>Procedencia</strong></td>
+							<td>{{ficha.procedencia.nombre}}</td>
+						</tr>
+						<tr>
+							<td><strong>Medico</strong></td>
+							<td>{{ficha.orden_medica.medico.nombre}} {{ficha.orden_medica.medico.apellido_paterno}} - <phy-rut rut="ficha.orden_medica.medico.rut"></phy-rut></td>
+						</tr>
+						<tr>
+							<td><strong>Previsión</strong></td>
+							<td>{{ficha.prevision}}</td>
+						</tr>
+						<tr>
+							<td><strong>Observaciones</strong></td>
+							<td>{{ficha.observaciones}}</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
 </div>
 <div class="row">
-	<div class="col-sm-3">
-		<div class="widget-container fluid-height">
-			<div class="heading">
-				<i class="fa fa-fw fa-user"></i> Ficha
-			</div>
-			<ul class="list-group">
-				<li class="list-group-item" ng-repeat="tab in tabs" ng-class="{active: state.current.name === tab.id}">
-					<a ui-sref="{{tab.state}}">
-					<p>
-						<span class="badge" ng-if="tab.badge">{{tab.badge}}</span>{{tab.name}}
-					</p> </a>
-				</li>
-			</ul>
-		</div>
+	<div class="col-sm-12">
+		<ul class="nav nav-pills">
+			<li ng-repeat="tab in tabs" ng-class="{active: state.current.name === tab.id}">
+				<a ui-sref="{{tab.state}}">
+				<p>
+					<span class="badge" ng-if="tab.badge">{{tab.badge}}</span>{{tab.name}}
+				</p> </a>
+			</li>
+		</ul>
+		<div ui-view ></div>
 	</div>
-
-	<div ui-view class="col-sm-9"></div>
 </div>
