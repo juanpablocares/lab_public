@@ -34,7 +34,7 @@ class Api::ExamenesController < ApplicationController
 		end
 		
 		numberOfPages = results.count / params[:number].to_i
-		results.order(nombre: :asc).limit(params[:number].to_i).offset(params[:start].to_i)
+		results = results.order(nombre: :asc).limit(params[:number].to_i).offset(params[:start].to_i)
 		render json: {
 			  success: true,
 			  message: 'Examenes encontrados',
