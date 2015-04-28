@@ -1,5 +1,5 @@
 (function() {
-	angular.module('lab').controller('TarifasSearchController', function($scope, $auth, $state, $http, $stateParams, Tarifas) {
+	angular.module('lab').controller('PrevisionesSearchController', function($scope, $auth, $state, $http, $stateParams, Previsiones) {
 
 		$scope.displayed = [];
 		$scope.callServer = function callServer(tableState) {
@@ -13,7 +13,7 @@
 			var number = pagination.number || 10;
 			// Number of entries showed per page.
 			
-			Tarifas.range.advanced({
+			Previsiones.range.advanced({
 				start : start,
 				number : number
 			}, tableState).

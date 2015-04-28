@@ -100,6 +100,23 @@ class Api::ExamenesController < ApplicationController
 			}, status: 200
 	end
 	
+	def create
+		@examen = Examen.new(examen_params)
+		if @examen.save
+			render json: {
+	          success: true,
+	          message: 'Examen successfully created',
+	          data: @examen,
+	        }, status: 200
+		else
+			render json: {
+	          success: false,
+	          message: 'Examen cannot be created',
+	          data: @examen.errors,
+	        }, status: 500
+		end
+	end
+	
 	def examen_params
 		params.permit(:codigo_fonasa, :nombre, :codigo, :externo, :procedencia, :indicacion_id, :tipo_examen_id)
 	end

@@ -1,0 +1,35 @@
+<div class="form-group">
+	<label class="control-label col-md-2">id</label>
+	<div class="col-md-7">
+		<input ng-model="prevision.id" class="form-control" type="text" ng-disabled="prevision.id">
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-md-2">Nombre</label>
+	<div class="col-md-7">
+		<input ng-model="prevision.nombre" class="form-control" type="text"="prevision.nombre">
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-md-2">Codigo</label>
+	<div class="col-md-7">
+		<input ng-model="prevision.codigo" class="form-control" type="text"="prevision.codigo">
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-md-2">Habilitada</label>
+	<div class="col-md-6">
+		<label class="radio" >
+			<input ng-model="prevision.habilitada" name="seleccionar_habilitacion" type="radio" value="1">
+			<span>Verdadero</span></label>
+		<label class="radio">
+			<input ng-model="prevision.habilitada" name="seleccionar_habilitacion" type="radio" value="0">
+			<span>Falso</span> </label>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-md-2">Tarifa</label>
+	<div class="col-md-7">
+		<select class="form-control" ng-model="prevision.tarifa" ng-options="t.id for t in tarifas | orderBy:'id'"></select>
+	</div>
+</div>
