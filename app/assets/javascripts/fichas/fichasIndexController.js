@@ -1,9 +1,68 @@
 angular.module('lab').controller('FichasIndexController', function($scope, $auth, $state, $http, $stateParams, Fichas, Perfiles, TiposPago, DetallesPagoFicha) {
 
-	$scope.precio_total=0;
+	$scope.loading = true;
+
+	$scope.precio_total = 0;
 	$scope.editExamenes = false;
 	$scope.examenesSeleccionados = [];
 	$scope.ficha = {};
+
+	$scope.setEstadoExamenes = function() {
+		for ( i = 0; i < $scope.examenesSeleccionados.length; i++) {
+			value = $scope.examenesSeleccionados[i];
+			if (value.perfil) {
+				for ( j = 0; j < value.detalles_ficha.length; j++) {
+					value2 = value.detalles_ficha[j];
+	
+					value2.estado = {};
+	
+					if (value2.usuario_muestra_id == null) {
+						value2.estado.class = 'warning';
+						value2.estado.texto = 'Toma de muestra pendiente';
+					}
+					else {
+						if (value2.resultados_examen.length == value2.examen.sustancias.length) {
+							value2.estado.texto = 'Resultados ingresados';
+							value2.estado.class = 'info';
+						}
+						else
+						if (value2.resultados_examen.length < value2.examen.sustancias.length || value2.examen.sustancias.length == 0) {
+							value2.estado.class = 'success';
+							value2.estado.texto = 'Ingreso de resultados';
+						}
+						else {
+							value2.estado.class = 'danger';
+							value2.estado.texto = 'Error en resultados';
+						}
+					}
+				}
+			}
+			else {
+				value.estado = {};
+
+				if (value.usuario_muestra_id == null) {
+					value.estado.class = 'warning';
+					value.estado.texto = 'Toma de muestra pendiente';
+				}
+				else {
+					if (value.resultados_examen.length == value.examen.sustancias.length) {
+						value.estado.texto = 'Resultados ingresados';
+						value.estado.class = 'info';
+					}
+					else
+					if (value.resultados_examen.length < value.examen.sustancias.length || value.examen.sustancias.length == 0) {
+						value.estado.class = 'success';
+						value.estado.texto = 'Ingreso de resultados';
+					}
+					else {
+						value.estado.class = 'danger';
+						value.estado.texto = 'Error en resultados';
+					}
+				}
+			}
+		} 
+		console.log($scope.examenesSeleccionados);
+	};
 
 	$scope.setPreciosExamenes = function() {
 		angular.forEach($scope.examenesSeleccionados, function(value, key) {
@@ -24,14 +83,13 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 
 	$scope.getPrecioDetalleFicha = function(tarifa_id, examen) {
 		for ( i = 0; i < examen.tarifas_examen.length; i++) {
-			var value= examen.tarifas_examen[i];
+			var value = examen.tarifas_examen[i];
 			if (value.tarifa_id == tarifa_id) {
 				return value.precio;
 			}
 		}
 		return 0;
 	}
-	
 	//Sin ficha, enviar al home
 	if ($stateParams.ficha_id == null)
 		$state.go('loginRequired.index');
@@ -39,7 +97,7 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 	$scope.ordenarExamenes = function(tarifa_id) {
 		var i = 0;
 		detalles = angular.copy($scope.ficha.detalles_ficha);
-		
+
 		while (i < detalles.length) {
 			value = detalles[i];
 			if (value.perfil_id != null) {
@@ -69,6 +127,7 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 			i++;
 		}
 		$scope.setPreciosExamenes();
+		$scope.setEstadoExamenes();
 	};
 
 	//Obtener tipos de pago para select
@@ -85,6 +144,7 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 		id : $stateParams.ficha_id
 	}).$promise.then(function(result) {
 		$scope.detallePagos = result.data;
+		$scope.loading = false;
 	}).catch(function(response) {
 		console.error("Error al cargar detalle pagos");
 	});
@@ -127,7 +187,6 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 		}
 		return total;
 	}
-	
 	//Recobrar ficha desde el menu
 	$scope.$on('fichaFromMenu', function(event, data) {
 		if (data != undefined) {
@@ -136,7 +195,5 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 		}
 	});
 	$scope.$emit('PedirFichaFromMenu');
-	
-	
 
 });

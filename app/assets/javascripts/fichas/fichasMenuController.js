@@ -1,5 +1,7 @@
 angular.module('lab').controller('FichasMenuController', function($scope, $http, $stateParams, $auth, $state, Ficha) {
 
+	$scope.loading = true;
+
 	if ($stateParams.ficha_id == null)
 		$state.go('loginRequired.busqueda_ficha');
 	$scope.state = $state;
@@ -12,10 +14,6 @@ angular.module('lab').controller('FichasMenuController', function($scope, $http,
 		name : 'Pagos',
 		state : 'loginRequired.fichas.pagos()',
 		id : 'loginRequired.fichas.pagos',
-	}, {
-		name : 'Examenes',
-		state : 'loginRequired.fichas.examenes()',
-		id : 'loginRequired.fichas.examenes',
 	}];
 
 	Ficha.get({
@@ -43,6 +41,7 @@ angular.module('lab').controller('FichasMenuController', function($scope, $http,
 		};
 		
 		$scope.mandarFicha();
+		$scope.loading = false;
 	});
 	$scope.$on('fichaFromEdit', function(event, data) {
 		$scope.ficha = data;

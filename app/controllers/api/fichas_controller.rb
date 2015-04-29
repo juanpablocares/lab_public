@@ -17,9 +17,12 @@ class Api::FichasController < ApplicationController
 			:prevision,
 			:procedencia,
 			{:detalles_ficha => [
+				:resultados_examen,
 				:perfil, {
 				:examen => [
-					:indicaciones,
+					:sustancias,
+					:indicacion,
+					:tipo_examen,
 					:tarifas_examen]}
 			   	]})
 			   .find(params[:id])
@@ -33,7 +36,7 @@ class Api::FichasController < ApplicationController
 		        	:user,
 		        	:prevision,
 		        	:procedencia,
-		        	{:detalles_ficha => {include: [:perfil,{:examen => { include: [:indicaciones,:tarifas_examen]}}]}}]
+		        	{:detalles_ficha => {include: [:resultados_examen,:perfil,{:examen => { include: [:sustancias, :indicacion, :tipo_examen,:tarifas_examen]}}]}}]
 		end
 	end
 

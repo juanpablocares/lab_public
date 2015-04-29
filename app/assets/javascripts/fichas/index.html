@@ -1,45 +1,64 @@
-<div class="widget-container fluid-height">
+<div ng-if="loading" class="row text-center">
+	<i class="fa fa-spinner fa-pulse fa-2x"></i>	
+</div>
+
+<div class="widget-container fluid-height" ng-if="!loading">
 	<div class="widget-content padded">
 		<form>
 			<div>
-				<table class="table table-striped" ng-if="examenesSeleccionados.length != 0">
+				<table class="table table-bordered" ng-if="examenesSeleccionados.length != 0">
 					<thead>
-						<th>Código</th>
 						<th>Código Fonasa</th>
 						<th>Examen</th>
+						<th>Tipo muestra</th>
+						<th>Indicaciones</th>
+						<th>Proceso</th>
+						<th>Dia proceso</th>
+						<th>Demora</th>
+						<th>Estado</th>
 						<th>Precio</th>
-						<th class="col-sm-1" ng-if="editExamenes">Opciones</th>
 					</thead>
 					<tbody>
-						<tr ng-repeat="item in examenesSeleccionados track by $index" ng-if="item.perfil">
-							<td colspan="3"><strong>{{item.nombre}}</strong>
-							<table class="table borderless" style="background: none;">
-								<tbody>
-									<tr ng-repeat="detalle in item.detalles_ficha">
-										<td> {{detalle.examen.id}}</td><td> {{detalle.examen.codigo_fonasa}}</td><td> {{detalle.examen.nombre}}</td><td>{{detalle.precio}}</td>
-									</tr>
-								</tbody>
-							</table></td><td>{{item.precio_total}}</td>
-							<td ng-if="editExamenes" class="text-center"><a href="#" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar perfil"><i class="fa fa-trash-o fa-lg"></i></a></td>
-						</tr>
 						<tr ng-repeat="item in examenesSeleccionados track by $index" ng-if="!item.perfil">
-							<td>{{item.examen.id}}</td>
-							<td>{{item.examen.codigo_fonasa}}</td>
-							<td>{{item.examen.nombre}}</td>
-							<td>{{item.precio}}</td>
-							<td ng-if="editExamenes" class="text-center"><a href="#" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar examen"><i class="fa fa-trash-o fa-lg"></i></a></td>
+							<td>{{item.examen.codigo_fonasa?item.examen.codigo_fonasa:'---'}}</td>
+							<td>{{item.examen.nombre?item.examen.nombre:'---'}}</td>
+							<td>{{item.examen.tipo_muestra.muestra?item.examen.tipo_muestra.muestra:'---'}}</td>
+							<td>{{item.examen.indicacion.descripcion?item.examen.indicacion.descripcion:'---'}}</td>
+							<td>{{item.examen.externo!=0?'Interno':'Externo'}}</td>
+							<td>{{item.examen.dia_proceso?item.examen.dia_proceso:'---'}}</td>
+							<td>{{item.examen.demora_proceso?item.examen.demora_proceso:'---'}}</td>
+							<td><label class="label label-{{item.estado.class}}">{{item.estado.texto}}</label></td>
+							<td>{{item.precio?item.precio:'---'}}</td>
+						</tr>
+					</tbody>
+					<tbody ng-repeat="item in examenesSeleccionados track by $index" ng-if="item.perfil">
+						<tr>
+							<td colspan="9"><strong>{{item.nombre}}</strong></td>
+						</tr>
+						<tr ng-repeat="detalle in item.detalles_ficha">
+							<td>{{detalle.examen.codigo_fonasa?detalle.examen.codigo_fonasa:'---'}}</td>
+							<td>{{detalle.examen.nombre?detalle.examen.nombre:'---'}}</td>
+							<td>{{detalle.examen.tipo_muestra.muestra?detalle.examen.tipo_muestra.muestra:'---'}}</td>
+							<td>{{detalle.examen.indicacion.descripcion?detalle.examen.indicacion.descripcion:'---'}}</td>
+							<td>{{detalle.examen.externo!=0?'Interno':'Externo'}}</td>
+							<td>{{detalle.examen.dia_proceso?detalle.examen.dia_proceso:'---'}}</td>
+							<td>{{detalle.examen.demora_proceso?detalle.examen.demora_proceso:'---'}}</td>
+							<td><label class="label label-{{detalle.estado.class}}">{{detalle.estado.texto}}</label></td>
+							<td>{{detalle.precio?detalle.precio:'---'}}</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr>
+							<td colspan="8"><strong>Precio total</strong></td>
+							<td class="text-danger">{{ficha.precio_total}}</td>
 						</tr>
 						<tr>
-							<td colspan="3"><strong>Precio total</strong></td>
-							<td class="text-danger">{{precio_total}}</td>
-						</tr>
-						<tr>
-							<td colspan="3"><strong>Pagado</strong></td>
+							<td colspan="8"><strong>Pagado</strong></td>
 							<td class="text-success">{{getTotalPagos()}}</td>
 						</tr>
 						<tr>
-							<td colspan="3"><strong>Total</strong></td>
-							<td ng-class="{'text-success': precio_total < getTotalPagos(), 'text-danger': precio_total > getTotalPagos()}">{{precio_total - getTotalPagos()}}</td>
+							<td colspan="8"><strong>Total</strong></td>
+							<td ng-class="{'text-success': ficha.precio_total < getTotalPagos(), 'text-danger': ficha.precio_total > getTotalPagos()}">{{ficha.precio_total - getTotalPagos()}}</td>
 						</tr>
 					</tbody>
 				</table>

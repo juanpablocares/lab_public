@@ -1,18 +1,22 @@
-<div class="row">
+<div ng-if="loading" class="row text-center">
+	<i class="fa fa-spinner fa-pulse fa-2x"></i>	
+</div>
+
+<div class="row" ng-if="!loading">
 	<div class="col-sm-6">
 		<div class="widget-container fluid-height">
 			<div class="widget-content padded clearfix text-center">
 				<table class="table table-condensed">
-					<tbody>
+					<tbody> 
 						<tr>
 							<td><strong>Rut</strong></td>
-							<td><phy-rut rut='ficha.paciente.rut_completo'></phy-rut></td>
+							<td><a ui-sref="loginRequired.pacientes.info({paciente_id: ficha.paciente.id})"><phy-rut rut='ficha.paciente.rut_completo'></phy-rut></a></td>
 						</tr>
 						<tr>
 							<td><strong>Paciente</strong></td>
-							<td>{{ficha.paciente.nombre}} {{ficha.paciente.apellido_paterno}} {{ficha.paciente.apellido_materno}}</td>
+							<td><a ui-sref="loginRequired.pacientes.info({paciente_id: ficha.paciente.id})">{{ficha.paciente.nombre}} {{ficha.paciente.apellido_paterno}} {{ficha.paciente.apellido_materno}}</a></td>
 						</tr>
-						<tr>
+						<tr> 
 							<td><strong>Fecha Nacimiento</strong></td>
 							<td>{{ficha.paciente.fecha_nacimiento | date:'dd/MM/yyyy'}} - {{ficha.paciente.getEdad()}}</td>
 						</tr>
@@ -26,7 +30,7 @@
 						</tr>
 						<tr>
 							<td><strong>Email</strong></td>
-							<td>{{ficha.paciente.email}}</td>
+							<td>{{ficha.paciente.email?ficha.paciente.email:'Sin correo electrónico'}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -52,15 +56,15 @@
 						</tr>
 						<tr>
 							<td><strong>Medico</strong></td>
-							<td>{{ficha.orden_medica.medico.nombre}} {{ficha.orden_medica.medico.apellido_paterno}} - <phy-rut rut="ficha.orden_medica.medico.rut"></phy-rut></td>
+							<td><span ng-if="ficha.orden_medica.medico.id">{{ficha.orden_medica.medico.nombre}} {{ficha.orden_medica.medico.apellido_paterno}} - <phy-rut rut="ficha.orden_medica.medico.rut"></phy-rut></span><span ng-if="!ficha.orden_medica.medico.id">No hay orden médica</span></td>
 						</tr>
 						<tr>
 							<td><strong>Previsión</strong></td>
-							<td>{{ficha.prevision}}</td>
+							<td>{{ficha.prevision.nombre}}</td>
 						</tr>
 						<tr>
 							<td><strong>Observaciones</strong></td>
-							<td>{{ficha.observaciones}}</td>
+							<td><span ng-if="ficha.observaciones">{{ficha.observaciones}}</span><span ng-if="!ficha.observaciones">Sin observaciones.</span></td>
 						</tr>
 					</tbody>
 				</table>
