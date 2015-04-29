@@ -249,8 +249,8 @@
 			params: {tarifa: null}
 		});
 		
-		$stateProvider.state('loginRequired.tarifas.examenes', {
-			url : '/examenes',
+		$stateProvider.state('loginRequired.csv_tarifa', {
+			url : '/actualizar_tarifas',
 			templateUrl : "tarifas/examenes.html",
 			controller : 'TarifasExamenesController',
 			params: {tarifa: null}
@@ -306,7 +306,32 @@
 			controller : 'ResultadosMuestrasTomadasController',
 		});
 		
+		/*Rutas Previsiones*/
 		
+		$stateProvider.state('loginRequired.busqueda_previsiones', {
+			url : '/previsiones/buscar',
+			templateUrl : "previsiones/search.html",
+			controller : 'PrevisionesSearchController',
+		});
+		
+		$stateProvider.state('loginRequired.previsiones', {
+			url : '/previsiones/:prevision_id',
+			templateUrl : "previsiones/menu.html",
+			controller : 'PrevisionesMenuController',
+		});
+		
+		$stateProvider.state('loginRequired.nueva_prevision', {
+			url : '/previsiones/nuevo',
+			templateUrl : "previsiones/new.html",
+			controller : 'PrevisionesNewController',
+		});
+		
+		$stateProvider.state('loginRequired.previsiones.info', {
+			url : '/informacion',
+			templateUrl : "previsiones/index.html",
+			controller : 'PrevisionesIndexController',
+			params: {prevision: null}
+		});
 		
 		/*
 		 * Login State

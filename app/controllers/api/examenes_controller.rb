@@ -34,7 +34,7 @@ class Api::ExamenesController < ApplicationController
 		end
 		
 		numberOfPages = results.count / params[:number].to_i
-		results.order(nombre: :asc).limit(params[:number].to_i).offset(params[:start].to_i)
+		results = results.order(nombre: :asc).limit(params[:number].to_i).offset(params[:start].to_i)
 		render json: {
 			  success: true,
 			  message: 'Examenes encontrados',
@@ -98,6 +98,23 @@ class Api::ExamenesController < ApplicationController
 			  success: true,
 			  message: 'Examenes successfully modified',
 			}, status: 200
+	end
+	
+	def create
+		@examen = Examen.new(examen_params)
+		if @examen.save
+			render json: {
+	          success: true,
+	          message: 'Examen successfully created',
+	          data: @examen,
+	        }, status: 200
+		else
+			render json: {
+	          success: false,
+	          message: 'Examen cannot be created',
+	          data: @examen.errors,
+	        }, status: 500
+		end
 	end
 	
 	def examen_params

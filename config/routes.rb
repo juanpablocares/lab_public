@@ -46,6 +46,10 @@ Rails.application.routes.draw do
 		get 'tarifas_examen/', to: 'tarifas_examen#index', defaults: {format: 'json'}
 		put 'tarifas_examen/', to: 'tarifas_examen#update', defaults: {format: 'json'}
 		get 'tarifas_examen/examen/:examen_id', to: 'tarifas_examen#show_examen', defaults: {format: 'json'}
+		
+		#Controladores de previsiones
+		get 'previsiones/:id', to: 'previsiones#show', defaults: {format: 'json'}
+		post 'previsiones/range/:start/:number', to: 'previsiones#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 
 		#Controladores detalle_ficha
 		post 'detalles_ficha/muestras_tomadas/:start/:number', to: 'detalles_ficha#muestras_tomadas', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 

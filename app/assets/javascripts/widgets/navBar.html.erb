@@ -48,13 +48,35 @@
 					<li>
 						<a ui-sref="loginRequired.busqueda_muestras"><span class="fa-stack"> <i class="fa fa-user-md fa-stack-icon"></i> <i class="fa fa-search fa-stack-icon fa-stack-corner-icon"></i></span>Buscar Muestras</a>
 					</li>
-					<li>
-						<a ui-sref="loginRequired.busqueda_tarifas"><span class="fa-stack"> <i class="fa fa-money fa-stack-icon"></i> <i class="fa fa-search fa-stack-icon fa-stack-corner-icon"></i></span>Buscar Tarifas</a>
+					<li class="dropdown" dropdown>
+						<a data-toggle="dropdown" dropdown-toggle> <span aria-hidden="true"><i class="fa fa-money"></i></span>Tarifas<b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu">
+							<li>
+								<a ui-sref="loginRequired.busqueda_tarifas">Búsqueda</a>
+							</li>
+							<li>
+								<a ui-sref="loginRequired.nueva_tarifa">Nueva</a>
+							</li>
+							<li>
+								<a ui-sref="loginRequired.csv_tarifa">Editar</a>
+							</li>
+						</ul>
 					</li>
 					<li>
 						<a ui-sref="loginRequired.lista_ingreso_resultados_examen"><span class="fa-stack"> <i class="fa fa-heartbeat fa-stack-icon"></i> <i class="fa fa-pencil fa-stack-icon fa-stack-corner-icon"></i></span>
 							Ingresar resultados examenes
 						</a>
+					</li>
+					<li class="dropdown" dropdown>
+						<a data-toggle="dropdown" dropdown-toggle> <span aria-hidden="true"><i class="fa fa-hospital-o"></i></span>Previsiones<b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu">
+							<li>
+								<a ui-sref="loginRequired.busqueda_previsiones">Búsqueda</a>
+							</li>
+							<li>
+								<a ui-sref="loginRequired.nueva_prevision">Nueva</a>
+							</li>
+						</ul>
 					</li>
 					<li class="dropdown" dropdown>
 						<a data-toggle="dropdown" dropdown-toggle> <span aria-hidden="true" class="se7en-tables"></span>Tables<b class="caret"></b></a>
