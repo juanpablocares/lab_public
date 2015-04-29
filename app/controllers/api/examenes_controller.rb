@@ -40,7 +40,7 @@ class Api::ExamenesController < ApplicationController
 			  message: 'Examenes encontrados',
 			  numberOfPages: numberOfPages,
 			  data: results,
-			}, status: 200, include: [:tarifas_examen, :indicaciones, :tipo_examen]
+			}, status: 200, include: [:tarifas_examen, :indicacion, :tipo_examen]
 	end
 
 	def index
