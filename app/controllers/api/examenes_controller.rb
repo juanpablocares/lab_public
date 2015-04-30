@@ -1,7 +1,7 @@
 class Api::ExamenesController < ApplicationController
 
 	def show
-		if @results = Examen.find_by_id(params[:id])
+		if @results = Examen.find(params[:id])
 			render json: {
 		          success: true,
 		          message: 'Examen encontrado',

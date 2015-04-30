@@ -15,31 +15,51 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	$scope.selectModel = {};
 	$scope.procedencia = {};
 	$scope.examenes = {};
-	$scope.perfiles = {}; 
+	$scope.perfiles = {};
+	$scope.paciente = {};
 	$scope.procedenciasArray = [];
 	$scope.examenesArray = [];
 	$scope.examenesSeleccionados = [];
 	$scope.editExamenes = true;
 
-	Procedencias.buscar.todos().$promise.then(function(response) {
-		$scope.procedenciasArray = response.data;
-	}, function(response) {
-		console.log("ERROR obteniendo procedencias");
-	}); 
-
-	Examenes.buscar.todos().$promise.then(function(response) {
-		$scope.examenes = response.data;
-		$scope.crearExamenesArray();
-	}, function(response) {
-		console.log("ERROR obteniendo examenes");
+	$scope.$on('pacienteFromMenu', function(event, data) {
+		if(data.id != null)
+		{
+			$scope.paciente = data;
+			
+			Procedencias.buscar.todos().$promise.then(function(response) {
+				$scope.procedenciasArray = response.data;
+			}, function(response) {
+				console.log("ERROR obteniendo procedencias");
+			});
+	
+			Examenes.all.index({
+			}).$promise.then(function(response) {
+				$scope.examenes = response.data;
+				$scope.crearExamenesArray();
+			}, function(response) {
+				console.log("ERROR obteniendo examenes");
+			});
+			
+			/* Examenes.filtrar_tarifas.get({
+				tarifa_id : $scope.paciente.prevision.tarifa_id
+			}).$promise.then(function(response) {
+				$scope.examenes = response.data;
+				$scope.crearExamenesArray();
+			}, function(response) {
+				console.log("ERROR obteniendo examenes");
+			}); */
+	
+			Perfiles.buscar.todos().$promise.then(function(response) {
+				$scope.perfiles = response.data;
+				$scope.crearExamenesArray();
+			}, function(response) {
+				console.log("ERROR obteniendo perfiles");
+			});
+		}
 	});
-
-	Perfiles.buscar.todos().$promise.then(function(response) {
-		$scope.perfiles = response.data;
-		$scope.crearExamenesArray();
-	}, function(response) {
-		console.log("ERROR obteniendo perfiles");
-	});
+	
+	$scope.$emit('PedirPacienteFromMenu');
 
 	$scope.crearExamenesArray = function() {
 		$scope.examenesArray = [];
@@ -74,24 +94,28 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	$scope.crearCotizacion = function() {
 		data = {
 			paciente_id : $stateParams.paciente_id,
-			procedencia_id: $scope.procedencia.selected.id,
+			procedencia_id : $scope.procedencia.selected.id,
 			examenes : $scope.examenesSeleccionados,
 		};
 		Cotizaciones.root.new(data).$promise.then(function(response) {
-			$state.go('loginRequired.pacientes',{paciente_id: $stateParams.paciente_id}); 
-		}, function(response) { 
+			$state.go('loginRequired.pacientes', {
+				paciente_id : $stateParams.paciente_id
+			});
+		}, function(response) {
 			console.log("ERROR creando cotización");
 		});
 	};
-	
+
 	$scope.crearFicha = function() {
 		data = {
 			paciente_id : $stateParams.paciente_id,
-			procedencia_id: $scope.procedencia.selected.id,
+			procedencia_id : $scope.procedencia.selected.id,
 			examenes : $scope.examenesSeleccionados,
 		};
 		Fichas.root.new(data).$promise.then(function(response) {
-			$state.go('LoginRequired.fichas.info',{ficha_id: response.data.id});
+			$state.go('loginRequired.fichas.info', {
+				ficha_id : response.data.id
+			});
 		}, function(response) {
 			console.log("ERROR creando ficha");
 		});
