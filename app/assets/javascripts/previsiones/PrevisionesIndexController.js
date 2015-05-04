@@ -13,12 +13,6 @@ angular.module('lab').controller('PrevisionesIndexController', function($scope, 
 		$scope.prevision = data;
 		$http.get('/api/tarifas').success(function(data) {
 			$scope.tarifas = data;
-			/*angular.forEach(data, function(tarifa, key) {
-				if (tarifa.id == $scope.prevision.tarifa_id) {
-					$scope.prevision.tarifa = tarifa;
-					$scope.masterPrevision = angular.copy($scope.prevision);
-				}
-			});*/
 		}).error(function(data) {
 			// log error
 		});

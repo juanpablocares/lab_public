@@ -9,7 +9,7 @@ class Api::PrevisionesController < ApplicationController
 				  success: true,
 				  message: 'Prevision encontrada',
 				  prevision: @results,
-				}, status: 200
+				}, status: 200, include: [:tarifa]
 		end
 	end
   

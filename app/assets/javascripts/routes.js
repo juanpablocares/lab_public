@@ -249,6 +249,13 @@
 			params: {tarifa: null}
 		});
 		
+		$stateProvider.state('loginRequired.tarifas.examenes', {
+			url : '/examenes',
+			templateUrl : "tarifas/examen.html",
+			controller : 'TarifasExamenSearchController',
+			params: {tarifa: null}
+		});
+		
 		$stateProvider.state('loginRequired.csv_tarifa', {
 			url : '/actualizar_tarifas',
 			templateUrl : "tarifas/examenes.html",

@@ -1,0 +1,106 @@
+<div "class="widget-container fluid-height">
+	<div class="widget-content padded" ng-show="!editar">
+		<table st-table="displayed" class="table table-hover table-striped" st-pipe="callServer">
+			<thead>
+				<tr>
+					<th st-sort="nombre">Nombre</th>
+					<th st-sort="codigo_fonasa">Codigo Fonasa</th>
+					<th st-sort="codigo">Codigo interno</th>
+					<th st-sort="precio">Costo</th>
+					<th st-sort="precio_fonasa">Costo fonasa</th>
+				</tr>
+				<tr>
+					<th>
+					<input st-search="nombre" class="input-sm form-control"/>
+					</th>
+					<th>
+					<input st-search="codigo_fonasa" class="input-sm form-control"/>
+					</th>
+					<th>
+					<input st-search="codigo" class="input-sm form-control"/>
+					</th>
+					<th>
+					<input st-search="precio" class="input-sm form-control"/>
+					</th>
+					<th>
+					<input st-search="precio_fonasa" class="input-sm form-control"/>
+					</th>
+				</tr>
+			</thead>
+			<tbody ng-show="!isLoading">
+				<tr ng-repeat="row in displayed">
+					<td>{{row.examen.nombre}}</td>
+					<td>{{row.examen.codigo_fonasa}}</td>
+					
+						<td ng-if="row.examen.codigo">{{row.examen.codigo}}</td>
+						<td ng-if="!row.examen.codigo">Sin codigo interno</td>
+					
+						<td ng-if="row.precio">{{row.precio}}</td>
+						<td ng-if="!row.precio">No definido</td>
+						
+						<td ng-if="row.precio_fonasa">{{row.precio_fonasa}}</td>
+						<td ng-if="!row.precio_fonasa">No definido</td>
+					<td>
+						<button type="button" class="btn btn-info" ng-click="editarTarifaExamen(row.id)">
+							Editar
+						</button>
+					</td>
+				</tr>
+			</tbody>
+			<tbody ng-show="isLoading">
+				<tr>
+				<td colspan="6" class="text-center"><i class="fa fa-spinner fa-pulse"></i></td>
+			</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="6" class="text-center"><div st-pagination="" st-items-by-page="10" st-displayed-pages="10"></div></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<div class="widget-content padded" ng-show="editar">
+		<form class="form-horizontal" ng-submit="guardarDatosEditarTarifaExamen(tarifa_examen)" name="tarifaExamenEditingForm">
+			<div class="form-group">
+				<label class="control-label col-md-2">id</label>
+				<div class="col-md-7">
+					<input ng-model="tarifa_examen.id" class="form-control" type="text" ng-disabled="true">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-2">Tarifa</label>
+				<div class="col-md-7">
+					<input ng-model="tarifa_examen.tarifa_id" class="form-control" type="text" ng-disabled="true">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-2">Examen</label>
+				<div class="col-md-7">
+					<input ng-model="tarifa_examen.examen.nombre" class="form-control" type="text" ng-disabled="true">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-2">Precio</label>
+				<div class="col-md-7">
+					<input ng-model="tarifa_examen.precio" class="form-control" type="number">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-2">Precio Fonasa</label>
+				<div class="col-md-7">
+					<input ng-model="tarifa_examen.precio_fonasa" class="form-control" type="number">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-11 text-right">
+					<button type="submit" class="btn btn-primary" ng-disabled="buttonSubmit">
+						Editar
+					</button>
+					<button type="button" class="btn btn-danger" ng-click="cambiarVentanaSinCambios()">
+						Volver
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
