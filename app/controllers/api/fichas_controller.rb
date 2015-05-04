@@ -93,9 +93,24 @@ class Api::FichasController < ApplicationController
 	end
 
 	def create
+		
+		paciente = Paciente.find(params[:paciente_id])
+		if paciente == nil
+			render json:
+			{
+				success: false,
+				data:  ficha,
+	        	message: 'Paciente no encontrado',
+	        }, status: 500
+	        return false
+		end
+		
 		ficha = Ficha.new
-		ficha.paciente_id = params[:paciente_id]
+		ficha.paciente_id = paciente.id
 		ficha.procedencia_id = params[:procedencia_id]
+		ficha.prevision_id = paciente.prevision_id
+		ficha.precio_total = params[:precio_total]
+		ficha.observaciones = params[:observaciones]
 		ficha.orden_medica_id = nil
 		ficha.user_id = current_user.id
 

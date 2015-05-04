@@ -1,7 +1,18 @@
 class Api::ExamenesController < ApplicationController
 
+	def filtrar_tarifas
+		results = Examen.all.order(:id)
+		render json: {
+          success: true,
+          message: 'Examenes encontrados con sus tarifas',
+          data: results,
+        }, status: 200, include: [
+        	{:tarifas_examen => {include: {:find_by_tarifa => {:params => params[:id] }}}}
+        	] 
+	end
+
 	def show
-		if @results = Examen.find_by_id(params[:id])
+		if @results = Examen.find(params[:id])
 			render json: {
 		          success: true,
 		          message: 'Examen encontrado',
@@ -49,7 +60,7 @@ class Api::ExamenesController < ApplicationController
 		          success: true,
 		          message: 'Listado de examenes encontrado',
 		          data: @examenes,
-		        }, status: 200
+		        }, status: 200, include: [:tarifas_examen]
 	end
 	
 	def select

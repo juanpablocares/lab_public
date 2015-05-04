@@ -1,4 +1,5 @@
 class Api::DetallesFichaController < ApplicationController
+	
 	def index
 		render json: DetalleFicha.all
 	end

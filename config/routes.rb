@@ -8,9 +8,7 @@ Rails.application.routes.draw do
 		get 'users/paterno/:materno', to: 'users#search_materno', defaults: {format: 'json'}
 		
 		#Controladores de pacientes
-		get 'pacientes', to: 'pacientes#index', defaults: {format: 'json'}
 		post 'pacientes/range/:start/:number', to: 'pacientes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
-		get 'pacientes/:id', to: 'pacientes#show', defaults: {format: 'json'}
 		put 'pacientes/rut/:rut', to: 'pacientes#update_byrut', defaults: {format: 'json'}
 		get 'pacientes/rut/:rut', to: 'pacientes#search', defaults: {format: 'json'}
 		get 'pacientes/buscar/:rut', to: 'pacientes#search', defaults: {format: 'json'}, constraints: { :rut => /[0-9]+/ }
@@ -20,25 +18,23 @@ Rails.application.routes.draw do
 		get 'pacientes/paterno/:materno', to: 'pacientes#search_materno', defaults: {format: 'json'}
 		
 		#Controladores de fichas
-		get 'fichas', to: 'fichas#index', defaults: {format: 'json'}
-		get 'fichas/:id', to: 'fichas#show', defaults: {format: 'json'}
 		get 'fichas/pagos/:id', to: 'fichas#pagos', defaults: {format: 'json'}
 		get 'fichas/paciente/:id', to: 'fichas#show_bypaciente', defaults: {format: 'json'}
 		post 'fichas/range/:start/:number', to: 'fichas#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		post 'fichas/muestras/:start/:number', to: 'fichas#muestras', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		
-		#Controladores de examenes
+		#Controladores de perfiles
+		get 'perfiles/filtrar_tarifas/:id', to: 'perfiles#filtrar_tarifas', defaults: {format: 'json'},  constraints: { :id=> /[0-9]+/}
+	
+		#Controladores de examenes 
+		get 'examenes/filtrar_tarifas/:id', to: 'examenes#filtrar_tarifas', defaults: {format: 'json'},  constraints: { :id=> /[0-9]+/}
 		get 'examenes/select', to: 'examenes#select', defaults: {format: 'json'}
 		put 'examenes/', to: 'examenes#update_all', defaults: {format: 'json'}
-		get 'examenes/:id', to: 'examenes#show', defaults: {format: 'json'}
-		put 'examenes/:id', to: 'examenes#update', defaults: {format: 'json'}
 		post 'examenes/range/:start/:number', to: 'examenes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		
+		
 		#Controladores de tarifas
-		get 'tarifas/', to: 'tarifas#index', defaults: {format: 'json'}
 		get 'tarifas/examenes', to: 'tarifas#examenes', defaults: {format: 'json'}
-		get 'tarifas/:id', to: 'tarifas#show', defaults: {format: 'json'}
-		put 'tarifas/:id', to: 'tarifas#update', defaults: {format: 'json'}
 		post 'tarifas/range/:start/:number', to: 'tarifas#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		
 
@@ -51,7 +47,6 @@ Rails.application.routes.draw do
 		post 'tarifas_examen/range/:tarifa_id/:start/:number', to: 'tarifas_examen#range', defaults: {format: 'json'}, constraints: { :tarifa_id=> /[0-9]+/, :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		
 		#Controladores de previsiones
-		get 'previsiones/:id', to: 'previsiones#show', defaults: {format: 'json'}
 		post 'previsiones/range/:start/:number', to: 'previsiones#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 
 		#Controladores detalle_ficha
@@ -67,6 +62,8 @@ Rails.application.routes.draw do
 		get 'resultados_examen/detalle_ficha/:id', to: 'resultados_examen#get_by_detalle_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/}
 		post 'resultados_examen/detalle_ficha/:id', to: 'resultados_examen#save_batch_by_detalle_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/}
 		
+		get 'detalles_pago_ficha/ficha/:id', to: 'detalles_pago_ficha#getAllByFicha', defaults: {format: 'json'}
+		
 		
 		resources :resultados_examen, :defaults => { :format => 'json' }
 		resources :sustancias_examen, :defaults => { :format => 'json' }
@@ -78,13 +75,13 @@ Rails.application.routes.draw do
 		resources :regiones, :defaults => { :format => 'json' }
 		resources :pacientes, :defaults => { :format => 'json' }
 		resources :examenes, :defaults => { :format => 'json' }
+		resources :tarifas, :defaults => { :format => 'json' }
 		resources :cotizaciones, :defaults => { :format => 'json' }
 		resources :procedencias, :defaults => { :format => 'json' }
 		resources :perfiles, :defaults => { :format => 'json' }
 		resources :tipo_examenes, :defaults => { :format => 'json' }
 		resources :tipos_pago , :defaults => { :format => 'json' }
 		resources :detalles_pago_ficha, :defaults => { :format => 'json' }
-		get 'detalles_pago_ficha/ficha/:id', to: 'detalles_pago_ficha#getAllByFicha', defaults: {format: 'json'}
 		
 		resources :users, :defaults => { :format => 'json' } do
 			collection do

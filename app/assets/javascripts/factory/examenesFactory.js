@@ -7,11 +7,18 @@
 			}, {
 				'index' : {
 					method : 'GET',
-					isArray : true
 				},
 				'update' : {
 					method : 'PUT'
 				}
+			}),
+			filtrar_tarifas: $resource("/api/examenes/filtrar_tarifas/:tarifa_id", {
+				tarifa_id : "@tarifa_id",
+			}, {
+				get : {
+					method : 'GET',
+					isArray : false
+				},
 			}),
 			range : $resource("/api/examenes/range/:start/:number", {
 				start : "@start",
