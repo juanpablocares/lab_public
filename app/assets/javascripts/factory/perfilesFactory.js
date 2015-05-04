@@ -17,7 +17,15 @@
 					method : 'GET',
 					isArray: false,
 				},
-			})
+			}),
+			filtrar_tarifas: $resource("/api/perfiles/filtrar_tarifas/:tarifa_id", {
+				tarifa_id : "@tarifa_id",
+			}, {
+				get : {
+					method : 'GET',
+					isArray : false
+				},
+			}),
 		};
 	});
 	

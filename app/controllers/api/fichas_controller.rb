@@ -109,8 +109,8 @@ class Api::FichasController < ApplicationController
 		ficha.paciente_id = paciente.id
 		ficha.procedencia_id = params[:procedencia_id]
 		ficha.prevision_id = paciente.prevision_id
-		ficha.precio_total = 0
-		ficha.observaciones = ''
+		ficha.precio_total = params[:precio_total]
+		ficha.observaciones = params[:observaciones]
 		ficha.orden_medica_id = nil
 		ficha.user_id = current_user.id
 
