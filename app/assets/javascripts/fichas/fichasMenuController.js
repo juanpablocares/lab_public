@@ -25,7 +25,6 @@ angular.module('lab').controller('FichasMenuController', function($scope, $http,
 		$scope.ficha.paciente.getEdad = function() {
 			
 			if ($scope.ficha.paciente != null) {
-				$scope.ficha.paciente.fecha_nacimiento = new Date($scope.ficha.paciente.fecha_nacimiento.getUTCFullYear(), $scope.ficha.paciente.fecha_nacimiento.getUTCMonth(), $scope.ficha.paciente.fecha_nacimiento.getUTCDate());
 
 				var d = new Date();
 				var meses = 0;
@@ -33,7 +32,6 @@ angular.module('lab').controller('FichasMenuController', function($scope, $http,
 					meses += 12 - $scope.ficha.paciente.fecha_nacimiento.getUTCMonth() + d.getMonth();
 				else
 					meses = Math.abs($scope.ficha.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth());
-				var nac = new Date($scope.ficha.paciente.fecha_nacimiento);
 				var birthday = +new Date($scope.ficha.paciente.fecha_nacimiento);
 				var anios = ((Date.now() - birthday) / (31556926000));
 				return ~~anios + " Años " + ~~meses + " meses";
@@ -52,6 +50,9 @@ angular.module('lab').controller('FichasMenuController', function($scope, $http,
 	});
 
 	$scope.mandarFicha = function() {
-		$scope.$broadcast('fichaFromMenu', $scope.ficha);
+		if($scope.ficha != null)
+		{
+			$scope.$broadcast('fichaFromMenu', $scope.ficha);
+		}
 	}
 }); 

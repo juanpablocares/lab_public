@@ -107,7 +107,7 @@ class Api::DetallesFichaController < ApplicationController
 		          success: true,
 		          message: 'Detalles Ficha encontrado',
 		          data: @results,
-		        }, status: 200, include: [{:examen=> {include: [:sustancias,:indicaciones]}}, :perfil, :resultados_examen, {:ficha => {include: [:paciente]}}]
+		        }, status: 200, include: [{:examen=> {include: [:sustancias,:indicacion]}}, :perfil, :resultados_examen, {:ficha => {include: [:paciente]}}]
 		end
 	end
 

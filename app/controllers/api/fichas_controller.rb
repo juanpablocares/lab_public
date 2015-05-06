@@ -125,6 +125,13 @@ class Api::FichasController < ApplicationController
 							detalle.ficha_id = ficha.id
 							detalle.examen_id = exa[:id]
 							detalle.perfil_id = ex[:id]
+							
+							if exa[:tarifas_examen] && exa[:tarifas_examen].size != 0
+								detalle.precio = exa[:tarifas_examen][0][:precio]
+							else
+								detalle.precio = 0
+							end
+							
 							if !detalle.save
 								raise "Error saving detalle_ficha"
 							end
@@ -134,6 +141,7 @@ class Api::FichasController < ApplicationController
 						detalle.ficha_id = ficha.id
 						detalle.examen_id = ex[:id]
 						detalle.perfil_id = nil
+						detalle.precio = ex[:tarifas_examen][0][:precio]
 						if !detalle.save
 							raise "Error saving detalle_ficha"
 						end

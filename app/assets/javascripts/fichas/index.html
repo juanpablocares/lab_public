@@ -28,7 +28,7 @@
 							<td>{{item.examen.dia_proceso?item.examen.dia_proceso:'---'}}</td>
 							<td>{{item.examen.demora_proceso?item.examen.demora_proceso:'---'}}</td>
 							<td><label class="label label-{{item.estado.class}}">{{item.estado.texto}}</label></td>
-							<td>{{item.precio?item.precio:'---'}}</td>
+							<td>{{item.precio?item.precio:0}}</td>
 						</tr>
 					</tbody>
 					<tbody ng-repeat="item in examenesSeleccionados track by $index" ng-if="item.perfil">
@@ -44,7 +44,7 @@
 							<td>{{detalle.examen.dia_proceso?detalle.examen.dia_proceso:'---'}}</td>
 							<td>{{detalle.examen.demora_proceso?detalle.examen.demora_proceso:'---'}}</td>
 							<td><label class="label label-{{detalle.estado.class}}">{{detalle.estado.texto}}</label></td>
-							<td>{{detalle.precio?detalle.precio:'---'}}</td>
+							<td>{{detalle.precio?detalle.precio:0}}</td>
 						</tr>
 					</tbody>
 					<tbody>
