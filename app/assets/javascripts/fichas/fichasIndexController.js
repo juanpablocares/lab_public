@@ -61,35 +61,8 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 				}
 			}
 		} 
-		console.log($scope.examenesSeleccionados);
 	};
 
-	$scope.setPreciosExamenes = function() {
-		angular.forEach($scope.examenesSeleccionados, function(value, key) {
-			if (value.perfil) {
-				value.precio_total = 0;
-				angular.forEach(value.detalles_ficha, function(value2, key2) {
-					value2.precio = $scope.getPrecioDetalleFicha($scope.ficha.paciente.prevision.tarifa_id, value2.examen);
-					value.precio_total += value2.precio;
-				});
-				$scope.precio_total += value.precio_total;
-			}
-			else {
-				value.precio = $scope.getPrecioDetalleFicha($scope.ficha.paciente.prevision.tarifa_id, value.examen);
-				$scope.precio_total += value.precio;
-			}
-		});
-	}
-
-	$scope.getPrecioDetalleFicha = function(tarifa_id, examen) {
-		for ( i = 0; i < examen.tarifas_examen.length; i++) {
-			var value = examen.tarifas_examen[i];
-			if (value.tarifa_id == tarifa_id) {
-				return value.precio;
-			}
-		}
-		return 0;
-	}
 	//Sin ficha, enviar al home
 	if ($stateParams.ficha_id == null)
 		$state.go('loginRequired.index');
@@ -126,7 +99,7 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 			}
 			i++;
 		}
-		$scope.setPreciosExamenes();
+		$scope.precio_total = $scope.ficha.precio_total;
 		$scope.setEstadoExamenes();
 	};
 

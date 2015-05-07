@@ -103,9 +103,11 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		else {
 			for (var i = 0; i < model.examenes.length; i++) {
 				value = model.examenes[i];
+				console.log(value);
 				var temp = null;
 				for (var j = 0; j < value.tarifas_examen.length; j++) {
 					value2 = value.tarifas_examen[j];
+					console.log(value2);
 					if (value2.tarifa_id == $scope.paciente.prevision.tarifa_id) {
 						temp = value2;
 					}
@@ -115,6 +117,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		}
 		$scope.examenesSeleccionados.push(model);
 		select.selected = "";
+		console.log($scope.examenesArray);
 		console.log($scope.examenesSeleccionados);
 		$scope.getPrecioTotal();
 	};
