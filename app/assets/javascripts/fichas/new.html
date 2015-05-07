@@ -2,21 +2,72 @@
 	<div class="heading">
 		Información ficha
 	</div>
-	<div class="widget-content padded">
-		<form class="form-horizontal">
+	<div class="widget-content padded" ng-show="step == 1">
+		<form class="form-horizontal" novalidate>
 			<div class="form-group">
 				<label  class="col-sm-2 control-label">Procedencia</label>
+				<div class="col-md-10">
+					<input class="form-control" placeholder="Ingrese procedencia" type="text" ng-model="ficha.procedencia" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<label  class="col-sm-2 control-label">Programa</label>
+					<div class="col-md-4">
+						<input class="form-control" placeholder="Ingrese programa" type="text" ng-model="ficha.programa" required>
+					</div>
+					<label  class="col-md-1 control-label">N°</label>
+					<div class="col-md-4">
+						<input class="form-control" placeholder="Ingrese número" type="number" ng-model="ficha.numero_programa" required>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<label  class="col-sm-2 control-label">Previsión</label>
+					<div class="col-md-4">
+						<input class="form-control" type="text" ng-model="paciente.prevision.nombre" disabled>
+					</div>
+					<label  class="col-sm-1 control-label">Envío email</label>
+					<div class="col-md-1">
+						<input class="form-control" type="checkbox" ng-model="ficha.correo">
+					</div>
+					<label  class="col-sm-1 control-label">Urgente</label>
+					<div class="col-md-1">
+						<input class="form-control" type="checkbox" ng-model="ficha.urgente">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label  class="col-sm-2 control-label">Medico solicitante</label>
 				<div class="col-sm-10">
-					<ui-select ng-model="procedencia.selected" theme="bootstrap" >
-						<ui-select-match placeholder="Seleccione procedencia">
+					<ui-select ng-model="medico.selected" theme="bootstrap" >
+						<ui-select-match placeholder="Seleccione medico">
 							{{$select.selected.nombre}}
 						</ui-select-match>
-						<ui-select-choices repeat="item in procedenciasArray | filter: $select.search">
+						<ui-select-choices repeat="item in medicosArray | filter: $select.search">
 							<span ng-bind-html="item.nombre | highlight: $select.search"></span>
 						</ui-select-choices>
 					</ui-select>
 				</div>
 			</div>
+			<div class="form-group">
+				<label  class="col-sm-2 control-label">Observaciones</label>
+				<div class="col-sm-10">
+					<input ng-model="ficha.observaciones" class="form-control"/>
+				</div>
+			</div>
+			<div class="row form-group">
+				<div class="col-sm-11 text-right">
+					<button ng-click="agregarExamenes()" class="btn btn-primary">
+						Agregar exámenes
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="widget-content padded" ng-show="step == 2">
+		<form class="form-horizontal" novalidate>
 			<div class="form-group">
 				<label  class="col-sm-2 control-label">Examenes</label>
 				<div class="col-sm-10">
@@ -31,21 +82,15 @@
 						</ui-select-choices>
 					</ui-select>
 				</div>
+				<div ng-include="'fichas/_examenes_table.html'"></div>
 			</div>
-			<div class="form-group">
-				<label  class="col-sm-2 control-label">Observaciones</label>
-				<div class="col-sm-10">
-					<input ng-model="observaciones" class="form-control"/>
-				</div>
-			</div>
-			<div ng-include="'fichas/_examenes_table.html'"></div>
 			<div class="row form-group">
 				<div class="col-sm-11 text-right">
-					<button ng-click="crearCotizacion()" class="btn btn-primary">
-						Crear cotización
+					<button ng-click="volver()" class="btn btn-danger">
+						Volver
 					</button>
-					<button ng-click="crearFicha()" class="btn btn-danger">
-						Procesar pedido de exámenes
+					<button ng-click="ficha_temporal()" class="btn btn-primary">
+						Ver ficha
 					</button>
 				</div>
 			</div>

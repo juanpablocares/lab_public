@@ -14,7 +14,7 @@
 				<th class="col-sm-2 text-right">Celular</th><td>{{masterPaciente.celular}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-2 text-right">Dirección</th><td>{{masterPaciente.direccion+', '+masterPaciente.comuna.nombre}}</td>
+				<th class="col-sm-2 text-right">Teléfono Fijo</th><td>{{masterPaciente.telefono_fijo}}</td>
 			</tr>
 			<tr>
 				<th class="col-sm-2 text-right">Fecha de nacimiento</th><td>{{masterPaciente.fecha_nacimiento | date : 'dd-MM-yyyy'}}</td>
@@ -23,7 +23,7 @@
 				<th class="col-sm-2 text-right">Edad</th><td>{{masterPaciente.edad}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-2 text-right">Género</th><td>{{masterPaciente.genero?'Masculino':'Femenino'}}</td>
+				<th class="col-sm-2 text-right">Correo electrónico</th><td>{{masterPaciente.correo}}</td>
 			</tr>
 			<tr>
 				<th class="col-sm-2 text-right">Previsión</th><td>{{masterPaciente.prevision.nombre}}</td>
@@ -31,6 +31,9 @@
 		</table>
 		<div class="row form-group">
 			<div class="col-sm-11 text-right">
+					<button ui-sref="loginRequired.pacientes.asignarExamenes" type="submit" class="btn btn-success">
+						Ficha/Cotización
+					</button>
 				<button type="button" class="btn btn-primary" ng-click="cambiarVentanaSinCambios()">
 					Editar información
 				</button>

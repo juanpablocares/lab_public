@@ -1,0 +1,124 @@
+<div ng-if="loading" class="row text-center">
+	<i class="fa fa-spinner fa-pulse fa-2x"></i>	
+</div>
+
+<div class="widget-container fluid-height" ng-if="!loading">
+
+	<div class="row" ng-if="!loading">
+	<div class="col-sm-6">
+		<div class="widget-container fluid-height">
+			<div class="widget-content padded clearfix text-center">
+				<table class="table table-condensed">
+					<tbody> 
+						<tr>
+							<td><strong>Rut</strong></td>
+							<td><a ui-sref="loginRequired.pacientes.info({paciente_id: ficha.paciente.id})"><phy-rut rut='ficha.paciente.rut_completo'></phy-rut></a></td>
+						</tr>
+						<tr>
+							<td><strong>Paciente</strong></td>
+							<td><a ui-sref="loginRequired.pacientes.info({paciente_id: ficha.paciente.id})">{{ficha.paciente.nombre}} {{ficha.paciente.apellido_paterno}} {{ficha.paciente.apellido_materno}}</a></td>
+						</tr>
+						<tr> 
+							<td><strong>Fecha Nacimiento</strong></td>
+							<td>{{ficha.paciente.fecha_nacimiento | date:'dd/MM/yyyy'}} - {{ficha.paciente.getEdad()}}</td>
+						</tr>
+						<tr>
+							<td><strong>Teléfono</strong></td>
+							<td>{{ficha.paciente.celular}}</td>
+						</tr>
+						<tr>
+							<td><strong>Dirección</strong></td>
+							<td>{{ficha.paciente.direccion}} {{ficha.paciente.comuna.nombre}}</td>
+						</tr>
+						<tr>
+							<td><strong>Email</strong></td>
+							<td>{{ficha.paciente.email?ficha.paciente.email:'Sin correo electrónico'}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="widget-container fluid-height">
+			<div class="widget-content padded clearfix text-center">
+				<table class="table table-condensed">
+					<tbody>
+						<tr>
+							<td><strong>Fecha ingreso</strong></td>
+							<td>{{ficha.creado | date:'dd/MM/yyyy HH:mm' }}</td>
+						</tr>
+						<tr>
+							<td><strong>Recepcionista</strong></td>
+							<td>{{ficha.user.nombre}} {{ficha.user.apellido_paterno}}</td>
+						</tr>
+						<tr>
+							<td><strong>Procedencia</strong></td>
+							<td>{{ficha.procedencia.nombre}}</td>
+						</tr>
+						<tr>
+							<td><strong>Medico</strong></td>
+							<td><span ng-if="ficha.orden_medica.medico.id">{{ficha.orden_medica.medico.nombre}} {{ficha.orden_medica.medico.apellido_paterno}} - <phy-rut rut="ficha.orden_medica.medico.rut"></phy-rut></span><span ng-if="!ficha.orden_medica.medico.id">No hay orden médica</span></td>
+						</tr>
+						<tr>
+							<td><strong>Previsión</strong></td>
+							<td>{{ficha.prevision.nombre}}</td>
+						</tr>
+						<tr>
+							<td><strong>Observaciones</strong></td>
+							<td><span ng-if="ficha.observaciones">{{ficha.observaciones}}</span><span ng-if="!ficha.observaciones">Sin observaciones.</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<div class="widget-content padded">
+		<form>
+			<div>
+				<table class="table table-bordered" ng-if="examenesSeleccionados.length != 0">
+					<thead>
+						<th>Código Fonasa</th>
+						<th>Examen</th>
+						<th>Tipo muestra</th>
+						<th>Indicaciones</th>
+						<th>Proceso</th>
+						<th>Dia proceso</th>
+						<th>Demora</th>
+						<th>Precio</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in examenesSeleccionados">
+							<td>{{item.codigo_fonasa?item.codigo_fonasa:'---'}}</td>
+							<td>{{item.nombre?item.nombre:'---'}}</td>
+							<td>{{item.tipo_muestra.muestra?item.tipo_muestra.muestra:'---'}}</td>
+							<td>{{item.indicacion.descripcion?item.indicacion.descripcion:'---'}}</td>
+							<td>{{item.externo!=0?'Interno':'Externo'}}</td>
+							<td>{{item.dia_proceso?item.examen.dia_proceso:'---'}}</td>
+							<td>{{item.demora_proceso?item.examen.demora_proceso:'---'}}</td>
+							<td>{{item.precio?item.precio:'---'}}</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr>
+							<td colspan="7"><strong>Precio total</strong></td>
+							<td class="text-danger">{{precio_total}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="row form-group">
+				<div class="col-sm-11 text-right">
+					<button ng-click="ficha_temporal()" class="btn btn-success">
+						Cotizar
+					</button>
+					<button ng-click="ficha_temporal()" class="btn btn-primary">
+						Procesar
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

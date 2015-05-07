@@ -26,10 +26,23 @@
 	</div>
 </div>
 <div class="form-group">
+	<label class="control-label col-md-2">Correo electrónico</label>
+	<div class="col-md-7">
+		<input class="form-control" placeholder="Ingrese correo electrónico" type="email" ng-model="paciente.correo">
+	</div>
+</div>
+<div class="form-group">
 	<label class="control-label col-md-2">Celular</label>
 	<div class="col-md-7">
 		<input class="form-control" type="text" ui-mask="(9) 999-9999" ng-model="paciente.celular" name="celular" required>
 		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.celular.$pristine) && paciente_form.celular.$error.required">Debe ingresar celular</label>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-md-2">Teléfono fijo</label>
+	<div class="col-md-7">
+		<input class="form-control" type="number" ng-model="paciente.telefono_fijo" name="telefono_fijo" required>
+		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.telefono_fijo.$pristine) && paciente_form.telefono_fijo.$error.required">Debe ingresar teléfono fijo</label>
 	</div>
 </div>
 <div class="form-group">

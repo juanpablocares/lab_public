@@ -108,6 +108,14 @@
 			}
 		});
 		/* Rutas de Fichas*/
+		
+		$stateProvider.state('loginRequired.ficha_temporal', {
+			url : '/pacientes/ficha_temporal',
+			templateUrl : "fichas/ficha_temporal.html",
+			controller : 'fichaTemporalController',
+			params: {ficha: null}
+		});
+		
 		$stateProvider.state('loginRequired.fichas', {
 			url : '/fichas/:ficha_id',
 			templateUrl : "fichas/menu.html",

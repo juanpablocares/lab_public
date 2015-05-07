@@ -10,8 +10,9 @@
 
  */
 
-angular.module('lab').controller('FichasNewController', function($scope, $auth, $state, $http, $resource, $stateParams, Examenes, Perfiles, Cotizaciones, Procedencias, Fichas) {
+angular.module('lab').controller('FichasNewController', function($scope, $auth, $state, $http, $resource, $stateParams, Examenes, Perfiles, Cotizaciones, Procedencias, Fichas, Medicos) {
 
+	$scope.step = 1;
 	$scope.ficha = {};
 	$scope.selectModel = {};
 	$scope.procedencia = {};
@@ -20,6 +21,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	$scope.perfiles = {};
 	$scope.paciente = {};
 	$scope.precio_total = 0;
+	$scope.medicosArray = [];
 	$scope.procedenciasArray = [];
 	$scope.examenesArray = [];
 	$scope.examenesSeleccionados = [];
@@ -29,6 +31,13 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		if (data.id != null) {
 			$scope.paciente = data;
 
+			Medicos.buscar.todos().$promise.then(function(response) {
+				$scope.medicosArray = response.data;
+			}, function(response) {
+				console.log("ERROR obteniendo medicos");
+			});
+
+			
 			Procedencias.buscar.todos().$promise.then(function(response) {
 				$scope.procedenciasArray = response.data;
 			}, function(response) {
@@ -110,21 +119,18 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		$scope.getPrecioTotal();
 	};
 
-	$scope.crearCotizacion = function() {
-		data = {
-			paciente_id : $stateParams.paciente_id,
-			procedencia_id : $scope.procedencia.selected.id,
-			examenes : $scope.examenesSeleccionados,
-		};
-		Cotizaciones.root.new(data).$promise.then(function(response) {
-			$state.go('loginRequired.pacientes', {
-				paciente_id : $stateParams.paciente_id
-			});
-		}, function(response) {
-			console.log("ERROR creando cotización");
-		});
+	$scope.agregarExamenes = function() {
+		$scope.step = 2;
+	};
+	
+	$scope.volver = function() {
+		$scope.step = 1;
 	};
 
+	$scope.validar_datos = function() {
+		console.log('Validar datos');
+	};
+	
 	$scope.crearFicha = function() {
 		data = {
 			paciente_id : $stateParams.paciente_id,
@@ -143,6 +149,15 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 
 	};
 
+	$scope.ficha_temporal = function() {
+		$scope.ficha.examenesSeleccionados = $scope.examenesSeleccionados;
+		$scope.ficha.prevision = $scope.paciente.prevision;
+		$scope.ficha.paciente = $scope.paciente;
+		$state.go('loginRequired.ficha_temporal',{
+			ficha: $scope.ficha
+		});
+	};
+	
 	$scope.getPrecioTotal = function() {
 		var total = 0;
 		for (var i = 0; i < $scope.examenesSeleccionados.length; i++) {

@@ -77,6 +77,7 @@ Rails.application.routes.draw do
 		resources :examenes, :defaults => { :format => 'json' }
 		resources :tarifas, :defaults => { :format => 'json' }
 		resources :cotizaciones, :defaults => { :format => 'json' }
+		resources :medicos, :defaults => { :format => 'json' }
 		resources :procedencias, :defaults => { :format => 'json' }
 		resources :perfiles, :defaults => { :format => 'json' }
 		resources :tipo_examenes, :defaults => { :format => 'json' }
