@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150428211942) do
+ActiveRecord::Schema.define(version: 20150507120931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(version: 20150428211942) do
     t.integer  "prevision_id",                                                 null: false
     t.integer  "user_id",          limit: 8,                                   null: false
     t.datetime "creado",                       default: '2015-02-20 15:08:40', null: false
+    t.string   "correo"
   end
 
   create_table "perfiles", force: :cascade do |t|

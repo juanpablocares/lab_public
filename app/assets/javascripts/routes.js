@@ -62,12 +62,6 @@
 			controller : 'CuentaPasswordController',
 		});
 		
-		$stateProvider.state('loginRequired.busqueda_examen', {
-			url : '/examenes',
-			templateUrl : "examenes/search.html",
-			controller : 'ExamenesSearchController'
-		});
-		
 		$stateProvider.state('loginRequired.busqueda_ficha', {
 			url : '/fichas',
 			templateUrl : "fichas/search.html",
@@ -187,16 +181,22 @@
 		
 		/*Rutas de listado de examenes */
 		
-		$stateProvider.state('loginRequired.lista_examenes', {
-			url : '/examenes/:examen_id',
-			templateUrl : "lista_examenes/menu.html",
-			controller : 'ListaExamenesMenuController',
+		$stateProvider.state('loginRequired.busqueda_examen', {
+			url : '/busqueda_examenes',
+			templateUrl : "examenes/search.html",
+			controller : 'ExamenesSearchController'
 		});
 		
-		$stateProvider.state('loginRequired.lista_examenes.info', {
+		$stateProvider.state('loginRequired.examenes', {
+			url : '/examenes/:examen_id',
+			templateUrl : "examenes/menu.html",
+			controller : 'ExamenesMenuController',
+		});
+		
+		$stateProvider.state('loginRequired.examenes.info', {
 			url : '/informacion',
-			templateUrl : "lista_examenes/index.html",
-			controller : 'ListaExamenesIndexController',
+			templateUrl : "examenes/index.html",
+			controller : 'ExamenesIndexController',
 			params: {examen: null}
 		});
 		

@@ -12,6 +12,7 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 	}];
 	
 	$scope.$on('examenFromMenu', function(event, data) {
+		console.log(data);
 		$scope.examen = data;
 		angular.forEach($scope.procesadores, function(procesador, key) {
 			if(procesador.label == $scope.examen.procedencia){
@@ -72,9 +73,10 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 	};
 
 	$scope.guardarDatosExamen = function(examen) {
-		examen.procedencia = examen.procesa.label;
+		//examen.procedencia = examen.procesa.label;
 		examen.indicacion_id = examen.indicacion.id;
 		examen.tipo_examen_id = examen.tipo_examen.id;
+		console.log(examen);
 		Examen.update({id:examen.id}, examen).
 			$promise.
 				then(function(response) {

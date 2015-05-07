@@ -31,7 +31,7 @@
 <div class="form-group">
 	<label class="control-label col-md-2">Indicaciones</label>
 	<div class="col-md-7">
-		<select class="form-control" ng-model="examen.indicacion" ng-selected="examen.indicacion_id" ng-options="i.codigo for i in indicaciones track by i.id| orderBy:'codigo'"></select>
+		<select class="form-control" ng-model="examen.indicacion" ng-selected="examen.indicacion_id" ng-options="i.id for i in indicaciones track by i.id| orderBy:'codigo'"></select>
 	</div>
 </div>
 <div class="form-group">

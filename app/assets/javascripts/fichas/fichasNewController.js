@@ -175,6 +175,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 			else {
 				if($scope.examenesSeleccionados[i].tarifas_examen[0])
 				{
+					$scope.examenesSeleccionados[i].precio = $scope.examenesSeleccionados[i].tarifas_examen[0].precio;
 					total = total + $scope.examenesSeleccionados[i].tarifas_examen[0].precio;
 				}
 			}

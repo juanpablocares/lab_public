@@ -1,7 +1,6 @@
 angular.module('lab').controller('FichasIndexController', function($scope, $auth, $state, $http, $stateParams, Fichas, Perfiles, TiposPago, DetallesPagoFicha) {
 
 	$scope.loading = true;
-
 	$scope.precio_total = 0;
 	$scope.editExamenes = false;
 	$scope.examenesSeleccionados = [];
