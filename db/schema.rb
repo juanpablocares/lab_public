@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150507120931) do
+ActiveRecord::Schema.define(version: 20150507152915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20150507120931) do
     t.integer  "tipo_pago_id", limit: 8,                   null: false
     t.integer  "monto_pagado", limit: 8,                   null: false
     t.datetime "creado",                 default: "now()", null: false
+    t.integer  "user_id"
   end
 
   create_table "especialidades", force: :cascade do |t|
@@ -320,6 +321,7 @@ ActiveRecord::Schema.define(version: 20150507120931) do
   add_foreign_key "detalles_ficha", "users", column: "usuario_muestra_id", name: "detalles_ficha_usuario_muestra_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_pagos_ficha", "fichas", name: "detalles_pagos_ficha_ficha_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_pagos_ficha", "tipos_pago", name: "detalles_pagos_ficha_tipo_pago_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "detalles_pagos_ficha", "users"
   add_foreign_key "examenes", "indicaciones"
   add_foreign_key "examenes", "tipo_examenes", name: "examenes_tipo_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes_perfil", "examenes", name: "examenes_perfil_examen_id_fkey", on_update: :cascade, on_delete: :cascade

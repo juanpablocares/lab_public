@@ -153,6 +153,8 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	};
 
 	$scope.ficha_temporal = function() {
+		//$scope.ficha.medico = $scope.medico;
+		console.log($scope);
 		$scope.ficha.examenesSeleccionados = $scope.examenesSeleccionados;
 		$scope.ficha.prevision = $scope.paciente.prevision;
 		$scope.ficha.paciente = $scope.paciente;

@@ -55,7 +55,7 @@
 				<div class="col-sm-10">
 					<ui-select ng-model="medico.selected" theme="bootstrap" >
 						<ui-select-match placeholder="Seleccione medico">
-							{{$select.selected.nombre}}
+							{{$select.selected.nombre}} {{$select.selected.apellido_paterno}} {{$select.selected.apellido_materno}}
 						</ui-select-match>
 						<ui-select-choices repeat="item in medicosArray | filter: $select.search">
 							<div ng-if="item.rut != null && item.rutdv != null"><strong ng-bind-html="item.rut+'-'+item.rutdv | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre + ' ' + item.apellido_paterno + ' ' + item.apellido_materno | highlight: $select.search"></span></div>

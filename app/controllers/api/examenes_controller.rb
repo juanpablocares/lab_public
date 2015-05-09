@@ -60,7 +60,7 @@ class Api::ExamenesController < ApplicationController
 		          success: true,
 		          message: 'Listado de examenes encontrado',
 		          data: @examenes,
-		        }, status: 200, include: [:tarifas_examen]
+		        }, status: 200, include: [:tarifas_examen, :indicacion, :tipo_examen]
 	end
 	
 	def select
