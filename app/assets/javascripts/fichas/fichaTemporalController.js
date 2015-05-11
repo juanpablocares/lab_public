@@ -3,13 +3,23 @@ angular.module('lab').controller('fichaTemporalController', function($scope, $au
 	$scope.loading = true;
 	$scope.precio_total = 0;
 	$scope.ficha = {};
+	$scope.examenesArray = [];
+	$scope.examenesSeleccionados = [];
+	
+	$scope.crearExamenesArray = function() {
+		$scope.examenesArray = [];
+		angular.forEach($scope.perfiles, function(value, key) {
+			value.perfil = true;
+			$scope.examenesArray.push(value);
+		});
+		angular.forEach($scope.examenes, function(value, key) {
+			value.perfil = false;
+			$scope.examenesArray.push(value);
+		});
+	};
 	
 	$scope.ficha = $stateParams.ficha;
 	$scope.paciente = $stateParams.paciente;
-	$scope.examenesSeleccionados = $scope.ficha.examenesSeleccionados;
-	console.log($scope.examenesSeleccionados);
-	
-	$scope.ficha.creado = Date();
 	$scope.ficha.user = $auth.user;
 	
 	total = 0;
@@ -23,7 +33,6 @@ angular.module('lab').controller('fichaTemporalController', function($scope, $au
 	}
 	
 	$scope.precio_total = total;
-	console.log($scope.precio_total);
 	
 	$scope.loading = false;
 });

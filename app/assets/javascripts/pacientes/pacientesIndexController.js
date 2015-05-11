@@ -31,6 +31,17 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 
 	$scope.pacienteEditing = false;
 
+	$scope.crear_ficha_temporal = function() {
+
+		$scope.ficha = new Object();
+		$scope.ficha.paciente = $scope.paciente;
+		
+		$state.go('loginRequired.ficha_temporal', {
+				paciente_id : $stateParams.paciente_id,
+				ficha: $scope.ficha
+			});
+	};
+	
 	$scope.updatePaciente = function() {
 		$scope.paciente.rut_completo = $scope.paciente.getRutCompleto();
 		$scope.paciente.nombre_completo = $scope.paciente.getNombreCompleto();

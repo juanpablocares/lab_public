@@ -104,7 +104,7 @@
 		/* Rutas de Fichas*/
 		
 		$stateProvider.state('loginRequired.ficha_temporal', {
-			url : '/pacientes/ficha_temporal',
+			url : '/pacientes/:paciente_id/ficha_temporal',
 			templateUrl : "fichas/ficha_temporal.html",
 			controller : 'fichaTemporalController',
 			params: {ficha: null}
