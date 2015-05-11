@@ -1,10 +1,43 @@
-angular.module('lab').controller('fichaTemporalController', function($scope, $auth, $state, $http, $stateParams)
+angular.module('lab').controller('fichaTemporalController', function($scope, $auth, $state, $http, $stateParams, Medicos, Procedencias, Examenes, Perfiles)
 {
 	$scope.loading = true;
 	$scope.precio_total = 0;
 	$scope.ficha = {};
 	$scope.examenesArray = [];
 	$scope.examenesSeleccionados = [];
+	
+	$scope.iniciar_vista = function(){
+		
+		Medicos.buscar.todos().$promise.then(function(response) {
+				$scope.medicosArray = response.data;
+			}, function(response) {
+				console.log("ERROR obteniendo medicos");
+			});
+
+			
+			Procedencias.buscar.todos().$promise.then(function(response) {
+				$scope.procedenciasArray = response.data;
+			}, function(response) {
+				console.log("ERROR obteniendo procedencias");
+			});
+
+			Examenes.all.index({
+			}).$promise.then(function(response) {
+				$scope.examenes = response.data;
+				$scope.crearExamenesArray();
+			}, function(response) {
+				console.log("ERROR obteniendo examenes");
+			});
+
+			Perfiles.buscar.todos().$promise.then(function(response) {
+				$scope.perfiles = response.data;
+				$scope.crearExamenesArray();
+			}, function(response) {
+				console.log("ERROR obteniendo perfiles");
+			});
+	};
+	
+	$scope.iniciar_vista();
 	
 	$scope.crearExamenesArray = function() {
 		$scope.examenesArray = [];
