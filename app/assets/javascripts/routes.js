@@ -86,6 +86,12 @@
 				desde_barra: false,
 			}
 		});
+		
+		$stateProvider.state('loginRequired.nueva_ficha', {
+			url : '/asignar_examenes/:paciente_id',
+			templateUrl : "fichas/new.html",
+			controller : 'FichasNewController',
+		});
 
 		$stateProvider.state('loginRequired.busqueda_paciente', {
 			url : '/pacientes',
@@ -118,13 +124,6 @@
 		});
 		
 		/* Rutas de Fichas*/
-		
-		$stateProvider.state('loginRequired.ficha_temporal', {
-			url : '/pacientes/:paciente_id/ficha_temporal',
-			templateUrl : "fichas/ficha_temporal.html",
-			controller : 'fichaTemporalController',
-			params: {ficha: null}
-		});
 		
 		$stateProvider.state('loginRequired.fichas', {
 			url : '/fichas/:ficha_id',
@@ -181,12 +180,6 @@
 			templateUrl : "pacientes/examenes.html",
 			controller : 'PacientesExamenesController',
 			params: {paciente: null}
-		});
-		
-		$stateProvider.state('loginRequired.pacientes.asignarExamenes', {
-			url : '/asignarExamenes',
-			templateUrl : "fichas/new.html",
-			controller : 'FichasNewController',
 		});
 		
 		$stateProvider.state('loginRequired.pacientes.ficha', {
