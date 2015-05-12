@@ -1,6 +1,6 @@
 class Api::CotizacionesController < ApplicationController
 
-	before_action :authenticate_user!
+	
 	def create
 		cotizacion = Cotizacion.new
 		cotizacion.paciente_id = params[:paciente_id]
@@ -40,6 +40,37 @@ class Api::CotizacionesController < ApplicationController
 			end
 		else
 			raise "No hay exámenes"
+		end
+	end
+	
+	def show
+		if @results = Cotizacion.includes(
+			{:paciente => [:prevision,:comuna]},
+			{:orden_medica => [:medico]},
+			:user,
+			:prevision,
+			:procedencia,
+			{:detalles_cotizacion => [
+				:resultados_examen,
+				:perfil, {
+				:examen => [
+					:sustancias,
+					:indicacion,
+					:tipo_examen,
+					:tarifas_examen]}
+			   	]})
+			   .find(params[:id])
+			render json: {
+		          success: true,
+		          message: '[show] Cotizacion encontrada',
+		          data: @results,
+		        }, status: 200, include: [
+		        	{:paciente => {include: [:prevision, :comuna]}},
+		        	{:orden_medica => {include: [:medico]}},
+		        	:user,
+		        	:prevision,
+		        	:procedencia,
+		        	{:detalles_cotizacion => {include: [:resultados_examen,:perfil,{:examen => { include: [:sustancias, :indicacion, :tipo_examen,:tarifas_examen]}}]}}]
 		end
 	end
 end

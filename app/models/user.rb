@@ -5,4 +5,5 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
   
   has_many :fichas
+  has_many :detalles_pago_ficha
 end

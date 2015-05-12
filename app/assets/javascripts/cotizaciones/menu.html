@@ -1,0 +1,87 @@
+<div ng-if="loading" class="row text-center">
+	<i class="fa fa-spinner fa-pulse fa-2x"></i>	
+</div>
+
+<div class="row" ng-if="!loading">
+	<div class="col-sm-6">
+		<div class="widget-container fluid-height">
+			<div class="widget-content padded clearfix text-center">
+				<table class="table table-condensed">
+					<tbody> 
+						<tr>
+							<td><strong>Rut</strong></td>
+							<td><a ui-sref="loginRequired.pacientes.info({paciente_id: cotizacion.paciente.id})"><phy-rut rut='cotizacion.paciente.rut_completo'></phy-rut></a></td>
+						</tr>
+						<tr>
+							<td><strong>Paciente</strong></td>
+							<td><a ui-sref="loginRequired.pacientes.info({paciente_id: cotizacion.paciente.id})">{{cotizacion.paciente.nombre}} {{cotizacion.paciente.apellido_paterno}} {{cotizacion.paciente.apellido_materno}}</a></td>
+						</tr>
+						<tr> 
+							<td><strong>Fecha Nacimiento</strong></td>
+							<td>{{cotizacion.paciente.fecha_nacimiento | date:'dd/MM/yyyy'}} - {{cotizacion.paciente.getEdad()}}</td>
+						</tr>
+						<tr>
+							<td><strong>Teléfono</strong></td>
+							<td>{{cotizacion.paciente.celular}}</td>
+						</tr>
+						<tr>
+							<td><strong>Dirección</strong></td>
+							<td>{{cotizacion.paciente.direccion}} {{cotizacion.paciente.comuna.nombre}}</td>
+						</tr>
+						<tr>
+							<td><strong>Email</strong></td>
+							<td>{{cotizacion.paciente.email?cotizacion.paciente.email:'Sin correo electrónico'}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="widget-container fluid-height">
+			<div class="widget-content padded clearfix text-center">
+				<table class="table table-condensed">
+					<tbody>
+						<tr>
+							<td><strong>Fecha ingreso</strong></td>
+							<td>{{cotizacion.creado | date:'dd/MM/yyyy HH:mm' }}</td>
+						</tr>
+						<tr>
+							<td><strong>Recepcionista</strong></td>
+							<td>{{cotizacion.user.nombre}} {{cotizacion.user.apellido_paterno}}</td>
+						</tr>
+						<tr>
+							<td><strong>Procedencia</strong></td>
+							<td>{{cotizacion.procedencia.nombre}}</td>
+						</tr>
+						<tr>
+							<td><strong>Medico</strong></td>
+							<td><span ng-if="cotizacion.orden_medica.medico.id">{{cotizacion.orden_medica.medico.nombre}} {{cotizacion.orden_medica.medico.apellido_paterno}} - <phy-rut rut="cotizacion.orden_medica.medico.rut"></phy-rut></span><span ng-if="!cotizacion.orden_medica.medico.id">No hay orden médica</span></td>
+						</tr>
+						<tr>
+							<td><strong>Previsión</strong></td>
+							<td>{{cotizacion.prevision.nombre}}</td>
+						</tr>
+						<tr>
+							<td><strong>Observaciones</strong></td>
+							<td><span ng-if="cotizacion.observaciones">{{cotizacion.observaciones}}</span><span ng-if="!cotizacion.observaciones">Sin observaciones.</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<ul class="nav nav-pills">
+			<li ng-repeat="tab in tabs" ng-class="{active: state.current.name === tab.id}">
+				<a ui-sref="{{tab.state}}">
+				<p>
+					<span class="badge" ng-if="tab.badge">{{tab.badge}}</span>{{tab.name}}
+				</p> </a>
+			</li>
+		</ul>
+		<div ui-view ></div>
+	</div>
+</div>
