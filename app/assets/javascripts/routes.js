@@ -175,6 +175,13 @@
 			params: {paciente: null}
 		});
 		
+		$stateProvider.state('loginRequired.pacientes.cotizaciones', {
+			url : '/cotizaciones',
+			templateUrl : "pacientes/cotizaciones.html",
+			controller : 'PacientesCotizacionesController',
+			params: {paciente: null}
+		});
+		
 		$stateProvider.state('loginRequired.pacientes.examenes', {
 			url : '/examenes',
 			templateUrl : "pacientes/examenes.html",

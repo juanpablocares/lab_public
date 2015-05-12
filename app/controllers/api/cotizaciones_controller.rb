@@ -72,4 +72,13 @@ class Api::CotizacionesController < ApplicationController
 		        	{:detalles_cotizacion => {include: [:perfil,{:examen => { include: [:sustancias, :indicacion, :tipo_examen,:tarifas_examen]}}]}}]
 		end
 	end
+	
+	def show_bypaciente
+		@cotizaciones = Cotizacion.where(paciente_id: params[:id])
+		render json: {
+		          success: true,
+		          message: '[Paciente] Cotizaciones del paciente indicado encontradas',
+		          cotizaciones: @cotizaciones,
+		        }, status: 200, include: [:orden_medica, :procedencia]
+	end
 end

@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 		
 		#Controladores cotizaciones
 		get 'cotizaciones/:id', to: 'cotizaciones#show', defaults: {format: 'json'}
+		get 'cotizaciones/paciente/:id', to: 'cotizaciones#show_bypaciente', defaults: {format: 'json'}
 		
 		#Controladores de fichas
 		get 'fichas/pagos/:id', to: 'fichas#pagos', defaults: {format: 'json'}
