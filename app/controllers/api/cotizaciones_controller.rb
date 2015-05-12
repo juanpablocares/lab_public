@@ -51,7 +51,6 @@ class Api::CotizacionesController < ApplicationController
 			:prevision,
 			:procedencia,
 			{:detalles_cotizacion => [
-				:resultados_examen,
 				:perfil, {
 				:examen => [
 					:sustancias,
@@ -70,7 +69,7 @@ class Api::CotizacionesController < ApplicationController
 		        	:user,
 		        	:prevision,
 		        	:procedencia,
-		        	{:detalles_cotizacion => {include: [:resultados_examen,:perfil,{:examen => { include: [:sustancias, :indicacion, :tipo_examen,:tarifas_examen]}}]}}]
+		        	{:detalles_cotizacion => {include: [:perfil,{:examen => { include: [:sustancias, :indicacion, :tipo_examen,:tarifas_examen]}}]}}]
 		end
 	end
 end
