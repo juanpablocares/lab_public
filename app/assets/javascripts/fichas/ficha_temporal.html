@@ -86,37 +86,21 @@
 
 	<div class="widget-content padded">
 		<form>
-			<div>
-				<table class="table table-bordered" ng-if="examenesSeleccionados.length != 0">
-					<thead>
-						<th>Código</th>
-						<th>Examen</th>
-						<th>Tipo muestra</th>
-						<th>Indicaciones</th>
-						<th>Proceso</th>
-						<th>Dia proceso</th>
-						<th>Demora</th>
-						<th>Precio</th>
-					</thead>
-					<tbody>
-						<tr ng-repeat="item in examenesSeleccionados">
-							<td>{{item.codigo_fonasa?item.codigo_fonasa:'---'}}</td>
-							<td>{{item.nombre?item.nombre:'---'}}</td>
-							<td>{{item.tipo_examen.nombre?item.tipo_examen.nombre:'---'}}</td>
-							<td>{{item.indicacion.descripcion?item.indicacion.descripcion:'---'}}</td>
-							<td>{{item.externo!=0?'Interno':'Externo'}}</td>
-							<td>{{item.dia_proceso?item.examen.dia_proceso:'---'}}</td>
-							<td>{{item.demora_proceso?item.examen.demora_proceso:'---'}}</td>
-							<td>{{item.precio?item.precio:'---'}}</td>
-						</tr>
-					</tbody>
-					<tbody>
-						<tr>
-							<td colspan="7"><strong>Precio total</strong></td>
-							<td class="text-danger">{{precio_total}}</td>
-						</tr>
-					</tbody>
-				</table>
+			<div class="form-group">
+				<label  class="col-sm-2 control-label">Examenes</label>
+				<div class="col-sm-10">
+					<ui-select ng-model="selectModel.selected" theme="bootstrap" reset-search-input="true" on-select="seleccionarExamen($item, $select)">
+						<ui-select-match placeholder="Seleccione un examen para agregar">
+							{{$select.selected.nombre}}
+						</ui-select-match>
+						<ui-select-choices group-by="agruparPerfiles" repeat="item in examenesArray | filter: $select.search">
+							<div ng-if="item.codigo_fonasa == null"><strong ng-bind-html="item.codigo | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span></div>
+							<div ng-if="item.codigo != null && item.codigo_fonasa != null"><strong ng-bind-html="item.codigo_fonasa+'-'+item.codigo | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span></div>
+							<div ng-if="item.codigo === null" ><strong ng-bind-html="item.codigo_fonasa| highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span></div>
+						</ui-select-choices>
+					</ui-select>
+				</div>
+				<div ng-include="'fichas/_examenes_table.html'"></div>
 			</div>
 			<div class="row form-group">
 				<div class="col-sm-11 text-right">

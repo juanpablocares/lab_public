@@ -107,6 +107,22 @@
 				prevision : null
 			}
 		});
+		
+		/* Rutas Cotizaciones*/
+		$stateProvider.state('loginRequired.cotizaciones', {
+			url : '/cotizaciones/:cotizacion_id',
+			templateUrl : "cotizaciones/menu.html",
+			controller : 'CotizacionesMenuController',
+			params: {paciente: null}
+		});
+		
+		$stateProvider.state('loginRequired.cotizaciones.info', {
+			url : '/informacion',
+			templateUrl : "cotizaciones/index.html",
+			controller : 'CotizacionesIndexController',
+			params: {cotizacion: null}
+		});
+		
 		/* Rutas de Fichas*/
 		
 		$stateProvider.state('loginRequired.fichas', {
@@ -156,6 +172,13 @@
 			url : '/fichas',
 			templateUrl : "pacientes/fichas.html",
 			controller : 'PacientesFichasController',
+			params: {paciente: null}
+		});
+		
+		$stateProvider.state('loginRequired.pacientes.cotizaciones', {
+			url : '/cotizaciones',
+			templateUrl : "pacientes/cotizaciones.html",
+			controller : 'PacientesCotizacionesController',
 			params: {paciente: null}
 		});
 		
