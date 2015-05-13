@@ -8,7 +8,7 @@
 			<form class="form-horizontal" name="ingresarPagoForm" novalidate>
 				<div class="form-group" ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_tipo_pago.$error.required)}">
 					<label class="col-sm-2 control-label">Tipo de pago</label>
-					<div class="col-sm-8">
+					<div class="col-sm-10">
 						<ui-select ng-model="nuevoPago.tipo_pago" name="nuevo_pago_tipo_pago" theme="bootstrap" required>
 							<ui-select-match placeholder="Seleccione tipo de pago">
 								{{$select.selected.nombre}}
@@ -23,7 +23,7 @@
 				<div class="form-group" ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_numero_documento.$error.required)}">
 				<label class="col-sm-2 control-label">N° documento:</label>
 				<div class="col-sm-3">
-					<input class="form-control" ng-model="nuevoPago.n_documento" name="nuevo_pago_numero_documento" type="number" required>
+					<input class="form-control" ng-model="nuevoPago.numero_documento" name="nuevo_pago_numero_documento" type="number" required>
 					<label class="error" ng-if="(ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_numero_documento.$error.required)">Ingrese el número del documento.</label>
 				</div>
 				<div class="form-group" ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_monto.$error.required)}">
@@ -53,30 +53,28 @@
 			<div class="col-sm-12" ng-if="detallePagos.length != 0">
 				<table class="table">
 					<thead>
-						<th> Medio de pago </th>
-						<th> Número documento </th>
+						<th> Código </th>
 						<th> Fecha </th>
-						<th> Recaudador </th>
+						<th> Medio de pago </th>
 						<th> Monto </th>
 					</thead>
 					<tbody>
 						<tr ng-repeat="pago in detallePagos">
-							<td>{{pago.tipo_pago.nombre}}</td>
-							<td>{{pago.n_documento}}</td>
+							<td>{{pago.id}}</td>
 							<td>{{pago.creado}}</td>
-							<td>{{pago.user.nombre}} {{pago.user.apellido_paterno}}</td>
+							<td>{{pago.tipo_pago.nombre}}</td>
 							<td>{{pago.monto_pagado}}</td>
 						</tr>
 						<tr>
-							<td colspan="4"><strong>Precio total</strong></td>
+							<td colspan="3"><strong>Precio total</strong></td>
 							<td class="text-danger">{{precio_total}}</td>
 						</tr>
 						<tr>
-							<td colspan="4"><strong>Pagado</strong></td>
+							<td colspan="3"><strong>Pagado</strong></td>
 							<td class="text-success">{{getTotalPagos()}}</td>
 						</tr>
 						<tr>
-							<td colspan="4"><strong>Total</strong></td>
+							<td colspan="3"><strong>Total</strong></td>
 							<td ng-class="{'text-success': precio_total < getTotalPagos(), 'text-danger': precio_total > getTotalPagos()}">{{precio_total - getTotalPagos()}}</td>
 						</tr>
 					</tbody>
