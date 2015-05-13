@@ -31,9 +31,9 @@
 		</table>
 		<div class="row form-group">
 			<div class="col-sm-11 text-right">
-					<a ui-sref="loginRequired.nueva_ficha({paciente_id: paciente.id})" class="btn btn-success">
+					<button ng-click="crear_ficha_temporal()" type="submit" class="btn btn-success">
 						Ficha/Cotización
-					</a>
+					</button>
 				<button type="button" class="btn btn-primary" ng-click="cambiarVentanaSinCambios()">
 					Editar información
 				</button>
