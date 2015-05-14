@@ -17,9 +17,6 @@ Rails.application.routes.draw do
 		get 'pacientes/paterno/:paterno', to: 'pacientes#search_paterno', defaults: {format: 'json'}
 		get 'pacientes/paterno/:materno', to: 'pacientes#search_materno', defaults: {format: 'json'}
 		
-		#Controladores cotizaciones
-		get 'cotizaciones/:id', to: 'cotizaciones#show', defaults: {format: 'json'}
-		
 		#Controladores de fichas
 		get 'fichas/pagos/:id', to: 'fichas#pagos', defaults: {format: 'json'}
 		get 'fichas/paciente/:id', to: 'fichas#show_bypaciente', defaults: {format: 'json'}
@@ -67,7 +64,7 @@ Rails.application.routes.draw do
 		
 		get 'detalles_pago_ficha/ficha/:id', to: 'detalles_pago_ficha#getAllByFicha', defaults: {format: 'json'}
 		
-		resources :cotizaciones, :defaults => { :format => 'json' }
+		
 		resources :resultados_examen, :defaults => { :format => 'json' }
 		resources :sustancias_examen, :defaults => { :format => 'json' }
 		resources :comunas, :defaults => { :format => 'json' }

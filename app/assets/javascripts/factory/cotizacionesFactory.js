@@ -1,7 +1,7 @@
 (function() {
 	var labs = angular.module('lab');
 
-	labs.factory('Cotizaciones', function($resource) {
+	labs.factory('Cotizacion', function($resource) {
 		return {
 			root : $resource("/api/cotizacion", {
 			}, {

@@ -27,41 +27,60 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	$scope.examenesSeleccionados = [];
 	$scope.editExamenes = true;
 
-	$scope.$on('pacienteFromMenu', function(event, data) {
-		if (data.id != null) {
-			$scope.paciente = data;
+	$http.get('/api/pacientes/' + $stateParams.paciente_id).success(function(data) {
+		//Set of received data to parent paciente object.
+		$scope.paciente = data.data;
+		//Functions of paciente object
+		$scope.paciente.getNombreCompleto = function() {
+			return this.nombre + " " + this.apellido_paterno + " " + this.apellido_materno;
+		};
+		$scope.paciente.getRutCompleto = function() {
+			return this.rut + "" + this.rutdv;
+		};
+		
+		$scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
+		var d = new Date();
+		var meses = 0;
+		if ($scope.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth() > 0)
+			meses += 12 - $scope.paciente.fecha_nacimiento.getUTCMonth() + d.getMonth();
+		else
+			meses = Math.abs($scope.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth());
+		var anios = ((Date.now() - $scope.paciente.fecha_nacimiento) / (31556926000));
+		$scope.paciente.edad = ~~anios + " Años " + ~~meses + " meses";
 
-			Medicos.buscar.todos().$promise.then(function(response) {
-				$scope.medicosArray = response.data;
-			}, function(response) {
-				console.log("ERROR obteniendo medicos");
-			});
+		$scope.paciente.rut_completo = $scope.paciente.getRutCompleto();
+		$scope.paciente.nombre_completo = $scope.paciente.getNombreCompleto();
 
-			
-			Procedencias.buscar.todos().$promise.then(function(response) {
-				$scope.procedenciasArray = response.data;
-			}, function(response) {
-				console.log("ERROR obteniendo procedencias");
-			});
+		Medicos.buscar.todos().$promise.then(function(response) {
+			$scope.medicosArray = response.data;
+		}, function(response) {
+			console.log("ERROR obteniendo medicos");
+		});
 
-			Examenes.all.index({
-			}).$promise.then(function(response) {
-				$scope.examenes = response.data;
-				$scope.crearExamenesArray();
-			}, function(response) {
-				console.log("ERROR obteniendo examenes");
-			});
+		Procedencias.buscar.todos().$promise.then(function(response) {
+			$scope.procedenciasArray = response.data;
+		}, function(response) {
+			console.log("ERROR obteniendo procedencias");
+		});
 
-			Perfiles.buscar.todos().$promise.then(function(response) {
-				$scope.perfiles = response.data;
-				$scope.crearExamenesArray();
-			}, function(response) {
-				console.log("ERROR obteniendo perfiles");
-			});
-		}
+		Examenes.all.index({
+		}).$promise.then(function(response) {
+			$scope.examenes = response.data;
+			$scope.crearExamenesArray();
+		}, function(response) {
+			console.log("ERROR obteniendo examenes");
+		});
+
+		Perfiles.buscar.todos().$promise.then(function(response) {
+			$scope.perfiles = response.data;
+			$scope.crearExamenesArray();
+		}, function(response) {
+			console.log("ERROR obteniendo perfiles");
+		});
+
+	}).error(function(data) {
+		$state.go('loginRequired.index');
 	});
-
-	$scope.$emit('PedirPacienteFromMenu');
 
 	$scope.crearExamenesArray = function() {
 		$scope.examenesArray = [];
@@ -103,11 +122,9 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		else {
 			for (var i = 0; i < model.examenes.length; i++) {
 				value = model.examenes[i];
-				console.log(value);
 				var temp = null;
 				for (var j = 0; j < value.tarifas_examen.length; j++) {
 					value2 = value.tarifas_examen[j];
-					console.log(value2);
 					if (value2.tarifa_id == $scope.paciente.prevision.tarifa_id) {
 						temp = value2;
 					}
@@ -117,15 +134,13 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		}
 		$scope.examenesSeleccionados.push(model);
 		select.selected = "";
-		console.log($scope.examenesArray);
-		console.log($scope.examenesSeleccionados);
 		$scope.getPrecioTotal();
 	};
 
 	$scope.agregarExamenes = function() {
 		$scope.step = 2;
 	};
-	
+
 	$scope.volver = function() {
 		$scope.step = 1;
 	};
@@ -133,7 +148,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	$scope.validar_datos = function() {
 		console.log('Validar datos');
 	};
-	
+
 	$scope.crearFicha = function() {
 		data = {
 			paciente_id : $stateParams.paciente_id,
@@ -152,31 +167,18 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 
 	};
 
-	$scope.ficha_temporal = function() {
-		//$scope.ficha.medico = $scope.medico;
-		console.log($scope);
-		$scope.ficha.examenesSeleccionados = $scope.examenesSeleccionados;
-		$scope.ficha.prevision = $scope.paciente.prevision;
-		$scope.ficha.paciente = $scope.paciente;
-		$state.go('loginRequired.ficha_temporal',{
-			ficha: $scope.ficha
-		});
-	};
-	
 	$scope.getPrecioTotal = function() {
 		var total = 0;
 		for (var i = 0; i < $scope.examenesSeleccionados.length; i++) {
 			if ($scope.examenesSeleccionados[i].perfil) {
 				for (var j = 0; j < $scope.examenesSeleccionados[i].examenes.length; j++) {
-					if($scope.examenesSeleccionados[i].examenes[j].tarifas_examen[0])
-					{
+					if ($scope.examenesSeleccionados[i].examenes[j].tarifas_examen[0]) {
 						total = total + $scope.examenesSeleccionados[i].examenes[j].tarifas_examen[0].precio;
 					}
 				}
 			}
 			else {
-				if($scope.examenesSeleccionados[i].tarifas_examen[0])
-				{
+				if ($scope.examenesSeleccionados[i].tarifas_examen[0]) {
 					$scope.examenesSeleccionados[i].precio = $scope.examenesSeleccionados[i].tarifas_examen[0].precio;
 					total = total + $scope.examenesSeleccionados[i].tarifas_examen[0].precio;
 				}

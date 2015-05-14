@@ -1,16 +1,16 @@
 (function() {
 	var labs = angular.module('lab');
 
-	labs.factory('Cotizacion', function($resource) {
-		return $resource("/api/cotizaciones/:id", {id: "@id"},
-			{
-				get : {
-					method : 'GET',
+	labs.factory('Cotizaciones', function($resource) {
+		return {
+			root : $resource("/api/cotizaciones", {
+			}, {
+				new : {
+					method : 'POST',
+					isArray: false,
 				},
-				update : {
-					method : 'PUT',
-				},
-			});
+			})
+		};
 	});
 	
 })();
