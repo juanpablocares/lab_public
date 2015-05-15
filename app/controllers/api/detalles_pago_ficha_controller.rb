@@ -16,13 +16,13 @@ class Api::DetallesPagoFichaController < ApplicationController
 	def getAllByFicha
 		render json: {
 			success: true,
-			data: Ficha.find(params[:id]).detalles_pago_ficha.includes(:tipo_pago),
+			data: Ficha.find(params[:id]).detalles_pago_ficha.includes(:tipo_pago, :user),
 	        message: 'Detalle pago ficha creado',
-	    }, status: 200, include: [:tipo_pago]
+	    }, status: 200, include: [:tipo_pago, :user]
 	end
 
 	def detalle_pago_ficha_params
-		params.require(:detalle_pago_ficha).permit(:ficha_id, :tipo_pago_id, :monto_pagado)
+		params.require(:detalle_pago_ficha).permit(:ficha_id, :tipo_pago_id, :monto_pagado, :n_documento, :factura, :user_id)
 	end
 
 end

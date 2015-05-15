@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150512122218) do
+ActiveRecord::Schema.define(version: 20150514231155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,8 +92,14 @@ ActiveRecord::Schema.define(version: 20150512122218) do
     t.integer  "user_id",         limit: 8,                                 null: false
     t.datetime "creado",                    default: '2015-02-20 15:08:40', null: false
     t.string   "observaciones"
-    t.integer  "prevision_id"
-    t.integer  "precio_total"
+    t.integer  "prevision_id",                                              null: false
+    t.integer  "precio_total",                                              null: false
+    t.string   "receptor"
+    t.string   "programa",                                                  null: false
+    t.string   "numero_programa",                                           null: false
+    t.boolean  "mandar_email",              default: false
+    t.boolean  "urgente",                   default: false
+    t.integer  "medico_id"
   end
 
   add_index "fichas", ["prevision_id"], name: "index_fichas_on_prevision_id", using: :btree
@@ -328,6 +334,7 @@ ActiveRecord::Schema.define(version: 20150512122218) do
   add_foreign_key "examenes", "tipo_examenes", name: "examenes_tipo_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes_perfil", "examenes", name: "examenes_perfil_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes_perfil", "perfiles", name: "examenes_perfil_perfil_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "fichas", "medicos"
   add_foreign_key "fichas", "ordenes_medicas", column: "orden_medica_id", name: "fichas_orden_medica_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "fichas", "pacientes", name: "fichas_paciente_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "fichas", "previsiones"

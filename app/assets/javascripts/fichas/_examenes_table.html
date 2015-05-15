@@ -1,7 +1,13 @@
 <div>
 	<table class="table table-striped" ng-if="examenesSeleccionados.length != 0">
 		<thead>
+			<th>Código</th>
 			<th>Examen</th>
+			<th>Tipo muestra</th>
+			<th>Indicaciones</th>
+			<th>Proceso</th>
+			<th>Dia proceso</th>
+			<th>Demora</th>
 			<th>Precio</th>
 			<th class="col-sm-1" ng-if="editExamenes">Opciones</th>
 		</thead>
@@ -18,15 +24,21 @@
 		</tbody>
 		<tbody ng-repeat="item in examenesSeleccionados track by $index"  ng-if="!item.perfil">
 			<tr >
+				<td>{{item.codigo}}</td>
 				<td>{{item.nombre}}</td>
+				<td>{{item.tipo_examen.nombre?item.tipo_examen.nombre:'---'}}</td>
+				<td>{{item.indicacion.descripcion?item.indicacion.descripcion:'---'}}</td>
+				<td>{{item.externo!=0?'Interno':'Externo'}}</td>
+				<td>{{item.dia_proceso?item.examen.dia_proceso:'---'}}</td>
+				<td>{{item.demora_proceso?item.examen.demora_proceso:'---'}}</td>
 				<td>{{item.precio?item.precio:0 }}</td>
 				<td ng-if="editExamenes" class="text-center"><a href="#" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar examen"><i class="fa fa-trash-o fa-lg"></i></a></td>
 			</tr>
 		</tbody>
 		<tbody>
 			<tr>
-				<td ><strong>Total</strong></td>
-				<td colspan="2">{{precio_total}}</td>
+				<td colspan="7"><strong>Total</strong></td>
+				<td >{{precio_total}}</td>
 			</tr>
 		</tbody>
 	</table>
