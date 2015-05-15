@@ -12,16 +12,16 @@
 
 angular.module('lab').controller('FichasNewController', function($scope, $auth, $state, $http, $resource, $stateParams, Examenes, Perfiles, Cotizaciones, Procedencias, Fichas, Medicos) {
 
-	$scope.step = 1;
 	$scope.ficha = {};
 	$scope.selectModel = {};
 	$scope.procedencia = {};
+	$scope.medico = {};
 	$scope.observaciones = "";
 	$scope.examenes = {};
 	$scope.perfiles = {};
 	$scope.paciente = {};
 	$scope.precio_total = 0;
-	$scope.medicosArray = [];
+	$scope.medicosArray = []; 
 	$scope.procedenciasArray = [];
 	$scope.examenesArray = [];
 	$scope.examenesSeleccionados = [];
@@ -137,34 +137,50 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		$scope.getPrecioTotal();
 	};
 
-	$scope.agregarExamenes = function() {
-		$scope.step = 2;
-	};
+	$scope.validate_form = function(ficha_form)
+	{
+		return $scope.examenesSeleccionados.length > 0 && ficha_form.$valid;
+	}
 
-	$scope.volver = function() {
-		$scope.step = 1;
-	};
-
-	$scope.validar_datos = function() {
-		console.log('Validar datos');
-	};
-
-	$scope.crearFicha = function() {
-		data = {
-			paciente_id : $stateParams.paciente_id,
-			procedencia_id : $scope.procedencia.selected.id,
-			observaciones : $scope.observaciones,
-			precio_total : $scope.precio_total,
-			examenes : $scope.examenesSeleccionados,
-		};
-		Fichas.root.new(data).$promise.then(function(response) {
-			$state.go('loginRequired.fichas.info', {
-				ficha_id : response.data.id
+	$scope.crearFicha = function(ficha_form){
+		if($scope.validate_form(ficha_form))
+		{
+			$scope.ficha.paciente_id = $stateParams.paciente_id;
+			if($scope.medico != undefined && $scope.medico.selected != undefined)
+			{
+				$scope.ficha.medico_id = $scope.medico.selected.id;
+			}
+			$scope.ficha.procedencia_id = $scope.procedencia.selected.id;
+			$scope.ficha.precio_total = $scope.precio_total;
+			$scope.ficha.examenes = $scope.examenesSeleccionados;
+			Fichas.root.new($scope.ficha).$promise.then(function(response) {
+				$state.go('loginRequired.fichas.info', {
+					ficha_id : response.data.id
+				});
+			}, function(response) {
+				console.log("ERROR creando ficha");
 			});
-		}, function(response) {
-			console.log("ERROR creando ficha");
-		});
-
+		}
+	};
+	
+	$scope.crearCotizacion = function(ficha_form){
+		if($scope.validate_form(ficha_form))
+		{
+			$scope.ficha.paciente_id = $stateParams.paciente_id;
+			$scope.ficha.medico_id = $scope.medico.selected.id;
+			$scope.ficha.procedencia_id = $scope.procedencia.selected.id;
+			$scope.ficha.precio_total = $scope.precio_total;
+			$scope.ficha.examenes = $scope.examenesSeleccionados;
+			
+			Cotizaciones.root.new(data).$promise.then(function(response) {
+				console.log("REDIRECCIONANDO A loginRequired.cotizaciones.info");
+				$state.go('loginRequired.cotizaciones.info', {
+					ficha_id : response.data.id
+				});
+			}, function(response) {
+				console.log("ERROR creando ficha");
+			});
+		}
 	};
 
 	$scope.getPrecioTotal = function() {

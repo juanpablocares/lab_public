@@ -105,11 +105,43 @@ class Api::FichasController < ApplicationController
 	        return false
 		end
 		
+		medico = nil
+		if params.has_key? :medico_id
+			medico = Medico.find(params[:medico_id])
+			if medico == nil
+				render json:
+				{
+					success: false,
+					data:  ficha,
+		        	message: 'Medico no encontrado',
+		        }, status: 500
+		        return false
+			end
+		end
+		
 		ficha = Ficha.new
 		ficha.paciente_id = paciente.id
+
+		if medico != nil
+			ficha.medico_id = medico.id
+		end
+		if params.has_key? :receptor
+			ficha.entregar_a = params[:receptor]
+		end
+		
+		if params.has_key? :mandar_email
+			ficha.mandar_email = params[:mandar_email]
+		end
+		
+		if params.has_key? :urgente
+			ficha.urgente = params[:urgente]
+		end
+		
 		ficha.procedencia_id = params[:procedencia_id]
 		ficha.prevision_id = paciente.prevision_id
 		ficha.precio_total = params[:precio_total]
+		ficha.programa = params[:programa]
+		ficha.numero_programa = params[:numero_programa]
 		ficha.observaciones = params[:observaciones]
 		ficha.orden_medica_id = nil
 		ficha.user_id = current_user.id
