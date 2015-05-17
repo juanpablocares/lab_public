@@ -1,5 +1,4 @@
 angular.module('lab').controller('FichasPagosController', function($scope, $auth, $state, $http, $stateParams, Fichas, Perfiles, TiposPago, DetallesPagoFicha) {
-
 	$scope.precio_total=0;
 	$scope.editExamenes = false;
 	$scope.examenesSeleccionados = [];
@@ -74,12 +73,10 @@ angular.module('lab').controller('FichasPagosController', function($scope, $auth
 	//Recobrar ficha desde el menu
 	$scope.$on('fichaFromMenu', function(event, data) {
 		console.log("fichaFromMenu");
-		console.log($scope.examenesSeleccionados);
 		if (data != undefined) {
 			$scope.ficha = data;
 			$scope.ordenarExamenes();
 		}
-		console.log($scope.examenesSeleccionados);
 	});
 	
 	$scope.$emit('PedirFichaFromMenu');
@@ -115,7 +112,9 @@ angular.module('lab').controller('FichasPagosController', function($scope, $auth
 			data = {
 				ficha_id : $stateParams.ficha_id,
 				tipo_pago_id : $scope.nuevoPago.tipo_pago.id,
+				n_documento : $scope.nuevoPago.numero_documento,
 				monto_pagado : $scope.nuevoPago.monto,
+				user_id : $auth.user.id,
 			};
 			DetallesPagoFicha.root.new(data).$promise.then(function(response) {
 				DetallesPagoFicha.by_ficha_id.all({
