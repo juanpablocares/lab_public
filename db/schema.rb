@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150514231155) do
+ActiveRecord::Schema.define(version: 20150517214837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,17 +24,26 @@ ActiveRecord::Schema.define(version: 20150514231155) do
   add_index "comunas", ["nombre"], name: "comuna_unica", unique: true, using: :btree
 
   create_table "cotizaciones", force: :cascade do |t|
-    t.integer  "paciente_id",    limit: 8,                                 null: false
-    t.integer  "procedencia_id", limit: 8,                                 null: false
-    t.integer  "user_id",        limit: 8,                                 null: false
-    t.datetime "creado",                   default: '2015-02-20 15:08:40', null: false
+    t.integer  "paciente_id",     limit: 8,                                 null: false
+    t.integer  "procedencia_id",  limit: 8,                                 null: false
+    t.integer  "user_id",         limit: 8,                                 null: false
+    t.datetime "creado",                    default: '2015-02-20 15:08:40', null: false
+    t.string   "observaciones"
+    t.integer  "prevision_id",                                              null: false
+    t.integer  "precio_total",                                              null: false
+    t.integer  "medico_id"
+    t.string   "programa"
+    t.string   "numero_programa"
+    t.boolean  "mandar_email",              default: false
+    t.boolean  "urgente",                   default: false
   end
 
   create_table "detalles_cotizacion", force: :cascade do |t|
-    t.integer  "cotizacion_id",    limit: 8,                                 null: false
-    t.integer  "examen_id",        limit: 8,                                 null: false
-    t.integer  "perfil_examen_id", limit: 8
-    t.datetime "creado",                     default: '2015-02-20 15:08:40', null: false
+    t.integer  "cotizacion_id", limit: 8,                                 null: false
+    t.integer  "examen_id",     limit: 8,                                 null: false
+    t.integer  "perfil_id",     limit: 8
+    t.datetime "creado",                  default: '2015-02-20 15:08:40', null: false
+    t.integer  "precio"
   end
 
   create_table "detalles_ficha", force: :cascade do |t|
@@ -317,12 +326,14 @@ ActiveRecord::Schema.define(version: 20150514231155) do
   add_index "users_sucursal", ["user_id", "sucursal_id"], name: "user_sucursal", unique: true, using: :btree
 
   add_foreign_key "comunas", "regiones", name: "comunas_region_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "cotizaciones", "medicos"
   add_foreign_key "cotizaciones", "pacientes", name: "cotizaciones_paciente_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "cotizaciones", "previsiones"
   add_foreign_key "cotizaciones", "procedencias", name: "cotizaciones_procedencia_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "cotizaciones", "users", name: "cotizaciones_user_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_cotizacion", "cotizaciones", name: "detalles_cotizacion_cotizacion_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_cotizacion", "examenes", name: "detalles_cotizacion_examen_id_fkey", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "detalles_cotizacion", "perfiles", column: "perfil_examen_id", name: "detalles_cotizacion_perfil_examen_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "detalles_cotizacion", "perfiles", name: "detalles_cotizacion_perfil_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_ficha", "examenes", name: "detalles_ficha_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_ficha", "fichas", name: "detalles_ficha_ficha_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_ficha", "perfiles", name: "detalles_ficha_perfil_examen_id_fkey", on_update: :cascade, on_delete: :cascade

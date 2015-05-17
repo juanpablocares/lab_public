@@ -167,18 +167,19 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		if($scope.validate_form(ficha_form))
 		{
 			$scope.ficha.paciente_id = $stateParams.paciente_id;
-			$scope.ficha.medico_id = $scope.medico.selected.id;
+			if($scope.medico != undefined && $scope.medico.selected != undefined)
+			{
+				$scope.ficha.medico_id = $scope.medico.selected.id;
+			}
 			$scope.ficha.procedencia_id = $scope.procedencia.selected.id;
 			$scope.ficha.precio_total = $scope.precio_total;
 			$scope.ficha.examenes = $scope.examenesSeleccionados;
-			
-			Cotizaciones.root.new(data).$promise.then(function(response) {
-				console.log("REDIRECCIONANDO A loginRequired.cotizaciones.info");
+			Cotizaciones.root.new($scope.ficha).$promise.then(function(response) {
 				$state.go('loginRequired.cotizaciones.info', {
-					ficha_id : response.data.id
+					cotizacion_id : response.data.id
 				});
 			}, function(response) {
-				console.log("ERROR creando ficha");
+				console.log("ERROR creando cotizacion");
 			});
 		}
 	};

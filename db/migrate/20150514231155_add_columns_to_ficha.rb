@@ -6,7 +6,6 @@ class AddColumnsToFicha < ActiveRecord::Migration
 	add_column :fichas, :mandar_email, :boolean
 	add_column :fichas, :urgente, :boolean
 	add_column :fichas, :medico_id, :integer
-	#add_reference :fichas, :medicos, index: true
     add_foreign_key :fichas, :medicos
     
     change_column_null :fichas, :numero_programa, false
