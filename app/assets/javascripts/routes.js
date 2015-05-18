@@ -193,6 +193,13 @@
 			params: {examen: null}
 		});
 		
+		$stateProvider.state('loginRequired.examenes.precios', {
+			url : '/precios',
+			templateUrl : "examenes/precios.html",
+			controller : 'ExamenesPreciosController',
+			params: {examen: null}
+		});
+		
 		/*Rutas de examenes a pacientes*/
 		
 		$stateProvider.state('loginRequired.ordenes_examen', {

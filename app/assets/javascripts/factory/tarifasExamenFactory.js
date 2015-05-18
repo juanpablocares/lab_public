@@ -20,6 +20,12 @@
 					isArray: false,
 				}
 			}),
+			by_examen : $resource("/api/tarifas_examen/examen/:id", {id: "@id"},
+			{
+				get : {
+					method : 'GET',
+				},
+			}),
 		};
 	});
 	
