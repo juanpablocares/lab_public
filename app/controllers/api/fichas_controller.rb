@@ -126,7 +126,7 @@ class Api::FichasController < ApplicationController
 			ficha.medico_id = medico.id
 		end
 		if params.has_key? :receptor
-			ficha.entregar_a = params[:receptor]
+			ficha.receptor = params[:receptor]
 		end
 		
 		if params.has_key? :mandar_email
@@ -175,7 +175,7 @@ class Api::FichasController < ApplicationController
 						detalle.perfil_id = nil
 						
 						if ex[:tarifas_examen] && ex[:tarifas_examen].size != 0
-							detalle.precio = exa[:tarifas_examen][0][:precio]
+							detalle.precio = ex[:tarifas_examen][0][:precio]
 						else
 							detalle.precio = 0
 						end
