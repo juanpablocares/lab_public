@@ -1,5 +1,13 @@
 angular.module('lab').controller('ExamenesIndexController', function($scope, $auth, $state, $http, $stateParams, Examen) {
 
+	$scope.alias_items = [{
+		texto: '',
+	}];
+
+	$scope.horas_proceso = [{
+		texto: '',
+	}];
+	
 	$scope.procesadores = [{
 	  id: 1,
 	  label: 'N',
@@ -10,6 +18,48 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 	  id: 3,
 	  label: 'LG',
 	}];
+	
+	$scope.procesos = [{
+	  id: 1,
+	  label: 'Interno',
+	}, {
+	  id: 2,
+	  label: 'Derivado',
+	}, {
+	  id: 3,
+	  label: 'No se realiza',
+	}];
+	
+	$scope.tapas = [{
+	  id: 1,
+	  label: 'Azul',
+	}, {
+	  id: 2,
+	  label: 'Rojo',
+	}, {
+	  id: 3,
+	  label: 'Blanco',
+	}];
+	
+	$scope.envases = [{
+	  id: 1,
+	  label: 'Propileno',
+	}, {
+	  id: 2,
+	  label: 'Vidrio',
+	}];
+	
+	$scope.add = function () {
+          $scope.alias_items.push({ 
+            question: "",
+          });
+        };
+	
+	$scope.add_hora = function () {
+          $scope.horas_proceso.push({ 
+            question: "",
+          });
+        };
 	
 	$scope.$on('examenFromMenu', function(event, data) {
 		console.log(data);
