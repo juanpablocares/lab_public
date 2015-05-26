@@ -5,14 +5,14 @@ class Api::FichasController < ApplicationController
 		          success: true,
 		          message: '[index] Fichas encontradas',
 		          data: @results,
-		        }, status: 200, include: [:paciente, :orden_medica, :procedencia, :detalles_ficha]
+		        }, status: 200, include: [:paciente, :medico, :procedencia, :detalles_ficha]
 		end
 	end
 
 	def show
 		if @results = Ficha.includes(
 			{:paciente => [:prevision,:comuna]},
-			{:orden_medica => [:medico]},
+			:medico,
 			:user,
 			:prevision,
 			:procedencia,
@@ -32,7 +32,7 @@ class Api::FichasController < ApplicationController
 		          data: @results,
 		        }, status: 200, include: [
 		        	{:paciente => {include: [:prevision, :comuna]}},
-		        	{:orden_medica => {include: [:medico]}},
+		        	:medico,
 		        	:user,
 		        	:prevision,
 		        	:procedencia,
@@ -56,7 +56,7 @@ class Api::FichasController < ApplicationController
 		          success: true,
 		          message: '[Paciente] Fichas del paciente indicado encontradas',
 		          fichas: @fichas,
-		        }, status: 200, include: [:orden_medica, :procedencia]
+		        }, status: 200, include: [:medico, :procedencia]
 	end
 
 	def muestras
@@ -67,7 +67,7 @@ class Api::FichasController < ApplicationController
 			  message: 'Muestras encontradas',
 			  numberOfPages: @numberOfPages,
 			  data: @results,
-			}, status: 200, include: [:paciente, :orden_medica, :procedencia, :detalles_ficha]
+			}, status: 200, include: [:paciente, :medico, :procedencia, :detalles_ficha]
 	end
 
 	def range
@@ -79,7 +79,7 @@ class Api::FichasController < ApplicationController
 		          data:  @results,
 		          message: 'Resultado correcto',
 		          numberOfPages: @numberOfPages
-		        }, status: 200, include: [:paciente, :orden_medica]
+		        }, status: 200, include: [:paciente, :medico]
 		else
 			@results = Ficha.limit(params[:number].to_i).offset(params[:start].to_i)
 			@numberOfPages = Ficha.count / params[:number].to_i
@@ -88,25 +88,163 @@ class Api::FichasController < ApplicationController
 				data:  @results,
 		        message: 'Resultado correcto',
 		        numberOfPages: @numberOfPages,
-		    }, status: 200, include: [:paciente, :orden_medica]
+		    }, status: 200, include: [:paciente, :medico]
 		end
 	end
 
-	def create
+	def update
+		ficha = Ficha.find(params[:id])
+		if ficha == nil
+			render json:
+			{
+				success: false,
+	        	message: 'Ficha no encontrado',
+	        }, status: 500
+	        return false
+		end
 		
 		paciente = Paciente.find(params[:paciente_id])
 		if paciente == nil
 			render json:
 			{
 				success: false,
-				data:  ficha,
 	        	message: 'Paciente no encontrado',
 	        }, status: 500
 	        return false
 		end
 		
 		medico = nil
-		if params.has_key? :medico_id
+		if params.has_key? :medico_id && params[:medico_id]
+			medico = Medico.find(params[:medico_id])
+			if medico == nil
+				render json:
+				{
+					success: false,
+					data:  ficha,
+		        	message: 'Medico no encontrado',
+		        }, status: 500
+		        return false
+			end
+		else
+			ficha.medico_id = medico
+		end
+		
+		if params.has_key? :receptor && params[:receptor]
+			ficha.receptor = params[:receptor]
+		else
+			ficha.receptor = ""
+		end
+		
+		if params.has_key? :mandar_email
+			ficha.mandar_email = params[:mandar_email]
+		else
+			ficha.mandar_email = false
+		end
+		
+		if params.has_key? :urgente
+			ficha.urgente = params[:urgente]
+		else
+			ficha.urgente = false
+		end
+		
+		ficha.procedencia_id = params[:procedencia_id]
+		ficha.prevision_id = paciente.prevision_id
+		ficha.precio_total = params[:precio_total]
+		ficha.programa = params[:programa]
+		ficha.numero_programa = params[:numero_programa]
+		ficha.observaciones = params[:observaciones]
+		ficha.orden_medica_id = nil
+		ficha.user_id = current_user.id
+		
+		#Borrar examenes eliminados de la ficha
+		cant_detalles_ficha = DetalleFicha.count(:conditions => ["ficha_id = ?",ficha.id])
+		if params[:examenesBorrados] != nil && params[:examenesBorrados].length > 0 && params[:examenesBorrados].length < cant_detalles_ficha || params[:examenesBorrados] != nil && params[:examenesBorrados].length > 0 && params[:examenesBorrados].length == cant_detalles_ficha && params[:examenesAgregados] != nil && params[:examenesAgregados].length > 0 
+			params[:examenesBorrados].each do |borrado|
+				if borrado[:perfil]
+					detalles_borrados = DetalleFicha.where(ficha_id: ficha.id).where(perfil_id: borrado[:id])
+					detalles_borrados.destroy_all
+				else
+					detalle_borrado = DetalleFicha.find(borrado[:id])
+					detalle_borrado.destroy
+				end
+			end 
+		end	
+		if params[:examenesAgregados] != nil && params[:examenesAgregados].length > 0
+			if !ficha.save
+				raise "Error saving ficha"
+			else
+				params[:examenesAgregados].each do |ex|
+					if ex[:perfil]
+						ex[:examenes].each do |exa|
+							detalle = DetalleFicha.new
+							detalle.ficha_id = ficha.id
+							detalle.examen_id = exa[:id]
+							detalle.perfil_id = ex[:id]
+							
+							if exa[:tarifas_examen] && exa[:tarifas_examen].size != 0
+								detalle.precio = exa[:tarifas_examen][0][:precio]
+							else
+								detalle.precio = 0
+							end
+							if !detalle.save
+							end
+						end
+					else
+						detalle = DetalleFicha.new
+						detalle.ficha_id = ficha.id
+						detalle.examen_id = ex[:id]
+						detalle.perfil_id = nil
+						
+						if ex[:tarifas_examen] && ex[:tarifas_examen].size != 0
+							detalle.precio = ex[:tarifas_examen][0][:precio]
+						else
+							detalle.precio = 0
+						end
+						
+						if !detalle.save
+						end
+					end
+				end
+				render json: {
+		          success: true,
+		          message: '[Update] Cambios en ficha guardados',
+		          data: ficha,
+		        }, status: 200, include: [
+		        	{:paciente => {include: [:prevision, :comuna]}},
+		        	:medico,
+		        	:user,
+		        	:prevision,
+		        	:procedencia,
+		        	{:detalles_ficha => {include: [:resultados_examen,:perfil,{:examen => { include: [:sustancias, :indicacion, :tipo_examen,:tarifas_examen]}}]}}]
+			end
+		else
+			render json: {
+	          success: true,
+	          message: '[Update] Cambios en ficha guardados',
+	          data: ficha,
+	        }, status: 200, include: [
+	        	{:paciente => {include: [:prevision, :comuna]}},
+	        	:medico,
+	        	:user,
+	        	:prevision,
+	        	:procedencia,
+	        	{:detalles_ficha => {include: [:resultados_examen,:perfil,{:examen => { include: [:sustancias, :indicacion, :tipo_examen,:tarifas_examen]}}]}}]
+		end
+	end
+
+	def create
+		paciente = Paciente.find(params[:paciente_id])
+		if paciente == nil
+			render json:
+			{
+				success: false,
+	        	message: 'Paciente no encontrado',
+	        }, status: 500
+	        return false
+		end
+		
+		medico = nil
+		if params.has_key? :medico_id && params[:medico_id]
 			medico = Medico.find(params[:medico_id])
 			if medico == nil
 				render json:

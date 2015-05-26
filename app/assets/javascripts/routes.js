@@ -122,6 +122,12 @@
 			controller : 'FichasIndexController',
 			params: {ficha: null}
 		});
+		$stateProvider.state('loginRequired.fichas.editar', {
+			url : '/editar',
+			templateUrl : "fichas/edit.html",
+			controller : 'FichasEditController',
+			params: {ficha: null}
+		});
 		
 		$stateProvider.state('loginRequired.fichas.pagos', {
 			url : '/pagos',

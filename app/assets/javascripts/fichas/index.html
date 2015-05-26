@@ -1,8 +1,8 @@
 <div ng-if="loading" class="row text-center">
-	<i class="fa fa-spinner fa-pulse fa-2x"></i>	
+	<i class="fa fa-spinner fa-pulse fa-2x"></i>
 </div>
 
-<div class="widget-container fluid-height" ng-if="!loading">
+<div class="widget-container fluid-height" ng-if="!loading && !edit">
 	<div class="widget-content padded">
 		<form>
 			<div>
@@ -35,7 +35,7 @@
 						<tr>
 							<td colspan="9"><strong>{{item.nombre}}</strong></td>
 						</tr>
-						<tr ng-repeat="detalle in item.detalles_ficha">
+						<tr ng-repeat="detalle in item.examenes"> 
 							<td>{{detalle.examen.codigo_fonasa?detalle.examen.codigo_fonasa:'---'}}</td>
 							<td>{{detalle.examen.nombre?detalle.examen.nombre:'---'}}</td>
 							<td>{{detalle.examen.tipo_muestra.muestra?detalle.examen.tipo_muestra.muestra:'---'}}</td>
@@ -54,15 +54,198 @@
 						</tr>
 						<tr>
 							<td colspan="8"><strong>Pagado</strong></td>
-							<td class="text-success">{{getTotalPagos()}}</td>
+							<td class="text-success">{{total_pagos}}</td>
 						</tr>
 						<tr>
 							<td colspan="8"><strong>Total</strong></td>
-							<td ng-class="{'text-success': ficha.precio_total < getTotalPagos(), 'text-danger': ficha.precio_total > getTotalPagos()}">{{ficha.precio_total - getTotalPagos()}}</td>
+							<td ng-class="{'text-success': ficha.precio_total < total_pagos, 'text-danger': ficha.precio_total > total_pagos}">{{ficha.precio_total - total_pagos}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="row">
+					<div class="col-md-4 col-md-offset-8">
+						<a class="btn btn-primary" ng-click="go_to_edit()">Realizar cambios a ficha</a>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="widget-container fluid-height" ng-if="!loading && edit">
+	<form class="form-horizontal" name="form" ng-submit="validate_form(form)" novalidate>
+		<div class="row padded" ng-if="!loading">
+			<div class="col-md-12">
+				<table class="table table-condensed">
+					<tbody>
+						<tr>
+							<td><strong>Procedencia</strong></td>
+							<td colspan="3">
+							<ui-select ng-model="procedencia.selected" theme="bootstrap" required>
+								<ui-select-match placeholder="Seleccione procedencia">
+									{{$select.selected.nombre}}
+								</ui-select-match>
+								<ui-select-choices repeat="item in procedenciasArray | filter: $select.search">
+									<span ng-bind-html="item.nombre | highlight: $select.search"></span>
+								</ui-select-choices>
+							</ui-select></td>
+						</tr>
+						<tr>
+							<td width="10%"><strong>Restringido</strong></td>
+							<td width="10%">
+							<input style="width: 20px" class="form-control" type="checkbox" ng-change="ficha_edit.receptor = ''" ng-checked="ficha_edit.receptor" ng-model="ficha_edit.restringido">
+							</td>
+							<td width="10%">Entregar a</td>
+							<td width="70%">
+							<input class="form-control" type="text" ng-model="ficha_edit.receptor" ng-disabled="!ficha_edit.restringido">
+							</td>
+						</tr>
+						<tr>
+							<td width="10%"><strong>Programa</strong></td>
+							<td width="40%">
+							<input class="form-control" placeholder="Ingrese programa" type="text" ng-model="ficha_edit.programa" required>
+							</td>
+							<td width="5%">N°</td>
+							<td width="20%">
+							<input class="form-control" placeholder="Ingrese número" type="number" ng-model="ficha_edit.numero_programa" required>
+							</td>
+							<td width="10%"><strong>Email</strong></td>
+							<td width="40%">
+							<input style="width: 20px" class="form-control" type="checkbox" ng-model="ficha_edit.mandar_email">
+							</td>
+							<td width="10%">Urgente</td>
+							<td width="40%">
+							<input style="width: 20px" class="form-control" type="checkbox" ng-model="ficha_edit.urgente">
+							</td>
+						</tr>
+						<tr>
+							<td><strong>Médico</strong></td>
+							<td colspan="3">
+							<div class="row">
+								<div class="col-sm-11">
+									<ui-select ng-model="medico.selected" theme="bootstrap">
+										<ui-select-match placeholder="Seleccione medico">
+											{{$select.selected.nombre}} {{$select.selected.apellido_paterno}} {{$select.selected.apellido_materno}}
+										</ui-select-match>
+										<ui-select-choices repeat="item in medicosArray | filter: $select.search">
+											<div ng-if="item.rut != null && item.rutdv != null">
+												<strong ng-bind-html="item.rut+'-'+item.rutdv | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre + ' ' + item.apellido_paterno + ' ' + item.apellido_materno | highlight: $select.search"></span>
+											</div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<div class="col-sm-1">
+									<button ng-click="borrarMedico()">
+										<i class="fa fa-close text-danger"></i>
+									</button>
+								</div>
+							</div></td>
+							<td><strong>Observaciones</strong></td>
+							<td colspan="3">
+							<input ng-model="ficha_edit.observaciones" class="form-control"/>
+							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-		</form>
-	</div>
+		</div>
+
+		<div class="form-group padded">
+			<h4 >Agregue examenes</h4>
+			<div class="alert alert-danger" ng-if="examenesSeleccionados_edit.length == 0 && form.$submitted">
+				<label><strong>Debe agregar examenes</strong></label>
+			</div>
+			<label class="col-sm-2 control-label">Examenes</label>
+			<div class="col-sm-10">
+				<ui-select ng-model="selectModel.selected" theme="bootstrap" reset-search-input="true" on-select="seleccionarExamen($item, $select)">
+					<ui-select-match placeholder="Seleccione un examen o perfil para agregar">
+						{{$select.selected.nombre}}
+					</ui-select-match>
+					<ui-select-choices group-by="agruparPerfiles" repeat="item in examenesArray | filter: $select.search">
+						<div ng-if="item.codigo_fonasa == null">
+							<strong ng-bind-html="item.codigo | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span>
+						</div>
+						<div ng-if="item.codigo != null && item.codigo_fonasa != null">
+							<strong ng-bind-html="item.codigo_fonasa+'-'+item.codigo | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span>
+						</div>
+						<div ng-if="item.codigo === null" >
+							<strong ng-bind-html="item.codigo_fonasa| highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span>
+						</div>
+					</ui-select-choices>
+				</ui-select>
+			</div>
+			<div>
+				<table class="table table-bordered" ng-if="examenesSeleccionados_edit.length != 0">
+					<thead>
+						<th>Eliminar</th>
+						<th>Código</th>
+						<th>Examen</th>
+						<th>Tipo muestra</th>
+						<th>Indicaciones</th>
+						<th>Proceso</th>
+						<th>Dia proceso</th>
+						<th>Demora</th>
+						<th>Estado</th>
+						<th>Precio</th>
+					</thead>
+					<tbody ng-repeat="item in examenesSeleccionados_edit track by $index"  ng-if="!item.perfil">
+						<tr >
+							<td class="text-center"><a ng-if="item.delete" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar examen"><i class="fa fa-trash-o fa-lg"></i></a></td>
+							<td>{{item.examen.codigo_fonasa}}</td>
+							<td>{{item.examen.nombre}}</td>
+							<td>{{item.examen.tipo_examen.nombre?item.examen.tipo_examen.nombre:'---'}}</td>
+							<td>{{item.examen.indicacion.descripcion?item.examen.indicacion.descripcion:'---'}}</td>
+							<td>{{item.examen.externo!=0?'Interno':'Externo'}}</td>
+							<td>{{item.examen.dia_proceso?item.examen.examen.dia_proceso:'---'}}</td>
+							<td>{{item.examen.demora_proceso?item.examen.examen.demora_proceso:'---'}}</td>
+							<td><label class="label label-{{item.estado.class}}">{{item.estado.texto}}</label></td>
+							<td>{{item.precio?item.precio:0 }}</td>
+						</tr>
+					</tbody>
+					<tbody ng-repeat="item in examenesSeleccionados_edit track by $index" ng-if="item.perfil">
+						<tr>
+							<td ng-if="item.delete" class="text-center"><a class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar perfil"><i class="fa fa-trash-o fa-lg"></i></a></td>
+							<td colspan="9"><strong>{{item.nombre}}</strong></td>
+						</tr>
+						<tr ng-repeat="detalle in item.examenes" ng-if="item.id">
+							<td>&nbsp;</td>
+							<td>{{detalle.examen.codigo_fonasa}}</td>
+							<td>{{detalle.examen.nombre}}</td>
+							<td>{{detalle.examen.tipo_examen.nombre?detalle.examen.tipo_examen.nombre:'---'}}</td>
+							<td>{{detalle.examen.indicacion.descripcion?detalle.examen.indicacion.descripcion:'---'}}</td>
+							<td>{{detalle.examen.externo!=0?'Interno':'Externo'}}</td>
+							<td>{{detalle.examen.dia_proceso?detalle.examen.dia_proceso:'---'}}</td>
+							<td>{{detalle.examen.demora_proceso?detalle.examen.demora_proceso:'---'}}</td>
+							<td><label class="label label-{{detalle.estado.class}}">{{detalle.estado.texto}}</label></td>
+							<td>{{detalle.precio?detalle.precio:0 }}</td>
+						</tr>
+						<tr ng-repeat="detalle in item.examenes" ng-if="!item.id">
+							<td>&nbsp;</td>
+							<td>{{detalle.codigo_fonasa}}</td>
+							<td>{{detalle.nombre}}</td>
+							<td>{{detalle.tipo_examen.nombre?detalle.tipo_examen.nombre:'---'}}</td>
+							<td>{{detalle.indicacion.descripcion?detalle.indicacion.descripcion:'---'}}</td>
+							<td>{{detalle.externo!=0?'Interno':'Externo'}}</td>
+							<td>{{detalle.dia_proceso?detalle.dia_proceso:'---'}}</td>
+							<td>{{detalle.demora_proceso?detalle.demora_proceso:'---'}}</td>
+							<td><label class="label label-{{detalle.estado.class}}">{{detalle.estado.texto}}</label></td>
+							<td>{{detalle.precio?detalle.precio:0 }}</td>
+						</tr>
+					</tbody>
+					<tbody> 
+						<tr>
+							<td colspan="9"><strong>Total</strong></td>
+							<td >{{precio_total_edit}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row form-group padded">
+			<div class="col-sm-11 text-right">
+				<a class="btn btn-success" ng-click="guardar_cambios_ficha(form)">Guardar cambios a ficha</a>
+				<a class="btn btn-primary" ng-click="back_to_info()">Cancelar</a>
+			</div>
+		</div>
+	</form>
 </div>

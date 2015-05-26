@@ -15,7 +15,11 @@ angular.module('lab').controller('FichasMenuController', function($scope, $http,
 		state : 'loginRequired.fichas.pagos()',
 		id : 'loginRequired.fichas.pagos',
 	}];
-
+	
+	$scope.$on('fichaFromEdit', function(event, data) {
+		$scope.ficha = data;
+	});
+	
 	Ficha.get({
 		id : $stateParams.ficha_id
 	}, function(datos) {
@@ -23,9 +27,7 @@ angular.module('lab').controller('FichasMenuController', function($scope, $http,
 		$scope.ficha.paciente.fecha_nacimiento = new Date($scope.ficha.paciente.fecha_nacimiento);
 		$scope.ficha.paciente.rut_completo = $scope.ficha.paciente.rut+""+$scope.ficha.paciente.rutdv;	
 		$scope.ficha.paciente.getEdad = function() {
-			
 			if ($scope.ficha.paciente != null) {
-
 				var d = new Date();
 				var meses = 0;
 				if ($scope.ficha.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth() > 0)
@@ -37,7 +39,7 @@ angular.module('lab').controller('FichasMenuController', function($scope, $http,
 				return ~~anios + " Años " + ~~meses + " meses";
 			}
 		};
-		
+		console.log($scope.ficha);
 		$scope.mandarFicha();
 		$scope.loading = false;
 	});

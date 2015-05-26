@@ -108,6 +108,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	};
 
 	$scope.seleccionarExamen = function(model, select) {
+		console.log(model);
 
 		if (!model.perfil) {
 			var temp = null;
@@ -118,6 +119,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 				}
 			}
 			model.tarifas_examen = [temp];
+			model.precio = temp.precio;
 		}
 		else {
 			for (var i = 0; i < model.examenes.length; i++) {
@@ -130,6 +132,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 					}
 				}
 				value.tarifas_examen = [temp];
+				value.precio = temp.precio;
 			}
 		}
 		$scope.examenesSeleccionados.push(model);

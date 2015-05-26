@@ -1,5 +1,5 @@
 <div ng-if="loading" class="row text-center">
-	<i class="fa fa-spinner fa-pulse fa-2x"></i>	
+	<i class="fa fa-spinner fa-pulse fa-2x"></i>
 </div>
 
 <div class="row" ng-if="!loading">
@@ -7,7 +7,7 @@
 		<div class="widget-container fluid-height">
 			<div class="widget-content padded clearfix text-center">
 				<table class="table table-condensed">
-					<tbody> 
+					<tbody class="text-left">
 						<tr>
 							<td><strong>Rut</strong></td>
 							<td><a ui-sref="loginRequired.pacientes.info({paciente_id: ficha.paciente.id})"><phy-rut rut='ficha.paciente.rut_completo'></phy-rut></a></td>
@@ -18,9 +18,9 @@
 						</tr>
 						<tr>
 							<td><strong>Previsión</strong></td>
-							<td>{{ficha.paciente.prevision.nombre}}</td>
+							<td>{{ficha.prevision.nombre}}</td>
 						</tr>
-						<tr> 
+						<tr>
 							<td><strong>Fecha Nacimiento</strong></td>
 							<td>{{ficha.paciente.fecha_nacimiento | date:'dd/MM/yyyy'}} - {{ficha.paciente.getEdad()}}</td>
 						</tr>
@@ -45,7 +45,11 @@
 		<div class="widget-container fluid-height">
 			<div class="widget-content padded clearfix text-center">
 				<table class="table table-condensed">
-					<tbody>
+					<tbody class="text-left">
+						<tr>
+							<td colspan="2"><strong>Ficha Número</strong></td>
+							<td colspan="2">{{ficha.id}}</td>
+						</tr>
 						<tr>
 							<td colspan="2"><strong>Fecha ingreso</strong></td>
 							<td colspan="2">{{ficha.creado | date:'dd/MM/yyyy HH:mm' }}</td>
@@ -55,14 +59,14 @@
 							<td colspan="2">{{ficha.procedencia.nombre}}</td>
 						</tr>
 						<tr>
-							<td width="30%"><strong>Programa</strong></td>
-							<td width="30%">{{ficha.programa}}</td>
+							<td ><strong>Programa</strong></td>
+							<td >{{ficha.programa}}</td>
 							<td ><strong>N°</strong></td>
 							<td >{{ficha.numero_programa}}</td>
 						</tr>
 						<tr>
 							<td colspan="2"><strong>Medico</strong></td>
-							<td colspan="2"><span ng-if="ficha.orden_medica.medico.id">{{ficha.orden_medica.medico.nombre}} {{ficha.orden_medica.medico.apellido_paterno}} - <phy-rut rut="ficha.orden_medica.medico.rut"></phy-rut></span><span ng-if="!ficha.orden_medica.medico.id">No hay orden médica</span></td>
+							<td colspan="2"><span ng-if="ficha.medico.id">{{ficha.medico.nombre}} {{ficha.medico.apellido_paterno}} - <phy-rut rut="ficha.medico.rut+''+ficha.medico.rutdv"></phy-rut></span><span ng-if="!ficha.medico.id">No hay orden médica</span></td>
 						</tr>
 						<tr>
 							<td colspan="2"><strong>Entregar a</strong></td>
@@ -70,8 +74,8 @@
 						</tr>
 						<tr>
 							<td ><strong>Envío correo</strong></td>
-							<td ><span ng-if="ficha.enviar">Si</span><span ng-if="!ficha.enviar">No</span></td>
-							
+							<td ><span ng-if="ficha.mandar_email">Si</span><span ng-if="!ficha.mandar_email">No</span></td>
+
 							<td ><strong>Urgente</strong></td>
 							<td ><span ng-if="ficha.urgente">Si</span><span ng-if="!ficha.urgente">No</span></td>
 						</tr>
