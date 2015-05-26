@@ -1,6 +1,7 @@
 <div>
-	<table class="table table-striped" ng-if="examenesSeleccionados.length != 0">
+	<table class="table table-bordered" ng-if="examenesSeleccionados.length != 0">
 		<thead>
+			<th>Eliminar</th>
 			<th>Código</th>
 			<th>Examen</th>
 			<th>Tipo muestra</th>
@@ -9,21 +10,27 @@
 			<th>Dia proceso</th>
 			<th>Demora</th>
 			<th>Precio</th>
-			<th class="col-sm-1" ng-if="editExamenes">Opciones</th>
 		</thead>
 		<tbody ng-repeat="item in examenesSeleccionados track by $index" ng-if="item.perfil">
 			<tr>
-				<td colspan="2"> {{item.nombre}}</td>
-				<td ng-if="editExamenes" class="text-center"><a href="#" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar perfil"><i class="fa fa-trash-o fa-lg"></i></a></td>
+				<td class="text-center"><a class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar perfil"><i class="fa fa-trash-o fa-lg"></i></a></td>
+				<td colspan="9"><strong>{{item.nombre}}</strong></td>
 			</tr>
-			<tr ng-repeat="examen in item.examenes">
-				<td> {{examen.nombre}} </td>
-				<td>{{examen.precio?examen.precio:0}}</td>
-				<td></td>
+			<tr ng-repeat="detalle in item.examenes">
+				<td>&nbsp;</td>
+				<td>{{detalle.codigo_fonasa}}</td>
+				<td>{{detalle.nombre}}</td>
+				<td>{{detalle.tipo_examen.nombre?detalle.examen.tipo_examen.nombre:'---'}}</td>
+				<td>{{detalle.indicacion.descripcion?detalle.examen.indicacion.descripcion:'---'}}</td>
+				<td>{{detalle.externo!=0?'Interno':'Externo'}}</td>
+				<td>{{detalle.dia_proceso?detalle.examen.dia_proceso:'---'}}</td>
+				<td>{{detalle.demora_proceso?detalle.examen.demora_proceso:'---'}}</td>
+				<td>{{detalle.precio?detalle.precio:0 }}</td>
 			</tr>
 		</tbody>
 		<tbody ng-repeat="item in examenesSeleccionados track by $index"  ng-if="!item.perfil">
 			<tr >
+				<td class="text-center"><a href="#" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar examen"><i class="fa fa-trash-o fa-lg"></i></a></td>
 				<td>{{item.codigo}}</td>
 				<td>{{item.nombre}}</td>
 				<td>{{item.tipo_examen.nombre?item.tipo_examen.nombre:'---'}}</td>
@@ -32,12 +39,11 @@
 				<td>{{item.dia_proceso?item.examen.dia_proceso:'---'}}</td>
 				<td>{{item.demora_proceso?item.examen.demora_proceso:'---'}}</td>
 				<td>{{item.precio?item.precio:0 }}</td>
-				<td ng-if="editExamenes" class="text-center"><a href="#" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar examen"><i class="fa fa-trash-o fa-lg"></i></a></td>
 			</tr>
 		</tbody>
 		<tbody>
 			<tr>
-				<td colspan="7"><strong>Total</strong></td>
+				<td colspan="8"><strong>Total</strong></td>
 				<td >{{precio_total}}</td>
 			</tr>
 		</tbody>
