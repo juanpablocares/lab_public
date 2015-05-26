@@ -19,6 +19,14 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 	  label: 'LG',
 	}];
 	
+	$scope.tipo_muestras = [{
+	  id: 1,
+	  label: 'Ematologico',
+	}, {
+	  id: 2,
+	  label: 'Inmunologico',
+	}];
+	
 	$scope.procesos = [{
 	  id: 1,
 	  label: 'Interno',
@@ -85,6 +93,18 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 			// log error
 		});
 		
+		$http.get('/api/tipos_muestras').success(function(data) {
+			$scope.tipos_muestras = data;
+			angular.forEach(data, function(tipo_muestra, key) {
+				if (tipo_muestra.id == $scope.examen.tipo_muestra_id) {
+					$scope.examen.tipo_muestra = tipo_muestra;
+					$scope.masterExamen = angular.copy($scope.examen);
+				}
+			});
+		}).error(function(data) {
+			// log error
+		});
+		
 		$scope.masterExamen = angular.copy($scope.examen);
 		
 		$http.get('/api/tipo_examenes').success(function(data) {
@@ -124,7 +144,7 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 
 	$scope.guardarDatosExamen = function(examen) {
 		//examen.procedencia = examen.procesa.label;
-		examen.indicacion_id = examen.indicacion.id;
+		//examen.indicacion_id = examen.indicacion.id;
 		examen.tipo_examen_id = examen.tipo_examen.id;
 		console.log(examen);
 		Examen.update({id:examen.id}, examen).

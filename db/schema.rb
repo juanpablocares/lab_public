@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150517214837) do
+ActiveRecord::Schema.define(version: 20150526143826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,12 +47,12 @@ ActiveRecord::Schema.define(version: 20150517214837) do
   end
 
   create_table "detalles_ficha", force: :cascade do |t|
-    t.integer  "ficha_id",           limit: 8,                                 null: false
-    t.integer  "examen_id",          limit: 8,                                 null: false
+    t.integer  "ficha_id",           limit: 8,                   null: false
+    t.integer  "examen_id",          limit: 8,                   null: false
     t.integer  "perfil_id",          limit: 8
     t.integer  "usuario_muestra_id", limit: 8
     t.datetime "fecha_muestra"
-    t.datetime "creado",                       default: '2015-02-20 15:08:40', null: false
+    t.datetime "creado",                       default: "now()", null: false
     t.integer  "precio"
   end
 
@@ -73,15 +73,45 @@ ActiveRecord::Schema.define(version: 20150517214837) do
   end
 
   create_table "examenes", force: :cascade do |t|
-    t.string   "codigo_fonasa",  limit: 10
-    t.string   "nombre",         limit: 200,                                 null: false
-    t.string   "codigo",         limit: 500
+    t.string   "codigo_fonasa",          limit: 10
+    t.string   "nombre",                 limit: 200,                                 null: false
+    t.string   "codigo",                 limit: 500
     t.integer  "externo"
-    t.datetime "creado",                     default: '2015-02-20 15:08:40', null: false
+    t.datetime "creado",                             default: '2015-02-20 15:08:40', null: false
     t.integer  "tipo_examen_id"
     t.integer  "indicacion_id"
     t.string   "dia_proceso"
     t.string   "demora_proceso"
+    t.string   "creador"
+    t.string   "nombre_impreso"
+    t.string   "sigla"
+    t.string   "proceso"
+    t.string   "area_trabajo"
+    t.integer  "volumen_minimo"
+    t.string   "condiciones_transporte"
+    t.string   "maximo_toma_muestra"
+    t.string   "unidad_medida"
+    t.string   "metodo"
+    t.string   "metodo_abreviado"
+    t.boolean  "proceso_lunes"
+    t.boolean  "proceso_martes"
+    t.boolean  "proceso_miercoles"
+    t.boolean  "proceso_jueves"
+    t.boolean  "proceso_viernes"
+    t.boolean  "proceso_sabado"
+    t.string   "principio_metodo"
+    t.string   "interferentes"
+    t.string   "calculos"
+    t.string   "proposito"
+    t.string   "analista_responsable"
+    t.string   "rechazo_hemolisis"
+    t.string   "rechazo_proteccion_luz"
+    t.string   "rechazo_lipemia"
+    t.string   "rechazo_ictericia"
+    t.string   "rechazo_tubo"
+    t.string   "rechazo_otros"
+    t.string   "observaciones"
+    t.integer  "tipo_muestra_id"
   end
 
   add_index "examenes", ["indicacion_id"], name: "index_examenes_on_indicacion_id", using: :btree
@@ -95,17 +125,17 @@ ActiveRecord::Schema.define(version: 20150517214837) do
   add_index "examenes_perfil", ["examen_id", "perfil_id"], name: "examenes_perfil_examen_id_perfil_id_key", unique: true, using: :btree
 
   create_table "fichas", force: :cascade do |t|
-    t.integer  "paciente_id",     limit: 8,                                 null: false
-    t.integer  "procedencia_id",  limit: 8,                                 null: false
+    t.integer  "paciente_id",     limit: 8,                   null: false
+    t.integer  "procedencia_id",  limit: 8,                   null: false
     t.integer  "orden_medica_id", limit: 8
-    t.integer  "user_id",         limit: 8,                                 null: false
-    t.datetime "creado",                    default: '2015-02-20 15:08:40', null: false
+    t.integer  "user_id",         limit: 8,                   null: false
+    t.datetime "creado",                    default: "now()", null: false
     t.string   "observaciones"
-    t.integer  "prevision_id",                                              null: false
-    t.integer  "precio_total",                                              null: false
+    t.integer  "prevision_id",                                null: false
+    t.integer  "precio_total",                                null: false
     t.string   "receptor"
-    t.string   "programa",                                                  null: false
-    t.string   "numero_programa",                                           null: false
+    t.string   "programa",                                    null: false
+    t.string   "numero_programa",                             null: false
     t.boolean  "mandar_email",              default: false
     t.boolean  "urgente",                   default: false
     t.integer  "medico_id"
@@ -343,6 +373,7 @@ ActiveRecord::Schema.define(version: 20150517214837) do
   add_foreign_key "detalles_pagos_ficha", "users"
   add_foreign_key "examenes", "indicaciones"
   add_foreign_key "examenes", "tipo_examenes", name: "examenes_tipo_examen_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "examenes", "tipos_muestras", column: "tipo_muestra_id"
   add_foreign_key "examenes_perfil", "examenes", name: "examenes_perfil_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes_perfil", "perfiles", name: "examenes_perfil_perfil_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "fichas", "medicos"

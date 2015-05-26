@@ -11,6 +11,7 @@ class Examen < ActiveRecord::Base
  
 	belongs_to 	:indicacion
 	belongs_to 	:tipo_examen
+	belongs_to 	:tipo_muestra
 
 	has_many :detalles_cotizacion, :class_name => 'DetalleCotizacion'
 

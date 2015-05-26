@@ -3,7 +3,7 @@ angular.module('lab').controller('ExamenesMenuController', function($scope, $htt
 	$scope.state = $state;
 
 	$scope.tabs = [{
-		name : 'Informacion',
+		name : 'Ficha técnica',
 		state : 'loginRequired.examenes.info({examen: examen})',
 		id : 'loginRequired.examenes.info',
 	},{
