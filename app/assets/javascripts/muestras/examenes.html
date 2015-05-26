@@ -10,6 +10,7 @@
 						<th class="col-md-1">id</th>
 						<th >Código</th>
 						<th >Exámenes</th>
+						<th >Ficha Técnica</th>
 						<th >Tapa tubo</th>
 						<th >mL</th>
 						<th >Muestra</th>
@@ -22,6 +23,9 @@
 							<td>{{$index + 1}}</td>
 							<td>{{item.codigo}}</td>
 							<td>{{item.examen.nombre}}</td>
+							<td>
+								<button type="button" class="btn btn-default" ng-click="abrirFichaTecnica(item.examen.id)"><i class="fa fa-info-circle"></i></button>
+							</td>
 							<td>{{item.examen.tapa_tubo}}</td>
 							<td>{{item.examen.volumen_minimo}}</td>
 							<td data-toggle="tooltip" data-placement="top" title="{{item.examen.tipo_examen.nombre}}">{{item.examen.tipo_examen.codigo}}</td>

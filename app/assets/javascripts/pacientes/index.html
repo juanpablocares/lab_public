@@ -14,7 +14,7 @@
 				<th class="col-sm-2 text-right">Celular</th><td>{{masterPaciente.celular}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-2 text-right">Teléfono Fijo</th><td>{{masterPaciente.telefono_fijo}}</td>
+				<th class="col-sm-2 text-right">Teléfono Fijo</th><td>{{masterPaciente.telefono}}</td>
 			</tr>
 			<tr>
 				<th class="col-sm-2 text-right">Fecha de nacimiento</th><td>{{masterPaciente.fecha_nacimiento | date : 'dd-MM-yyyy'}}</td>
@@ -46,7 +46,7 @@
 			<div class="form-group">
 				<div class="col-sm-11 text-right">
 					<button type="submit" class="btn btn-primary" ng-disabled="buttonSubmit">
-						Editar
+						Guardar
 					</button>
 					<button type="button" class="btn btn-danger" ng-click="cambiarVentanaSinCambios()">
 						Volver

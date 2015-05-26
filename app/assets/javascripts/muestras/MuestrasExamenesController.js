@@ -23,7 +23,7 @@ angular.module('lab').controller('MuestrasExamenesController', function($scope, 
 
 	$scope.examenesSeleccionados = [];
 	$scope.ficha = {};
-
+	
 	$scope.cambiarEstadoBoton = function(item) {
 		console.log("Definitivo");
 		estado = item.estado;
