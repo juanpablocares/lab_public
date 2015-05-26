@@ -200,6 +200,13 @@
 			params: {examen: null}
 		});
 		
+		$stateProvider.state('loginRequired.examenes.referencia', {
+			url : '/valores_referencia',
+			templateUrl : "examenes/valores_referencia.html",
+			controller : 'ExamenesReferenciaController',
+			params: {examen: null}
+		});
+		
 		/*Rutas de examenes a pacientes*/
 		
 		$stateProvider.state('loginRequired.ordenes_examen', {
