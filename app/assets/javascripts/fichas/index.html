@@ -207,7 +207,7 @@
 							<td ng-if="item.delete" class="text-center"><a class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar perfil"><i class="fa fa-trash-o fa-lg"></i></a></td>
 							<td colspan="9"><strong>{{item.nombre}}</strong></td>
 						</tr>
-						<tr ng-repeat="detalle in item.examenes" ng-if="item.id">
+						<tr ng-repeat="detalle in item.examenes" ng-if="!item.nuevo">
 							<td>&nbsp;</td>
 							<td>{{detalle.examen.codigo_fonasa}}</td>
 							<td>{{detalle.examen.nombre}}</td>
@@ -219,7 +219,7 @@
 							<td><label class="label label-{{detalle.estado.class}}">{{detalle.estado.texto}}</label></td>
 							<td>{{detalle.precio?detalle.precio:0 }}</td>
 						</tr>
-						<tr ng-repeat="detalle in item.examenes" ng-if="!item.id">
+						<tr ng-repeat="detalle in item.examenes" ng-if="item.nuevo">
 							<td>&nbsp;</td>
 							<td>{{detalle.codigo_fonasa}}</td>
 							<td>{{detalle.nombre}}</td>

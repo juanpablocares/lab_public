@@ -84,14 +84,19 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 
 		var model = angular.copy(model2);
 		select.selected = "";
+		model.nuevo = true;
 		model = $scope.limpiarTarifas(model);
-		console.log(model2);
 		var perfil = model.perfil;
-		console.log($scope.examenesSeleccionados_edit);
 
 		if (!perfil) {
 			model = {
+				nuevo : true,
 				examen : angular.copy(model2)
+			};
+		}
+		else {
+			for (var i = 0; i < model.examenes.length; i++) {
+				model.examenes[i].nuevo = true;
 			};
 		}
 
@@ -190,6 +195,7 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 	$scope.ordenarExamenes = function(tarifa_id) {
 		var i = 0;
 		detalles = angular.copy($scope.ficha.detalles_ficha);
+		$scope.examenesSeleccionados = [];
 
 		while (i < detalles.length) {
 			value = detalles[i];
@@ -268,15 +274,14 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 						aux = temp1.examenes[i];
 						var value = null;
 						var temp = null;
-						if (temp1.id) {
-							value = aux.examen;
-						}
-						else {
+						console.log(aux);
+						if (temp1.nuevo)
 							value = aux;
-						}
+						else
+							value = aux.examen;
+
 						for (var j = 0; j < value.tarifas_examen.length; j++) {
-							value2 = value.tarifas_examen[j];
-							if (value2.tarifa_id == $scope.paciente.prevision.tarifa_id) {
+							if (value2 != null && value2.tarifa_id == $scope.paciente.prevision.tarifa_id) {
 								temp = value2;
 							}
 						}
@@ -297,17 +302,11 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 				model.tarifas_examen = [temp];
 			}
 			else {
-
-				for (var i = 0; i < temp1.examenes.length; i++) {
-					aux = temp1.examenes[i];
+				for (var i = 0; i < model.examenes.length; i++) {
+					aux = model.examenes[i];
 					var value = null;
 					var temp = null;
-					if (temp1.id) {
-						value = aux.examen;
-					}
-					else {
-						value = aux;
-					}
+					value = aux;
 					for (var j = 0; j < value.tarifas_examen.length; j++) {
 						value2 = value.tarifas_examen[j];
 						if (value2.tarifa_id == $scope.paciente.prevision.tarifa_id) {
@@ -325,7 +324,6 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 		var total = 0;
 		if (edit) {
 			var examenes = $scope.examenesSeleccionados_edit;
-
 		}
 		else {
 			var examenes = $scope.examenesSeleccionados;
@@ -335,13 +333,11 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 				var perfil = examenes[i];
 				for (var j = 0; j < perfil.examenes.length; j++) {
 					var examen = null;
-					if (perfil.id) {
-						examen = perfil.examenes[j].examen;
-					}
-					else {
+					if (perfil.examenes[j].nuevo)
 						examen = perfil.examenes[j];
-					}
-					if (examen.tarifas_examen.length > 0) {
+					else
+						examen = perfil.examenes[j].examen;
+					if (examen.tarifas_examen.length > 0 && examen.tarifas_examen[0] != null) {
 						examen.precio = examen.tarifas_examen[0].precio;
 						total = total + examen.tarifas_examen[0].precio;
 					}
@@ -440,7 +436,9 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 				id : $scope.ficha.id
 			}, $scope.ficha_edit).$promise.then(function(response) {
 				$scope.edit = false;
+				$scope.examenesSeleccionados = [];
 				$scope.examenesSeleccionados = angular.copy($scope.examenesSeleccionados_edit);
+				$scope.examenesSeleccionados_edit = [];
 				$scope.examenesAgregados = [];
 				$scope.examenesBorrados = [];
 				$scope.ficha = response.data;
