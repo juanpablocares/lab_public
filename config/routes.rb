@@ -71,6 +71,7 @@ Rails.application.routes.draw do
 		resources :detalles_ficha , :defaults => { :format => 'json' }
 		resources :fichas, :defaults => { :format => 'json' }
 		resources :indicaciones, :defaults => { :format => 'json' }
+		resources :indicaciones_muestra, :defaults => { :format => 'json' }
 		resources :previsiones, :defaults => { :format => 'json' }
 		resources :regiones, :defaults => { :format => 'json' }
 		resources :pacientes, :defaults => { :format => 'json' }
@@ -80,6 +81,8 @@ Rails.application.routes.draw do
 		resources :medicos, :defaults => { :format => 'json' }
 		resources :procedencias, :defaults => { :format => 'json' }
 		resources :perfiles, :defaults => { :format => 'json' }
+		resources :tapas_tubo, :defaults => { :format => 'json' }
+		resources :tipos_envase , :defaults => { :format => 'json' }
 		resources :tipo_examenes, :defaults => { :format => 'json' }
 		resources :tipos_muestras, :defaults => { :format => 'json' }
 		resources :tipos_pago , :defaults => { :format => 'json' }

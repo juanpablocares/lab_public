@@ -10,6 +10,9 @@ class Examen < ActiveRecord::Base
 	has_many 	:tarifas_examen_por_tarifa_id, -> (tarifa_id){where("tarifas_examen.tarifa_id = ?", tarifa_id)} , :class_name => 'TarifaExamen'
  
 	belongs_to 	:indicacion
+	belongs_to 	:indicacion_muestra
+	belongs_to 	:tapa_tubo
+	belongs_to 	:tipo_envase
 	belongs_to 	:tipo_examen
 	belongs_to 	:tipo_muestra
 

@@ -38,24 +38,79 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 	  label: 'No se realiza',
 	}];
 	
-	$scope.tapas = [{
-	  id: 1,
-	  label: 'Azul',
-	}, {
-	  id: 2,
-	  label: 'Rojo',
-	}, {
-	  id: 3,
-	  label: 'Blanco',
-	}];
+	$http.get('/api/indicaciones').success(function(data) {
+		$scope.indicaciones = data;
+		angular.forEach(data, function(indicacion, key) {
+			if (indicacion.id == $scope.examen.indicacion_id) {
+				$scope.examen.indicacion = indicacion;
+				$scope.masterExamen = angular.copy($scope.examen);
+			}
+		});
+	}).error(function(data) {
+		// log error
+	});
 	
-	$scope.envases = [{
-	  id: 1,
-	  label: 'Propileno',
-	}, {
-	  id: 2,
-	  label: 'Vidrio',
-	}];
+	$http.get('/api/indicaciones_muestra').success(function(data) {
+		$scope.indicaciones_muestra = data;
+		angular.forEach(data, function(indicacion_muestra, key) {
+			if (indicacion_muestra.id == $scope.examen.indicacion_muestra_id) {
+				$scope.examen.indicacion_muestra = indicacion_muestra;
+				$scope.masterExamen = angular.copy($scope.examen);
+			}
+		});
+	}).error(function(data) {
+		// log error
+	});
+	
+	$http.get('/api/tapas_tubo').success(function(data) {
+		$scope.tapas_tubo = data;
+		angular.forEach(data, function(tapa_tubo, key) {
+			if (tapa_tubo.id == $scope.examen.tapa_tubo_id) {
+				$scope.examen.tapa_tubo = tapa_tubo;
+				$scope.masterExamen = angular.copy($scope.examen);
+			}
+		});
+	}).error(function(data) {
+		// log error
+	});
+	
+	$http.get('/api/tipos_envase').success(function(data) {
+		$scope.tipos_envase = data;
+		angular.forEach(data, function(tipo_envase, key) {
+			if (tipo_envase.id == $scope.examen.tipo_envase_id) {
+				$scope.examen.tipo_envase = tipo_envase;
+				$scope.masterExamen = angular.copy($scope.examen);
+			}
+		});
+	}).error(function(data) {
+		// log error
+	});
+	
+	$http.get('/api/tipos_muestras').success(function(data) {
+		$scope.tipos_muestras = data;
+		angular.forEach(data, function(tipo_muestra, key) {
+			if (tipo_muestra.id == $scope.examen.tipo_muestra_id) {
+				$scope.examen.tipo_muestra = tipo_muestra;
+				$scope.masterExamen = angular.copy($scope.examen);
+			}
+		});
+	}).error(function(data) {
+		// log error
+	});
+	
+	$scope.masterExamen = angular.copy($scope.examen);
+	
+	$http.get('/api/tipo_examenes').success(function(data) {
+		$scope.tipo_examenes = data;
+		angular.forEach(data, function(tipo_examen, key) {
+			if (tipo_examen.id == $scope.examen.tipo_examen_id) {
+				$scope.examen.tipo_examen = tipo_examen;
+				$scope.masterExamen = angular.copy($scope.examen);
+			}
+		});
+	}).error(function(data) {
+		// log error
+	});
 	
 	$scope.add = function () {
           $scope.alias_items.push({ 
@@ -81,43 +136,6 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 		
 		$scope.masterExamen = angular.copy($scope.examen);
 		
-		$http.get('/api/indicaciones').success(function(data) {
-			$scope.indicaciones = data;
-			angular.forEach(data, function(indicacion, key) {
-				if (indicacion.id == $scope.examen.indicacion_id) {
-					$scope.examen.indicacion = indicacion;
-					$scope.masterExamen = angular.copy($scope.examen);
-				}
-			});
-		}).error(function(data) {
-			// log error
-		});
-		
-		$http.get('/api/tipos_muestras').success(function(data) {
-			$scope.tipos_muestras = data;
-			angular.forEach(data, function(tipo_muestra, key) {
-				if (tipo_muestra.id == $scope.examen.tipo_muestra_id) {
-					$scope.examen.tipo_muestra = tipo_muestra;
-					$scope.masterExamen = angular.copy($scope.examen);
-				}
-			});
-		}).error(function(data) {
-			// log error
-		});
-		
-		$scope.masterExamen = angular.copy($scope.examen);
-		
-		$http.get('/api/tipo_examenes').success(function(data) {
-			$scope.tipo_examenes = data;
-			angular.forEach(data, function(tipo_examen, key) {
-				if (tipo_examen.id == $scope.examen.tipo_examen_id) {
-					$scope.examen.tipo_examen = tipo_examen;
-					$scope.masterExamen = angular.copy($scope.examen);
-				}
-			});
-		}).error(function(data) {
-			// log error
-		});
 	});
 
 	$scope.examenEditing = false;
@@ -144,7 +162,10 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 
 	$scope.guardarDatosExamen = function(examen) {
 		//examen.procedencia = examen.procesa.label;
-		//examen.indicacion_id = examen.indicacion.id;
+		examen.tipo_envase_id = examen.tipo_envase.id;
+		examen.tapa_tubo_id = examen.tapa_tubo.id;
+		examen.indicacion_id = examen.indicacion.id;
+		examen.indicacion_muestra_id = examen.indicacion_muestra.id;
 		examen.tipo_examen_id = examen.tipo_examen.id;
 		console.log(examen);
 		Examen.update({id:examen.id}, examen).

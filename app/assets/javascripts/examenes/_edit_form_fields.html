@@ -130,7 +130,7 @@
 			<label class="control-label"><strong>Tipo Envase</strong></label>
 		</div>
 		<div class="col-md-2">
-			<select class="form-control" ng-model="examen.tipo_envase" ng-selected="examen.envase_id" ng-options="i.label for i in envases track by i.id| orderBy:'codigo'"></select>
+			<select class="form-control" ng-model="examen.tipo_envase" ng-selected="examen.tipo_envase_id" ng-options="i.codigo for i in tipos_envase track by i.id| orderBy:'codigo'"></select>
 		</div>
 		<div class="col-md-1">
 			<label class="control-label"><strong>Volumen Mínimo</strong></label>
@@ -156,7 +156,7 @@
 			<label class="control-label"><strong>Tapa Tubo</strong></label>
 		</div>
 		<div class="col-md-2">
-			<select class="form-control" ng-model="examen.tapa_tubo" ng-selected="examen.tapa_id" ng-options="i.label for i in tapas track by i.id| orderBy:'codigo'"></select>
+			<select class="form-control" ng-model="examen.tapa_tubo" ng-selected="examen.tapa_tubo_id" ng-options="i.codigo for i in tapas_tubo track by i.id| orderBy:'codigo'"></select>
 		</div>
 		<div class="col-md-1">
 			<label class="control-label"><strong>Condición transporte</strong></label>
