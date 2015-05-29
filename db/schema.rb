@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527162013) do
+ActiveRecord::Schema.define(version: 20150529181743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "alias_examenes", force: :cascade do |t|
+    t.integer "examen_id"
+    t.string  "nombre"
+    t.string  "descripcion"
+  end
 
   create_table "comunas", force: :cascade do |t|
     t.string  "nombre",    limit: 200, null: false
@@ -112,7 +118,7 @@ ActiveRecord::Schema.define(version: 20150527162013) do
     t.string   "rechazo_otros"
     t.string   "observaciones"
     t.integer  "tipo_muestra_id"
-    t.string   "entrega"
+    t.string   "demora"
     t.integer  "indicacion_muestra_id"
     t.integer  "tapa_tubo_id"
     t.integer  "tipo_envase_id"
@@ -146,6 +152,12 @@ ActiveRecord::Schema.define(version: 20150527162013) do
   end
 
   add_index "fichas", ["prevision_id"], name: "index_fichas_on_prevision_id", using: :btree
+
+  create_table "horaproceso_examenes", force: :cascade do |t|
+    t.integer "examen_id"
+    t.string  "hora"
+    t.string  "descripcion"
+  end
 
   create_table "indicaciones", force: :cascade do |t|
     t.text "descripcion"
@@ -240,8 +252,8 @@ ActiveRecord::Schema.define(version: 20150527162013) do
   end
 
   create_table "procedencias", force: :cascade do |t|
-    t.string   "nombre", limit: 100,                                 null: false
-    t.datetime "creado",             default: '2015-02-20 15:08:40', null: false
+    t.string   "nombre", limit: 100,                   null: false
+    t.datetime "creado",             default: "now()", null: false
   end
 
   create_table "regiones", force: :cascade do |t|
@@ -374,6 +386,7 @@ ActiveRecord::Schema.define(version: 20150527162013) do
 
   add_index "users_sucursal", ["user_id", "sucursal_id"], name: "user_sucursal", unique: true, using: :btree
 
+  add_foreign_key "alias_examenes", "examenes"
   add_foreign_key "comunas", "regiones", name: "comunas_region_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "cotizaciones", "medicos"
   add_foreign_key "cotizaciones", "pacientes", name: "cotizaciones_paciente_id_fkey", on_update: :cascade, on_delete: :cascade
@@ -404,6 +417,7 @@ ActiveRecord::Schema.define(version: 20150527162013) do
   add_foreign_key "fichas", "previsiones"
   add_foreign_key "fichas", "procedencias", name: "fichas_procedencia_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "fichas", "users", name: "fichas_usuario_creador_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "horaproceso_examenes", "examenes"
   add_foreign_key "indicadores", "sustancias", name: "indicadores_sustancia_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "medicos", "especialidades", column: "especialidad_id"
   add_foreign_key "medicos", "instituciones", column: "institucion_id"

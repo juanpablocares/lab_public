@@ -7,13 +7,13 @@ angular.module('lab').controller('ExamenesMenuController', function($scope, $htt
 		state : 'loginRequired.examenes.info({examen: examen})',
 		id : 'loginRequired.examenes.info',
 	},{
-		name : 'Precios',
-		state : 'loginRequired.examenes.precios({examen: examen})',
-		id : 'loginRequired.examenes.precios',
-	},{
 		name : 'Valores referencia',
 		state : 'loginRequired.examenes.referencia({examen: examen})',
 		id : 'loginRequired.examenes.referencia',
+	},{
+		name : 'Precios',
+		state : 'loginRequired.examenes.precios({examen: examen})',
+		id : 'loginRequired.examenes.precios',
 	}];
 
 	$scope.$on('examenFromEdit', function(event, data) {

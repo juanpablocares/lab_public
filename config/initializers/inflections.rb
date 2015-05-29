@@ -16,6 +16,7 @@
 # end
 
 ActiveSupport::Inflector.inflections do |inflect|
+	inflect.irregular 'aliasExamen', 'aliasExamenes'
 	inflect.irregular 'cotizacion', 'cotizaciones'
   	inflect.irregular 'detalleCotizacion', 'detallesCotizacion'
   	inflect.irregular 'detalleFicha', 'detallesFicha'
@@ -24,6 +25,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   	inflect.irregular 'examen', 'examenes'
   	inflect.irregular 'examenPerfil', 'examenesPerfil'
   	inflect.irregular 'examen_perfil', 'examenes_perfil'
+	inflect.irregular 'horaprocesoExamen', 'horaprocesoExamenes'
   	inflect.irregular 'indicador', 'indicadores'
 	inflect.irregular 'indicacion', 'indicaciones'
 	inflect.irregular 'indicacionMuestra', 'indicacionesMuestra'

@@ -63,10 +63,10 @@
 		<div class="col-md-1">
 			<label class="control-label"><strong>Alias</strong></label>
 		</div>
-		<div class="col-md-2" ng-repeat="item in alias_items">
-			<input class="form-control" type="text" ng-model="item.question" placeholder="Ingrese alias" >
+		<div class="col-md-2 right-inner-addon" ng-repeat="item in alias_examen">
+			<input class="form-control" type="text" ng-model="item.nombre" placeholder="Ingrese alias">
 		</div>
-			<button ng-show="alias_items.length < 5" class="btn btn-info-outline" ng-model="alias_button" ng-click="add()"><i class="fa fa-plus-circle"></i>Agregar alias</button>
+		<button type="button" ng-show="alias_examen.length < 5" class="btn btn-info-outline" ng-model="alias_button" ng-click="add()"><i class="fa fa-plus-circle"></i>Agregar alias</button>
 	</div>
 	<div class="row">
 		<div class="col-md-1">
@@ -179,10 +179,10 @@
 			<input ng-model="examen.metodo_abreviado" class="form-control" type="text">
 		</div>
 		<div class="col-md-1">
-			<label class="control-label"><strong>Entrega</strong></label>
+			<label class="control-label"><strong>Demora</strong></label>
 		</div>
 		<div class="col-md-2">
-			<input ng-model="examen.entrega" class="form-control" type="text">
+			<input ng-model="examen.demora" class="form-control" type="text">
 		</div>
 	</div>
 	<div class="row">
@@ -224,10 +224,10 @@
 		<div class="col-md-1">
 			<label class="control-label"><strong>Hora de proceso</strong></label>
 		</div>
-		<div class="col-md-2" ng-repeat="item in horas_proceso">
-			<input class="form-control" type="text" ng-model="item.question" placeholder="Ingrese hora" >
+		<div class="col-md-2" ng-repeat="item in horaproceso_examen">
+			<input class="form-control" type="text" ng-model="item.hora" placeholder="Ingrese hora" >
 		</div>
-			<button ng-show="horas_proceso.length < 5" class="btn btn-info-outline" ng-click="add_hora()"><i class="fa fa-plus-circle"></i>Agregar hora</button>
+			<button type="button" ng-show="horaproceso_examen.length < 5" class="btn btn-info-outline" ng-click="add_hora()"><i class="fa fa-plus-circle"></i>Agregar hora</button>
 	</div>
 	<div class="row">
 		<div class="col-md-1">

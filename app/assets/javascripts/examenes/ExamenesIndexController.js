@@ -1,4 +1,4 @@
-angular.module('lab').controller('ExamenesIndexController', function($scope, $auth, $state, $http, $stateParams, Examen) {
+angular.module('lab').controller('ExamenesIndexController', function($scope, $auth, $state, $http, $stateParams, Examen, AliasExamenes, HoraprocesoExamenes) {
 
 	$scope.alias_items = [{
 		texto: '',
@@ -38,9 +38,26 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 	  label: 'No se realiza',
 	}];
 	
+	$scope.$on('examenFromMenu', function(event, data) {
+		console.log(data);
+		$scope.alias_examen = data.alias_examenes;
+		$scope.horaproceso_examen = data.horaproceso_examenes;
+		$scope.examen = data;
+		angular.forEach($scope.procesadores, function(procesador, key) {
+			if(procesador.label == $scope.examen.procedencia){
+				$scope.examen.procesa = procesador;
+				$scope.masterExamen = angular.copy($scope.examen);
+			}
+		});
+		
+		$scope.masterExamen = angular.copy($scope.examen);
+		
+	});
+
 	$http.get('/api/indicaciones').success(function(data) {
 		$scope.indicaciones = data;
 		angular.forEach(data, function(indicacion, key) {
+			//console.log(indicacion);
 			if (indicacion.id == $scope.examen.indicacion_id) {
 				$scope.examen.indicacion = indicacion;
 				$scope.masterExamen = angular.copy($scope.examen);
@@ -113,31 +130,22 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 	});
 	
 	$scope.add = function () {
-          $scope.alias_items.push({ 
-            question: "",
+		
+          $scope.alias_examen.push({
+            examen_id: parseInt($stateParams.examen_id),
+			nombre: '',
+			descripcion: '',
           });
         };
 	
 	$scope.add_hora = function () {
-          $scope.horas_proceso.push({ 
-            question: "",
+          $scope.horaproceso_examen.push({
+            examen_id: parseInt($stateParams.examen_id),
+			hora: '',
+			descripcion: '',
           });
         };
 	
-	$scope.$on('examenFromMenu', function(event, data) {
-		console.log(data);
-		$scope.examen = data;
-		angular.forEach($scope.procesadores, function(procesador, key) {
-			if(procesador.label == $scope.examen.procedencia){
-				$scope.examen.procesa = procesador;
-				$scope.masterExamen = angular.copy($scope.examen);
-			}
-		});
-		
-		$scope.masterExamen = angular.copy($scope.examen);
-		
-	});
-
 	$scope.examenEditing = false;
 	
 	if ($stateParams.examen != null) {
@@ -168,6 +176,25 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 		examen.indicacion_muestra_id = examen.indicacion_muestra.id;
 		examen.tipo_examen_id = examen.tipo_examen.id;
 		console.log(examen);
+		console.log($scope.alias_examen);
+		console.log($scope.horaproceso_examen);
+		
+		HoraprocesoExamenes.all.update({
+				horaproceso_examen : $scope.horaproceso_examen,
+			}).
+			$promise.then(function(result) {
+				console.log('update horaproceso examenes');
+				console.log(result);
+			});
+		
+		AliasExamenes.all.update({
+				alias_examen : $scope.alias_examen,
+			}).
+			$promise.then(function(result) {
+				console.log('update alias examenes');
+				console.log(result);
+			});
+		
 		Examen.update({id:examen.id}, examen).
 			$promise.
 				then(function(response) {

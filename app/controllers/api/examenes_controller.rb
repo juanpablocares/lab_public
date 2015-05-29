@@ -17,7 +17,7 @@ class Api::ExamenesController < ApplicationController
 		          success: true,
 		          message: 'Examen encontrado',
 		          examen: @results,
-		        }, status: 200, include: [:tarifas_examen, :indicacion, :tipo_examen, :tipo_muestra]
+		        }, status: 200, include: [:tarifas_examen, :indicacion, :tipo_examen, :tipo_muestra, :alias_examenes, :horaproceso_examenes]
 		else
 			render json: {
 		          success: false,
