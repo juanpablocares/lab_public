@@ -7,6 +7,10 @@ Rails.application.routes.draw do
 		get 'users/paterno/:paterno', to: 'users#search_paterno', defaults: {format: 'json'}
 		get 'users/paterno/:materno', to: 'users#search_materno', defaults: {format: 'json'}
 		
+		#Controladores alias examenes
+		get 'alias_examenes/examen/:examen_id', to: 'alias_examenes#by_examen', defaults: {format: 'json'}
+		put 'alias_examenes/', to: 'alias_examenes#update_all', defaults: {format: 'json'}
+		
 		#Controladores de pacientes
 		post 'pacientes/range/:start/:number', to: 'pacientes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		put 'pacientes/rut/:rut', to: 'pacientes#update_byrut', defaults: {format: 'json'}
@@ -22,6 +26,10 @@ Rails.application.routes.draw do
 		get 'fichas/paciente/:id', to: 'fichas#show_bypaciente', defaults: {format: 'json'}
 		post 'fichas/range/:start/:number', to: 'fichas#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		post 'fichas/muestras/:start/:number', to: 'fichas#muestras', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
+		
+		#Controladores de hora preoceso examenes
+		get 'horaproceso_examenes/examen/:examen_id', to: 'horaproceso_examenes#by_examen', defaults: {format: 'json'}
+		put 'horaproceso_examenes/', to: 'horaproceso_examenes#update_all', defaults: {format: 'json'}
 		
 		#Controladores de perfiles
 		get 'perfiles/filtrar_tarifas/:id', to: 'perfiles#filtrar_tarifas', defaults: {format: 'json'},  constraints: { :id=> /[0-9]+/}
@@ -65,12 +73,15 @@ Rails.application.routes.draw do
 		get 'detalles_pago_ficha/ficha/:id', to: 'detalles_pago_ficha#getAllByFicha', defaults: {format: 'json'}
 		
 		
+		resources :alias_examenes, :defaults => { :format => 'json' }
 		resources :resultados_examen, :defaults => { :format => 'json' }
 		resources :sustancias_examen, :defaults => { :format => 'json' }
 		resources :comunas, :defaults => { :format => 'json' }
 		resources :detalles_ficha , :defaults => { :format => 'json' }
 		resources :fichas, :defaults => { :format => 'json' }
+		resources :horaproceso_examenes, :defaults => { :format => 'json' }
 		resources :indicaciones, :defaults => { :format => 'json' }
+		resources :indicaciones_muestra, :defaults => { :format => 'json' }
 		resources :previsiones, :defaults => { :format => 'json' }
 		resources :regiones, :defaults => { :format => 'json' }
 		resources :pacientes, :defaults => { :format => 'json' }
@@ -80,6 +91,8 @@ Rails.application.routes.draw do
 		resources :medicos, :defaults => { :format => 'json' }
 		resources :procedencias, :defaults => { :format => 'json' }
 		resources :perfiles, :defaults => { :format => 'json' }
+		resources :tapas_tubo, :defaults => { :format => 'json' }
+		resources :tipos_envase , :defaults => { :format => 'json' }
 		resources :tipo_examenes, :defaults => { :format => 'json' }
 		resources :tipos_muestras, :defaults => { :format => 'json' }
 		resources :tipos_pago , :defaults => { :format => 'json' }

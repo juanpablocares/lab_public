@@ -1,4 +1,4 @@
-angular.module('lab').controller('ExamenesPreciosController', function($scope, $auth, $state, $http, $stateParams, TarifasExamen) {
+angular.module('lab').controller('ExamenesPreciosController', function($scope, $auth, $state, $http, $stateParams, TarifasExamen, TarifaExamen) {
 	
 	$scope.isLoading = true;
 	
@@ -12,4 +12,33 @@ angular.module('lab').controller('ExamenesPreciosController', function($scope, $
 	});
 	
 	$scope.isLoading = false;
+	
+	$scope.quitar_precio_seleccionado = function(precio){
+		console.log(precio);
+		var index = $scope.tarifas_examen.indexOf(precio);
+		console.log(index);
+		var r = confirm("Confirma eliminar?");
+		if (r == true){
+			if (index > -1)
+				$scope.tarifas_examen.splice(index, 1);
+			//Eliminar de la BD
+		}
+	}
+	
+	$scope.guardar_cambios = function(tarifas_examen){
+		console.log(tarifas_examen);
+		var status = true;
+		for(i = 0; i < tarifas_examen.length; i++){
+			TarifaExamen.update({id:tarifas_examen[i].id}, tarifas_examen[i]).
+				$promise.
+					then(function(response) {
+						
+					}, function(response) {
+						status = false;
+						console.log("ERROR editando tarifa examen");
+					});
+		}
+		if(status)
+			$state.go('loginRequired.index');
+	}
 });

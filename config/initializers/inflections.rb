@@ -16,6 +16,7 @@
 # end
 
 ActiveSupport::Inflector.inflections do |inflect|
+	inflect.irregular 'aliasExamen', 'aliasExamenes'
 	inflect.irregular 'cotizacion', 'cotizaciones'
   	inflect.irregular 'detalleCotizacion', 'detallesCotizacion'
   	inflect.irregular 'detalleFicha', 'detallesFicha'
@@ -24,8 +25,10 @@ ActiveSupport::Inflector.inflections do |inflect|
   	inflect.irregular 'examen', 'examenes'
   	inflect.irregular 'examenPerfil', 'examenesPerfil'
   	inflect.irregular 'examen_perfil', 'examenes_perfil'
+	inflect.irregular 'horaprocesoExamen', 'horaprocesoExamenes'
   	inflect.irregular 'indicador', 'indicadores'
 	inflect.irregular 'indicacion', 'indicaciones'
+	inflect.irregular 'indicacionMuestra', 'indicacionesMuestra'
   	inflect.irregular 'ordenMedica', 'ordenesMedicas'
   	inflect.irregular 'perfil', 'perfiles'
   	inflect.irregular 'permisoRol', 'permisosRol'
@@ -40,6 +43,8 @@ ActiveSupport::Inflector.inflections do |inflect|
   	inflect.irregular 'sustancia', 'sustancias'
   	inflect.irregular 'sustanciaExamen', 'sustanciasExamen'
   	inflect.irregular 'sustancia_examen', 'sustancias_examen'
+	inflect.irregular 'tapaTubo', 'tapasTubo'
+	inflect.irregular 'tipoEnvase', 'tiposEnvase'
 	inflect.irregular 'tipoExamen', 'tipoExamenes'
   	inflect.irregular 'tipoMuestra', 'tiposMuestras'
   	inflect.irregular 'tipoPago', 'tiposPago'

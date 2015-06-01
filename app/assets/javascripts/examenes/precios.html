@@ -12,19 +12,21 @@
 						<th>Tarifa</th>
 						<th>Precio</th>
 						<th>Precio Fonasa</th>
+						<th>Eliminar</th>
 					</thead>
 					<tbody>
 						<tr ng-repeat="item in tarifas_examen">
 							<td>{{item.tarifa_id?item.tarifa_id:'---'}}</td>
 							<td><input class="form-control" type="number" ng-model="item.precio" name="precio"></td>
 							<td><input class="form-control" type="number" ng-model="item.precio_fonasa" name="precio_fonasa"></td>
+							<td><a class="text-danger ng-scope" ng-click="quitar_precio_seleccionado(item)" title="Quitar precio"><i class="fa fa-trash-o fa-lg"></i></a></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<div class="row form-group">
 				<div class="col-sm-11 text-right">
-					<button ng-click="guardar_cambios()" class="btn btn-success">
+					<button ng-click="guardar_cambios(tarifas_examen)" class="btn btn-success">
 						Guardar
 					</button>
 				</div>

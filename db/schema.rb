@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150526143826) do
+ActiveRecord::Schema.define(version: 20150529181743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "alias_examenes", force: :cascade do |t|
+    t.integer "examen_id"
+    t.string  "nombre"
+    t.string  "descripcion"
+  end
 
   create_table "comunas", force: :cascade do |t|
     t.string  "nombre",    limit: 200, null: false
@@ -112,6 +118,10 @@ ActiveRecord::Schema.define(version: 20150526143826) do
     t.string   "rechazo_otros"
     t.string   "observaciones"
     t.integer  "tipo_muestra_id"
+    t.string   "demora"
+    t.integer  "indicacion_muestra_id"
+    t.integer  "tapa_tubo_id"
+    t.integer  "tipo_envase_id"
   end
 
   add_index "examenes", ["indicacion_id"], name: "index_examenes_on_indicacion_id", using: :btree
@@ -143,8 +153,19 @@ ActiveRecord::Schema.define(version: 20150526143826) do
 
   add_index "fichas", ["prevision_id"], name: "index_fichas_on_prevision_id", using: :btree
 
+  create_table "horaproceso_examenes", force: :cascade do |t|
+    t.integer "examen_id"
+    t.string  "hora"
+    t.string  "descripcion"
+  end
+
   create_table "indicaciones", force: :cascade do |t|
     t.text "descripcion"
+  end
+
+  create_table "indicaciones_muestra", force: :cascade do |t|
+    t.string "codigo"
+    t.string "descripcion"
   end
 
   create_table "indicadores", force: :cascade do |t|
@@ -231,8 +252,8 @@ ActiveRecord::Schema.define(version: 20150526143826) do
   end
 
   create_table "procedencias", force: :cascade do |t|
-    t.string   "nombre", limit: 100,                                 null: false
-    t.datetime "creado",             default: '2015-02-20 15:08:40', null: false
+    t.string   "nombre", limit: 100,                   null: false
+    t.datetime "creado",             default: "now()", null: false
   end
 
   create_table "regiones", force: :cascade do |t|
@@ -282,6 +303,11 @@ ActiveRecord::Schema.define(version: 20150526143826) do
   add_index "sustancias_examen", ["sustancia_id", "examen_id"], name: "sustancias_examen_sustancia_id_examen_id_key", unique: true, using: :btree
   add_index "sustancias_examen", ["sustancia_id"], name: "index_sustancias_examen_on_sustancia_id", using: :btree
 
+  create_table "tapas_tubo", force: :cascade do |t|
+    t.string "codigo"
+    t.string "descripcion"
+  end
+
   create_table "tarifas", force: :cascade do |t|
     t.string   "nombre", limit: 100,                   null: false
     t.boolean  "alerta",                               null: false
@@ -301,6 +327,11 @@ ActiveRecord::Schema.define(version: 20150526143826) do
   create_table "tipo_examenes", force: :cascade do |t|
     t.string "codigo", limit: 5
     t.text   "nombre"
+  end
+
+  create_table "tipos_envase", force: :cascade do |t|
+    t.string "codigo"
+    t.string "descripcion"
   end
 
   create_table "tipos_muestras", force: :cascade do |t|
@@ -355,6 +386,7 @@ ActiveRecord::Schema.define(version: 20150526143826) do
 
   add_index "users_sucursal", ["user_id", "sucursal_id"], name: "user_sucursal", unique: true, using: :btree
 
+  add_foreign_key "alias_examenes", "examenes"
   add_foreign_key "comunas", "regiones", name: "comunas_region_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "cotizaciones", "medicos"
   add_foreign_key "cotizaciones", "pacientes", name: "cotizaciones_paciente_id_fkey", on_update: :cascade, on_delete: :cascade
@@ -372,7 +404,10 @@ ActiveRecord::Schema.define(version: 20150526143826) do
   add_foreign_key "detalles_pagos_ficha", "tipos_pago", name: "detalles_pagos_ficha_tipo_pago_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "detalles_pagos_ficha", "users"
   add_foreign_key "examenes", "indicaciones"
+  add_foreign_key "examenes", "indicaciones_muestra", column: "indicacion_muestra_id"
+  add_foreign_key "examenes", "tapas_tubo", column: "tapa_tubo_id"
   add_foreign_key "examenes", "tipo_examenes", name: "examenes_tipo_examen_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "examenes", "tipos_envase", column: "tipo_envase_id"
   add_foreign_key "examenes", "tipos_muestras", column: "tipo_muestra_id"
   add_foreign_key "examenes_perfil", "examenes", name: "examenes_perfil_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes_perfil", "perfiles", name: "examenes_perfil_perfil_id_fkey", on_update: :cascade, on_delete: :cascade
@@ -382,6 +417,7 @@ ActiveRecord::Schema.define(version: 20150526143826) do
   add_foreign_key "fichas", "previsiones"
   add_foreign_key "fichas", "procedencias", name: "fichas_procedencia_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "fichas", "users", name: "fichas_usuario_creador_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "horaproceso_examenes", "examenes"
   add_foreign_key "indicadores", "sustancias", name: "indicadores_sustancia_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "medicos", "especialidades", column: "especialidad_id"
   add_foreign_key "medicos", "instituciones", column: "institucion_id"
