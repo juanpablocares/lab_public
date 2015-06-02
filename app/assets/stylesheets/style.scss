@@ -96,7 +96,6 @@ body {
 }
 
 .main-view{  margin: 10px;
-  margin-top: 130px;
 }
 
 .main-content {
@@ -640,8 +639,8 @@ body.login1 {
 /*----------------------------------------------------------------------------------- */
 /*  Sidebar nav */
 /*----------------------------------------------------------------------------------- */
-body.sidebar-nav {
-  padding: 70px 0 0 220px;
+body.sidebar-nav {  .login2{    margin: 0px 0px 0px -220px;  }  
+  padding: 50px 0 0 220px;
   .navbar {
     height: 45px !important;
     &.scroll-hide.closed {
