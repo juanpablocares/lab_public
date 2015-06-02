@@ -82,21 +82,22 @@
 			<select class="form-control" ng-model="examen.procesador_examen" ng-selected="examen.procesador_examen_id" ng-options="p.nombre for p in procesadores_examenes track by p.nombre"></select>
 		</div>
 		<div class="col-md-1">
-			<label class="control-label"><strong>Tipo muestra</strong></label>
+			<label class="control-label"><strong>Tipo examen</strong></label>
 		</div>
 		<div class="col-md-2">
-			<select class="form-control" ng-model="examen.tipo_examen" ng-selected="examen.tipo_examen_id" ng-options="t.codigo for t in tipo_examenes track by t.id| orderBy:'codigo'"></select>
-		</div>
-		<div class="col-md-3">
-			<input class="form-control" ng-model="examen.tipo_examen.nombre" disabled="true"></input>
+			<select class="form-control" ng-model="examen.tipo_examen" ng-selected="examen.tipo_examen_id" ng-options="t.nombre for t in tipo_examenes track by t.id| orderBy:'codigo'">
+			<option value=""></option>
+			</select>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-1">
-			<label class="control-label"><strong>Tipo examen</strong></label>
+			<label class="control-label"><strong>Tipo muestra</strong></label>
 		</div>
 		<div class="col-md-2">
-			<select class="form-control" ng-model="examen.tipo_muestra" ng-selected="examen.tipo_muestra_id" ng-options="t.muestra for t in tipos_muestras track by t.id| orderBy:'muestra'"></select>
+			<select class="form-control" ng-model="examen.tipo_muestra" ng-selected="examen.tipo_muestra_id" ng-options="t.muestra for t in tipos_muestras track by t.id| orderBy:'muestra'">
+			<option value=""></option>
+			</select>
 		</div>
 		<div class="col-md-1">
 			<label class="control-label"><strong>Área trabajo</strong></label>

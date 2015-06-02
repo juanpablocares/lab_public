@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150602124010) do
+ActiveRecord::Schema.define(version: 20150602191914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 20150602124010) do
     t.string   "codigo",                 limit: 500
     t.integer  "externo"
     t.datetime "creado",                             default: '2015-02-20 15:08:40', null: false
-    t.integer  "tipo_examen_id"
+    t.integer  "tipo_muestra_id"
     t.integer  "indicacion_id"
     t.string   "dia_proceso"
     t.string   "demora_proceso"
@@ -117,13 +117,13 @@ ActiveRecord::Schema.define(version: 20150602124010) do
     t.string   "rechazo_tubo"
     t.string   "rechazo_otros"
     t.string   "observaciones"
-    t.integer  "tipo_muestra_id"
     t.string   "demora"
     t.integer  "indicacion_muestra_id"
     t.integer  "tapa_tubo_id"
     t.integer  "tipo_envase_id"
     t.integer  "proceso_examen_id"
     t.integer  "procesador_examen_id"
+    t.integer  "tipo_examen_id"
   end
 
   add_index "examenes", ["indicacion_id"], name: "index_examenes_on_indicacion_id", using: :btree
@@ -347,9 +347,9 @@ ActiveRecord::Schema.define(version: 20150602124010) do
   end
 
   create_table "tipos_muestras", force: :cascade do |t|
-    t.string   "muestra", limit: 200,                                 null: false
-    t.string   "codigo",  limit: 100,                                 null: false
-    t.datetime "creado",              default: '2015-02-20 15:08:40', null: false
+    t.string   "muestra", limit: 200,                   null: false
+    t.string   "codigo",  limit: 100,                   null: false
+    t.datetime "creado",              default: "now()", null: false
   end
 
   create_table "tipos_pago", force: :cascade do |t|
@@ -420,9 +420,9 @@ ActiveRecord::Schema.define(version: 20150602124010) do
   add_foreign_key "examenes", "procesadores_examenes", column: "procesador_examen_id"
   add_foreign_key "examenes", "proceso_examenes"
   add_foreign_key "examenes", "tapas_tubo", column: "tapa_tubo_id"
-  add_foreign_key "examenes", "tipo_examenes", name: "examenes_tipo_examen_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "examenes", "tipo_examenes"
+  add_foreign_key "examenes", "tipo_examenes", column: "tipo_muestra_id", name: "examenes_tipo_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes", "tipos_envase", column: "tipo_envase_id"
-  add_foreign_key "examenes", "tipos_muestras", column: "tipo_muestra_id"
   add_foreign_key "examenes_perfil", "examenes", name: "examenes_perfil_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes_perfil", "perfiles", name: "examenes_perfil_perfil_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "fichas", "medicos"
