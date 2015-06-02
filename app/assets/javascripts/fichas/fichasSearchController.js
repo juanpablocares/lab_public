@@ -25,8 +25,9 @@
 				tableState.pagination.numberOfPages = result.numberOfPages;
 				//set the number of pages so the pagination can update
 				$scope.isLoading = false;
+				console.log($scope.displayed);
 			});
 		};
-
+		
 	});
 })();

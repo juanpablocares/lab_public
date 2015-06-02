@@ -73,13 +73,13 @@
 			<label class="control-label"><strong>Proceso</strong></label>
 		</div>
 		<div class="col-md-2">
-			<select class="form-control" ng-model="examen.proceso_examen" ng-selected="examen.proceso_examen_id" ng-options="p.nombre for p in proceso_examenes track by p.id"></select>
+			<select class="form-control" ng-model="examen.proceso" ng-selected="examen.proceso_id" ng-options="p.label for p in procesos track by p.label"></select>
 		</div>
 		<div class="col-md-1">
 			<label class="control-label"><strong>Procesador</strong></label>
 		</div>
 		<div class="col-md-2">
-			<select class="form-control" ng-model="examen.procesador_examen" ng-selected="examen.procesador_examen_id" ng-options="p.nombre for p in procesadores_examenes track by p.nombre"></select>
+			<select class="form-control" ng-model="examen.procesador" ng-selected="examen.procedencia_id" ng-options="p.label for p in procesadores track by p.label"></select>
 		</div>
 		<div class="col-md-1">
 			<label class="control-label"><strong>Tipo muestra</strong></label>

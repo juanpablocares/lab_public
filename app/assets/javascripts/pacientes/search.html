@@ -7,7 +7,6 @@
 				<th st-sort="apellido_materno">Apellido Materno</th>
 				<th st-sort="nombre">Nombre</th>
 				<th st-sort="apellido_materno">Prevision</th>
-				<th st-sort="apellido_materno">Comuna</th>
 			</tr>
 			<tr>
 				<th>
@@ -23,21 +22,19 @@
 					<input st-search="nombre" class="input-sm form-control"/>
 				</th>
 				<th>
-					<input st-search="prevision" class="input-sm form-control"/>
-				</th>
-				<th>
-					<input st-search="comuna" class="input-sm form-control"/>
+					<select st-search="prevision" class="form-control" ng-model="prevision" ng-options="plan.nombre for plan in plans track by plan.id | orderBy:'nombre'" name="prevision">
+						<option value=""></option>
+					</select>
 				</th>
 			</tr>
 		</thead>
 		<tbody ng-show="!isLoading">
 			<tr ng-repeat="row in displayed" ui-sref="loginRequired.pacientes.info({paciente_id: row.id})">
 				<td>{{row.id}}</td>
-				<td>{{row.nombre}}</td>
 				<td>{{row.apellido_paterno}}</td>
 				<td>{{row.apellido_materno}}</td>
+				<td>{{row.nombre}}</td>
 				<td>{{row.prevision.nombre}}</td>
-				<td>{{row.comuna.nombre}}</td>
 			</tr>
 		</tbody>
 		<tbody ng-show="isLoading">

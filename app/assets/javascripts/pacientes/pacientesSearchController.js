@@ -3,6 +3,12 @@
 
 		$scope.resultadosBusqueda = null;
 
+		$http.get('/api/previsiones').success(function(data) {
+			$scope.plans = data;
+		}).error(function(data) {
+			// log error
+		});
+		
 		if ($stateParams.rut_completo != null) {
 			var value = $stateParams.rut_completo;
 			Pacientes.buscar.by_rut({

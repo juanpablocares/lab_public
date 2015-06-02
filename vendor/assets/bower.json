@@ -13,6 +13,7 @@
     "angular-resource": "latest",
     "angular-smart-table": "latest",
     "ng-csv": "latest",
-    "papa.parse": "latest"
+    "papa.parse": "latest",
+    "ngDialog": "latest"
   }
 }

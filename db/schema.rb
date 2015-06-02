@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150529181743) do
+ActiveRecord::Schema.define(version: 20150602124010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,6 +122,8 @@ ActiveRecord::Schema.define(version: 20150529181743) do
     t.integer  "indicacion_muestra_id"
     t.integer  "tapa_tubo_id"
     t.integer  "tipo_envase_id"
+    t.integer  "proceso_examen_id"
+    t.integer  "procesador_examen_id"
   end
 
   add_index "examenes", ["indicacion_id"], name: "index_examenes_on_indicacion_id", using: :btree
@@ -254,6 +256,16 @@ ActiveRecord::Schema.define(version: 20150529181743) do
   create_table "procedencias", force: :cascade do |t|
     t.string   "nombre", limit: 100,                   null: false
     t.datetime "creado",             default: "now()", null: false
+  end
+
+  create_table "procesadores_examenes", force: :cascade do |t|
+    t.string "nombre"
+    t.string "descripcion"
+  end
+
+  create_table "proceso_examenes", force: :cascade do |t|
+    t.string "nombre"
+    t.string "descripcion"
   end
 
   create_table "regiones", force: :cascade do |t|
@@ -405,6 +417,8 @@ ActiveRecord::Schema.define(version: 20150529181743) do
   add_foreign_key "detalles_pagos_ficha", "users"
   add_foreign_key "examenes", "indicaciones"
   add_foreign_key "examenes", "indicaciones_muestra", column: "indicacion_muestra_id"
+  add_foreign_key "examenes", "procesadores_examenes", column: "procesador_examen_id"
+  add_foreign_key "examenes", "proceso_examenes"
   add_foreign_key "examenes", "tapas_tubo", column: "tapa_tubo_id"
   add_foreign_key "examenes", "tipo_examenes", name: "examenes_tipo_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes", "tipos_envase", column: "tipo_envase_id"

@@ -34,6 +34,8 @@ ActiveSupport::Inflector.inflections do |inflect|
   	inflect.irregular 'permisoRol', 'permisosRol'
   	inflect.irregular 'prevision', 'previsiones'
   	inflect.irregular 'procedencia', 'procedencias'
+	inflect.irregular 'procesadorExamen', 'procesadoresExamenes'
+	inflect.irregular 'procesoExamen', 'procesoExamenes'
   	inflect.irregular 'region', 'regiones'
   	inflect.irregular 'resultadoExamen', 'resultadosExamen'
   	inflect.irregular 'resultado_examen', 'resultados_examen'

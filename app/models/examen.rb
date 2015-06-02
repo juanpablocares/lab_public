@@ -11,6 +11,8 @@ class Examen < ActiveRecord::Base
  
 	belongs_to 	:indicacion
 	belongs_to 	:indicacion_muestra
+	belongs_to 	:proceso_examen
+	belongs_to 	:procesador_examen
 	belongs_to 	:tapa_tubo
 	belongs_to 	:tipo_envase
 	belongs_to 	:tipo_examen

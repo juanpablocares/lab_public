@@ -1,4 +1,4 @@
-angular.module('lab').controller('MuestrasExamenesController', function($scope, $http, $stateParams, $auth, $state, Fichas, DetallesFicha,DetalleFicha) {
+angular.module('lab').controller('MuestrasExamenesController', function($scope, $http, $stateParams, $auth, $state, $window, Fichas, DetallesFicha, DetalleFicha) {
 	
 	console.log("Muestra Examenes");
 	$scope.$on('fichaFromMenu', function(event, data) {
@@ -110,5 +110,10 @@ angular.module('lab').controller('MuestrasExamenesController', function($scope, 
 		}
 		console.log("Ordenar examenes");
 		console.log($scope.examenesSeleccionados);
+	};
+	
+	$scope.abrirFichaTecnica = function(examen_id){
+            $window.open('www.aideas.cl:3000/#/ficha_tecnica/'+ examen_id, '_blank');
+		console.log(examen_id);
 	};
 });

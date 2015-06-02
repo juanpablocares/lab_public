@@ -192,6 +192,12 @@
 			controller : 'ExamenesMenuController',
 		});
 		
+		$stateProvider.state('loginRequired.ficha_tecnica', {
+			url : '/ficha_tecnica/:examen_id',
+			templateUrl : "examenes/ficha_tecnica.html",
+			controller : 'ExamenesFichaTecnicaController'
+		});
+		
 		$stateProvider.state('loginRequired.examenes.info', {
 			url : '/informacion',
 			templateUrl : "examenes/index.html",
@@ -359,6 +365,37 @@
 			templateUrl : "previsiones/index.html",
 			controller : 'PrevisionesIndexController',
 			params: {prevision: null}
+		});
+		
+		/*Otros*/
+		$stateProvider.state('loginRequired.otros', {
+			url : '/otros',
+			templateUrl : "otros/menu.html",
+			controller : 'OtrosMenuController',
+		});
+		
+		$stateProvider.state('loginRequired.otros.procesadores', {
+			url : '/procesadores',
+			templateUrl : "otros/procesadores.html",
+			controller : 'OtrosProcesadoresController',
+		});
+		
+		$stateProvider.state('loginRequired.otros.procesos', {
+			url : '/procesos',
+			templateUrl : "otros/procesos.html",
+			controller : 'OtrosProcesosController',
+		});
+		
+		$stateProvider.state('loginRequired.otros.tipos_muestra', {
+			url : '/tipos_muestra',
+			templateUrl : "otros/tipos_muestra.html",
+			controller : 'OtrosTiposMuestrasController',
+		});
+		
+		$stateProvider.state('loginRequired.otros.tipos_examenes', {
+			url : '/tipos_examenes',
+			templateUrl : "otros/tipos_examenes.html",
+			controller : 'OtrosTiposExamenesController',
 		});
 		
 		/*

@@ -6,7 +6,6 @@
 				<th st-sort="nombre_paciente">Nombre paciente</th>
 				<th st-sort="apellido_paterno">Apellido Paterno</th>
 				<th st-sort="apellido_paterno">Apellido Materno</th>
-				<th st-sort="orden_medica">Orden Medica</th>
 				<th st-sort="creacion">Fecha creación</th>
 			</tr>
 			<tr>
@@ -23,20 +22,16 @@
 					<input st-search="apellido_materno" class="input-sm form-control"/>
 				</th>
 				<th>
-					<input st-search="orden_medica" class="input-sm form-control"/>
-				</th>
-				<th>
 					<input st-search="creacion" class="input-sm form-control"/>
 				</th>
 			</tr>
 		</thead>
 		<tbody ng-show="!isLoading">
 			<tr ng-repeat="row in displayed" ui-sref="loginRequired.fichas.info({paciente_id: row.paciente_id, ficha_id: row.id})">
-				<td>{{row.id}}</td>
+			<td>{{row.id}}</td>
 			<td>{{row.paciente.nombre}}</td>
 			<td>{{row.paciente.apellido_paterno}}</td>
 			<td>{{row.paciente.apellido_materno}}</td>
-			<td>{{row.orden_medica_id}}</td>
 			<td>{{row.creado | date:'dd-MM-yyyy HH:mm'}}</td>
 			</tr>
 		</tbody>

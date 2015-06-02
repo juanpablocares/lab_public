@@ -71,27 +71,38 @@ class Api::FichasController < ApplicationController
 	end
 
 	def range
-
-		if params[:search] && params[:search][:predicateObject] && params[:search][:predicateObject][:id]
-			@results = Ficha.where(id: params[:search][:predicateObject][:id].to_i)
-			@numberOfPages = Ficha.count / params[:number].to_i
-			render json: {
-		          data:  @results,
-		          message: 'Resultado correcto',
-		          numberOfPages: @numberOfPages
-		        }, status: 200, include: [:paciente, :medico]
-		else
-			@results = Ficha.limit(params[:number].to_i).offset(params[:start].to_i)
-			@numberOfPages = Ficha.count / params[:number].to_i
-			render json: {
-				success: true,
-				data:  @results,
-		        message: 'Resultado correcto',
-		        numberOfPages: @numberOfPages,
-		    }, status: 200, include: [:paciente, :medico]
+		results = Ficha.all
+		
+		if(params.has_key?(:search))
+			if(params[:search].has_key?(:predicateObject))
+				if(params[:search][:predicateObject].has_key?(:id))
+					results = results.where(id: params[:search][:predicateObject][:id].to_i)
+				end
+				if(params[:search][:predicateObject].has_key?(:nombre))
+					results = results.where(Paciente.arel_table[:nombre].matches("%#{params[:search][:predicateObject][:nombre]}%"))
+				end
+				if(params[:search][:predicateObject].has_key?(:apellido_paterno))
+					results = results.where(Paciente.arel_table[:apellido_paterno].matches("%#{params[:search][:predicateObject][:apellido_paterno]}%"))
+				end
+				if(params[:search][:predicateObject].has_key?(:apellido_materno))
+					results = results.where(Paciente.arel_table[:apellido_materno].matches("%#{params[:search][:predicateObject][:apellido_materno]}%"))
+				end
+				if(params[:search][:predicateObject].has_key?(:prevision))
+					results = results.where(prevision_id: params[:search][:predicateObject][:prevision])
+				end
+			end
 		end
+		
+		numberOfPages = results.count / params[:number].to_i
+		results = results.order(id: :asc).limit(params[:number].to_i).offset(params[:start].to_i)
+		render json: {
+			  success: true,
+			  message: 'Fichas encontradas',
+			  numberOfPages: numberOfPages,
+			  data: results,
+			}, status: 200, include: [:paciente, :medico]
 	end
-
+	
 	def update
 		ficha = Ficha.find(params[:id])
 		if ficha == nil

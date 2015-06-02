@@ -11,6 +11,22 @@ Rails.application.routes.draw do
 		get 'alias_examenes/examen/:examen_id', to: 'alias_examenes#by_examen', defaults: {format: 'json'}
 		put 'alias_examenes/', to: 'alias_examenes#update_all', defaults: {format: 'json'}
 		
+		#Controladores procesos examenes
+		put 'proceso_examenes/', to: 'proceso_examenes#update_all', defaults: {format: 'json'}
+		delete 'proceso_examenes/:id', to: 'proceso_examenes#delete', defaults: {format: 'json'}
+		
+		#Controladores procesadores examenes
+		put 'procesadores_examenes/', to: 'procesadores_examenes#update_all', defaults: {format: 'json'}
+		delete 'procesadores_examenes/:id', to: 'procesadores_examenes#delete', defaults: {format: 'json'}
+		
+		#Controladores tipos muestras
+		put 'tipos_muestras/', to: 'tipos_muestras#update_all', defaults: {format: 'json'}
+		delete 'tipos_muestras/:id', to: 'tipos_muestras#delete', defaults: {format: 'json'}
+		
+		#Controladores tipos examen
+		put 'tipo_examenes/', to: 'tipo_examenes#update_all', defaults: {format: 'json'}
+		delete 'tipo_examenes/:id', to: 'tipo_examenes#delete', defaults: {format: 'json'}
+		
 		#Controladores de pacientes
 		post 'pacientes/range/:start/:number', to: 'pacientes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		put 'pacientes/rut/:rut', to: 'pacientes#update_byrut', defaults: {format: 'json'}
@@ -85,6 +101,8 @@ Rails.application.routes.draw do
 		resources :previsiones, :defaults => { :format => 'json' }
 		resources :regiones, :defaults => { :format => 'json' }
 		resources :pacientes, :defaults => { :format => 'json' }
+		resources :procesadores_examenes, :defaults => { :format => 'json' }
+		resources :proceso_examenes, :defaults => { :format => 'json' }
 		resources :examenes, :defaults => { :format => 'json' }
 		resources :tarifas, :defaults => { :format => 'json' }
 		resources :cotizaciones, :defaults => { :format => 'json' }

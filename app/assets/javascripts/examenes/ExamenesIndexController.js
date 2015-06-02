@@ -1,43 +1,5 @@
 angular.module('lab').controller('ExamenesIndexController', function($scope, $auth, $state, $http, $stateParams, Examen, AliasExamenes, HoraprocesoExamenes) {
 
-	$scope.alias_items = [{
-		texto: '',
-	}];
-
-	$scope.horas_proceso = [{
-		texto: '',
-	}];
-	
-	$scope.procesadores = [{
-	  id: 1,
-	  label: 'N',
-	}, {
-	  id: 2,
-	  label: 'BK',
-	}, {
-	  id: 3,
-	  label: 'LG',
-	}];
-	
-	$scope.tipo_muestras = [{
-	  id: 1,
-	  label: 'Ematologico',
-	}, {
-	  id: 2,
-	  label: 'Inmunologico',
-	}];
-	
-	$scope.procesos = [{
-	  id: 1,
-	  label: 'Interno',
-	}, {
-	  id: 2,
-	  label: 'Derivado',
-	}, {
-	  id: 3,
-	  label: 'No se realiza',
-	}];
-	
 	$scope.$on('examenFromMenu', function(event, data) {
 		console.log(data);
 		$scope.alias_examen = data.alias_examenes;
@@ -54,6 +16,32 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 		
 	});
 
+	$http.get('/api/proceso_examenes').success(function(data) {
+		$scope.proceso_examenes = data;
+		angular.forEach(data, function(proceso_examen, key) {
+			//console.log(indicacion);
+			if (proceso_examen.id == $scope.examen.proceso_examen_id) {
+				$scope.examen.proceso_examen = proceso_examen;
+				$scope.masterExamen = angular.copy($scope.examen);
+			}
+		});
+	}).error(function(data) {
+		// log error
+	});
+	
+	$http.get('/api/procesadores_examenes').success(function(data) {
+		$scope.procesadores_examenes = data;
+		angular.forEach(data, function(procesador_examen, key) {
+			//console.log(indicacion);
+			if (procesador_examen.id == $scope.examen.procesador_examen_id) {
+				$scope.examen.procesador_examen = procesador_examen;
+				$scope.masterExamen = angular.copy($scope.examen);
+			}
+		});
+	}).error(function(data) {
+		// log error
+	});
+	
 	$http.get('/api/indicaciones').success(function(data) {
 		$scope.indicaciones = data;
 		angular.forEach(data, function(indicacion, key) {
@@ -173,6 +161,8 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 		examen.tipo_envase_id = examen.tipo_envase.id;
 		examen.tapa_tubo_id = examen.tapa_tubo.id;
 		examen.indicacion_id = examen.indicacion.id;
+		examen.procesador_examen_id = examen.procesador_examen.id;
+		examen.proceso_examen_id = examen.proceso_examen.id;
 		examen.indicacion_muestra_id = examen.indicacion_muestra.id;
 		examen.tipo_examen_id = examen.tipo_examen.id;
 		console.log(examen);
