@@ -416,6 +416,18 @@
 			controller : 'OtrosIndicacionesController',
 		});
 		
+		$stateProvider.state('loginRequired.otros.indicaciones_muestras', {
+			url : '/indicaciones_muestras',
+			templateUrl : "otros/indicaciones_muestras.html",
+			controller : 'OtrosIndicacionesMuestrasController',
+		});
+		
+		$stateProvider.state('loginRequired.otros.previsiones', {
+			url : '/previsiones',
+			templateUrl : "otros/previsiones.html",
+			controller : 'OtrosPrevisionesController',
+		});
+		
 		/*
 		 * Login State
 		 * No necesita estar logueado para poder ser visto. De hecho es la única url permitida sin login.

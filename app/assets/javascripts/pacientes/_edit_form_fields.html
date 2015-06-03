@@ -1,28 +1,28 @@
 <div class="form-group">
-	<label class="control-label col-md-2">Rut</label>
-	<div class="col-md-7">
-		<input ng-rut rut-format="live" ng-model="paciente.rut_completo" class="form-control" type="text" ng-disabled="paciente.rut_completo != null && paciente.desde_barra" name="rut_completo">
-		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.rut_completo.$pristine) && paciente_form.rut_completo.$error.required">Debe ingresar rut del paciente</label>
+	<div class="row">
+		<label class="control-label col-md-2">Rut</label>
+		<div class="col-md-3">
+			<input ng-rut rut-format="live" ng-model="paciente.rut_completo" class="form-control" type="text" ng-disabled="paciente.rut_completo != null && paciente.desde_barra" name="rut_completo">
+			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.rut_completo.$pristine) && paciente_form.rut_completo.$error.required">Debe ingresar rut del paciente</label>
+		</div>
+		<label class="control-label col-md-1">Nombres</label>
+		<div class="col-md-3">
+			<input class="form-control" placeholder="Ingrese nombres" type="text" ng-model="paciente.nombre" name="nombre" required>
+			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.nombre.$pristine) && paciente_form.nombre.$error.required">Debe ingresar nombre</label>
+		</div>
 	</div>
 </div>
 <div class="form-group">
-	<label class="control-label col-md-2">Nombres</label>
-	<div class="col-md-7">
-		<input class="form-control" placeholder="Ingrese nombres" type="text" ng-model="paciente.nombre" name="nombre" required>
-		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.nombre.$pristine) && paciente_form.nombre.$error.required">Debe ingresar nombre</label>
-	</div>
-</div>
-<div class="form-group">
-	<label class="control-label col-md-2">Apellido Paterno</label>
-	<div class="col-md-7">
-		<input class="form-control" placeholder="Ingrese apellido paterno" type="text" ng-model="paciente.apellido_paterno" name="apellido_paterno" required>
-		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.apellido_paterno.$pristine) && paciente_form.apellido_paterno.$error.required">Debe ingresar apellido</label>
-	</div>
-</div>
-<div class="form-group">
-	<label class="control-label col-md-2">Apellido Materno</label>
-	<div class="col-md-7">
-		<input class="form-control" placeholder="Ingrese apellido materno" type="text" ng-model="paciente.apellido_materno">
+	<div class="row">
+		<label class="control-label col-md-2">Apellido Paterno</label>
+		<div class="col-md-3">
+			<input class="form-control" placeholder="Ingrese apellido paterno" type="text" ng-model="paciente.apellido_paterno" name="apellido_paterno" required>
+			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.apellido_paterno.$pristine) && paciente_form.apellido_paterno.$error.required">Debe ingresar apellido</label>
+		</div>
+		<label class="control-label col-md-1">Apellido Materno</label>
+		<div class="col-md-3">
+			<input class="form-control" placeholder="Ingrese apellido materno" type="text" ng-model="paciente.apellido_materno">
+		</div>
 	</div>
 </div>
 <div class="form-group">
@@ -32,16 +32,16 @@
 	</div>
 </div>
 <div class="form-group">
-	<label class="control-label col-md-2">Celular</label>
-	<div class="col-md-7">
-		<input class="form-control" type="text" ui-mask="(9) 999-9999" ng-model="paciente.celular" name="celular" required>
-		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.celular.$pristine) && paciente_form.celular.$error.required">Debe ingresar celular</label>
-	</div>
-</div>
-<div class="form-group">
-	<label class="control-label col-md-2">Teléfono fijo</label>
-	<div class="col-md-7">
-		<input class="form-control" type="text" ng-model="paciente.telefono" name="telefono">
+	<div class="row">
+		<label class="control-label col-md-2">Celular</label>
+		<div class="col-md-3">
+			<input class="form-control" type="text" ui-mask="(9) 999-9999" ng-model="paciente.celular" name="celular" required>
+			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.celular.$pristine) && paciente_form.celular.$error.required">Debe ingresar celular</label>
+		</div>
+		<label class="control-label col-md-1">Teléfono fijo</label>
+		<div class="col-md-3">
+			<input class="form-control" type="text" ng-model="paciente.telefono" name="telefono">
+		</div>
 	</div>
 </div>
 <div class="form-group">
@@ -51,36 +51,33 @@
 	</div>
 </div>
 <div class="form-group">
-	<label class="control-label col-md-2">Región</label>
-	<div class="col-md-7">
-		<select class="form-control" ng-model="paciente.region" ng-selected="paciente.region_id" ng-options="r.nombre for r in regiones track by r.id| orderBy:'nombre'" name="region" required></select>
-		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.region.$pristine) && paciente_form.region.$error.required">Debe ingresar region</label>
-	</div>
-</div>
-</div>
-<div class="form-group">
-	<label class="control-label col-md-2">Comuna</label>
-	<div class="col-md-7">
-		<select class="form-control" ng-model="paciente.comuna" ng-options="c.nombre for c in paciente.region.comunas track by c.id| orderBy:'nombre'" name="comuna"  required></select>
-		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.comuna.$pristine) && paciente_form.comuna.$error.required">Debe ingresar comuna</label>
-	</div>
-</div>
-</div>
-<div class="form-group">
-	<label class="control-label col-md-2">Fecha de nacimiento</label>
-	<div class="col-md-7">
-		<div class="input-group date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
-			<input class="form-control" type="date" id="exampleInput" name="input" ng-model="paciente.fecha_nacimiento" ng-change="paciente.edad = paciente.getEdad()" name="fecha_nacimiento" required/>
-			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+	<div class="row">
+		<label class="control-label col-md-2">Región</label>
+		<div class="col-md-3">
+			<select class="form-control" ng-model="paciente.region" ng-selected="paciente.region_id" ng-options="r.nombre for r in regiones track by r.id| orderBy:'nombre'" name="region" required></select>
+			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.region.$pristine) && paciente_form.region.$error.required">Debe ingresar region</label>
 		</div>
-		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.fecha_nacimiento.$pristine) && paciente_form.fecha_nacimiento.$error.required">Debe ingresar fecha nacimiento</label>
+		<label class="control-label col-md-1">Comuna</label>
+		<div class="col-md-3">
+			<select class="form-control" ng-model="paciente.comuna" ng-options="c.nombre for c in paciente.region.comunas track by c.id| orderBy:'nombre'" name="comuna"  required></select>
+			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.comuna.$pristine) && paciente_form.comuna.$error.required">Debe ingresar comuna</label>
+		</div>
 	</div>
 </div>
-</div>
 <div class="form-group">
-	<label class="control-label col-md-2">Edad</label>
-	<div class="col-md-7">
-		<input ng-model="paciente.edad" class="form-control" id="disabledInput" type="text" disabled>
+	<div class="row">
+		<label class="control-label col-md-2">Fecha de nacimiento</label>
+		<div class="col-md-3">
+			<div class="input-group date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
+				<input class="form-control" type="date" id="exampleInput" name="input" ng-model="paciente.fecha_nacimiento" ng-change="paciente.edad = paciente.getEdad()" name="fecha_nacimiento" required/>
+				<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			</div>
+			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.fecha_nacimiento.$pristine) && paciente_form.fecha_nacimiento.$error.required">Debe ingresar fecha nacimiento</label>
+		</div>
+		<label class="control-label col-md-1">Edad</label>
+		<div class="col-md-3">
+			<input ng-model="paciente.edad" class="form-control" id="disabledInput" type="text" disabled>
+		</div>
 	</div>
 </div>
 <div class="form-group">

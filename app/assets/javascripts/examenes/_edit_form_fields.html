@@ -122,7 +122,9 @@
 			<label class="control-label"><strong>Indicaciones muestra</strong></label>
 		</div>
 		<div class="col-md-2">
-			<select class="form-control" ng-model="examen.indicacion_muestra" ng-selected="examen.indicacion_muestra_id" ng-options="i.id for i in indicaciones_muestra track by i.id| orderBy:'codigo'"></select>
+			<select class="form-control" ng-model="examen.indicacion_muestra" ng-selected="examen.indicacion_muestra_id" ng-options="i.id for i in indicaciones_muestra track by i.id| orderBy:'codigo'">
+			<option value=""></option>
+			</select>
 		</div>
 		<div class="col-md-3">
 			<textarea class="form-control" ng-model="examen.indicacion_muestra.descripcion" disabled="true"></textarea>

@@ -163,8 +163,13 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 		
 		examen.procesador_examen_id = examen.procesador_examen.id;
 		examen.proceso_examen_id = examen.proceso_examen.id;
-		examen.indicacion_muestra_id = examen.indicacion_muestra.id;
 		console.log(examen);
+		
+		if(examen.indicacion_muestra)
+			examen.indicacion_muestra_id = examen.indicacion_muestra.id;
+		else
+			examen.indicacion_muestra_id = null;
+		
 		if(examen.tipo_muestra)
 			examen.tipo_muestra_id = examen.tipo_muestra.id;
 		else

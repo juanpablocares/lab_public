@@ -30,5 +30,13 @@ angular.module('lab').controller('OtrosMenuController', function($scope, $http, 
 		name : 'Indicaciones',
 		state : 'loginRequired.otros.indicaciones({})',
 		id : 'loginRequired.otros.indicaciones',
+	},{
+		name : 'Indicaciones Muestras',
+		state : 'loginRequired.otros.indicaciones_muestras({})',
+		id : 'loginRequired.otros.indicaciones_muestras',
+	},{
+		name : 'Previsiones',
+		state : 'loginRequired.otros.previsiones({})',
+		id : 'loginRequired.otros.previsiones',
 	}];
 });

@@ -13,6 +13,12 @@
 					isArray: false,
 				}
 			}),
+			all : $resource("/api/previsiones/", {
+			}, {
+				update : {
+					method : 'PUT',
+				},
+			}),
 		};
 	});
 })();

@@ -35,9 +35,13 @@ Rails.application.routes.draw do
 		put 'tapas_tubo/', to: 'tapas_tubo#update_all', defaults: {format: 'json'}
 		delete 'tapas_tubo/:id', to: 'tapas_tubo#delete', defaults: {format: 'json'}
 		
-		#Controladores tapas tubos
+		#Controladores indicaciones
 		put 'indicaciones/', to: 'indicaciones#update_all', defaults: {format: 'json'}
 		delete 'indicaciones/:id', to: 'indicaciones#delete', defaults: {format: 'json'}
+		
+		#Controladores indicaciones muestras
+		put 'indicaciones_muestra/', to: 'indicaciones_muestra#update_all', defaults: {format: 'json'}
+		delete 'indicaciones_muestra/:id', to: 'indicaciones_muestra#delete', defaults: {format: 'json'}
 		
 		#Controladores de pacientes
 		post 'pacientes/range/:start/:number', to: 'pacientes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
@@ -84,6 +88,8 @@ Rails.application.routes.draw do
 		
 		#Controladores de previsiones
 		post 'previsiones/range/:start/:number', to: 'previsiones#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
+		put 'previsiones/', to: 'previsiones#update_all', defaults: {format: 'json'}
+		delete 'previsiones/:id', to: 'previsiones#delete', defaults: {format: 'json'}
 
 		#Controladores detalle_ficha
 		post 'detalles_ficha/muestras_tomadas/:start/:number', to: 'detalles_ficha#muestras_tomadas', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 

@@ -1,6 +1,11 @@
 class Api::PrevisionesController < ApplicationController
 	def index
-		render json: Prevision.all
+		@results = Prevision.all.order(:id)
+		render json: {
+				  success: true,
+				  message: 'Previsiones encontradas',
+				  previsiones: @results,
+				}, status: 200, include: [:tarifa]
 	end
   
 	def show
@@ -34,6 +39,45 @@ class Api::PrevisionesController < ApplicationController
 			  message: 'Previsiones encontrados',
 			  numberOfPages: numberOfPages,
 			  data: results,
+			}, status: 200
+	end
+	
+	def delete
+		if Prevision.find(params[:id]).destroy
+			render json: {
+				  success: true,
+				  message: 'Prevision successfully deleted',
+				}, status: 200
+		else
+			render json: {
+				  success: false,
+				  message: 'Error eliminando Prevision',
+				}, status: 500
+		end
+	end
+	
+	def update_all
+		@result = params[:previsiones]
+		@result.each do |r|
+			@tmp = Prevision.where(id: r["id"]).first
+			if @tmp != nil
+				@tmp.nombre = r["nombre"]
+				@tmp.codigo = r["codigo"]
+				@tmp.habilitada = r["habilitada"]
+				@tmp.tarifa_id = r["tarifa_id"]
+				@tmp.save
+			else
+				prevision = Prevision.new
+				prevision.nombre = r["nombre"]
+				prevision.codigo = r["codigo"]
+				prevision.habilitada = r["habilitada"]
+				prevision.tarifa_id = r["tarifa_id"]
+				prevision.save
+			end
+		end
+		render json: {
+			  success: true,
+			  message: 'Prevision successfully modified',
 			}, status: 200
 	end
 	

@@ -1,14 +1,10 @@
 <div class="row">
-	<div class="col-sm-12">
+	<div class="col-sm-2">
 		<div class="widget-container fluid-height">
 			<div class="widget-content padded clearfix text-center">
-				<h3><strong><phy-rut rut='paciente.rut_completo'></phy-rut></strong> - {{paciente.nombre_completo}}</h3>
+				<h5><strong><phy-rut rut='paciente.rut_completo'></phy-rut></strong><br>{{paciente.nombre_completo}}</h5>
 			</div>
 		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-sm-3">
 		<div class="widget-container fluid-height">
 			<div class="heading">
 				<i class="fa fa-fw fa-user"></i> Paciente
@@ -23,6 +19,6 @@
 			</ul>
 		</div>
 	</div>
-
-	<div ui-view class="col-sm-9"></div>
+	
+	<div ui-view class="col-sm-10"></div>
 </div>
