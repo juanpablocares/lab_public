@@ -24,7 +24,7 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 	$scope.$emit('PedirPacienteFromMenu');
 
 	$http.get('/api/previsiones').success(function(data) {
-		$scope.plans = data;
+		$scope.plans = data.previsiones;
 	}).error(function(data) {
 		// log error
 	});
