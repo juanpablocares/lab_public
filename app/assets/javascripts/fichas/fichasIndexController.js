@@ -2,6 +2,7 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 
 	$scope.saving = false;
 	$scope.loading = true;
+	$scope.guardado = false;
 	$scope.procedencia = {};
 	$scope.examenesBorrados = [];
 	$scope.examenesAgregados = [];
@@ -21,6 +22,65 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 	$scope.examenesSeleccionados_edit = [];
 	$scope.paciente = {};
 
+	Ficha.get({
+        id : $stateParams.ficha_id
+		}, function(datos) {
+	        $scope.ficha = datos.data;
+            $scope.ficha.paciente.fecha_nacimiento = new Date($scope.ficha.paciente.fecha_nacimiento);
+            $scope.ficha.paciente.rut_completo = $scope.ficha.paciente.rut+""+$scope.ficha.paciente.rutdv;
+            $scope.ficha.paciente.getEdad = function() {
+                    if ($scope.ficha.paciente != null) {
+                            var d = new Date();
+                            var meses = 0;
+                            if ($scope.ficha.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth() > 0)
+                                    meses += 12 - $scope.ficha.paciente.fecha_nacimiento.getUTCMonth() + d.getMonth();
+                            else
+                                    meses = Math.abs($scope.ficha.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth());
+                            var birthday = +new Date($scope.ficha.paciente.fecha_nacimiento);
+                            var anios = ((Date.now() - birthday) / (31556926000));
+                            return ~~anios + " Años " + ~~meses + " meses";
+                    }
+            };
+            $scope.paciente = $scope.ficha.paciente;
+            $scope.ficha.numero_programa = parseInt($scope.ficha.numero_programa, 10);
+            if ($scope.ficha.receptor)
+                    $scope.ficha.restringido = true;
+            $scope.ordenarExamenes();
+
+			Medicos.buscar.todos().$promise.then(function(response) {
+				$scope.medicosArray = response.data;
+				$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha.medico);
+			}, function(response) {
+				console.log("ERROR obteniendo medicos");
+			});
+
+			Procedencias.buscar.todos().$promise.then(function(response) {
+				$scope.procedenciasArray = response.data;
+				$scope.procedencia.selected = $scope.setProcedenciaSeleccionada($scope.ficha.procedencia);
+			}, function(response) {
+				console.log("ERROR obteniendo procedencias");
+			});
+
+			Examenes.all.index({
+			}).$promise.then(function(response) {
+				$scope.examenes = response.data;
+				$scope.crearExamenesArray();
+			}, function(response) {
+				console.log("ERROR obteniendo examenes");
+			});
+
+			Perfiles.buscar.todos().$promise.then(function(response) {
+				$scope.perfiles = response.data;
+				$scope.crearExamenesArray();
+			}, function(response) {
+				console.log("ERROR obteniendo perfiles");
+			});
+		
+			$scope.ficha_edit = angular.copy($scope.ficha);
+			$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
+			$scope.limpiarTarifas();
+	});
+
 	$scope.crearExamenesArray = function() {
 		$scope.examenesArray = [];
 		angular.forEach($scope.perfiles, function(value, key) {
@@ -34,10 +94,7 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 	};
 
 	$scope.quitarExamenSeleccionado = function(item) {
-		console.log("quitarexamenseleccionado");
-		console.log(item);
 		var temparray = angular.copy($scope.examenesSeleccionados_edit);
-		console.log(temparray);
 		var index = $scope.examenesSeleccionados_edit.indexOf(item);
 		$scope.examenesSeleccionados_edit.splice(index, 1);
 		var index2 = null;
@@ -54,7 +111,6 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 			$scope.examenesBorrados.push(item);
 		}
 		$scope.getPrecioTotal(true);
-		console.log($scope.examenesSeleccionados_edit);
 	};
 
 	$scope.setProcedenciaSeleccionada = function(ficha_procedencia) {
@@ -250,13 +306,12 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 		$scope.total_pagos = $scope.getTotalPagos();
 		$scope.loading = false;
 	}).catch(function(response) {
-		console.error("Error al cargar detalle pagos");
+		console.error("ERROR al cargar detalle pagos");
 	});
 
 	$scope.limpiarTarifas = function(model) {
 		if (model == null) {
 			for (var i = 0; i < $scope.examenesSeleccionados_edit.length; i++) {
-				console.log($scope.examenesSeleccionados_edit);
 				var temp1 = angular.copy($scope.examenesSeleccionados_edit[i]);
 				if (!temp1.perfil) {
 					temp3 = temp1.examen;
@@ -264,10 +319,8 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 					for (var i = 0; i < temp3.tarifas_examen.length; i++) {
 						value = temp3.tarifas_examen[i];
 						if (value.tarifa_id == $scope.paciente.prevision.tarifa_id) {
-							console.log("precio de prevision");
 							temp = value;
 						}
-						console.log(value);
 					}
 					temp3.tarifas_examen = [temp];
 				}
@@ -280,14 +333,12 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 							value = aux;
 						else
 							value = aux.examen;
-
 						for (var j = 0; j < value.tarifas_examen.length; j++) {
 							if (value2 != null && value2.tarifa_id == $scope.paciente.prevision.tarifa_id) {
 								temp = value2;
 							}
 						}
 						value.tarifas_examen = [temp];
-						console.log(temp.precio);
 					}
 				}
 			}
@@ -359,55 +410,10 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 			$scope.precio_total = total;
 		}
 	}
-	//Recobrar ficha desde el menu
-	$scope.$on('fichaFromMenu', function(event, data) {
-		if (data != undefined) {
-			$scope.ficha = data;
-			$scope.paciente = $scope.ficha.paciente;
-			$scope.ficha.numero_programa = parseInt($scope.ficha.numero_programa, 10);
-			if ($scope.ficha.receptor)
-				$scope.ficha.restringido = true;
-			$scope.ordenarExamenes();
-
-			Medicos.buscar.todos().$promise.then(function(response) {
-				$scope.medicosArray = response.data;
-				$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha.medico);
-			}, function(response) {
-				console.log("ERROR obteniendo medicos");
-			});
-
-			Procedencias.buscar.todos().$promise.then(function(response) {
-				$scope.procedenciasArray = response.data;
-				$scope.procedencia.selected = $scope.setProcedenciaSeleccionada($scope.ficha.procedencia);
-			}, function(response) {
-				console.log("ERROR obteniendo procedencias");
-			});
-
-			Examenes.all.index({
-			}).$promise.then(function(response) {
-				$scope.examenes = response.data;
-				$scope.crearExamenesArray();
-			}, function(response) {
-				console.log("ERROR obteniendo examenes");
-			});
-
-			Perfiles.buscar.todos().$promise.then(function(response) {
-				$scope.perfiles = response.data;
-				$scope.crearExamenesArray();
-			}, function(response) {
-				console.log("ERROR obteniendo perfiles");
-			});
-		}
-		$scope.ficha_edit = angular.copy($scope.ficha);
-		$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
-		console.log("limpiartarifas");
-		$scope.limpiarTarifas();
-	});
-	$scope.$emit('PedirFichaFromMenu');
-
+	
 	//Sin ficha, enviar al home
 	if ($stateParams.ficha_id == null)
-		$state.go('loginRequired.index');
+		$state.go('loginRequired.busqueda_fichas');
 
 	$scope.cancelar_cambios = function() {
 		$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
@@ -431,20 +437,18 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 			Ficha.update({
 				id : $scope.ficha.id
 			}, $scope.ficha_edit).$promise.then(function(response) {
+				ficha_form.$pristine();
 				$scope.edit = false;
 				$scope.examenesSeleccionados = [];
-				$scope.examenesSeleccionados = angular.copy($scope.examenesSeleccionados_edit);
 				$scope.examenesSeleccionados_edit = [];
 				$scope.examenesAgregados = [];
 				$scope.examenesBorrados = [];
 				response.data.numero_programa = parseInt(response.data.numero_programa,10);
 				$scope.ficha = response.data;
 				$scope.precio_total = angular.copy($scope.precio_total_edit);
-				$scope.$emit('fichaFromEdit', $scope.ficha);
 				$scope.ordenarExamenes();
-				$state.go('loginRequired.fichas.info', {
-					ficha_id : response.data.id
-				});
+				$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
+
 			}, function(response) {
 				console.log("ERROR creando ficha");
 			});
