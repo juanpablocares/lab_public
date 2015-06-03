@@ -160,16 +160,26 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 		//examen.procedencia = examen.procesa.label;
 		examen.tipo_envase_id = examen.tipo_envase.id;
 		examen.tapa_tubo_id = examen.tapa_tubo.id;
-		examen.indicacion_id = examen.indicacion.id;
+		
 		examen.procesador_examen_id = examen.procesador_examen.id;
 		examen.proceso_examen_id = examen.proceso_examen.id;
 		examen.indicacion_muestra_id = examen.indicacion_muestra.id;
-		if(examen.tipo_muestra.id)
-			examen.tipo_muestra_id = examen.tipo_muestra.id;
-		else	
-			examen.tipo_muestra_id = null;
-		examen.tipo_examen_id = examen.tipo_examen.id;
 		console.log(examen);
+		if(examen.tipo_muestra)
+			examen.tipo_muestra_id = examen.tipo_muestra.id;
+		else
+			examen.tipo_muestra_id = null;
+		
+		if(examen.tipo_examen)
+			examen.tipo_examen_id = examen.tipo_examen.id;
+		else
+			examen.tipo_examen_id = null;
+		
+		if(examen.indicacion)
+			examen.indicacion_id = examen.indicacion.id;
+		else
+			examen.indicacion_id = null;
+		
 		console.log($scope.alias_examen);
 		console.log($scope.horaproceso_examen);
 		

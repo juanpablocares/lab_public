@@ -398,6 +398,24 @@
 			controller : 'OtrosTiposExamenesController',
 		});
 		
+		$stateProvider.state('loginRequired.otros.tipos_envases', {
+			url : '/tipos_envases',
+			templateUrl : "otros/tipos_envases.html",
+			controller : 'OtrosTiposEnvasesController',
+		});
+		
+		$stateProvider.state('loginRequired.otros.tapas_tubos', {
+			url : '/tapas_tubos',
+			templateUrl : "otros/tapas_tubos.html",
+			controller : 'OtrosTapasTubosController',
+		});
+		
+		$stateProvider.state('loginRequired.otros.indicaciones', {
+			url : '/indicaciones',
+			templateUrl : "otros/indicaciones.html",
+			controller : 'OtrosIndicacionesController',
+		});
+		
 		/*
 		 * Login State
 		 * No necesita estar logueado para poder ser visto. De hecho es la única url permitida sin login.

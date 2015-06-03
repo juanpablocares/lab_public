@@ -27,6 +27,18 @@ Rails.application.routes.draw do
 		put 'tipo_examenes/', to: 'tipo_examenes#update_all', defaults: {format: 'json'}
 		delete 'tipo_examenes/:id', to: 'tipo_examenes#delete', defaults: {format: 'json'}
 		
+		#Controladores tipos envases
+		put 'tipos_envase/', to: 'tipos_envase#update_all', defaults: {format: 'json'}
+		delete 'tipos_envase/:id', to: 'tipos_envase#delete', defaults: {format: 'json'}
+		
+		#Controladores tapas tubos
+		put 'tapas_tubo/', to: 'tapas_tubo#update_all', defaults: {format: 'json'}
+		delete 'tapas_tubo/:id', to: 'tapas_tubo#delete', defaults: {format: 'json'}
+		
+		#Controladores tapas tubos
+		put 'indicaciones/', to: 'indicaciones#update_all', defaults: {format: 'json'}
+		delete 'indicaciones/:id', to: 'indicaciones#delete', defaults: {format: 'json'}
+		
 		#Controladores de pacientes
 		post 'pacientes/range/:start/:number', to: 'pacientes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		put 'pacientes/rut/:rut', to: 'pacientes#update_byrut', defaults: {format: 'json'}

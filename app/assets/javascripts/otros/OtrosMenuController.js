@@ -18,5 +18,17 @@ angular.module('lab').controller('OtrosMenuController', function($scope, $http, 
 		name : 'Tipos Examen',
 		state : 'loginRequired.otros.tipos_examenes({})',
 		id : 'loginRequired.otros.tipos_examenes',
+	},{
+		name : 'Tipos Envases',
+		state : 'loginRequired.otros.tipos_envases({})',
+		id : 'loginRequired.otros.tipos_envases',
+	},{
+		name : 'Tapas Tubos',
+		state : 'loginRequired.otros.tapas_tubos({})',
+		id : 'loginRequired.otros.tapas_tubos',
+	},{
+		name : 'Indicaciones',
+		state : 'loginRequired.otros.indicaciones({})',
+		id : 'loginRequired.otros.indicaciones',
 	}];
 });

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150602191914) do
+ActiveRecord::Schema.define(version: 20150602213212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,7 +162,8 @@ ActiveRecord::Schema.define(version: 20150602191914) do
   end
 
   create_table "indicaciones", force: :cascade do |t|
-    t.text "descripcion"
+    t.text   "descripcion"
+    t.string "codigo"
   end
 
   create_table "indicaciones_muestra", force: :cascade do |t|
@@ -421,8 +422,8 @@ ActiveRecord::Schema.define(version: 20150602191914) do
   add_foreign_key "examenes", "proceso_examenes"
   add_foreign_key "examenes", "tapas_tubo", column: "tapa_tubo_id"
   add_foreign_key "examenes", "tipo_examenes"
-  add_foreign_key "examenes", "tipo_examenes", column: "tipo_muestra_id", name: "examenes_tipo_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes", "tipos_envase", column: "tipo_envase_id"
+  add_foreign_key "examenes", "tipos_muestras", column: "tipo_muestra_id", name: "examenes_tipo_muestra_id_fkey", on_update: :cascade
   add_foreign_key "examenes_perfil", "examenes", name: "examenes_perfil_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "examenes_perfil", "perfiles", name: "examenes_perfil_perfil_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "fichas", "medicos"
