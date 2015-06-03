@@ -1,12 +1,35 @@
-angular.module('lab').controller('FichasPagosController', function($scope, $auth, $state, $http, $stateParams, Fichas, Perfiles, TiposPago, DetallesPagoFicha) {
+angular.module('lab').controller('FichasPagosController', function($scope, $auth, $state, $http, $stateParams, Ficha, Fichas, Perfiles, TiposPago, DetallesPagoFicha) {
 	$scope.precio_total=0;
 	$scope.editExamenes = false;
 	$scope.examenesSeleccionados = [];
 	$scope.ficha = {};
-	
 	$scope.detallePagos = [];
 	$scope.nuevoPago = {};
 	
+	Ficha.get({
+        id : $stateParams.ficha_id
+		}, function(datos) {
+	        $scope.ficha = datos.data;
+            $scope.ficha.paciente.fecha_nacimiento = new Date($scope.ficha.paciente.fecha_nacimiento);
+            $scope.ficha.paciente.rut_completo = $scope.ficha.paciente.rut+""+$scope.ficha.paciente.rutdv;
+            $scope.ficha.paciente.getEdad = function() {
+                    if ($scope.ficha.paciente != null) {
+                            var d = new Date();
+                            var meses = 0;
+                            if ($scope.ficha.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth() > 0)
+                                    meses += 12 - $scope.ficha.paciente.fecha_nacimiento.getUTCMonth() + d.getMonth();
+                            else
+                                    meses = Math.abs($scope.ficha.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth());
+                            var birthday = +new Date($scope.ficha.paciente.fecha_nacimiento);
+                            var anios = ((Date.now() - birthday) / (31556926000));
+                            return ~~anios + " Años " + ~~meses + " meses";
+                    }
+            };
+            $scope.paciente = $scope.ficha.paciente;
+			$scope.ordenarExamenes();
+	});
+
+
 	$scope.setPreciosExamenes = function() {
 		angular.forEach($scope.examenesSeleccionados, function(value, key) {
 			if (value.perfil) { 
@@ -34,7 +57,7 @@ angular.module('lab').controller('FichasPagosController', function($scope, $auth
 		return 0;
 	}
 	
-		$scope.ordenarExamenes = function(tarifa_id) {
+	$scope.ordenarExamenes = function(tarifa_id) {
 		var i = 0;
 		detalles = angular.copy($scope.ficha.detalles_ficha);
 		
@@ -68,22 +91,6 @@ angular.module('lab').controller('FichasPagosController', function($scope, $auth
 		}
 		$scope.setPreciosExamenes();
 	};
-
-
-	//Recobrar ficha desde el menu
-	$scope.$on('fichaFromMenu', function(event, data) {
-		console.log("fichaFromMenu");
-		if (data != undefined) {
-			$scope.ficha = data;
-			$scope.ordenarExamenes();
-		}
-	});
-	
-	$scope.$emit('PedirFichaFromMenu');
-	
-	//Sin ficha, enviar al home
-	if ($stateParams.ficha_id == null)
-		$state.go('loginRequired.index');
 
 	//Obtener tipos de pago para select
 	TiposPago.root.get({}).$promise.then(function(result) {

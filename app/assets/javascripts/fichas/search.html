@@ -27,7 +27,7 @@
 			</tr>
 		</thead>
 		<tbody ng-show="!isLoading">
-			<tr ng-repeat="row in displayed" ui-sref="loginRequired.fichas.info({paciente_id: row.paciente_id, ficha_id: row.id})">
+			<tr ng-repeat="row in displayed" ui-sref="loginRequired.fichas.info({ficha_id: row.id})">
 			<td>{{row.id}}</td>
 			<td>{{row.paciente.nombre}}</td>
 			<td>{{row.paciente.apellido_paterno}}</td>
