@@ -1,5 +1,5 @@
 class Ficha < ActiveRecord::Base
-	
+
   belongs_to :paciente
   belongs_to :procedencia
   belongs_to :medico

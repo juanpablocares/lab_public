@@ -78,9 +78,9 @@ class Api::TarifasExamenController < ApplicationController
 		@result.each do |r|
 			@tmp = TarifaExamen.where(examen_id: r["examen_id"]).where(tarifa_id: r["tarifa_id"]).first
 			if @tmp != nil
-				@tmp.precio = r[:precio]
-				if r[:precio_fonasa] != nil
-					@tmp.precio_fonasa = r[:precio_fonasa]
+				@tmp.precio = r["precio"]
+				if r["precio_fonasa"] != nil
+					@tmp.precio_fonasa = r["precio_fonasa"]
 				end
 				@tmp.save
 			else

@@ -95,19 +95,24 @@ class Api::ExamenesController < ApplicationController
 	def update_all
 		@result = params[:examenes]
 		@result.each do |r|
-			if r["id"] != nil
-				@tmp = Examen.find(r["id"])
-				if @tmp != nil
-					@tmp.nombre = r[:nombre]
-					@tmp.codigo = r[:codigo]
-					@tmp.codigo_fonasa = r[:codigo_fonasa]
-					@tmp.save
-				end
+			@tmp = Examen.where(id: r["id"]).first
+			if @tmp != nil
+				@tmp.nombre = r["nombre"]
+				@tmp.codigo = r["codigo"]
+				@tmp.codigo_fonasa = r["codigo_fonasa"]
+				@tmp.save
+			else
+				examen = Examen.new
+				examen.examen_id = r["examen_id"]
+				examen.tarifa_id = r["tarifa_id"]
+				examen.precio = r["precio"]
+				examen.precio_fonasa = r["precio_fonasa"]
+				examen.save
 			end
 		end
 		render json: {
 			  success: true,
-			  message: 'Examenes successfully modified',
+			  message: 'Examen successfully modified',
 			}, status: 200
 	end
 	

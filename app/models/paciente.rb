@@ -7,4 +7,8 @@ class Paciente < ActiveRecord::Base
 	belongs_to :comuna
 	belongs_to :prevision
 	belongs_to :user
+	
+	def calculate_age(birthday)
+		(Date.today - birthday).to_i / 365
+	end
 end

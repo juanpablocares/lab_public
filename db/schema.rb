@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150602213212) do
+ActiveRecord::Schema.define(version: 20150609142602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -225,6 +225,7 @@ ActiveRecord::Schema.define(version: 20150602213212) do
     t.integer  "user_id",          limit: 8,                                   null: false
     t.datetime "creado",                       default: '2015-02-20 15:08:40', null: false
     t.string   "correo"
+    t.string   "observaciones"
   end
 
   create_table "perfiles", force: :cascade do |t|
@@ -443,6 +444,7 @@ ActiveRecord::Schema.define(version: 20150602213212) do
   add_foreign_key "pacientes", "users", name: "pacientes_user_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "permisos_rol", "permisos", name: "permisos_rol_permiso_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "permisos_rol", "roles", name: "permisos_rol_rol_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "previsiones", "tarifas", name: "previsiones_tarifa_id_fkey", on_update: :cascade
   add_foreign_key "resultados_examen", "detalles_ficha", column: "detalle_ficha_id", name: "resultados_examen_detalle_ficha_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "resultados_examen", "sustancias", name: "resultados_examen_sustancia_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "roles_usuario", "roles", name: "roles_usuario_rol_id_fkey", on_update: :cascade, on_delete: :cascade

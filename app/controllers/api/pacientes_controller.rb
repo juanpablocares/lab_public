@@ -13,13 +13,13 @@ class Api::PacientesController < ApplicationController
 					results = results.where(id: params[:search][:predicateObject][:id].to_i)
 				end
 				if(params[:search][:predicateObject].has_key?(:nombre))
-					results = results.where(Paciente.arel_table[:nombre].matches("%#{params[:search][:predicateObject][:nombre]}%"))
+					results = results.where(Paciente.arel_table[:nombre].matches("#{params[:search][:predicateObject][:nombre]}%"))
 				end
 				if(params[:search][:predicateObject].has_key?(:apellido_paterno))
-					results = results.where(Paciente.arel_table[:apellido_paterno].matches("%#{params[:search][:predicateObject][:apellido_paterno]}%"))
+					results = results.where(Paciente.arel_table[:apellido_paterno].matches("#{params[:search][:predicateObject][:apellido_paterno]}%"))
 				end
 				if(params[:search][:predicateObject].has_key?(:apellido_materno))
-					results = results.where(Paciente.arel_table[:apellido_materno].matches("%#{params[:search][:predicateObject][:apellido_materno]}%"))
+					results = results.where(Paciente.arel_table[:apellido_materno].matches("#{params[:search][:predicateObject][:apellido_materno]}%"))
 				end
 				if(params[:search][:predicateObject].has_key?(:prevision))
 					results = results.where(prevision_id: params[:search][:predicateObject][:prevision])
@@ -43,7 +43,7 @@ class Api::PacientesController < ApplicationController
 				success: true,
 	        	message: '[show] Paciente obtenido',
 				data: @paciente
-			}, status: 200, include: [{:comuna => {include: [:region]}}, :prevision]
+			}, status: 200, include: [{:comuna => {include: [:region]}}, :prevision, :user]
 		end
 	end
 
@@ -147,6 +147,6 @@ class Api::PacientesController < ApplicationController
 	private
 
 	def paciente_params
-		params.permit(:rut, :rutdv, :nombre, :apellido_paterno, :apellido_materno, :celular, :direccion, :comuna_id, :fecha_nacimiento, :genero, :diagnostico, :prevision_id, :user_id, :correo, :telefono)
+		params.permit(:rut, :rutdv, :nombre, :apellido_paterno, :apellido_materno, :celular, :direccion, :comuna_id, :fecha_nacimiento, :genero, :diagnostico, :prevision_id, :user_id, :correo, :telefono, :observaciones)
 	end
 end

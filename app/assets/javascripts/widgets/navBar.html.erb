@@ -4,7 +4,7 @@
 			<div class="pull-right">
 				<ul class="nav navbar-nav pull-right">
 					<li class="dropdown user" dropdown>
-						<a class="dropdown-toggle" dropdown-toggle> <img width="34" height="34" src="<%= asset_path 'avatar-male.jpg' %>" />{{ user.email }}<b class="caret"></b></a>
+						<a class="dropdown-toggle" dropdown-toggle> <img width="34" height="34" src="<%= asset_path 'avatar-male.jpg' %>" />{{user.nombre}} {{user.apellido_paterno}}<b class="caret"></b></a>
 						<ul class="dropdown-menu" role="menu">
 							<li>
 								<a ui-sref="loginRequired.account.info"> <i class="fa fa-user"></i>My Account</a>
@@ -74,7 +74,7 @@
 								<a ui-sref="loginRequired.admin.users">Ver usuarios</a>
 							</li>
 							<li>
-								<a ui-sref="loginRequired.facturas">Facturas</a>
+								<a ui-sref="loginRequired.facturas.asignar">Facturas</a>
 							</li>
 							<li>
 								<a ui-sref="loginRequired.otros.procesos">Otros</a>

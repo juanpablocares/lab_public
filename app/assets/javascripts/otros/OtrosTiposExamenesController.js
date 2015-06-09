@@ -47,7 +47,6 @@ angular.module('lab').controller('OtrosTiposExamenesController', function($scope
 			$scope.tipo_examenes = data;
 			for(i = 0; i < $scope.tipo_examenes.length; i++)
 				$scope.tipo_examenes[i].boton_agregar = true;
-			$scope.isLoading = false;
 		}).error(function(data) {
 			// log error
 		});

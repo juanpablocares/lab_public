@@ -7,6 +7,11 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 		if (data.fecha_nacimiento != undefined) {
 			data.fecha_nacimiento = new Date(data.fecha_nacimiento.getUTCFullYear(), data.fecha_nacimiento.getUTCMonth(), data.fecha_nacimiento.getUTCDate());
 		}
+		
+		if (data.creado != undefined) {
+			data.creado = new Date(data.creado);
+		}
+		
 		$scope.paciente = data;
 		$scope.masterPaciente = angular.copy($scope.paciente);
 		$http.get('/api/regiones').success(function(data) {

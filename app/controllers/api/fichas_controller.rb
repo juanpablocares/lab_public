@@ -1,4 +1,8 @@
 class Api::FichasController < ApplicationController
+	def anno
+		@anno = creado.year
+	end
+
 	def index
 		if @results = Ficha.all
 			render json: {
@@ -79,7 +83,7 @@ class Api::FichasController < ApplicationController
 					results = results.where(id: params[:search][:predicateObject][:id].to_i)
 				end
 				if(params[:search][:predicateObject].has_key?(:nombre))
-					results = results.where(Paciente.arel_table[:nombre].matches("%#{params[:search][:predicateObject][:nombre]}%"))
+					results = results.where(paciente_id: Paciente.where(nombre: params[:search][:predicateObject][:nombre]))
 				end
 				if(params[:search][:predicateObject].has_key?(:apellido_paterno))
 					results = results.where(Paciente.arel_table[:apellido_paterno].matches("%#{params[:search][:predicateObject][:apellido_paterno]}%"))
@@ -89,6 +93,9 @@ class Api::FichasController < ApplicationController
 				end
 				if(params[:search][:predicateObject].has_key?(:prevision))
 					results = results.where(prevision_id: params[:search][:predicateObject][:prevision])
+				end
+				if(params[:search][:predicateObject].has_key?(:urgente))
+					results = results.where(urgente: params[:search][:predicateObject][:urgente])
 				end
 			end
 		end
