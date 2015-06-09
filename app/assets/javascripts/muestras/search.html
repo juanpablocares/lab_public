@@ -1,3 +1,12 @@
+<div class="form-group">
+	<label class="control-label col-md-2"><strong>Fecha</strong></label>
+	<div class="col-md-3">
+		<div class="input-group date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
+			<input class="form-control" type="date" id="exampleInput" name="input" ng-model="fecha"name="fecha" required/>
+			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+	</div>
+</div>
 <div class="widget-container fluid-height">
 	<table st-table="displayed" class="table table-hover table-striped" st-pipe="callServer">
 		<thead>
@@ -14,7 +23,7 @@
 			</tr>
 			<tr>
 				<th>
-					<input st-search="indice" class="input-sm form-control"/>
+					
 				</th>
 				<th>
 					<input st-search="ficha_id" class="input-sm form-control"/>
@@ -32,10 +41,10 @@
 					
 				</th>
 				<th style="text-align:center;">
-					<input st-search="urgente" class="input-sm form-control" type="checkbox"/>
+					
 				</th>
 				<th>
-					<input st-search="estado" class="input-sm form-control"/>
+					
 				</th>
 				<th>
 					
@@ -50,8 +59,9 @@
 				<td>{{row.paciente.apellido_materno}}</td>
 				<td>{{row.paciente.nombre}}</td>
 				<td>{{row.edad}}</td>
-				<td style="text-align:center;"><input type="checkbox" ng-model="row.urgente"></td>
-				<td align="center"><span class="label label-danger">Pendiente</span></td>
+				<td style="text-align:center;"><input type="checkbox" ng-model="row.urgente" disabled="true"></td>
+					<td align="center" ng-if="row.estado == 'Pendiente'"><span class="label label-danger">{{row.estado}}</span></td>
+					<td align="center" ng-if="row.estado == 'Realizado'"><span class="label label-success">{{row.estado}}</span></td>
 				<td>{{row.observaciones}}</td>
 			</tr>
 		</tbody>

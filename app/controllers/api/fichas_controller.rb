@@ -64,13 +64,44 @@ class Api::FichasController < ApplicationController
 	end
 
 	def muestras
-		@results = Ficha.includes(:detalles_ficha).where(:detalles_ficha => {:usuario_muestra_id => nil})
-		@numberOfPages = Ficha.includes(:detalles_ficha).where(:detalles_ficha => {:usuario_muestra_id => nil}).count / params[:number].to_i
+	
+		if params[:fecha]
+			results = Ficha.where(:creado => params[:fecha]).order(:id)
+		elsif
+			results = Ficha.all.order(:id)
+		end
+	
+		if(params.has_key?(:search))
+			if(params[:search].has_key?(:predicateObject))
+				if(params[:search][:predicateObject].has_key?(:ficha_id))
+					results = results.where(id: params[:search][:predicateObject][:ficha_id].to_i)
+				end
+				if(params[:search][:predicateObject].has_key?(:nombre))
+					results = results.where(paciente_id: Paciente.where(nombre: params[:search][:predicateObject][:nombre]))
+				end
+				if(params[:search][:predicateObject].has_key?(:apellido_paterno))
+					results = results.where(Paciente.arel_table[:apellido_paterno].matches("%#{params[:search][:predicateObject][:apellido_paterno]}%"))
+				end
+				if(params[:search][:predicateObject].has_key?(:apellido_materno))
+					results = results.where(Paciente.arel_table[:apellido_materno].matches("%#{params[:search][:predicateObject][:apellido_materno]}%"))
+				end
+				if(params[:search][:predicateObject].has_key?(:prevision))
+					results = results.where(prevision_id: params[:search][:predicateObject][:prevision])
+				end
+
+			end
+		end
+	
+		#@results = Ficha.includes(:detalles_ficha).where(:detalles_ficha => {:usuario_muestra_id => nil})
+		#@numberOfPages = Ficha.includes(:detalles_ficha).where(:detalles_ficha => {:usuario_muestra_id => nil}).count / params[:number].to_i
+		
+		numberOfPages = results.count / params[:number].to_i
+		results = results.order(id: :asc).limit(params[:number].to_i).offset(params[:start].to_i)
 		render json: {
 			  success: true,
-			  message: 'Muestras encontradas',
-			  numberOfPages: @numberOfPages,
-			  data: @results,
+			  message: 'Fichas encontradas',
+			  numberOfPages: numberOfPages,
+			  data: results,
 			}, status: 200, include: [:paciente, :medico, :procedencia, :detalles_ficha]
 	end
 
@@ -94,9 +125,7 @@ class Api::FichasController < ApplicationController
 				if(params[:search][:predicateObject].has_key?(:prevision))
 					results = results.where(prevision_id: params[:search][:predicateObject][:prevision])
 				end
-				if(params[:search][:predicateObject].has_key?(:urgente))
-					results = results.where(urgente: params[:search][:predicateObject][:urgente])
-				end
+
 			end
 		end
 		

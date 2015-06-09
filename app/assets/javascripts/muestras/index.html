@@ -3,7 +3,7 @@
 		<table class="table">
 			<tr>
 				<th class="col-sm-1 text-right">Fecha</th><td ng-bind="masterFicha.creado | date:'dd-MM-yyyy'"></td>
-				<th class="col-sm-1 text-right">Folio</th><td>{{masterFicha.id}}</td>
+				<th class="col-sm-1 text-right">Folio</th><td colspan="3">{{masterFicha.id}}</td>
 			</tr>
 			<tr>
 				<th class="col-sm-1 text-right">Paciente</th><td>{{masterFicha.paciente.nombre}} {{masterFicha.paciente.apellido_paterno}} {{masterFicha.paciente.apellido_materno}}</td>
@@ -11,10 +11,10 @@
 				<th class="col-sm-1 text-right">Médico</th><td>{{masterFicha.paciente.nombre}} {{masterFicha.paciente.apellido_paterno}} {{masterFicha.paciente.apellido_materno}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-1 text-right">Diagnóstico</th><td>{{masterFicha.paciente.diagnostico}}</td>
+				<th class="col-sm-1 text-right">Diagnóstico</th><td colspan="5">{{masterFicha.paciente.diagnostico}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-1 text-right">Observaciones</th><td>{{masterFicha.observaciones}}</td>
+				<th class="col-sm-1 text-right">Observaciones</th><td colspan="5">{{masterFicha.observaciones}}</td>
 			</tr>
 		</table>
 	</div>

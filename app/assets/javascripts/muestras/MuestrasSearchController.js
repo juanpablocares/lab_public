@@ -1,6 +1,6 @@
 (function() {
 	angular.module('lab').controller('MuestrasSearchController', function($scope, $auth, $state, $http, $stateParams, Fichas) {
-
+		$scope.fecha = new Date();
 		$scope.getEdad = function(data) {
 			if(data != null)
 			{
@@ -32,6 +32,7 @@
 			// Number of entries showed per page.
 			
 			Fichas.muestras.advanced({
+				//fecha : $scope.fecha,
 				start : start,
 				number : number
 			}, tableState).
@@ -42,6 +43,16 @@
 				for(var i in $scope.displayed){
 					$scope.displayed[i].paciente.fecha_nacimiento = new Date($scope.displayed[i].paciente.fecha_nacimiento);
 					$scope.displayed[i].edad = $scope.getEdad($scope.displayed[i].paciente.fecha_nacimiento);
+					$scope.displayed[i].estado = "Realizado";
+					//Checkear estado
+					if($scope.displayed[i].detalles_ficha){
+						for(var j in $scope.displayed[i].detalles_ficha){
+							if($scope.displayed[i].detalles_ficha[j].usuario_muestra_id == null){
+								$scope.displayed[i].estado = "Pendiente";
+								break;
+							}
+						}
+					}
 				}
 				
 				//set the number of pages so the pagination can update

@@ -88,11 +88,11 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 			}, tmp).$promise.then(function(results) {
 				if (results.data.usuario_muestra_id != null) {
 					item.estado.class = 'success';
-					item.estado.text = 'Toma de muestra realizada';
+					item.estado.text = 'Muestra realizada';
 				}
 				else {
 					item.estado.class = 'warning';
-					item.estado.text = 'Toma de muestra pendiente';
+					item.estado.text = 'Muestra pendiente';
 				}
 			}).catch(function(results) {
 				item.estado = estado;
@@ -115,12 +115,12 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 						if (value2.usuario_muestra_id == null) {
 							value2.estado = {};
 							value2.estado.class = 'warning';
-							value2.estado.text = 'Toma de muestra pendiente';
+							value2.estado.text = 'Muestra pendiente';
 						}
 						else {
 							value2.estado = {};
 							value2.estado.class = 'success';
-							value2.estado.text = 'Toma de muestra realizada';
+							value2.estado.text = 'Muestra realizada';
 						}
 						$scope.examenesSeleccionados.push(value2);
 						if (value.id == value2.id)
@@ -135,12 +135,12 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 				if (value.usuario_muestra_id == null) {
 					value.estado = {};
 					value.estado.class = 'warning';
-					value.estado.text = 'Toma de muestra pendiente';
+					value.estado.text = 'Muestra pendiente';
 				}
 				else {
 					value.estado = {};
 					value.estado.class = 'success';
-					value.estado.text = 'Toma de muestra realizada';
+					value.estado.text = 'Muestra realizada';
 				}
 				//console.log(value);
 				$scope.examenesSeleccionados.push(value);
