@@ -1,108 +1,15 @@
 <div ng-if="loading" class="row text-center">
 	<i class="fa fa-spinner fa-pulse fa-2x"></i>
 </div>
-
 <div class="widget-container fluid-height" ng-if="!loading">
 	<form class="form-horizontal" name="form" ng-submit="validate_form(form)" novalidate>
-		<div class="row padded" ng-if="!loading">
-			<div class="col-md-4">
-				<table class="table table-condensed">
-					<tbody>
-						<tr>
-							<td><strong>Rut</strong></td>
-							<td><a ui-sref="loginRequired.pacientes.info({paciente_id: paciente.id})"><phy-rut rut='paciente.rut_completo'></phy-rut></a></td>
-						</tr>
-						<tr>
-							<td><strong>Paciente</strong></td>
-							<td><a ui-sref="loginRequired.pacientes.info({paciente_id: paciente.id})">{{paciente.nombre}} {{paciente.apellido_paterno}} {{paciente.apellido_materno}}</a></td>
-						</tr>
-						<tr>
-							<td><strong>Fecha Nacimiento</strong></td>
-							<td>{{paciente.fecha_nacimiento | date:'dd/MM/yyyy'}} - {{paciente.edad}}</td>
-						</tr>
-						<tr>
-							<td><strong>Teléfono</strong></td>
-							<td>{{paciente.celular}}</td>
-						</tr>
-						<tr>
-							<td><strong>Prevision</strong></td>
-							<td>{{paciente.prevision.nombre}}</td>
-						</tr>
-						<tr>
-							<td><strong>Email</strong></td>
-							<td>{{paciente.email?paciente.correo:'Sin correo electrónico'}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="col-md-8">
-				<table class="table table-condensed">
-					<tbody>
-						<tr>
-							<td><strong>Procedencia</strong></td>
-							<td colspan="3">
-							<ui-select ng-model="procedencia.selected" theme="bootstrap" required>
-								<ui-select-match placeholder="Seleccione procedencia">
-									{{$select.selected.nombre}}
-								</ui-select-match>
-								<ui-select-choices repeat="item in procedenciasArray | filter: $select.search">
-									<span ng-bind-html="item.nombre | highlight: $select.search"></span>
-								</ui-select-choices>
-							</ui-select></td>
-						</tr>
-						<tr>
-							<td width="10%"><strong>Restringido</strong></td>
-							<td width="10%">
-							<input style="width: 20px" class="form-control" type="checkbox" ng-model="ficha.restringido">
-							</td>
-							<td width="10%">Entregar a</td>
-							<td width="70%">
-							<input class="form-control" type="text" ng-model="ficha.receptor" ng-disabled="!ficha.restringido">
-							</td>
-						</tr>
-						<tr>
-							<td width="10%"><strong>Programa</strong></td>
-							<td width="40%">
-							<input class="form-control" placeholder="Ingrese programa" type="text" ng-model="ficha.programa" required>
-							</td>
-							<td width="5%">N°</td>
-							<td width="20%">
-							<input class="form-control" placeholder="Ingrese número" type="number" ng-model="ficha.numero_programa" required>
-							</td>
-							<td width="10%"><strong>Email</strong></td>
-							<td width="40%">
-							<input style="width: 20px" class="form-control" type="checkbox" ng-model="ficha.mandar_email">
-							</td>
-							<td width="10%">Urgente</td>
-							<td width="40%">
-							<input style="width: 20px" class="form-control" type="checkbox" ng-model="ficha.urgente">
-							</td>
-						</tr>
-						<tr>
-							<td><strong>Médico</strong></td>
-							<td colspan="3">
-							<ui-select ng-model="medico.selected" theme="bootstrap">
-								<ui-select-match placeholder="Seleccione medico">
-									{{$select.selected.nombre}} {{$select.selected.apellido_paterno}} {{$select.selected.apellido_materno}}
-								</ui-select-match>
-								<ui-select-choices repeat="item in medicosArray | filter: $select.search">
-									<div ng-if="item.rut != null && item.rutdv != null">
-										<strong ng-bind-html="item.rut+'-'+item.rutdv | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre + ' ' + item.apellido_paterno + ' ' + item.apellido_materno | highlight: $select.search"></span>
-									</div>
-								</ui-select-choices>
-							</ui-select></td>
-							<td><strong>Observaciones</strong></td>
-							<td colspan="3">
-							<input ng-model="ficha.observaciones" class="form-control"/>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+		<div class="col-md-4">
+			<ng-include src="'fichas/_informacion_paciente.html'"></ng-include>
 		</div>
-
+		<div class="col-md-8">
+			<ng-include src="'fichas/_edit_ficha_form_fields.html'"></ng-include>
+		</div>
 		<div class="form-group padded">
-			<h4 >Agregue examenes</h4>
 			<div class="alert alert-danger" ng-if="examenesSeleccionados.length == 0 && form.$submitted">
 				<label><strong>Debe agregar examenes</strong></label>
 			</div>
@@ -119,13 +26,13 @@
 						<div ng-if="item.codigo != null && item.codigo_fonasa != null">
 							<strong ng-bind-html="item.codigo_fonasa+'-'+item.codigo | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span>
 						</div>
-						<div ng-if="item.codigo === null" >
+						<div ng-if="item.codigo === null">
 							<strong ng-bind-html="item.codigo_fonasa| highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span>
 						</div>
 					</ui-select-choices>
 				</ui-select>
 			</div>
-			<div ng-include="'fichas/_examenes_table.html'"></div>
+			<div ng-include="'fichas/_examenes_table_new.html'"></div>
 		</div>
 		<div class="row form-group padded">
 			<div class="col-sm-11 text-right">
