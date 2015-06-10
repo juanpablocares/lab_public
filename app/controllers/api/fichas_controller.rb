@@ -66,9 +66,9 @@ class Api::FichasController < ApplicationController
 	def muestras
 	
 		if params[:fecha]
-			results = Ficha.where(:creado => params[:search][:predicateObject][:fecha]).order(:id)
+			results = Ficha.where(:creado => params[:search][:predicateObject][:fecha]).order(id: :desc)
 		elsif
-			results = Ficha.all.order(:id)
+			results = Ficha.all.order(id: :desc)
 		end
 	
 		if(params.has_key?(:search))
@@ -96,7 +96,7 @@ class Api::FichasController < ApplicationController
 		#@numberOfPages = Ficha.includes(:detalles_ficha).where(:detalles_ficha => {:usuario_muestra_id => nil}).count / params[:number].to_i
 		
 		numberOfPages = results.count / params[:number].to_i
-		results = results.order(id: :asc).limit(params[:number].to_i).offset(params[:start].to_i)
+		results = results.limit(params[:number].to_i).offset(params[:start].to_i)
 		render json: {
 			  success: true,
 			  message: 'Fichas encontradas',
@@ -106,7 +106,7 @@ class Api::FichasController < ApplicationController
 	end
 
 	def range
-		results = Ficha.includes(:paciente).all
+		results = Ficha.includes(:paciente).all.order(id: :desc)
 		
 		if(params.has_key?(:search))
 			if(params[:search].has_key?(:predicateObject))
@@ -130,7 +130,7 @@ class Api::FichasController < ApplicationController
 		end
 		
 		numberOfPages = results.count / params[:number].to_i
-		results = results.order(id: :asc).limit(params[:number].to_i).offset(params[:start].to_i)
+		results = results.limit(params[:number].to_i).offset(params[:start].to_i)
 		render json: {
 			  success: true,
 			  message: 'Fichas encontradas',

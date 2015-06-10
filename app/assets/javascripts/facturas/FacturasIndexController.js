@@ -1,6 +1,7 @@
 (function() {
 	angular.module('lab').controller('FacturasIndexController', function($scope, $auth, $state, $http, $stateParams, DetallesPagoFicha) {
-
+		$scope.boolean_atras = true;
+		$scope.paso = 1;
 		$scope.resultadosBusqueda = null;
 		$scope.seleccionar_todos = false;
 		$scope.displayed = [];
@@ -46,13 +47,24 @@
 		};
 
 		$scope.select_all = function(){
-
 			if($scope.seleccionar_todos){
 				for(var i in $scope.displayed){
 					$scope.displayed[i].facturar = true;
 				}
 			}
 		};
+		
+		$scope.atras = function(){
+			$scope.paso--;
+			if($scope.paso == 1)
+				$scope.boolean_atras = true;
+		}
+		
+		$scope.continuar = function(){
+			$scope.boolean_atras = false;
+			if($scope.paso < 2)
+				$scope.paso++;
+		}
 		
 	});
 })();

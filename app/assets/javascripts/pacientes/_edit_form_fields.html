@@ -2,7 +2,7 @@
 	<div class="row">
 		<label class="control-label col-md-2">Rut</label>
 		<div class="col-md-3">
-			<input ng-rut rut-format="live" ng-model="paciente.rut_completo" class="form-control" type="text" ng-disabled="paciente.rut_completo != null && paciente.desde_barra" name="rut_completo">
+			<input ng-rut rut-format="live" ng-model="paciente.rut_completo" class="form-control" type="text" ng-disabled="true" name="rut_completo">
 			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.rut_completo.$pristine) && paciente_form.rut_completo.$error.required">Debe ingresar rut del paciente</label>
 		</div>
 		<label class="control-label col-md-1">Nombres</label>
@@ -70,7 +70,6 @@
 		<div class="col-md-3">
 			<div class="input-group date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
 				<input class="form-control" type="date" id="exampleInput" name="input" ng-model="paciente.fecha_nacimiento" ng-change="paciente.edad = paciente.getEdad()" name="fecha_nacimiento" required/>
-				<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 			</div>
 			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.fecha_nacimiento.$pristine) && paciente_form.fecha_nacimiento.$error.required">Debe ingresar fecha nacimiento</label>
 		</div>
@@ -98,7 +97,7 @@
 		</div>
 	</div>
 </div>
-<div class="form-group">
+<div class="form-group" ng-show="!paciente_nuevo">
 	<div class="row">
 		<label class="control-label col-md-2">F. incorporación</label>
 		<div class="col-md-3">

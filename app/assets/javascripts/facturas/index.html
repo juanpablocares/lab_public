@@ -1,4 +1,4 @@
-<div class="widget-container fluid-height">
+<div class="widget-container fluid-height" ng-show="paso == 1">
 	<table st-table="displayed" class="table table-striped" st-pipe="callServer">
 		<thead>
 			<tr>
@@ -6,6 +6,7 @@
 				<th st-sort="paciente">Paciente</th>
 				<th st-sort="tipo_pago">Tipo Pago</th>
 				<th st-sort="prevision">Previsión</th>
+				<th st-sort="monto_pagado">Monto Pagado</th>
 				<th st-sort="creado">Creado</th>
 				<th st-sort="ingresar">Ingresar</th>
 			</tr>
@@ -27,6 +28,9 @@
 					</select>
 				</th>
 				<th>
+					<input st-search="monto_pagado" class="input-sm form-control"/>
+				</th>
+				<th>
 					<input st-search="creado" class="input-sm form-control"/>
 				</th>
 				<th style="text-align:center;">
@@ -40,8 +44,43 @@
 				<td>{{row.ficha.paciente.nombre}} {{row.ficha.paciente.apellido_paterno}}</td>
 				<td>{{row.tipo_pago.nombre}}</td>
 				<td>{{row.ficha.prevision.nombre}}</td>
+				<td>{{row.monto_pagado | currency:"$":0}}</td>
 				<td ng-bind="row.creado | date:'dd-MM-yyyy'"></td>
 				<td style="text-align:center;"><input type="checkbox" ng-model="row.facturar"></td>
+			</tr>
+		</tbody>
+		<tbody ng-show="isLoading">
+			<tr>
+			<td colspan="7" class="text-center"><i class="fa fa-spinner fa-pulse"></i></td>
+		</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="7" class="text-center"><div st-pagination="" st-items-by-page="10" st-displayed-pages="10"></div></td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+<div class="widget-container fluid-height" ng-show="paso == 2">
+	<table st-table="displayed" class="table table-striped" st-pipe="callServer">
+		<thead>
+			<tr>
+				<th>Ficha</th>
+				<th>Paciente</th>
+				<th>Tipo Pago</th>
+				<th>Previsión</th>
+				<th>Monto Pagado</th>
+				<th>Creado</th>
+			</tr>
+		</thead>
+		<tbody ng-show="!isLoading">
+			<tr ng-repeat="row in displayed" ng-show="row.facturar">
+				<td>{{row.ficha_id}}</td>
+				<td>{{row.ficha.paciente.nombre}} {{row.ficha.paciente.apellido_paterno}}</td>
+				<td>{{row.tipo_pago.nombre}}</td>
+				<td>{{row.ficha.prevision.nombre}}</td>
+				<td>{{row.monto_pagado | currency:"$":0}}</td>
+				<td ng-bind="row.creado | date:'dd-MM-yyyy'"></td>
 			</tr>
 		</tbody>
 		<tbody ng-show="isLoading">
@@ -55,4 +94,12 @@
 			</tr>
 		</tfoot>
 	</table>
+</div>
+<div class="pager">
+	<div class="btn btn-primary-outline btn-previous" ng-disabled="boolean_atras" type="button" ng-click="atras()">
+		<i class="fa fa-long-arrow-left"></i>Atras
+	</div>
+	<div class="btn btn-primary-outline btn-next" type="button" ng-click="continuar()">Continuar
+		<i class="fa fa-long-arrow-right"></i>
+	</div>
 </div>
