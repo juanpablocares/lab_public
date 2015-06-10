@@ -38,5 +38,9 @@ angular.module('lab').controller('OtrosMenuController', function($scope, $http, 
 		name : 'Previsiones',
 		state : 'loginRequired.otros.previsiones({})',
 		id : 'loginRequired.otros.previsiones',
-	}];
+	},{
+		name : 'Tipos Pagos',
+		state : 'loginRequired.otros.tipos_pagos({})',
+		id : 'loginRequired.otros.tipos_pagos',
+	},];
 });

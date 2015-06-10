@@ -20,6 +20,9 @@
 				<th class="col-sm-2 text-right">Edad</th><td>{{masterPaciente.edad}}</td>
 			</tr>
 			<tr>
+				<th class="col-sm-2 text-right" >Género</th> <td ng-if="masterPaciente.genero == 0">Femenino</td><td ng-if="masterPaciente.genero == 1">Masculino</td>
+			</tr>
+			<tr>
 				<th class="col-sm-2 text-right">Correo electrónico</th><td>{{masterPaciente.correo}}</td>
 			</tr>
 			<tr>

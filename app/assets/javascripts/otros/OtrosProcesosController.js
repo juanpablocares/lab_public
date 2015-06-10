@@ -42,6 +42,14 @@ angular.module('lab').controller('OtrosProcesosController', function($scope, $ht
 				console.log('update procesos examenes');
 				console.log(result);
 			});
+			
+		$http.get('/api/proceso_examenes').success(function(data) {
+			$scope.proceso_examenes = data;
+			for(i = 0; i < $scope.proceso_examenes.length; i++)
+				$scope.proceso_examenes[i].boton_agregar = true;
+		}).error(function(data) {
+			// log error
+		});
 	};
 	
 	$scope.remove = function(indice){

@@ -367,6 +367,19 @@
 			params: {prevision: null}
 		});
 		
+		/*Facturas*/
+		$stateProvider.state('loginRequired.facturas', {
+			url : '/facturas',
+			templateUrl : "facturas/menu.html",
+			controller : 'FacturasMenuController',
+		});
+		
+		$stateProvider.state('loginRequired.facturas.asignar', {
+			url : '/asignar_numero',
+			templateUrl : "facturas/index.html",
+			controller : 'FacturasIndexController',
+		});
+		
 		/*Otros*/
 		$stateProvider.state('loginRequired.otros', {
 			url : '/otros',
@@ -426,6 +439,12 @@
 			url : '/previsiones',
 			templateUrl : "otros/previsiones.html",
 			controller : 'OtrosPrevisionesController',
+		});
+		
+		$stateProvider.state('loginRequired.otros.tipos_pagos', {
+			url : '/tipos_pagos',
+			templateUrl : "otros/tipos_pagos.html",
+			controller : 'OtrosTiposPagosController',
 		});
 		
 		/*

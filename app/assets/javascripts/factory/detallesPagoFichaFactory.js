@@ -18,6 +18,16 @@
 					isArray : false
 				},
 			}),
+			range : $resource("/api/detalles_pago_ficha/range/:start/:number", {
+				start : "@start",
+				number : "@number",
+			},
+			{
+				advanced : {
+					method : 'POST',
+					isArray: false,
+				}
+			}),
 		};
 	});
 })();

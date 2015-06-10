@@ -4,7 +4,6 @@ angular.module('lab').controller('OtrosTiposMuestrasController', function($scope
 
 	$http.get('/api/tipos_muestras').success(function(data) {
 		$scope.tipos_muestras = data;
-		console.log($scope.tipos_muestras);
 		for(i = 0; i < $scope.tipos_muestras.length; i++)
 			$scope.tipos_muestras[i].boton_agregar = true;
 		$scope.isLoading = false;
@@ -24,7 +23,6 @@ angular.module('lab').controller('OtrosTiposMuestrasController', function($scope
 	};
 	
 	$scope.create = function(indice){
-		console.log($scope.tipos_muestras[indice]);
 		ProcesoExamen.update({id:$scope.tipos_muestras[indice].id}, $scope.tipos_muestras[indice]).
 			$promise.
 				then(function(response) {
@@ -46,10 +44,8 @@ angular.module('lab').controller('OtrosTiposMuestrasController', function($scope
 			
 		$http.get('/api/tipos_muestras').success(function(data) {
 			$scope.tipos_muestras = data;
-			console.log($scope.tipos_muestras);
 			for(i = 0; i < $scope.tipos_muestras.length; i++)
 				$scope.tipos_muestras[i].boton_agregar = true;
-			$scope.isLoading = false;
 		}).error(function(data) {
 			// log error
 		});

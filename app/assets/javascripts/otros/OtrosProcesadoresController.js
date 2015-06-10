@@ -42,6 +42,14 @@ angular.module('lab').controller('OtrosProcesadoresController', function($scope,
 				console.log('update procesadores examenes');
 				console.log(result);
 			});
+		
+		$http.get('/api/procesadores_examenes').success(function(data) {
+			$scope.procesadores_examenes = data;
+			for(i = 0; i < $scope.procesadores_examenes.length; i++)
+				$scope.procesadores_examenes[i].boton_agregar = true;
+		}).error(function(data) {
+			// log error
+		});
 	};
 	
 	$scope.remove = function(indice){
