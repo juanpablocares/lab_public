@@ -106,7 +106,7 @@ class Api::FichasController < ApplicationController
 	end
 
 	def range
-		results = Ficha.all
+		results = Ficha.includes(:paciente).all
 		
 		if(params.has_key?(:search))
 			if(params[:search].has_key?(:predicateObject))

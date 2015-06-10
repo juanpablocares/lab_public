@@ -1,4 +1,4 @@
-angular.module('lab').controller('FichasIndexController', function($scope, $auth, $state, $http, $stateParams, Fichas, Perfiles, TiposPago, Medicos, Procedencias, Examenes, DetallesPagoFicha, Ficha) {
+angular.module('lab').controller('FichasIndexController', function($scope, $auth, $state, $http, $stateParams, Fichas, Perfiles, Medicos, Procedencias, Examenes, DetallesPagoFicha, Ficha) {
 
 	$scope.saving = false;
 	$scope.loading = true;
