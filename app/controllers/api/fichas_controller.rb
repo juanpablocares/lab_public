@@ -66,7 +66,7 @@ class Api::FichasController < ApplicationController
 	def muestras
 	
 		if params[:fecha]
-			results = Ficha.where(:creado => params[:fecha]).order(:id)
+			results = Ficha.where(:creado => params[:search][:predicateObject][:fecha]).order(:id)
 		elsif
 			results = Ficha.all.order(:id)
 		end

@@ -1,14 +1,12 @@
-<div class="form-group">
-	<label class="control-label col-md-2"><strong>Fecha</strong></label>
-	<div class="col-md-3">
-		<div class="input-group date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
-			<input class="form-control" type="date" id="exampleInput" name="input" ng-model="fecha"name="fecha" required/>
-			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-		</div>
-	</div>
-</div>
 <div class="widget-container fluid-height">
 	<table st-table="displayed" class="table table-hover table-striped" st-pipe="callServer">
+		<label class="control-label col-md-2"><strong>Fecha</strong></label>
+		<div class="col-md-3">
+			<div class="input-group date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
+				<input class="form-control" type="date" id="exampleInput" name="input" ng-model="fecha"name="fecha" required/>
+				<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			</div>
+		</div>
 		<thead>
 			<tr>
 				<th st-sort="indice">Indice</th>
