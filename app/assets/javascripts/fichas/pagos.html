@@ -1,51 +1,19 @@
 <div ng-if="loading" class="row text-center">
 	<i class="fa fa-spinner fa-pulse fa-2x"></i>
 </div>
-<div class="row" ng-if="!loading">
-	<div class="col-sm-12">
-		<div class="widget-container fluid-height">
-			<div class="widget-content padded clearfix text-center">
-				<table class="table table-condensed">
-					<tbody class="text-left">
-						<tr>
-							<td><strong>Rut</strong></td>
-							<td><a ui-sref="loginRequired.pacientes.info({paciente_id: ficha.paciente.id})"><phy-rut rut='ficha.paciente.rut_completo'></phy-rut></a></td>
-							<td><strong>Paciente</strong></td>
-							<td><a ui-sref="loginRequired.pacientes.info({paciente_id: ficha.paciente.id})">{{ficha.paciente.nombre}} {{ficha.paciente.apellido_paterno}} {{ficha.paciente.apellido_materno}}</a></td>
-							<td><strong>Email</strong></td>
-							<td>{{ficha.paciente.email?ficha.paciente.email:'Sin correo electrónico'}}</td>
-						</tr>
-						<tr>
-							<td><strong>Previsión</strong></td>
-							<td>{{ficha.prevision.nombre}}</td>
-							<td><strong>Fecha Nacimiento</strong></td>
-							<td>{{ficha.paciente.fecha_nacimiento | date:'dd/MM/yyyy'}} - {{ficha.paciente.getEdad()}}</td>
-							<td><strong>Teléfono</strong></td>
-							<td>{{ficha.paciente.celular}}</td>
-						</tr>
-						<tr>
-							<td><strong>Dirección</strong></td>
-							<td>{{ficha.paciente.direccion}} {{ficha.paciente.comuna.nombre}}</td>
-							<td><strong>Número ficha</strong></td>
-							<td>{{ficha.id}}</td>
-							<td></td>
-							<td></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+<div class="widget-container fluid-height" ng-if="!loading">
+	<div class="row widget-content padded">
+		<div class="col-md-4">
+			<ng-include src="'fichas/_informacion_paciente.html'"></ng-include>
 		</div>
-	</div>
-	<div class="col-sm-12">
-		<div class="widget-container fluid-height">
-			<div class="widget-content padded">
-				<h3>Realizar pagos</h3>
-				<form class="form-horizontal" name="ingresarPagoForm" novalidate>
+		<div class="col-sm-8">
+			<h3>Ingresar pago</h3>
+			<form class="form-horizontal" name="ingresarPagoForm" novalidate>
 				<table class="table">
-						<th>
-					<div class="form-group" ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_tipo_pago.$error.required)}">
-						<label class="col-sm-2 control-label">Tipo de pago</label>
-						<div class="col-sm-10">
+					<tr>
+						<th>Tipo de pago</th>
+						<td>
+							<div ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_tipo_pago.$error.required)}">
 							<ui-select ng-model="nuevoPago.tipo_pago" name="nuevo_pago_tipo_pago" theme="bootstrap" required>
 								<ui-select-match placeholder="Seleccione tipo de pago">
 									{{$select.selected.nombre}}
@@ -55,39 +23,35 @@
 								</ui-select-choices>
 							</ui-select>
 							<label class="error" ng-if="(ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_tipo_pago.$error.required)">Seleccione un tipo de pago.</label>
-						</div>
-					</div>
-					</th>
-					<th>
-						<div class="form-group" ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_numero_documento.$error.required)}">
-							<label class="col-sm-2 control-label">N° documento:</label>
-							<div class="col-sm-3">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>N° Documento</th>
+						<td>
+							<div ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_numero_documento.$error.required)}">
 								<input class="form-control" ng-model="nuevoPago.numero_documento" name="nuevo_pago_numero_documento" type="number" required>
 								<label class="error" ng-if="(ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_numero_documento.$error.required)">Ingrese el número del documento.</label>
 							</div>
-							<div class="form-group" ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_monto.$error.required)}">
-								<label class="col-sm-2 control-label">Monto a pagar:</label>
-								<div class="col-sm-3">
-									<input class="form-control" ng-model="nuevoPago.monto" name="nuevo_pago_monto" type="number" required>
-									<label class="error" ng-if="(ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_monto.$error.required)">Ingrese el monto pagado.</label>
-								</div>
-							</div>
-						</div>
-					</th>
-						<tr>
-						<td colspan="10">
-							<div class="form-group">
-								<div class="text-right">
-									<label class="col-sm-3 control-label">Observaciones:</label>
-								<div class="col-sm-7">
-									<input class="form-control" ng-model="nuevoPago.observaciones" name="observaciones" type="text">
-								</div>
-								</div>
+						</td>
+					</tr>
+					<tr>
+						<th>Monto a pagar</th>
+						<td>
+							<div ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_monto.$error.required)}">
+								<input class="form-control" ng-model="nuevoPago.monto" name="nuevo_pago_monto" type="number" required>
+								<label class="error" ng-if="(ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_monto.$error.required)">Ingrese el monto pagado.</label>
 							</div>
 						</td>
-						</tr>
-						<tr>
-						<td colspan="3">
+					</tr>
+					<tr>
+						<th>Observaciones</th>
+						<td>
+							<input class="form-control" ng-model="nuevoPago.observaciones" name="observaciones" type="text">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
 							<div class="form-group">
 								<div class="col-sm-11 text-right">
 									<button type="submit" ui-sref="loginRequired.fichas.info({ficha_id: ficha.id})" class="btn btn-warning">
@@ -102,54 +66,51 @@
 								</div>
 							</div>
 						</td>
-						</tr>
+					</tr>
 				</table>
-				</form>
-			</div>
+			</form>
 		</div>
-		<div class="widget-container fluid-height">
-			<div class="heading">
-				Pagos realizados
-			</div>
-			<div class="row">
-				<div class="col-sm-12" ng-if="detallePagos.length == 0">
-					<h4> No hay pagos realizados aún. </h4>
-				</div>
-				<div class="col-sm-12" ng-if="detallePagos.length != 0">
-					<table class="table">
-						<thead>
-							<th> Código </th>
-							<th> Tipo de pago </th>
-							<th> Doc. N°</th>
-							<th> Fecha </th>
-							<th> Recaudador </th>
-							<th> Monto </th>
-						</thead>
-						<tbody>
-							<tr ng-repeat="pago in detallePagos">
-								<td>{{pago.id}}</td>
-								<td>{{pago.tipo_pago.nombre}}</td>
-								<td>{{pago.n_documento}}</td>
-								<td>{{pago.creado}}</td>
-								<td>{{pago.user.nombre}} {{pago.user.apellido_paterno}}</td>
-								<td>{{pago.monto_pagado}}</td>
-							</tr>
-							<tr>
-								<td colspan="5"><strong>Precio total</strong></td>
-								<td class="text-danger">{{precio_total}}</td>
-							</tr>
-							<tr>
-								<td colspan="5"><strong>Pagado</strong></td>
-								<td class="text-success">{{getTotalPagos()}}</td>
-							</tr>
-							<tr>
-								<td colspan="5"><strong>Total</strong></td>
-								<td ng-class="{'text-success': precio_total < getTotalPagos(), 'text-danger': precio_total > getTotalPagos()}">{{precio_total - getTotalPagos()}}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>	
+	</div>
+</div>
+<div class="widget-container fluid-height">
+	<div class="heading">
+		Pagos realizados
+	</div>
+	<div class="row widget-content padded">
+		<h4 ng-if="detallePagos.length == 0"> No hay pagos realizados aún. </h4>
+		<div class="col-sm-12" ng-if="detallePagos.length != 0">
+			<table class="table">
+				<thead>
+					<th> Código </th>
+					<th> Tipo de pago </th>
+					<th> Doc. N°</th>
+					<th> Fecha </th>
+					<th> Recaudador </th>
+					<th> Monto </th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="pago in detallePagos">
+						<td>{{pago.id}}</td>
+						<td>{{pago.tipo_pago.nombre}}</td>
+						<td>{{pago.n_documento}}</td>
+						<td>{{pago.creado | date:'dd/MM/yyyy HH:mm'}}</td>
+						<td>{{pago.user.nombre}} {{pago.user.apellido_paterno}}</td>
+						<td>{{pago.monto_pagado}}</td>
+					</tr>
+					<tr>
+						<td colspan="5"><strong>Precio total</strong></td>
+						<td class="text-danger">{{precio_total}}</td>
+					</tr>
+					<tr>
+						<td colspan="5"><strong>Pagado</strong></td>
+						<td class="text-success">{{getTotalPagos()}}</td>
+					</tr>
+					<tr>
+						<td colspan="5"><strong>Total</strong></td>
+						<td ng-class="{'text-success': precio_total < getTotalPagos(), 'text-danger': precio_total > getTotalPagos()}">{{precio_total - getTotalPagos()}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>

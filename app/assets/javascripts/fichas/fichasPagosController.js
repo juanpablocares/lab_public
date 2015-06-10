@@ -1,10 +1,16 @@
-angular.module('lab').controller('FichasPagosController', function($scope, $auth, $state, $http, $stateParams, Ficha, Fichas, Perfiles, TiposPago, DetallesPagoFicha) {
+angular.module('lab').controller('FichasPagosController', function($scope, 
+	$auth, $state, $http, $stateParams, Ficha, 
+	TiposPago, Fichas, Perfiles, DetallesPagoFicha) {
+	
+
+
 	$scope.precio_total=0;
 	$scope.editExamenes = false;
 	$scope.examenesSeleccionados = [];
 	$scope.ficha = {};
 	$scope.detallePagos = [];
 	$scope.nuevoPago = {};
+	$scope.tiposPagoArray = [];
 	
 	Ficha.get({
         id : $stateParams.ficha_id

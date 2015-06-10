@@ -1,0 +1,97 @@
+<div ng-init="!ficha_edit?ficha_edit=ficha:ficha=ficha"> </div>
+<table class="table table-condensed">
+	<tbody>
+		<tr ng-if="ficha.id">	
+			<td class="col-sm-2"><strong>N° Ficha
+			</strong></td>
+			<td class="col-sm-2">
+				{{ficha.id}}
+			</td>
+			<td class="col-sm-2">
+				<strong>Fecha</strong>
+			</td>
+			<td class="col-sm-2">
+				{{ficha.creado | date:'dd/MM/yyyy'}} 
+			</td>
+			<td class="col-sm-2"><strong>Recepcionista</strong></td>
+			<td class="col-sm-2">
+				{{ficha.user.id}} - {{ficha.user.nombre}} {{ficha.user.apellido_paterno}}
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Procedencia</strong></td>
+			<td colspan="3">
+				<ui-select ng-model="procedencia.selected" theme="bootstrap" required>
+					<ui-select-match placeholder="Seleccione procedencia">
+						<span >{{$select.selected.nombre}}</span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in procedenciasArray | filter: $select.search">
+						<span style="width=10px;" ng-bind-html="item.id | highlight: $select.search"></span> |
+						<span ng-bind-html="item.nombre | highlight: $select.search"></span>
+					</ui-select-choices>
+				</ui-select>
+			</td>
+			<td>
+				<strong>
+					Folio Proc.
+				</strong>
+			</td>
+			<td>{{procedencia.selected.id}}</td>
+		</tr>
+		<tr>
+			<td><strong>Restringido</strong></td>
+			<td>
+			<input class="form-control" type="checkbox" ng-change="ficha_edit.receptor = ''" ng-checked="ficha_edit.receptor" ng-model="ficha_edit.restringido">
+			</td>
+			<td><strong>Entregar a</strong></td>
+			<td>
+			<input class="form-control" type="text" ng-model="ficha_edit.receptor" ng-disabled="!ficha_edit.restringido">
+			</td>
+			<td><strong>Email</strong></td>
+			<td>
+				<input class="form-control" type="checkbox" ng-model="ficha_edit.mandar_email">
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Programa</strong></td>
+			<td>
+			<input class="form-control" placeholder="Ingrese programa" type="text" ng-model="ficha_edit.programa" required>
+			</td>
+			<td><strong>N°</strong></td>
+			<td>
+			<input class="form-control" placeholder="Ingrese número" type="number" ng-model="ficha_edit.numero_programa" required>
+			</td>
+			<td><strong>Urgente</strong></td>
+			<td>
+				<input class="form-control" type="checkbox" ng-model="ficha_edit.urgente">
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Médico</strong></td>
+			<td colspan="4">
+				<ui-select ng-model="medico.selected" theme="bootstrap">
+					<ui-select-match placeholder="Seleccione medico">
+						{{$select.selected.nombre}} {{$select.selected.apellido_paterno}} {{$select.selected.apellido_materno}}
+					</ui-select-match>
+					<ui-select-choices repeat="item in medicosArray | filter: $select.search">
+						<div ng-if="item.rut != null && item.rutdv != null">
+							<strong ng-bind-html="item.rut+'-'+item.rutdv | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre + ' ' + item.apellido_paterno + ' ' + item.apellido_materno | highlight: $select.search"></span>		
+						</div>
+					</ui-select-choices>
+				</ui-select>					
+			</td>
+			<td>
+				<button ng-click="borrarMedico()">
+					<i class="fa fa-close text-danger"></i>
+				</button>
+			</td>
+		</tr>
+		<tr>
+		<td><strong>Observaciones</strong></td>
+			<td colspan="5">
+			<input ng-model="ficha_edit.observaciones" class="form-control">
+			</input>
+			</td>
+		</tr>
+	</tbody>
+</table>

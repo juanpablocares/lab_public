@@ -41,6 +41,7 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
                             return ~~anios + " Años " + ~~meses + " meses";
                     }
             };
+            $scope.precio_total = $scope.precio_total_edit = $scope.ficha.precio_total;
             $scope.paciente = $scope.ficha.paciente;
             $scope.ficha.numero_programa = parseInt($scope.ficha.numero_programa, 10);
             if ($scope.ficha.receptor)
@@ -225,23 +226,23 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 				value.estado = {};
 				if (value.usuario_muestra_id == null) {
 					value.estado.class = 'warning';
-					value.estado.texto = 'Toma de muestra pendiente';
+					value.estado.texto = 'Pendiente';
 				}
 				else {
 					if (value.resultados_examen.length == value.examen.sustancias.length) {
 						value.delete = false;
-						value.estado.texto = 'Resultados ingresados';
-						value.estado.class = 'info';
+						value.estado.texto = 'Ingresado',
+						value.estado.class = 'success';
 					}
 					else
 					if (value.resultados_examen.length < value.examen.sustancias.length || value.examen.sustancias.length == 0) {
 						value.delete = false;
-						value.estado.class = 'success';
-						value.estado.texto = 'Ingreso de resultados';
+						value.estado.class = 'info';
+						value.estado.texto = 'Examen';
 					}
 					else {
 						value.estado.class = 'danger';
-						value.estado.texto = 'Error en resultados';
+						value.estado.texto = 'Error';
 					}
 				}
 			}
@@ -374,6 +375,7 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 	}
 
 	$scope.getPrecioTotal = function(edit) {
+		console.log('Calculando nuevo precio');
 		var total = 0;
 		if (edit) {
 			var examenes = $scope.examenesSeleccionados_edit;

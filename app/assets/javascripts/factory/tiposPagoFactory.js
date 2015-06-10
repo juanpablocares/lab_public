@@ -1,10 +1,13 @@
 (function() {
 	var labs = angular.module('lab');
 
-	labs.factory('TiposPagos', function($resource) {
+	labs.factory('TiposPago', function($resource) {
 		return {
-			all : $resource("/api/tipos_pago/", {
+			root : $resource("/api/tipos_pago/", {
 			}, {
+				get:{
+					method : 'GET',
+				},
 				update : {
 					method : 'PUT',
 				},
