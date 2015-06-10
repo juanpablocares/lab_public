@@ -70,7 +70,11 @@
 									</td>
 									<td><strong>Urgente</strong></td>
 									<td>
-									<input class="form-control" type="checkbox" ng-model="ficha_edit.urgente">
+									  <div class="checkbox">
+									    <label>
+											<input class="form-control" type="checkbox" ng-model="ficha_edit.urgente">
+										</label>
+									  </div>
 									</td>
 								</tr>
 								<tr>
@@ -120,7 +124,6 @@
 				</div>
 
 				<div class="form-group padded">
-					<h4 >Agregue examenes</h4>
 					<div class="alert alert-danger" ng-if="examenesSeleccionados_edit.length == 0 && form.$submitted">
 						<label><strong>Debe agregar examenes</strong></label>
 					</div>
@@ -221,7 +224,9 @@
 									<td class="text-success">{{total_pagos}}</td>
 								</tr>
 								<tr>
-									<td colspan="9"><strong>Total</strong></td>
+									<td colspan="2"><strong>Número Arancel</strong></td>
+									<td colspan="2">{{ficha_edit.prevision.tarifa_id}}</td>
+									<td colspan="5"><strong>Total</strong></td>
 									<td ng-class="{'text-success': ficha_edit.precio_total < total_pagos, 'text-danger': ficha_edit.precio_total > total_pagos}">{{ficha_edit.precio_total - total_pagos}}</td>
 								</tr>
 							</tbody>

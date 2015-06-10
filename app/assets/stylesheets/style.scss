@@ -1,4 +1,5 @@
-/*----------------------------------------------------------------------------------- */
+/*----------------------------------------------------------------------------------- */
+
 /*  Mixins/variables */
 /*----------------------------------------------------------------------------------- */
 $blue: #007aff;
@@ -95,7 +96,8 @@ body {
   }
 }
 
-.main-view{  margin: 10px;
+.main-view{
+  margin: 10px;
 }
 
 .main-content {
@@ -639,7 +641,11 @@ body.login1 {
 /*----------------------------------------------------------------------------------- */
 /*  Sidebar nav */
 /*----------------------------------------------------------------------------------- */
-body.sidebar-nav {  .login2{    margin: 0px 0px 0px -220px;  }  
+body.sidebar-nav {
+  .login2{
+    margin: 0px 0px 0px -220px;
+  }
+  
   padding: 50px 0 0 220px;
   .navbar {
     height: 45px !important;
@@ -1522,7 +1528,7 @@ th:active {
 }
 
 .padded {
-  padding: 15px;
+  padding: 0 10px;
 }
 
 /*----------------------------------------------------------------------------------- */
@@ -2673,7 +2679,11 @@ input[type="text"] {
   }
   &.has-error, &.error ,&.ng-invalid.ng-dirty{
     border-color: #d9534f;
-  }  &.ng-valid.ng-dirty  {    border-color: #088A08;  }
+  }
+  &.ng-valid.ng-dirty
+  {
+    border-color: #088A08;
+  }
 }
 
 .form-group {
@@ -3058,7 +3068,11 @@ input[type="text"] {
     }
   }
 }
-.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {    border: none;}
+
+.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+    border: none;
+}
+
 .select2-container-active .select2-choice, .select2-container-active .select2-choices {
   border-color: $blue;
 }
@@ -4578,7 +4592,8 @@ body.fourofour {
 }
 @media (max-width: 960px) {
   .main-view{
-    margin: 10px;    margin-top: 15px;
+    margin: 10px;
+    margin-top: 15px;
   }
 }
 
@@ -4665,7 +4680,7 @@ body.fourofour {
     }
   }
   .padded {
-    padding: 10px;
+    padding: 0 10px;
   }
   .table th {
     font-size: 13px;
@@ -4811,4 +4826,119 @@ body.fourofour {
       }
     }
   }
-}.fa-stack-icon{  position:absolute;  left: 0;  width: 100%;  text-align: center;}.fa-stack-corner-icon{  color: lightgrey;  font-size: 0.6em;  left: 6px;  bottom: -2px;}.ui-select-match.btn-default-focus {    outline: 0 none;    box-shadow: none !important;  }  .ui-select-match > span.btn {    display: inline-block;    padding: 6px 12px;    margin-bottom: 0;    font-size: 14px;    font-weight: normal;    line-height: 1.42857143;    text-align: center;    white-space: nowrap;    vertical-align: middle;    -ms-touch-action: manipulation;    touch-action: manipulation;    cursor: pointer;    -webkit-user-select: none;    -moz-user-select: none;    -ms-user-select: none;    user-select: none;    background-image: none;    border: 1px solid transparent;    border-radius: 4px;  }  .ui-select-match > span.btn:focus, .ui-select-match > span.btn:active:focus, .ui-select-match > span.btn.active:focus, .ui-select-match > span.btn.focus, .ui-select-match > span.btn:active.focus, .ui-select-match > span.btn.active.focus {    outline: 0 none;    outline-offset: 0px;    -webkit-appearance: none;  }  .ui-select-match > span.btn:hover, .ui-select-match > span.btn:focus, .ui-select-match > span.btn.focus {    color: #333;    text-decoration: none;  }  .ui-select-match > span.btn:active, .ui-select-match > span.btn.active {    background-image: none;    outline: 0 none;    -webkit-box-shadow: none;    box-shadow: none;  }  .ui-select-match > span.btn.disabled, .ui-select-match > span.btn[disabled], fieldset[disabled] .ui-select-match > span.btn {    pointer-events: none;    cursor: not-allowed;    filter: alpha(opacity=65);    -webkit-box-shadow: none;    box-shadow: none;    opacity: .65;  }  .ui-select-match > span.btn-default {    color: #333;    background-color: #fff;    border-color: #ccc;  }  .ui-select-match > span.btn-default:hover, .ui-select-match > span.btn-default:focus, .ui-select-match > span.btn-default.focus, .ui-select-match > span.btn-default:active, .ui-select-match > span.btn-default.active, .open > .dropdown-toggle.ui-select-match > span.btn-default {    color: #333;    background-color: #e6e6e6;    border-color: #adadad;  }  .ui-select-match > span.btn-default:active, .ui-select-match > span.btn-default.active, .open > .dropdown-toggle.ui-select-match > span.btn-default {    background-image: none;  }  .ui-select-match > span.btn-default.disabled, .ui-select-match > span.btn-default[disabled], fieldset[disabled] .ui-select-match > span.btn-default, .ui-select-match > span.btn-default.disabled:hover, .ui-select-match > span.btn-default[disabled]:hover, fieldset[disabled] .ui-select-match > span.btn-default:hover, .ui-select-match > span.btn-default.disabled:focus, .ui-select-match > span.btn-default[disabled]:focus, fieldset[disabled] .ui-select-match > span.btn-default:focus, .ui-select-match > span.btn-default.disabled.focus, .ui-select-match > span.btn-default[disabled].focus, fieldset[disabled] .ui-select-match > span.btn-default.focus, .ui-select-match > span.btn-default.disabled:active, .ui-select-match > span.btn-default[disabled]:active, fieldset[disabled] .ui-select-match > span.btn-default:active, .ui-select-match > span.btn-default.disabled.active, .ui-select-match > span.btn-default[disabled].active, fieldset[disabled] .ui-select-match > span.btn-default.active {    background-color: #fff;    border-color: #ccc;  }  .ui-select-match > span.btn-default .badge {    color: #fff;    background-color: #333;  }  .form-horizontal  {    .radio, .checkbox {      min-height: 27px;      padding-left: 20px;    }  }    form.ng-invalid.ng-submitted{    .ng-invalid{      border-color: #d9534f;    }  }  .borderless{    border: 0;  }    form.ng-submitted.ng-invalid{    .ui-select-container.ng-invalid    {      .ui-select-match{        span.ui-select-toggle{          border-color: #d9534f;        }      }    }  }
+}
+
+.fa-stack-icon
+{
+  position:absolute;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.fa-stack-corner-icon
+{
+  color: lightgrey;
+  font-size: 0.6em;
+  left: 6px;
+  bottom: -2px;
+}
+
+.ui-select-match.btn-default-focus {
+    outline: 0 none;
+    box-shadow: none !important;
+  }
+
+  .ui-select-match > span.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+
+  .ui-select-match > span.btn:focus, .ui-select-match > span.btn:active:focus, .ui-select-match > span.btn.active:focus, .ui-select-match > span.btn.focus, .ui-select-match > span.btn:active.focus, .ui-select-match > span.btn.active.focus {
+    outline: 0 none;
+    outline-offset: 0px;
+    -webkit-appearance: none;
+  }
+  .ui-select-match > span.btn:hover, .ui-select-match > span.btn:focus, .ui-select-match > span.btn.focus {
+    color: #333;
+    text-decoration: none;
+  }
+  .ui-select-match > span.btn:active, .ui-select-match > span.btn.active {
+    background-image: none;
+    outline: 0 none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+  .ui-select-match > span.btn.disabled, .ui-select-match > span.btn[disabled], fieldset[disabled] .ui-select-match > span.btn {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+  }
+  .ui-select-match > span.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+  }
+  .ui-select-match > span.btn-default:hover, .ui-select-match > span.btn-default:focus, .ui-select-match > span.btn-default.focus, .ui-select-match > span.btn-default:active, .ui-select-match > span.btn-default.active, .open > .dropdown-toggle.ui-select-match > span.btn-default {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+  }
+  .ui-select-match > span.btn-default:active, .ui-select-match > span.btn-default.active, .open > .dropdown-toggle.ui-select-match > span.btn-default {
+    background-image: none;
+  }
+  .ui-select-match > span.btn-default.disabled, .ui-select-match > span.btn-default[disabled], fieldset[disabled] .ui-select-match > span.btn-default, .ui-select-match > span.btn-default.disabled:hover, .ui-select-match > span.btn-default[disabled]:hover, fieldset[disabled] .ui-select-match > span.btn-default:hover, .ui-select-match > span.btn-default.disabled:focus, .ui-select-match > span.btn-default[disabled]:focus, fieldset[disabled] .ui-select-match > span.btn-default:focus, .ui-select-match > span.btn-default.disabled.focus, .ui-select-match > span.btn-default[disabled].focus, fieldset[disabled] .ui-select-match > span.btn-default.focus, .ui-select-match > span.btn-default.disabled:active, .ui-select-match > span.btn-default[disabled]:active, fieldset[disabled] .ui-select-match > span.btn-default:active, .ui-select-match > span.btn-default.disabled.active, .ui-select-match > span.btn-default[disabled].active, fieldset[disabled] .ui-select-match > span.btn-default.active {
+    background-color: #fff;
+    border-color: #ccc;
+  }
+  .ui-select-match > span.btn-default .badge {
+    color: #fff;
+    background-color: #333;
+  }
+  .form-horizontal
+  {
+    .radio, .checkbox {
+      min-height: 27px;
+      padding-left: 20px;
+    }
+  }
+  
+  form.ng-invalid.ng-submitted{
+    .ng-invalid{
+      border-color: #d9534f;
+    }
+  }
+  .borderless{
+    border: 0;
+  }
+  
+  form.ng-submitted.ng-invalid{
+    .ui-select-container.ng-invalid
+    {
+      .ui-select-match{
+        span.ui-select-toggle{
+          border-color: #d9534f;
+        }
+      }
+    }
+  }
