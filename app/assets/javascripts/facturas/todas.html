@@ -10,6 +10,7 @@
 				<th >Previsión</th>
 				<th >Fecha</th>
 				<th >Monto</th>
+				<th >Opciones</th>
 			</tr>
 			<tr>
 				<th>
@@ -45,6 +46,9 @@
 				<th>
 					
 				</th>
+				<th>
+					
+				</th>
 			</tr>
 		</thead>
 		<tbody ng-show="!isLoading">
@@ -53,10 +57,11 @@
 				<td >{{row.ficha_id}}</td>
 				<td>{{row.tipo_pago.nombre}}</td>
 				<td>{{row.n_documento}}</td>
-				<td>{{row.factura}}</td>
+				<td ><div class="success">{{row.factura}}</div></td>
 				<td>{{row.ficha.prevision.nombre}}</td>
 				<td ng-bind="row.creado | date:'dd-MM-yyyy'"></td>
 				<td>{{row.monto_pagado | currency:"$":0}}</td>
+				<td><a class="text-primary" ui-sref="loginRequired.fichas.pagos({examen_id: row.ficha_id})" title="Información ficha"><i class="fa fa-info-circle fa-lg"></i></a></td>
 			</tr>
 		</tbody>
 		<tbody ng-show="isLoading">
@@ -66,7 +71,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="8" class="text-center"><div st-pagination="" st-items-by-page="100" st-displayed-pages="10"></div></td>
+				<td colspan="8" class="text-center"><div st-pagination="" st-items-by-page="10" st-displayed-pages="10"></div></td>
 			</tr>
 		</tfoot>
 	</table>

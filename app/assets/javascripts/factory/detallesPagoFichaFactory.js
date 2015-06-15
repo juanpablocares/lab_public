@@ -29,6 +29,12 @@
 					isArray: false,
 				}
 			}),
+			all : $resource("/api/detalles_pago_ficha/", {
+			}, {
+				update : {
+					method : 'PUT',
+				},
+			}),
 		};
 	});
 })();

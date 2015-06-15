@@ -32,7 +32,7 @@
 			// Number of entries showed per page.
 			
 			DetallesPagoFicha.range.advanced({
-				facturadas : 1,
+				facturadas : 0,
 				start : start,
 				number : number
 			}, tableState).
@@ -100,11 +100,30 @@
 		}
 
 		$scope.guardar_factura = function(datos){
+			
 			var facturas_ingresar = [];
+			
 			for(var i in datos){
-				if(datos[i].facturar)
+				if(datos[i].facturar){
+					datos[i].factura = $scope.n_factura;
 					facturas_ingresar.push(datos[i]);
+				}
 			}
+			
+			if(facturas_ingresar.length == 0){
+				console.log('No se seleccionaron datos');
+				return ;
+			}
+			
+			DetallesPagoFicha.all.update({
+				detalles_pago_ficha : datos,
+			}).
+			$promise.then(function(result) {
+				console.log('update detalle tipo pago');
+				console.log(result);
+			});
+			
+			$state.go('loginRequired.facturas.todas');
 			console.log(facturas_ingresar);
 			console.log('Factura asignada');
 		}

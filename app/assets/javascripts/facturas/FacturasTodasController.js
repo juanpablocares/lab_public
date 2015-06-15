@@ -37,7 +37,6 @@
 				facturadas : 1
 			}, tableState).
 			$promise.then(function(result) {
-				console.log(result);
 				$scope.displayed = result.data;
 				tableState.pagination.numberOfPages = result.numberOfPages;
 				//set the number of pages so the pagination can update

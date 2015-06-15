@@ -111,6 +111,7 @@ Rails.application.routes.draw do
 		#Controlador detalle pago ficha
 		post 'detalles_pago_ficha/range/:start/:number/:facturadas', to: 'detalles_pago_ficha#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		get 'detalles_pago_ficha/ficha/:id', to: 'detalles_pago_ficha#getAllByFicha', defaults: {format: 'json'}
+		put 'detalles_pago_ficha/', to: 'detalles_pago_ficha#update_all', defaults: {format: 'json'}
 		
 		
 		resources :alias_examenes, :defaults => { :format => 'json' }

@@ -74,6 +74,21 @@ class Api::DetallesPagoFichaController < ApplicationController
 		end
 	end
 	
+	def update_all
+		@result = params[:detalles_pago_ficha]
+		@result.each do |r|
+			@tmp = DetallePagoFicha.where(id: r["id"]).first
+			if @tmp != nil
+				@tmp.factura = r["factura"]
+				@tmp.save
+			end
+		end
+		render json: {
+			  success: true,
+			  message: 'Detalles pago ficha successfully modified',
+			}, status: 200
+	end
+	
 	def getAllByFicha
 		render json: {
 			success: true,

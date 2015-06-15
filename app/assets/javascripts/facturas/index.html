@@ -79,3 +79,25 @@
 		</tfoot>
 	</table>
 </div>
+<div class="row">
+	<div class="widget-container fluid-height">
+		<div class="widget-content padded">
+			<form class="form-horizontal" ng-submit="guardar_factura(displayed)" name="facturar_form" novalidate>
+				<div class="form-group">
+					<label class="control-label col-md-6"><strong>Factura</strong></label>
+					<div class="text-right col-md-3">
+						<input class="form-control" placeholder="Ingrese factura" type="number" ng-model="n_factura">
+					</div>
+					<div class="text-right">
+						<button type="submit" class="btn btn-primary">
+							Guardar
+						</button>
+						<button type="button" class="btn btn-danger" ui-sref="loginRequired.index">
+							Cancelar
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
