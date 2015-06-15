@@ -6,4 +6,5 @@ class User < ActiveRecord::Base
   
   has_many :fichas
   has_many :detalles_pago_ficha
+  has_one  :detalle_ficha
 end

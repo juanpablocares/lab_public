@@ -380,6 +380,12 @@
 			controller : 'FacturasIndexController',
 		});
 		
+		$stateProvider.state('loginRequired.facturas.todas', {
+			url : '/todas',
+			templateUrl : "facturas/todas.html",
+			controller : 'FacturasTodasController',
+		});
+		
 		/*Otros*/
 		$stateProvider.state('loginRequired.otros', {
 			url : '/otros',

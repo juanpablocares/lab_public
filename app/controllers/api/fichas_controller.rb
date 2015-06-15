@@ -65,10 +65,10 @@ class Api::FichasController < ApplicationController
 
 	def muestras
 	
-		if params[:fecha]
-			results = Ficha.where(:creado => params[:search][:predicateObject][:fecha]).order(id: :desc)
-		elsif
-			results = Ficha.all.order(id: :desc)
+		if(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha))
+			results = Ficha.where('creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha].to_date.beginning_of_day, params[:search][:predicateObject][:fecha].to_date.end_of_day).order(id: :desc)
+		else
+			results = Ficha.where('creado BETWEEN ? and ?', DateTime.now.beginning_of_day, DateTime.now.end_of_day).order(id: :desc)
 		end
 	
 		if(params.has_key?(:search))
@@ -80,10 +80,10 @@ class Api::FichasController < ApplicationController
 					results = results.where(paciente_id: Paciente.where(nombre: params[:search][:predicateObject][:nombre]))
 				end
 				if(params[:search][:predicateObject].has_key?(:apellido_paterno))
-					results = results.where(Paciente.arel_table[:apellido_paterno].matches("%#{params[:search][:predicateObject][:apellido_paterno]}%"))
+					results = results.where(paciente_id: Paciente.where(apellido_paterno: params[:search][:predicateObject][:apellido_paterno]))
 				end
 				if(params[:search][:predicateObject].has_key?(:apellido_materno))
-					results = results.where(Paciente.arel_table[:apellido_materno].matches("%#{params[:search][:predicateObject][:apellido_materno]}%"))
+					results = results.where(paciente_id: Paciente.where(apellido_materno: params[:search][:predicateObject][:apellido_materno]))
 				end
 				if(params[:search][:predicateObject].has_key?(:prevision))
 					results = results.where(prevision_id: params[:search][:predicateObject][:prevision])
@@ -102,11 +102,11 @@ class Api::FichasController < ApplicationController
 			  message: 'Fichas encontradas',
 			  numberOfPages: numberOfPages,
 			  data: results,
-			}, status: 200, include: [:paciente, :medico, :procedencia, :detalles_ficha]
+			}, status: 200, include: [:paciente, :medico, :procedencia, {detalles_ficha: {include: [:usuario_muestra]}}]
 	end
 
 	def range
-		results = Ficha.includes(:paciente).all.order(id: :desc)
+		results = Ficha.joins(:paciente).all.order(id: :desc)
 		
 		if(params.has_key?(:search))
 			if(params[:search].has_key?(:predicateObject))
@@ -117,7 +117,7 @@ class Api::FichasController < ApplicationController
 					results = results.where(paciente_id: Paciente.where(nombre: params[:search][:predicateObject][:nombre]))
 				end
 				if(params[:search][:predicateObject].has_key?(:apellido_paterno))
-					results = results.where(Paciente.arel_table[:apellido_paterno].matches("%#{params[:search][:predicateObject][:apellido_paterno]}%"))
+					results = results.where(:pacientes => {:apellido_paterno => params[:search][:predicateObject][:apellido_paterno]})
 				end
 				if(params[:search][:predicateObject].has_key?(:apellido_materno))
 					results = results.where(Paciente.arel_table[:apellido_materno].matches("%#{params[:search][:predicateObject][:apellido_materno]}%"))
@@ -194,6 +194,22 @@ class Api::FichasController < ApplicationController
 			ficha.urgente = false
 		end
 		
+		if params.has_key? :observaciones_muestra
+			ficha.observaciones_muestra = params[:observaciones_muestra]
+		end
+		
+		if params.has_key? :diagnostico
+			ficha.diagnostico = params[:diagnostico]
+			ficha.save
+			render json:
+				{
+					success: true,
+					data:  ficha,
+		        	message: 'Modificación simple de ficha',
+		        }, status: 200
+		        return true
+		end
+		
 		ficha.procedencia_id = params[:procedencia_id]
 		ficha.prevision_id = paciente.prevision_id
 		ficha.precio_total = params[:precio_total]
@@ -201,7 +217,6 @@ class Api::FichasController < ApplicationController
 		ficha.numero_programa = params[:numero_programa]
 		ficha.observaciones = params[:observaciones]
 		ficha.orden_medica_id = nil
-		ficha.user_id = current_user.id
 		
 		#Borrar examenes eliminados de la ficha
 		cant_detalles_ficha = DetalleFicha.count(:conditions => ["ficha_id = ?",ficha.id])

@@ -6,9 +6,9 @@
 				<th WIDTH=10>Ficha</th>
 				<th >Tipo Pago</th>
 				<th >N° doc</th>
+				<th >Factura</th>
 				<th >Previsión</th>
 				<th >Fecha</th>
-				<th >Ingresar</th>
 				<th >Monto</th>
 			</tr>
 			<tr>
@@ -27,6 +27,9 @@
 					
 				</th>
 				<th>
+					<input st-search="n_factura" class="input-sm form-control"/>
+				</th>
+				<th>
 					<select st-search="prevision" class="form-control" ng-model="prevision" ng-options="plan.nombre for plan in plans track by plan.id | orderBy:'nombre'" name="prevision">
 						<option value=""></option>
 					</select>
@@ -39,32 +42,21 @@
 						<input st-search="fecha_fin" class="input-sm form-control" type="date" id="fecha_fin" name="fecha_inicio" ng-model="fecha_fin" name="fecha_fin"/>
 					</div>
 				</th>
-				<th style="text-align:center;">
-					<input st-search="ingresar" type="checkbox" ng-model="seleccionar_todos" ng-change="select_all()">
-				</th>
 				<th>
 					
 				</th>
 			</tr>
 		</thead>
 		<tbody ng-show="!isLoading">
-			<tr ng-repeat="row in displayed track by $index">
+			<tr ng-repeat="row in displayed track by $index" ui-sref="loginRequired.fichas.pagos({ficha_id: row.ficha_id})">
 				<td>{{$index + 1}}</td>
 				<td >{{row.ficha_id}}</td>
 				<td>{{row.tipo_pago.nombre}}</td>
 				<td>{{row.n_documento}}</td>
+				<td>{{row.factura}}</td>
 				<td>{{row.ficha.prevision.nombre}}</td>
 				<td ng-bind="row.creado | date:'dd-MM-yyyy'"></td>
-				<td style="text-align:center;"><input type="checkbox" ng-model="row.facturar" ng-change="actualizar_total()"></td>
 				<td>{{row.monto_pagado | currency:"$":0}}</td>
-			</tr>
-			<tr>
-				<td><strong>Fichas</strong></td>
-				<td><font size="5"><span class="label label-success">{{total_fichas}}</span></font></td>
-				<td><strong>Bonos</strong></td>
-				<td><font size="5"><span class="label label-success">{{total_bonos}}</span></font></td>
-				<td colspan="3"><strong>Total</strong></td>
-				<td WIDTH=100><font size="5"><span class="label label-success">{{total_factura | currency:"$":0}}</span></font></td>
 			</tr>
 		</tbody>
 		<tbody ng-show="isLoading">

@@ -109,7 +109,7 @@ Rails.application.routes.draw do
 		post 'resultados_examen/detalle_ficha/:id', to: 'resultados_examen#save_batch_by_detalle_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/}
 		
 		#Controlador detalle pago ficha
-		post 'detalles_pago_ficha/range/:start/:number', to: 'detalles_pago_ficha#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
+		post 'detalles_pago_ficha/range/:start/:number/:facturadas', to: 'detalles_pago_ficha#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		get 'detalles_pago_ficha/ficha/:id', to: 'detalles_pago_ficha#getAllByFicha', defaults: {format: 'json'}
 		
 		

@@ -155,4 +155,19 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
             $window.open('www.aideas.cl:3000/#/ficha_tecnica/'+ examen_id, '_blank');
 		console.log(examen_id);
 	};
+	
+	$scope.cambiarVentanaSinCambios = function(){
+		$state.go('loginRequired.busqueda_muestras');
+	}
+	
+	$scope.guardarDatosMuestra = function(ficha) {
+		console.log(ficha);
+		Ficha.update({id:ficha.id}, ficha).
+			$promise.
+				then(function(response) {
+					console.log(response.message);
+				}, function(response) {
+					console.log("ERROR editando ficha");
+				});
+	};
 });

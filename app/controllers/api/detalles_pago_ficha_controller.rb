@@ -14,35 +14,53 @@ class Api::DetallesPagoFichaController < ApplicationController
 	end
 
 	def range
-		results = DetallePagoFicha.where(factura: nil).all
+	
+		if params[:facturadas].to_i == 1
+			if(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha_inicio) and params[:search][:predicateObject].has_key?(:fecha_fin))
+				results = DetallePagoFicha.where('creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha_inicio].to_date.beginning_of_day, params[:search][:predicateObject][:fecha_fin].to_date.end_of_day)
+			elsif(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha_inicio))
+				results = DetallePagoFicha.where('creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha_inicio].to_date.beginning_of_day, DateTime.now.end_of_day).order(id: :desc)
+			elsif(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha_fin))
+				results = DetallePagoFicha.where('creado < ?', params[:search][:predicateObject][:fecha_fin].to_date.end_of_day)
+			else
+				results = DetallePagoFicha.all
+			end
+		elsif params[:facturadas].to_i == 0
+			if(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha_inicio) and params[:search][:predicateObject].has_key?(:fecha_fin))
+				results = DetallePagoFicha.where(factura: nil).where('creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha_inicio].to_date.beginning_of_day, params[:search][:predicateObject][:fecha_fin].to_date.end_of_day)
+			elsif(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha_inicio))
+				results = DetallePagoFicha.where(factura: nil).where('creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha_inicio].to_date.beginning_of_day, DateTime.now.end_of_day)
+			elsif(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha_fin))
+				results = DetallePagoFicha.where(factura: nil).where('creado < ?', params[:search][:predicateObject][:fecha_fin].to_date.end_of_day).order(id: :desc)
+			else
+				results = DetallePagoFicha.where(factura: nil).all
+			end
+		end
+		
+		results = results.order(id: :desc)
 		
 		if(params.has_key?(:search))
 			if(params[:search].has_key?(:predicateObject))
-				if(params[:search][:predicateObject].has_key?(:id))
-					results = results.where(id: params[:search][:predicateObject][:id].to_i)
+				if(params[:search][:predicateObject].has_key?(:ficha_id))
+					results = results.where(ficha_id: params[:search][:predicateObject][:ficha_id].to_i)
 				end
-				if(params[:search][:predicateObject].has_key?(:nombre))
-					results = results.where(Paciente.arel_table[:nombre].matches("#{params[:search][:predicateObject][:nombre]}%"))
-				end
-				if(params[:search][:predicateObject].has_key?(:apellido_paterno))
-					results = results.where(Paciente.arel_table[:apellido_paterno].matches("#{params[:search][:predicateObject][:apellido_paterno]}%"))
-				end
-				if(params[:search][:predicateObject].has_key?(:apellido_materno))
-					results = results.where(Paciente.arel_table[:apellido_materno].matches("#{params[:search][:predicateObject][:apellido_materno]}%"))
+				if(params[:search][:predicateObject].has_key?(:tipos_pago))
+					results = results.where(tipo_pago_id: params[:search][:predicateObject][:tipos_pago])
 				end
 				if(params[:search][:predicateObject].has_key?(:prevision))
-					results = results.where(prevision_id: params[:search][:predicateObject][:prevision])
+					results = results.where(ficha_id: Ficha.where(prevision_id: params[:search][:predicateObject][:prevision]))
 				end
 			end
 		end
 		
 		numberOfPages = results.count / params[:number].to_i
-		results = results.order(id: :asc).limit(params[:number].to_i).offset(params[:start].to_i)
+		results = results.limit(params[:number].to_i).offset(params[:start].to_i)
 		render json: {
 			  success: true,
-			  message: 'Detalle pago sin factura',
+			  message: 'Detalle pago sin factura asignada',
 			  numberOfPages: numberOfPages,
 			  data: results,
+			  tipo: params[:facturadas]
 			}, status: 200, include: [:tipo_pago, {:ficha => { include: [:prevision, :paciente]}}]
 	end
 	

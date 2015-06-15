@@ -18,9 +18,10 @@
 					isArray : false
 				},
 			}),
-			range : $resource("/api/detalles_pago_ficha/range/:start/:number", {
+			range : $resource("/api/detalles_pago_ficha/range/:start/:number/:facturadas", {
 				start : "@start",
 				number : "@number",
+				facturadas : "@facturadas"
 			},
 			{
 				advanced : {
