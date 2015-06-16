@@ -7,12 +7,18 @@
 				<th class="col-sm-2 text-left" ng-if="masterFicha.urgente" colspan="2"><span class="label label-danger">Ficha Urgente</span></th>
 			</tr>
 			<tr>
-				<th class="col-sm-1 text-right">Paciente</th><td>{{masterFicha.paciente.nombre}} {{masterFicha.paciente.apellido_paterno}} {{masterFicha.paciente.apellido_materno}}</td>
-				<th class="col-sm-1 text-right">Edad</th><td>{{masterFicha.paciente.edad}}</td>
-				<th class="col-sm-1 text-right">Médico</th><td>{{masterFicha.medico.nombre}} {{masterFicha.medico.apellido_paterno}} {{masterFicha.medico.apellido_materno}}</td>
+				<th class="col-sm-1 text-right">Procedencia</th><td >{{masterFicha.procedencia.nombre}}</td>
+				<th class="col-sm-1 text-right">N°</th><td >{{masterFicha.numero_procedencia}}</td>
+				<th class="col-sm-1 text-right">Programa</th><td >{{masterFicha.programa}}</td>
+				<th class="col-sm-1 text-right">N°</th><td >{{masterFicha.numero_programa}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-1 text-right">Obs. I</th><td colspan="5">{{masterFicha.observaciones}}</td>
+				<th class="col-sm-1 text-right">Paciente</th><td>{{masterFicha.paciente.nombre}} {{masterFicha.paciente.apellido_paterno}} {{masterFicha.paciente.apellido_materno}}</td>
+				<th class="col-sm-1 text-right">Edad</th><td>{{masterFicha.paciente.edad}}</td>
+				<th class="col-sm-1 text-right">Médico</th><td colspan="3">{{masterFicha.medico.nombre}} {{masterFicha.medico.apellido_paterno}} {{masterFicha.medico.apellido_materno}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-1 text-right">Obs. I</th><td colspan="7">{{masterFicha.observaciones}}</td>
 			</tr>
 		</table>
 	</div>
@@ -63,6 +69,7 @@
 				<th >Muestra</th>
 				<th >Indicaciones</th>
 				<th >Opciones</th>
+				<th >Urgente</th> 
 				<th >Flebotomista</th>
 				<th >Proceso</th>
 				<th >Día proceso</th>
@@ -82,7 +89,8 @@
 					<td>
 						<button type="button" class="btn btn-{{item.estado.class}}" ng-click="cambiarEstadoBoton(item)"><i class="fa fa-pulse fa-spinner" ng-if="item.estado.class=='info'"></i> {{item.estado.text}}</button>
 					</td>
-					<td>{{item.examen.observaciones}}</td>
+					<td style="text-align:center;"><input type="checkbox" ng-model="item.urgente" ng-change="actualizar_urgencia(item)"></td>
+					<td>{{item.usuario_muestra.nombre}} {{item.usuario_muestra.apellido_paterno}}</td>
 					<td>{{item.proceso}}</td>
 					<td>{{item.dia_proceso}}</td>
 					<td>{{item.demora}}</td>

@@ -52,8 +52,11 @@
 						for(j in $scope.displayed[i].detalles_ficha)
 							if($scope.displayed[i].detalles_ficha[j].usuario_muestra_id == null)
 								sum++;
-						if(sum == j)
+							else
+								$scope.displayed[i].flebotomista = $scope.displayed[i].detalles_ficha[j].usuario_muestra.nombre + ' ' + $scope.displayed[i].detalles_ficha[j].usuario_muestra.apellido_paterno;
+						if(sum == j){
 							$scope.displayed[i].estado = "En proceso";
+						}
 						else if(sum > 0)
 							$scope.displayed[i].estado = "Pendiente";
 					}

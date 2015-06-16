@@ -160,6 +160,17 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 		$state.go('loginRequired.busqueda_muestras');
 	}
 	
+	$scope.actualizar_urgencia = function(detalle_ficha){
+		console.log(detalle_ficha);
+		DetallesFicha.id.update({
+				id :  detalle_ficha.id
+			}, detalle_ficha).$promise.then(function(results) {
+				console.log('Modificada urgencia');
+			}).catch(function(results) {
+				
+			});
+	};
+	
 	$scope.guardarDatosMuestra = function(ficha) {
 		console.log(ficha);
 		Ficha.update({id:ficha.id}, ficha).

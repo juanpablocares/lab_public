@@ -129,6 +129,6 @@ class Api::DetallesFichaController < ApplicationController
 	end
 
 	def detalles_ficha_params
-		params.permit(:examen_id, :perfil_id, :usuario_muestra_id, :fecha_muestra, :tipo_muestra_id)
+		params.permit(:examen_id, :perfil_id, :usuario_muestra_id, :fecha_muestra, :tipo_muestra_id, :urgente)
 	end
 end

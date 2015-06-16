@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150616125114) do
+ActiveRecord::Schema.define(version: 20150616203517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20150616125114) do
     t.datetime "fecha_muestra"
     t.datetime "creado",                       default: "now()", null: false
     t.integer  "precio"
+    t.boolean  "urgente"
   end
 
   create_table "detalles_pagos_ficha", force: :cascade do |t|
@@ -207,9 +208,9 @@ ActiveRecord::Schema.define(version: 20150616125114) do
   end
 
   create_table "modificacion_examenes", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "examen_id"
-    t.datetime "creacion",  default: '2015-06-16 12:55:37', null: false
+    t.integer  "user_id",                     null: false
+    t.integer  "examen_id",                   null: false
+    t.datetime "creacion",  default: "now()", null: false
   end
 
   create_table "ordenes_medicas", force: :cascade do |t|

@@ -56,7 +56,7 @@
 					<td align="center" ng-if="row.estado == 'Pendiente'"><span class="label label-danger">{{row.estado}}</span></td>
 					<td align="center" ng-if="row.estado == 'Atendido'"><span class="label label-success">{{row.estado}}</span></td>
 					<td align="center" ng-if="row.estado == 'En proceso'"><span class="label label-warning">{{row.estado}}</span></td>
-				<td>{{row.detalles_ficha[row.detalles_ficha.length - 1].usuario_muestra.nombre}} {{row.detalles_ficha[row.detalles_ficha.length - 1].usuario_muestra.apellido_paterno}}</td>
+				<td>{{row.flebotomista}}</td>
 			</tr>
 		</tbody>
 		<tbody ng-show="isLoading">
