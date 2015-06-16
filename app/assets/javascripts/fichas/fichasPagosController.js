@@ -1,6 +1,6 @@
 angular.module('lab').controller('FichasPagosController', function($scope, 
 	$auth, $state, $http, $stateParams, Ficha, 
-	TiposPago, Fichas, Perfiles, DetallesPagoFicha) {
+	TiposPagos, Fichas, Perfiles, DetallesPagoFicha) {
 	
 
 
@@ -99,7 +99,7 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 	};
 
 	//Obtener tipos de pago para select
-	TiposPago.root.get({}).$promise.then(function(result) {
+	TiposPagos.root.get({}).$promise.then(function(result) {
 		$scope.tiposPagoArray = result.data;
 	}).catch(function(response) {
 		console.error('Error al obtener tipos de pago');
