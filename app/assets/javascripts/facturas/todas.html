@@ -6,7 +6,7 @@
 				<th WIDTH=10>Ficha</th>
 				<th >Tipo Pago</th>
 				<th >N° doc</th>
-				<th >Factura</th>
+				<th WIDTH=15>Factura</th>
 				<th >Previsión</th>
 				<th >Fecha</th>
 				<th >Monto</th>
@@ -27,8 +27,8 @@
 				<th>
 					
 				</th>
-				<th>
-					<input st-search="n_factura" class="input-sm form-control"/>
+				<th >
+					<input st-search="factura" class="input-sm form-control"/>
 				</th>
 				<th>
 					<select st-search="prevision" class="form-control" ng-model="prevision" ng-options="plan.nombre for plan in plans track by plan.id | orderBy:'nombre'" name="prevision">

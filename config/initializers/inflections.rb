@@ -29,6 +29,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   	inflect.irregular 'indicador', 'indicadores'
 	inflect.irregular 'indicacion', 'indicaciones'
 	inflect.irregular 'indicacionMuestra', 'indicacionesMuestra'
+	inflect.irregular 'modificacionExamen', 'modificacionExamenes'
   	inflect.irregular 'ordenMedica', 'ordenesMedicas'
   	inflect.irregular 'perfil', 'perfiles'
   	inflect.irregular 'permisoRol', 'permisosRol'

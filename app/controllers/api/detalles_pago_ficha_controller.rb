@@ -44,6 +44,9 @@ class Api::DetallesPagoFichaController < ApplicationController
 				if(params[:search][:predicateObject].has_key?(:ficha_id))
 					results = results.where(ficha_id: params[:search][:predicateObject][:ficha_id].to_i)
 				end
+				if(params[:search][:predicateObject].has_key?(:factura))
+					results = results.where(factura: params[:search][:predicateObject][:factura].to_i)
+				end
 				if(params[:search][:predicateObject].has_key?(:tipos_pago))
 					results = results.where(tipo_pago_id: params[:search][:predicateObject][:tipos_pago])
 				end

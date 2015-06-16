@@ -18,6 +18,7 @@ class Examen < ActiveRecord::Base
 	belongs_to 	:tipo_examen
 	belongs_to 	:tipo_muestra
 
+	has_many :modificacion_examenes
 	has_many :alias_examenes
 	has_many :horaproceso_examenes
 	has_many :detalles_cotizacion, :class_name => 'DetalleCotizacion'

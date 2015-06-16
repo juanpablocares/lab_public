@@ -75,7 +75,9 @@ Rails.application.routes.draw do
 		get 'examenes/select', to: 'examenes#select', defaults: {format: 'json'}
 		put 'examenes/', to: 'examenes#update_all', defaults: {format: 'json'}
 		post 'examenes/range/:start/:number', to: 'examenes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
-		
+		#Controladores modificaciones examenes
+		get 'modificacion_examenes/examen/:examen_id', to: 'modificacion_examenes#findby_examen', defaults: {format: 'json'},  constraints: { :id=> /[0-9]+/}
+		post 'modificacion_examenes/crear/:examen_id/:user_id', to: 'modificacion_examenes#create', defaults: {format: 'json'}
 		
 		#Controladores de tarifas
 		get 'tarifas/examenes', to: 'tarifas#examenes', defaults: {format: 'json'}
@@ -123,6 +125,7 @@ Rails.application.routes.draw do
 		resources :horaproceso_examenes, :defaults => { :format => 'json' }
 		resources :indicaciones, :defaults => { :format => 'json' }
 		resources :indicaciones_muestra, :defaults => { :format => 'json' }
+		resources :modificacion_examenes, :defaults => { :format => 'json' }
 		resources :previsiones, :defaults => { :format => 'json' }
 		resources :regiones, :defaults => { :format => 'json' }
 		resources :pacientes, :defaults => { :format => 'json' }

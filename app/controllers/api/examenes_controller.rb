@@ -17,7 +17,7 @@ class Api::ExamenesController < ApplicationController
 		          success: true,
 		          message: 'Examen encontrado',
 		          examen: @results,
-		        }, status: 200, include: [:tarifas_examen, :indicacion, :tipo_examen, :tipo_muestra, :alias_examenes, :horaproceso_examenes, :proceso_examen, :procesador_examen]
+		        }, status: 200, include: [:tarifas_examen, :indicacion, :tipo_examen, :tipo_muestra, :alias_examenes, :horaproceso_examenes, :proceso_examen, :procesador_examen, :modificacion_examenes]
 		else
 			render json: {
 		          success: false,
@@ -134,6 +134,6 @@ class Api::ExamenesController < ApplicationController
 	end
 	
 	def examen_params
-		params.permit(:codigo_fonasa, :nombre, :codigo, :externo, :procedencia, :indicacion_id, :tipo_examen_id, :tipo_muestra_id, :demora_proceso, :creador, :nombre_impreso, :sigla, :proceso, :area_trabajo, :volumen_minimo, :condiciones_transporte, :maximo_toma_muestra, :unidad_medida, :metodo, :metodo_abreviado, :proceso_lunes, :proceso_martes, :proceso_miercoles, :proceso_jueves, :proceso_viernes, :proceso_sabado, :principio_metodo, :interferentes, :calculos, :proposito, :analista_responsable, :rechazo_hemolisis, :rechazo_proteccion_luz, :rechazo_lipemia, :rechazo_ictericia, :rechazo_tubo, :rechazo_otros, :observaciones, :entrega, :indicacion_muestra_id, :tapa_tubo_id, :tipo_envase_id, :proceso_examen_id, :procesador_examen_id)
+		params.permit(:codigo_fonasa, :nombre, :codigo, :externo, :procedencia, :indicacion_id, :tipo_examen_id, :tipo_muestra_id, :demora_proceso, :creador, :nombre_impreso, :sigla, :proceso, :area_trabajo, :volumen_minimo, :condiciones_transporte, :maximo_toma_muestra, :unidad_medida, :metodo, :metodo_abreviado, :proceso_lunes, :proceso_martes, :proceso_miercoles, :proceso_jueves, :proceso_viernes, :proceso_sabado, :principio_metodo, :interferentes, :calculos, :proposito, :analista_responsable, :rechazo_hemolisis, :rechazo_proteccion_luz, :rechazo_lipemia, :rechazo_ictericia, :rechazo_tubo, :rechazo_otros, :observaciones, :entrega, :indicacion_muestra_id, :tapa_tubo_id, :tipo_envase_id, :proceso_examen_id, :procesador_examen_id, :autorizado_fonasa)
 	end
 end

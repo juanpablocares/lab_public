@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150612123210) do
+ActiveRecord::Schema.define(version: 20150616125114) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(version: 20150612123210) do
     t.integer  "proceso_examen_id"
     t.integer  "procesador_examen_id"
     t.integer  "tipo_examen_id"
+    t.boolean  "autorizado_fonasa"
   end
 
   add_index "examenes", ["indicacion_id"], name: "index_examenes_on_indicacion_id", using: :btree
@@ -203,6 +204,12 @@ ActiveRecord::Schema.define(version: 20150612123210) do
     t.integer  "institucion_id"
     t.string   "telefono"
     t.string   "direccion"
+  end
+
+  create_table "modificacion_examenes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "examen_id"
+    t.datetime "creacion",  default: '2015-06-16 12:55:37', null: false
   end
 
   create_table "ordenes_medicas", force: :cascade do |t|
@@ -439,6 +446,8 @@ ActiveRecord::Schema.define(version: 20150612123210) do
   add_foreign_key "indicadores", "sustancias", name: "indicadores_sustancia_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "medicos", "especialidades", column: "especialidad_id"
   add_foreign_key "medicos", "instituciones", column: "institucion_id"
+  add_foreign_key "modificacion_examenes", "examenes"
+  add_foreign_key "modificacion_examenes", "users"
   add_foreign_key "ordenes_medicas", "medicos", name: "ordenes_medicas_medico_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "ordenes_medicas", "pacientes", name: "ordenes_medicas_paciente_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "pacientes", "comunas", name: "pacientes_comuna_id_fkey", on_update: :cascade, on_delete: :cascade
