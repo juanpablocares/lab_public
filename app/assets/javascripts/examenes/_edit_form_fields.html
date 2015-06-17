@@ -1,32 +1,6 @@
 <div class="form-group">
 	<div class="row">
 		<div class="col-md-1">
-			<label class="control-label"><strong>Creada por</strong></label>
-		</div>
-		<div class="col-md-2">
-			<input ng-model="examen.creador" class="form-control" type="text">
-		</div>
-		<div class="col-md-1">
-			<label class="control-label"><strong>Fecha</strong></label>
-		</div>
-		<div class="col-md-2">
-			<input type="date" ng-model="examen.fecha_creada" placeholder="dd-MM-yyyy" disabled="true"/>
-		</div>
-		<div class="col-md-1">
-			<label class="control-label"><strong>Última modificación</strong></label>
-		</div>
-		<div class="col-md-2">
-			<input ng-model="examen.ultimo_modifidor" class="form-control" disabled="true" type="text">
-		</div>
-		<div class="col-md-1">
-			<label class="control-label"><strong>Fecha</strong></label>
-		</div>
-		<div class="col-md-2">
-			<input type="date" ng-model="examen.fecha_ultima_modificacion" placeholder="dd-MM-yyyy" disabled="true"/>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-1">
 			<label class="control-label"><strong>Examen</strong></label>
 		</div>
 		<div class="col-md-5">
@@ -51,6 +25,14 @@
 		</div>
 		<div class="col-md-2">
 			<input ng-model="examen.codigo_fonasa" class="form-control" type="text">
+		</div>
+		<div class="col-md-1">
+			<label class="control-label col-md-2"><strong>Autrizado Fonasa</strong></label>
+		</div>
+		<div class="checkbox col-md-1">
+			<label>
+				<input type="checkbox" ng-model="examen.autorizado_fonasa">
+			</label>
 		</div>
 		<div class="col-md-1">
 			<label class="control-label col-md-2"><strong>Sigla</strong></label>
@@ -316,7 +298,31 @@
 			<label class="control-label"><strong>Observaciones</strong></label>
 		</div>
 		<div class="col-md-11">
-			<textarea rows="3"ng-model="examen.observaciones" class="form-control" >
+			<textarea rows="3" ng-model="examen.observaciones" class="form-control"></textarea>
 		</div>
 	</div>
+	<div class="row">
+		<div class="heading">
+			Historial modificaciones
+		</div>
+		<div class="col-sm-5">
+			<button type="button" class="btn btn-success" ng-click="mostrar_historial()">
+				Mostrar
+			</button>
+		</div>
+	</div>
+	<table class="table table-striped" ng-if="modificacion_examen.length != 0" ng-show="historial_modificaciones">
+		<thead>
+			<th class="col-md-1">#</th>
+			<th >Encargado</th>
+			<th >Fecha modificación</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in modificacion_examen track by $index">
+				<td>{{$index + 1}}</td>
+				<td>{{item.user.nombre}} {{item.user.apellido_paterno}}</td>
+				<td>{{item.creacion | date : 'dd-MM-yyyy hh:mm'}}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>

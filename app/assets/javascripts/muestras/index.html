@@ -3,64 +3,99 @@
 		<table class="table">
 			<tr>
 				<th class="col-sm-1 text-right">Fecha</th><td ng-bind="masterFicha.creado | date:'dd-MM-yyyy'"></td>
-				<th class="col-sm-1 text-right">Folio</th><td colspan="3">{{masterFicha.id}}</td>
+				<th class="col-sm-1 text-right">Folio</th><td colspan="2">{{masterFicha.id}}</td>
+				<th class="col-sm-2 text-left" ng-if="masterFicha.urgente" colspan="2"><span class="label label-danger">Ficha Urgente</span></th>
+			</tr>
+			<tr>
+				<th class="col-sm-1 text-right">Procedencia</th><td >{{masterFicha.procedencia.nombre}}</td>
+				<th class="col-sm-1 text-right">N°</th><td >{{masterFicha.numero_procedencia}}</td>
+				<th class="col-sm-1 text-right">Programa</th><td >{{masterFicha.programa}}</td>
+				<th class="col-sm-1 text-right">N°</th><td >{{masterFicha.numero_programa}}</td>
 			</tr>
 			<tr>
 				<th class="col-sm-1 text-right">Paciente</th><td>{{masterFicha.paciente.nombre}} {{masterFicha.paciente.apellido_paterno}} {{masterFicha.paciente.apellido_materno}}</td>
 				<th class="col-sm-1 text-right">Edad</th><td>{{masterFicha.paciente.edad}}</td>
-				<th class="col-sm-1 text-right">Médico</th><td>{{masterFicha.paciente.nombre}} {{masterFicha.paciente.apellido_paterno}} {{masterFicha.paciente.apellido_materno}}</td>
+				<th class="col-sm-1 text-right">Médico</th><td colspan="3">{{masterFicha.medico.nombre}} {{masterFicha.medico.apellido_paterno}} {{masterFicha.medico.apellido_materno}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-1 text-right">Diagnóstico</th><td colspan="5">{{masterFicha.paciente.diagnostico}}</td>
-			</tr>
-			<tr>
-				<th class="col-sm-1 text-right">Observaciones</th><td colspan="5">{{masterFicha.observaciones}}</td>
+				<th class="col-sm-1 text-right">Obs. I</th><td colspan="7">{{masterFicha.observaciones}}</td>
 			</tr>
 		</table>
 	</div>
 </div>
+<div class="col-sm-12">
+	<div class="widget-container fluid-height">
+		<div class="widget-content padded">
+			<form class="form-horizontal" ng-submit="guardarDatosMuestra(masterFicha)">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-1">
+							<label class="control-label"><strong>Diagnostico</strong></label>
+						</div>
+						<div class="col-md-5">
+							<textarea ng-model="masterFicha.diagnostico" class="form-control" type="text" placeholder="Ingrese diagnostico" rows="3"></textarea>
+						</div>
+						<div class="col-md-1">
+							<label class="control-label"><strong>Obs. TM</strong></label>
+						</div>
+						<div class="col-md-5">
+							<textarea ng-model="masterFicha.observaciones_muestra" class="form-control"  placeholder="Ingrese observaciones a la toma de muestra" rows="3"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-11 text-right">
+						<button type="submit" class="btn btn-primary">
+							Guardar
+						</button>
+						<button type="button" class="btn btn-danger" ng-click="cambiarVentanaSinCambios()">
+							Volver
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+<div>
 <div class="widget-container fluid-height">
 	<div class="widget-content padded">
-		<form>
-			<div>
-				<table class="table table-striped" ng-if="examenesSeleccionados.length != 0">
-					<thead>
-						<th class="col-md-1">Indice</th>
-						<th >Código</th>
-						<th >Examen</th>
-						<th >Tapa tubo</th>
-						<th >Ficha Técnica</th>
-						<th >Muestra</th>
-						<th >Observaciones</th>
-						<th >Indicaciones</th>
-						<th class="col-md-4">Opciones</th>
-						<th >Proceso</th>
-						<th >Día proceso</th>
-						<th >Demora</th>
-					</thead>
-					<tbody>
-						<tr ng-repeat="item in examenesSeleccionados track by $index">
-							<td>{{$index + 1}}</td>
-							<td>{{item.codigo}}</td>
-							<td>{{item.examen.nombre}}</td>
-							<td>{{item.examen.tapa_tubo.codigo}}</td>
-							<td>
-								<button type="button" class="btn btn-default" ng-click="abrirFichaTecnica(item.examen.id)"><i class="fa fa-info-circle"></i></button>
-							</td>
-							<td data-toggle="tooltip" data-placement="top" title="{{item.examen.tipo_muestra.muestra}}">{{item.examen.tipo_muestra.codigo}}</td>
-							<td width="30" data-toggle="tooltip" data-placement="top" title="{{item.examen.observaciones}}">{{item.examen.observaciones}}</td>
-							<td data-toggle="tooltip" data-placement="top" title="{{item.examen.indicacion.descripcion}}">{{item.examen.indicacion.codigo}}</td>
-							<td>
-								<button type="button" class="btn btn-{{item.estado.class}}" ng-click="cambiarEstadoBoton(item)"><i class="fa fa-pulse fa-spinner" ng-if="item.estado.class=='info'"></i> {{item.estado.text}}</button>
-								<a class="btn btn-primary" ng-if="item.estado.class=='success'" ui-sref="loginRequired.ordenes_examen.ingreso_resultados({detalle_ficha_id: item.id})">Agregar resultados</a>
-							</td>
-							<td>{{item.proceso}}</td>
-							<td>{{item.dia_proceso}}</td>
-							<td>{{item.demora}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</form>
+		<table class="table table-striped" ng-if="examenesSeleccionados.length != 0">
+			<thead>
+				<th >#</th>
+				<th >Código</th>
+				<th >Examen</th>
+				<th >Tapa tubo</th>
+				<th >Ficha Técnica</th>
+				<th >Muestra</th>
+				<th >Indicaciones</th>
+				<th >Opciones</th>
+				<th >Urgente</th> 
+				<th >Flebotomista</th>
+				<th >Proceso</th>
+				<th >Día proceso</th>
+				<th >Demora</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in examenesSeleccionados track by $index">
+					<td>{{$index + 1}}</td>
+					<td>{{item.codigo}}</td>
+					<td>{{item.examen.nombre}}</td>
+					<td>{{item.examen.tapa_tubo.codigo}}</td>
+					<td>
+						<button type="button" class="btn btn-default" ng-click="abrirFichaTecnica(item.examen.id)"><i class="fa fa-info-circle"></i></button>
+					</td>
+					<td data-toggle="tooltip" data-placement="top" title="{{item.examen.tipo_muestra.muestra}}">{{item.examen.tipo_muestra.codigo}}</td>
+					<td data-toggle="tooltip" data-placement="top" title="{{item.examen.indicacion.descripcion}}">{{item.examen.indicacion.codigo}}</td>
+					<td>
+						<button type="button" class="btn btn-{{item.estado.class}}" ng-click="cambiarEstadoBoton(item)"><i class="fa fa-pulse fa-spinner" ng-if="item.estado.class=='info'"></i> {{item.estado.text}}</button>
+					</td>
+					<td style="text-align:center;"><input type="checkbox" ng-model="item.urgente" ng-change="actualizar_urgencia(item)"></td>
+					<td>{{item.usuario_muestra.nombre}} {{item.usuario_muestra.apellido_paterno}}</td>
+					<td>{{item.proceso}}</td>
+					<td>{{item.dia_proceso}}</td>
+					<td>{{item.demora}}</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </div>

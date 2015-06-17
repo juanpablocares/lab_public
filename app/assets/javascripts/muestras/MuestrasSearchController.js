@@ -38,20 +38,27 @@
 			}, tableState).
 			$promise.then(function(result) {
 				$scope.displayed = result.data;
+				console.log(result.data);
 				tableState.pagination.numberOfPages = result.numberOfPages;
 				
 				for(var i in $scope.displayed){
 					$scope.displayed[i].paciente.fecha_nacimiento = new Date($scope.displayed[i].paciente.fecha_nacimiento);
 					$scope.displayed[i].edad = $scope.getEdad($scope.displayed[i].paciente.fecha_nacimiento);
-					$scope.displayed[i].estado = "Realizado";
+					$scope.displayed[i].estado = "Atendido";
 					//Checkear estado
 					if($scope.displayed[i].detalles_ficha){
-						for(var j in $scope.displayed[i].detalles_ficha){
-							if($scope.displayed[i].detalles_ficha[j].usuario_muestra_id == null){
-								$scope.displayed[i].estado = "Pendiente";
-								break;
-							}
+						var sum = 0;
+						var j;
+						for(j in $scope.displayed[i].detalles_ficha)
+							if($scope.displayed[i].detalles_ficha[j].usuario_muestra_id == null)
+								sum++;
+							else
+								$scope.displayed[i].flebotomista = $scope.displayed[i].detalles_ficha[j].usuario_muestra.nombre + ' ' + $scope.displayed[i].detalles_ficha[j].usuario_muestra.apellido_paterno;
+						if(sum == j){
+							$scope.displayed[i].estado = "En proceso";
 						}
+						else if(sum > 0)
+							$scope.displayed[i].estado = "Pendiente";
 					}
 				}
 				

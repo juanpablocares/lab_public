@@ -6,5 +6,9 @@ angular.module('lab').controller('FacturasMenuController', function($scope, $htt
 		name : 'Asignar',
 		state : 'loginRequired.facturas.asignar({})',
 		id : 'loginRequired.facturas.asignar',
-	},];
+	},{
+		name : 'Todas',
+		state : 'loginRequired.facturas.todas({})',
+		id : 'loginRequired.facturas.todas',
+	}];
 });

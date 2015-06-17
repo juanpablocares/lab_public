@@ -1,29 +1,22 @@
-<div class="form-group">
-	<label class="control-label col-md-2"><strong>Fecha</strong></label>
-	<div class="col-md-3">
-		<div class="input-group date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
-			<input class="form-control" type="date" id="exampleInput" name="input" ng-model="fecha"name="fecha" required/>
-			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-		</div>
-	</div>
-</div>
 <div class="widget-container fluid-height">
 	<table st-table="displayed" class="table table-hover table-striped" st-pipe="callServer">
 		<thead>
 			<tr>
-				<th st-sort="indice">Indice</th>
+				<th>Indice</th>
 				<th st-sort="ficha_id">Folio</th>
 				<th st-sort="apellido_paterno">Apellido Paterno</th>
 				<th st-sort="apellido_materno">Apellido Materno</th>
 				<th st-sort="nombre">Nombre</th>
-				<th st-sort="edad">Edad</th>
-				<th st-sort="urgente">Urgente</th>
-				<th st-sort="estado">Estado</th>
-				<th st-sort="observaciones">Observaciones</th>
+				<th>Edad</th>
+				<th>Urgente</th>
+				<th>Estado</th>
+				<th>Flebotomista</th>
 			</tr>
 			<tr>
 				<th>
-					
+					<div class="input-group date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
+						<input st-search="fecha" class="input-sm form-control" type="date" id="exampleInput" name="input" ng-model="fecha" name="fecha" required/>
+					</div>
 				</th>
 				<th>
 					<input st-search="ficha_id" class="input-sm form-control"/>
@@ -61,18 +54,19 @@
 				<td>{{row.edad}}</td>
 				<td style="text-align:center;"><input type="checkbox" ng-model="row.urgente" disabled="true"></td>
 					<td align="center" ng-if="row.estado == 'Pendiente'"><span class="label label-danger">{{row.estado}}</span></td>
-					<td align="center" ng-if="row.estado == 'Realizado'"><span class="label label-success">{{row.estado}}</span></td>
-				<td>{{row.observaciones}}</td>
+					<td align="center" ng-if="row.estado == 'Atendido'"><span class="label label-success">{{row.estado}}</span></td>
+					<td align="center" ng-if="row.estado == 'En proceso'"><span class="label label-warning">{{row.estado}}</span></td>
+				<td>{{row.flebotomista}}</td>
 			</tr>
 		</tbody>
 		<tbody ng-show="isLoading">
 			<tr>
-			<td colspan="8" class="text-center"><i class="fa fa-spinner fa-pulse"></i></td>
+			<td colspan="9" class="text-center"><i class="fa fa-spinner fa-pulse"></i></td>
 		</tr>
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="8" class="text-center"><div st-pagination="" st-items-by-page="10" st-displayed-pages="10"></div></td>
+				<td colspan="9" class="text-center"><div st-pagination="" st-items-by-page="10" st-displayed-pages="10"></div></td>
 			</tr>
 		</tfoot>
 	</table>

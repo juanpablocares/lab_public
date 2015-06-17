@@ -1,7 +1,7 @@
 (function() {
 	var labs = angular.module('lab');
 
-	labs.factory('TiposPago', function($resource) {
+	labs.factory('TiposPagos', function($resource) {
 		return {
 			root : $resource("/api/tipos_pago/", {
 			}, {

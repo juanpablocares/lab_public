@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150609142602) do
+ActiveRecord::Schema.define(version: 20150616203517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20150609142602) do
     t.datetime "fecha_muestra"
     t.datetime "creado",                       default: "now()", null: false
     t.integer  "precio"
+    t.boolean  "urgente"
   end
 
   create_table "detalles_pagos_ficha", force: :cascade do |t|
@@ -124,6 +125,7 @@ ActiveRecord::Schema.define(version: 20150609142602) do
     t.integer  "proceso_examen_id"
     t.integer  "procesador_examen_id"
     t.integer  "tipo_examen_id"
+    t.boolean  "autorizado_fonasa"
   end
 
   add_index "examenes", ["indicacion_id"], name: "index_examenes_on_indicacion_id", using: :btree
@@ -137,20 +139,22 @@ ActiveRecord::Schema.define(version: 20150609142602) do
   add_index "examenes_perfil", ["examen_id", "perfil_id"], name: "examenes_perfil_examen_id_perfil_id_key", unique: true, using: :btree
 
   create_table "fichas", force: :cascade do |t|
-    t.integer  "paciente_id",     limit: 8,                   null: false
-    t.integer  "procedencia_id",  limit: 8,                   null: false
-    t.integer  "orden_medica_id", limit: 8
-    t.integer  "user_id",         limit: 8,                   null: false
-    t.datetime "creado",                    default: "now()", null: false
+    t.integer  "paciente_id",           limit: 8,                   null: false
+    t.integer  "procedencia_id",        limit: 8,                   null: false
+    t.integer  "orden_medica_id",       limit: 8
+    t.integer  "user_id",               limit: 8,                   null: false
+    t.datetime "creado",                          default: "now()", null: false
     t.string   "observaciones"
-    t.integer  "prevision_id",                                null: false
-    t.integer  "precio_total",                                null: false
+    t.integer  "prevision_id",                                      null: false
+    t.integer  "precio_total",                                      null: false
     t.string   "receptor"
-    t.string   "programa",                                    null: false
-    t.string   "numero_programa",                             null: false
-    t.boolean  "mandar_email",              default: false
-    t.boolean  "urgente",                   default: false
+    t.string   "programa",                                          null: false
+    t.string   "numero_programa",                                   null: false
+    t.boolean  "mandar_email",                    default: false
+    t.boolean  "urgente",                         default: false
     t.integer  "medico_id"
+    t.string   "observaciones_muestra"
+    t.string   "diagnostico"
   end
 
   add_index "fichas", ["prevision_id"], name: "index_fichas_on_prevision_id", using: :btree
@@ -201,6 +205,12 @@ ActiveRecord::Schema.define(version: 20150609142602) do
     t.integer  "institucion_id"
     t.string   "telefono"
     t.string   "direccion"
+  end
+
+  create_table "modificacion_examenes", force: :cascade do |t|
+    t.integer  "user_id",                     null: false
+    t.integer  "examen_id",                   null: false
+    t.datetime "creacion",  default: "now()", null: false
   end
 
   create_table "ordenes_medicas", force: :cascade do |t|
@@ -437,6 +447,8 @@ ActiveRecord::Schema.define(version: 20150609142602) do
   add_foreign_key "indicadores", "sustancias", name: "indicadores_sustancia_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "medicos", "especialidades", column: "especialidad_id"
   add_foreign_key "medicos", "instituciones", column: "institucion_id"
+  add_foreign_key "modificacion_examenes", "examenes"
+  add_foreign_key "modificacion_examenes", "users"
   add_foreign_key "ordenes_medicas", "medicos", name: "ordenes_medicas_medico_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "ordenes_medicas", "pacientes", name: "ordenes_medicas_paciente_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "pacientes", "comunas", name: "pacientes_comuna_id_fkey", on_update: :cascade, on_delete: :cascade
@@ -444,6 +456,7 @@ ActiveRecord::Schema.define(version: 20150609142602) do
   add_foreign_key "pacientes", "users", name: "pacientes_user_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "permisos_rol", "permisos", name: "permisos_rol_permiso_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "permisos_rol", "roles", name: "permisos_rol_rol_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "previsiones", "tarifas", name: "previsiones_tarifa_id_fkey", on_update: :cascade
   add_foreign_key "resultados_examen", "detalles_ficha", column: "detalle_ficha_id", name: "resultados_examen_detalle_ficha_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "resultados_examen", "sustancias", name: "resultados_examen_sustancia_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "roles_usuario", "roles", name: "roles_usuario_rol_id_fkey", on_update: :cascade, on_delete: :cascade

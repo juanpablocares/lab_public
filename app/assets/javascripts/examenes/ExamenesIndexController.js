@@ -1,4 +1,6 @@
-angular.module('lab').controller('ExamenesIndexController', function($scope, $auth, $state, $http, $stateParams, Examen, AliasExamenes, HoraprocesoExamenes) {
+angular.module('lab').controller('ExamenesIndexController', function($scope, $auth, $state, $http, $stateParams, Examen, AliasExamenes, HoraprocesoExamenes, ModificacionExamenes) {
+
+	$scope.historial_modificaciones = false;
 
 	$scope.$on('examenFromMenu', function(event, data) {
 		console.log(data);
@@ -117,6 +119,13 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 		// log error
 	});
 	
+	$http.get('/api/modificacion_examenes/examen/' + $stateParams.examen_id).success(function(data) {
+		$scope.modificacion_examen = data.modificaciones;
+		//console.log($scope.modificacion_examen);
+	}).error(function(data) {
+		// log error
+	});
+	
 	$scope.add = function () {
 		
           $scope.alias_examen.push({
@@ -214,5 +223,26 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 					$scope.resetExamen();
 					console.log("ERROR editando examen");
 				});
+		
+		ModificacionExamenes.root.nuevo({
+			examen_id : $stateParams.examen_id,
+			user_id   : $auth.user.id
+		}).
+			$promise.
+				then(function(response) {
+					console.log('Modificacion examen creado');
+					$http.get('/api/modificacion_examenes/examen/' + $stateParams.examen_id).success(function(data) {
+						$scope.modificacion_examen = data.modificaciones;
+						//console.log($scope.modificacion_examen);
+					}).error(function(data) {
+						// log error
+					});
+				}, function(response) {
+					console.log("ERROR creando modificacion examen");
+				});
+	};
+	
+	$scope.mostrar_historial = function(){
+		$scope.historial_modificaciones = !$scope.historial_modificaciones;
 	};
 });
