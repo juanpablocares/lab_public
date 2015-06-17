@@ -331,11 +331,11 @@ class Api::FichasController < ApplicationController
 		ficha.orden_medica_id = nil
 		ficha.user_id = current_user.id
 
-		if params[:examenes] != nil && params[:examenes].length > 0
+		if params[:examenesAgregados] != nil && params[:examenesAgregados].length > 0
 			if !ficha.save
 				raise "Error saving ficha"
 			else
-				params[:examenes].each do |ex|
+				params[:examenesAgregados].each do |ex|
 					if ex[:perfil]
 						ex[:examenes].each do |exa|
 							detalle = DetalleFicha.new
@@ -343,8 +343,8 @@ class Api::FichasController < ApplicationController
 							detalle.examen_id = exa[:id]
 							detalle.perfil_id = ex[:id]
 							
-							if exa[:tarifas_examen] && exa[:tarifas_examen].size != 0
-								detalle.precio = exa[:tarifas_examen][0][:precio]
+							if exa[:tarifa_prevision]
+								detalle.precio = exa[:tarifa_prevision][:precio]
 							else
 								detalle.precio = 0
 							end
@@ -359,8 +359,8 @@ class Api::FichasController < ApplicationController
 						detalle.examen_id = ex[:id]
 						detalle.perfil_id = nil
 						
-						if ex[:tarifas_examen] && ex[:tarifas_examen].size != 0
-							detalle.precio = ex[:tarifas_examen][0][:precio]
+						if ex[:tarifa_prevision]
+							detalle.precio = ex[:tarifa_prevision][:precio]
 						else
 							detalle.precio = 0
 						end

@@ -8,19 +8,17 @@ class Api::CotizacionesController < ApplicationController
 			render json:
 			{
 				success: false,
-				data:  ficha,
 	        	message: 'Paciente no encontrado',
 	        }, status: 500
 	        return false
 		end
 		medico = nil
-		if params.has_key? :medico_id
+		if params.has_key? :medico_id && params[:medico_id]
 			medico = Medico.find(params[:medico_id])
 			if medico == nil
 				render json:
 				{
 					success: false,
-					data:  ficha,
 		        	message: 'Medico no encontrado',
 		        }, status: 500
 		        return false
@@ -50,11 +48,11 @@ class Api::CotizacionesController < ApplicationController
 		cotizacion.observaciones = params[:observaciones]
 		cotizacion.user_id = current_user.id
 
-		if params[:examenes] != nil && params[:examenes].length > 0
+		if params[:examenesAgregados] != nil && params[:examenesAgregados].length > 0
 			if !cotizacion.save
 				raise "Error saving cotizacion"
 			else
-				params[:examenes].each do |ex|
+				params[:examenesAgregados].each do |ex|
 					if ex[:perfil]
 						ex[:examenes].each do |exa|
 							detalle = DetalleCotizacion.new
@@ -62,8 +60,8 @@ class Api::CotizacionesController < ApplicationController
 							detalle.examen_id = exa[:id]
 							detalle.perfil_id = ex[:id]
 							
-							if exa[:tarifas_examen] && exa[:tarifas_examen].size != 0
-								detalle.precio = exa[:tarifas_examen][0][:precio]
+							if exa[:tarifa_prevision]
+								detalle.precio = exa[:tarifa_prevision][:precio]
 							else
 								detalle.precio = 0
 							end
@@ -77,8 +75,8 @@ class Api::CotizacionesController < ApplicationController
 						detalle.cotizacion_id = cotizacion.id
 						detalle.examen_id = ex[:id]
 						detalle.perfil_id = nil
-						if ex[:tarifas_examen] && ex[:tarifas_examen].size != 0
-								detalle.precio = ex[:tarifas_examen][0][:precio]
+						if ex[:tarifa_prevision]
+								detalle.precio = ex[:tarifa_prevision][:precio]
 						else
 							detalle.precio = 0
 						end
@@ -96,5 +94,13 @@ class Api::CotizacionesController < ApplicationController
 		else
 			raise "No hay exámenes"
 		end
+	end
+	def show_bypaciente
+		cotizaciones = Cotizacion.where(paciente_id: params[:id])
+		render json: {
+		          success: true,
+		          message: '[Paciente] Cotizaciones del paciente indicado encontradas',
+		          cotizaciones: cotizaciones,
+		        }, status: 200, include: [:medico, :procedencia]
 	end
 end

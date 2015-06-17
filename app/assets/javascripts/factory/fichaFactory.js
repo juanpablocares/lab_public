@@ -10,6 +10,9 @@
 				update : {
 					method : 'PUT',
 				},
+				new : {
+					method: 'POST',
+				}
 			});
 	});
 	

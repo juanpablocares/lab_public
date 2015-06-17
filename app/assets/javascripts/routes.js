@@ -142,7 +142,30 @@
 			controller : 'FichasExamenesController',
 			params: {ficha: null}
 		});
+
+		/* Rutas de Cotizaciones*/
 		
+		$stateProvider.state('loginRequired.cotizaciones', {
+			url : '/cotizaciones/:cotizacion_id',
+			templateUrl : "cotizaciones/menu.html",
+			controller : 'CotizacionesMenuController',
+			params: {paciente: null}
+		});
+		
+		$stateProvider.state('loginRequired.cotizaciones.info', {
+			url : '/informacion',
+			templateUrl : "cotizaciones/index.html",
+			controller : 'CotizacionesIndexController',
+			params: {cotizacion: null}
+		});
+
+		$stateProvider.state('loginRequired.cotizaciones.editar', {
+			url : '/editar',
+			templateUrl : "cotizaciones/edit.html",
+			controller : 'CotizacionesEditController',
+			params: {ficha: null}
+		});
+	
 		/*Rutas de pacientes*/
 		
 		$stateProvider.state('loginRequired.pacientes', {
@@ -176,6 +199,19 @@
 			url : '/ficha/:ficha_id',
 			templateUrl : "fichas/index.html",
 			controller : 'FichasIndexController',
+		});
+
+		$stateProvider.state('loginRequired.pacientes.cotizaciones', {
+			url : '/cotizaciones',
+			templateUrl : "pacientes/cotizaciones.html",
+			controller : 'PacientesCotizacionesController',
+			params: {paciente: null}
+		});
+
+		$stateProvider.state('loginRequired.pacientes.cotizacion', {
+			url : '/cotizaciones/:cotizacion_id',
+			templateUrl : "cotizaciones/index.html",
+			controller : 'CotizacionesIndexController',
 		});
 		
 		/*Rutas de listado de examenes */

@@ -63,6 +63,10 @@ Rails.application.routes.draw do
 		post 'fichas/range/:start/:number', to: 'fichas#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		post 'fichas/muestras/:start/:number', to: 'fichas#muestras', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		
+		#controladores de cotizaciones
+		get 'cotizaciones/paciente/:id', to: 'cotizaciones#show_bypaciente', defaults: {format: 'json'}
+
+
 		#Controladores de hora preoceso examenes
 		get 'horaproceso_examenes/examen/:examen_id', to: 'horaproceso_examenes#by_examen', defaults: {format: 'json'}
 		put 'horaproceso_examenes/', to: 'horaproceso_examenes#update_all', defaults: {format: 'json'}
