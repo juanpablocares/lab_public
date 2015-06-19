@@ -26,24 +26,24 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
         id : $stateParams.ficha_id
 		}, function(datos) {
 	        $scope.ficha = datos.data;
-            $scope.ficha.paciente.rut_completo = $scope.ficha.paciente.rut+""+$scope.ficha.paciente.rutdv;
-            $scope.ficha.paciente.fecha_nacimiento = new Date($scope.ficha.paciente.fecha_nacimiento);
+            $scope.paciente = $scope.ficha.paciente;
+            $scope.paciente.rut_completo = $scope.paciente.rut+""+$scope.paciente.rutdv;
+            $scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
             $scope.ficha.paciente.getEdad = function() {
-	            $scope.ficha.paciente.fecha_nacimiento = new Date($scope.ficha.paciente.fecha_nacimiento);
-                if ($scope.ficha.paciente != null) {
+	            $scope.ficha.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
+                if ($scope.paciente != null) {
                         var d = new Date();
                         var meses = 0;
-                        if ($scope.ficha.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth() > 0)
-                                meses += 12 - $scope.ficha.paciente.fecha_nacimiento.getUTCMonth() + d.getMonth();
+                        if ($scope.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth() > 0)
+                                meses += 12 - $scope.paciente.fecha_nacimiento.getUTCMonth() + d.getMonth();
                         else
-                                meses = Math.abs($scope.ficha.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth());
-                        var birthday = +new Date($scope.ficha.paciente.fecha_nacimiento);
+                                meses = Math.abs($scope.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth());
+                        var birthday = +new Date($scope.paciente.fecha_nacimiento);
                         var anios = ((Date.now() - birthday) / (31556926000));
                         return ~~anios + " Años " + ~~meses + " meses";
                 }
             };
             $scope.precio_total = $scope.precio_total_edit = $scope.ficha.precio_total;
-            $scope.paciente = $scope.ficha.paciente;
             $scope.ficha.numero_programa = parseInt($scope.ficha.numero_programa, 10);
             if ($scope.ficha.receptor)
                     $scope.ficha.restringido = true;
@@ -80,6 +80,7 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 		
 			$scope.ficha_edit = angular.copy($scope.ficha);
 			$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
+			console.log($scope.examenesSeleccionados_edit);
 			$scope.limpiarTarifas();
 	});
 
