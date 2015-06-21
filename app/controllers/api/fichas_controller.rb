@@ -106,7 +106,12 @@ class Api::FichasController < ApplicationController
 	end
 
 	def range
-		results = Ficha.joins(:paciente).all.order(id: :desc)
+	
+		if(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha))
+			results = Ficha.where('creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha].to_time.beginning_of_day, params[:search][:predicateObject][:fecha].to_time.end_of_day).all.order(id: :desc)
+		else
+			results = Ficha.joins(:paciente).all.order(id: :desc)
+		end
 		
 		if(params.has_key?(:search))
 			if(params[:search].has_key?(:predicateObject))
@@ -125,7 +130,6 @@ class Api::FichasController < ApplicationController
 				if(params[:search][:predicateObject].has_key?(:prevision))
 					results = results.where(prevision_id: params[:search][:predicateObject][:prevision])
 				end
-
 			end
 		end
 		

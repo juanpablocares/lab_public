@@ -2,11 +2,11 @@
 	<table st-table="displayed" class="table table-hover table-striped" st-pipe="callServer">
 		<thead>
 			<tr>
-				<th st-sort="id">Ficha</th>
-				<th st-sort="apellido_paterno">Apellido Paterno</th>
-				<th st-sort="apellido_materno">Apellido Materno</th>
-				<th st-sort="nombre">Nombre paciente</th>
-				<th st-sort="creacion">Fecha creación</th>
+				<th >Ficha</th>
+				<th >Apellido Paterno</th>
+				<th >Apellido Materno</th>
+				<th >Nombre paciente</th>
+				<th >Fecha creación</th>
 			</tr>
 			<tr>
 				<th>
@@ -22,7 +22,9 @@
 					<input st-search="nombre" class="input-sm form-control"/>
 				</th>
 				<th>
-					<input st-search="creacion" class="input-sm form-control"/>
+					<div class="input-group date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
+						<input st-search="fecha" class="input-sm form-control" type="date" id="fecha" name="fecha" ng-model="fecha" name="fecha"/>
+					</div>
 				</th>
 			</tr>
 		</thead>
@@ -32,7 +34,7 @@
 			<td>{{row.paciente.apellido_paterno}}</td>
 			<td>{{row.paciente.apellido_materno}}</td>
 			<td>{{row.paciente.nombre}}</td>
-			<td>{{row.creado | date:'dd-MM-yyyy HH:mm'}}</td>
+			<td>{{row.creado | date:'dd-MM-yyyy'}}</td>
 			</tr>
 		</tbody>
 		<tbody ng-show="isLoading">

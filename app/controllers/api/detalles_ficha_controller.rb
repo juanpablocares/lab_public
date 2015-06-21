@@ -50,7 +50,7 @@ class Api::DetallesFichaController < ApplicationController
 	end
 
 	def muestras_tomadas
-		results = DetalleFicha.joins(ficha: :paciente).joins(:examen).where.not(:usuario_muestra_id => nil)
+		results = DetalleFicha.joins(ficha: :paciente).joins(:examen).where.not(:usuario_muestra_id => nil).order(ficha_id: :desc)
 		
 		if(params.has_key?(:search))
 			if(params[:search].has_key?(:predicateObject))
@@ -70,7 +70,10 @@ class Api::DetallesFichaController < ApplicationController
 					results = results.where('lower(examenes.nombre) like ?',"%#{params[:search][:predicateObject][:examen_nombre].downcase}%")
 				end
 				if(params[:search][:predicateObject].has_key?(:perfil_nombre))
-					results = results.joins(:perfil).where('lower(perfiles.nombre) like ?',"%#{params[:search][:predicateObject][:perfil_nombre].downcase}%")
+					results = results.where('lower(perfiles.nombre) like ?',"%#{params[:search][:predicateObject][:perfil_nombre].downcase}%")
+				end
+				if(params[:search][:predicateObject].has_key?(:fecha_muestra))
+					results = results.where('ficha.creado = ? ', params[:search][:predicateObject][:fecha_muestra].to_date)
 				end
 				if(params[:search][:predicateObject].has_key?(:paciente_rut))
 					rut_completo = params[:search][:predicateObject][:paciente_rut].gsub!(/[^0-9]/, '')
@@ -80,7 +83,7 @@ class Api::DetallesFichaController < ApplicationController
 				end
 			end
 		end
-		results.order(fecha_muestra: :desc).limit(params[:number].to_i).offset(params[:start].to_i)
+		results.limit(params[:number].to_i).offset(params[:start].to_i)
 		numberOfPages = results.count / params[:number].to_i
 		render json: {
 			  success: true,

@@ -17,27 +17,25 @@ class Api::DetallesPagoFichaController < ApplicationController
 	
 		if params[:facturadas].to_i == 1
 			if(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha_inicio) and params[:search][:predicateObject].has_key?(:fecha_fin))
-				results = DetallePagoFicha.where('creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha_inicio].to_date.beginning_of_day, params[:search][:predicateObject][:fecha_fin].to_date.end_of_day)
+				results = DetallePagoFicha.where('creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha_inicio].to_time.beginning_of_day, params[:search][:predicateObject][:fecha_fin].to_time)
 			elsif(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha_inicio))
-				results = DetallePagoFicha.where('creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha_inicio].to_date.beginning_of_day, DateTime.now.end_of_day).order(id: :desc)
+				results = DetallePagoFicha.where('creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha_inicio].to_time.beginning_of_day, DateTime.now.end_of_day).order(id: :desc)
 			elsif(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha_fin))
-				results = DetallePagoFicha.where('creado < ?', params[:search][:predicateObject][:fecha_fin].to_date.end_of_day)
+				results = DetallePagoFicha.where('creado < ?', params[:search][:predicateObject][:fecha_fin].to_time)
 			else
 				results = DetallePagoFicha.all
 			end
 		elsif params[:facturadas].to_i == 0
 			if(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha_inicio) and params[:search][:predicateObject].has_key?(:fecha_fin))
-				results = DetallePagoFicha.where(factura: nil).where('creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha_inicio].to_date.beginning_of_day, params[:search][:predicateObject][:fecha_fin].to_date.end_of_day)
+				results = DetallePagoFicha.where(factura: nil).where('creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha_inicio].to_time.beginning_of_day, params[:search][:predicateObject][:fecha_fin].to_time)
 			elsif(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha_inicio))
-				results = DetallePagoFicha.where(factura: nil).where('creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha_inicio].to_date.beginning_of_day, DateTime.now.end_of_day)
+				results = DetallePagoFicha.where(factura: nil).where('creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha_inicio].to_time.beginning_of_day, DateTime.now.end_of_day)
 			elsif(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha_fin))
-				results = DetallePagoFicha.where(factura: nil).where('creado < ?', params[:search][:predicateObject][:fecha_fin].to_date.end_of_day).order(id: :desc)
+				results = DetallePagoFicha.where(factura: nil).where('creado < ?', params[:search][:predicateObject][:fecha_fin].to_time).order(id: :desc)
 			else
 				results = DetallePagoFicha.where(factura: nil).all
 			end
 		end
-		
-		results = results.order(id: :desc)
 		
 		if(params.has_key?(:search))
 			if(params[:search].has_key?(:predicateObject))
@@ -53,9 +51,13 @@ class Api::DetallesPagoFichaController < ApplicationController
 				if(params[:search][:predicateObject].has_key?(:prevision))
 					results = results.where(ficha_id: Ficha.where(prevision_id: params[:search][:predicateObject][:prevision]))
 				end
+				if(params[:search][:predicateObject].has_key?(:procedencia))
+					results = results.where(ficha_id: Ficha.where(procedencia_id: params[:search][:predicateObject][:procedencia]))
+				end
 			end
 		end
 		
+		results = results.order(ficha_id: :desc).order(tipo_pago_id: :asc)
 		numberOfPages = results.count / params[:number].to_i
 		results = results.limit(params[:number].to_i).offset(params[:start].to_i)
 		render json: {
@@ -64,7 +66,7 @@ class Api::DetallesPagoFichaController < ApplicationController
 			  numberOfPages: numberOfPages,
 			  data: results,
 			  tipo: params[:facturadas]
-			}, status: 200, include: [:tipo_pago, {:ficha => { include: [:prevision, :paciente]}}]
+			}, status: 200, include: [:tipo_pago, {:ficha => { include: [:prevision, :paciente, :procedencia, :medico]}}]
 	end
 	
 	def show

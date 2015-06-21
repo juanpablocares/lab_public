@@ -228,11 +228,11 @@
 			controller : 'ExamenesMenuController',
 		});
 		
-		$stateProvider.state('loginRequired.ficha_tecnica', {
+		/*$stateProvider.state('loginRequired.ficha_tecnica', {
 			url : '/ficha_tecnica/:examen_id',
 			templateUrl : "examenes/ficha_tecnica.html",
 			controller : 'ExamenesFichaTecnicaController'
-		});
+		});*/
 		
 		$stateProvider.state('loginRequired.examenes.info', {
 			url : '/informacion',

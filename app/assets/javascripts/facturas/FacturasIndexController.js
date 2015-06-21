@@ -121,12 +121,10 @@
 			$promise.then(function(result) {
 				console.log('update detalle tipo pago');
 				console.log(result);
+				$state.go('loginRequired.facturas.todas');
 			});
-			
-			$state.go('loginRequired.facturas.todas');
 			console.log(facturas_ingresar);
 			console.log('Factura asignada');
 		}
-		
 	});
 })();

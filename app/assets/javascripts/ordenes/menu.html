@@ -1,21 +1,14 @@
 <div class="row">
-	<div class="col-sm-12">
+	<div class="col-sm-2">
 		<div class="widget-container fluid-height">
 			<div class="widget-content padded clearfix text-center">
-				<h4>
-					<strong>Número de orden de examen: </strong>
-					{{detalleFicha.id}}
-				</h4>
-				<h4><strong>Paciente: </strong>{{detalleFicha.ficha.paciente.nombre}} {{detalleFicha.ficha.paciente.apellido_paterno}}</h4>
+				<h4>{{detalleFicha.ficha.id}}</h4>
+				<h4>{{detalleFicha.ficha.paciente.nombre}} {{detalleFicha.ficha.paciente.apellido_paterno}}</h4>
 			</div>
 		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-sm-3">
 		<div class="widget-container fluid-height">
 			<div class="heading">
-				<i class="fa fa-fw fa-user"></i> Examen paciente
+				<i class="fa fa-fw fa-user"></i> Resultados
 			</div>
 			<ul class="list-group">
 				<li class="list-group-item" ng-repeat="tab in tabs" ng-class="{active: state.current.name === tab.id}">
@@ -27,6 +20,5 @@
 			</ul>
 		</div>
 	</div>
-
-	<div ui-view class="col-sm-9"></div>
-</div>	
+	<div ui-view class="col-sm-10"></div>
+</div>

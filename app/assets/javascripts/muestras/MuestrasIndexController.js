@@ -1,5 +1,5 @@
 angular.module('lab').controller('MuestrasIndexController', function($scope, $auth, $state, $http, $stateParams, Ficha, Fichas, DetallesFicha, DetalleFicha) {
-
+	
 	$scope.getEdad = function(data) {
 		if(data != null)
 		{
@@ -27,21 +27,26 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 			$scope.ficha.paciente.fecha_nacimiento =  new Date(result.data.paciente.fecha_nacimiento.getUTCFullYear(), result.data.paciente.fecha_nacimiento.getUTCMonth(), result.data.paciente.fecha_nacimiento.getUTCDate());
 			$scope.ficha.paciente.edad = $scope.getEdad(result.data.paciente.fecha_nacimiento);
 			$scope.masterFicha = angular.copy($scope.ficha);
+			//console.log($scope.masterFicha);
 	}).catch(function(response) {
 		console.error('Error al obtener ficha');
 		$state.go('loginRequired.index');
 	});
-	console.log($scope.ficha);
+	//console.log($scope.ficha);
 	//Falta colocar info si se cambia de tab
 	
 	if ($stateParams.ficha != null) {
 		$scope.ficha = $stateParams.ficha;
+		$scope.ficha.paciente.edad = $scope.getEdad(ficha.paciente.fecha_nacimiento);
 		$scope.masterFicha = angular.copy($scope.ficha);
 	}
 	
 	console.log("Muestra Examenes");
 	$scope.$on('fichaFromMenu', function(event, data) {
 		$scope.ficha = data;
+		$scope.ficha.paciente.fecha_nacimiento = new Date($scope.ficha.paciente.fecha_nacimiento);
+		$scope.ficha.paciente.fecha_nacimiento =  new Date($scope.ficha.paciente.fecha_nacimiento.getUTCFullYear(), $scope.ficha.paciente.fecha_nacimiento.getUTCMonth(), $scope.ficha.paciente.fecha_nacimiento.getUTCDate());
+		$scope.ficha.paciente.edad = $scope.getEdad($scope.ficha.paciente.fecha_nacimiento);
 		$scope.masterFicha = angular.copy($scope.ficha);
 	});
 

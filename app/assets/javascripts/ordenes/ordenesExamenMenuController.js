@@ -9,15 +9,11 @@ angular.module('lab').controller('OrdenesExamenMenuController', function($scope,
 		state : 'loginRequired.ordenes_examen.info()',
 		id : 'loginRequired.ordenes_examen.info',
 	}, {
-		name : 'Ver resultados del examen',
+		name : 'Resultados',
 		state : 'loginRequired.ordenes_examen.resultados()',
 		id : 'loginRequired.ordenes_examen.resultados',
 	}, {
-		name : 'Ingresar toma de muestra',
-		state : 'loginRequired.ordenes_examen.ingreso_muestra()',
-		id : 'loginRequired.ordenes_examen.ingreso_muestra',
-	}, {
-		name : 'Ingresar resultados examen',
+		name : 'Ingreso',
 		state : 'loginRequired.ordenes_examen.ingreso_resultados()',
 		id : 'loginRequired.ordenes_examen.ingreso_resultados',
 	}];
