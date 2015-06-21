@@ -15,6 +15,9 @@
 			}),
 			all : $resource("/api/previsiones/", {
 			}, {
+				get:{
+					method: 'GET',
+				},
 				update : {
 					method : 'PUT',
 				},

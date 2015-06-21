@@ -2,17 +2,8 @@ Comentarios fichas.
 
 En Crear/Editar ficha/cotizacion.
 
-	//	Folio como input 
-	//Arreglar ingreso de medico id en la bd.
 	Prevision seleccionable.
-
-	Parte de abajo de los examenes
-		Agregar $ Abono Bono
-				$ Abono boleta
-			Total -> TOTAL ABONOS
-			Diferencia -> "SALDO"	
-		Agregar copago abajo del total.
-
+	
 En vista Pagos:
 	Agregar campo "factura".
 	Bajar input observaciones y nombrarlo observaciones pagos: es un attr de la tabla fichas no del detalle_pago

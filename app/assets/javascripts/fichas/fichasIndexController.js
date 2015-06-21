@@ -1,5 +1,8 @@
-angular.module('lab').controller('FichasIndexController', function($scope, $auth, $state, $http, $stateParams, Fichas, Perfiles, Medicos, Procedencias, Examenes, DetallesPagoFicha, Ficha) {
+angular.module('lab').controller('FichasIndexController', function($scope, $auth, $state, $http, $stateParams, Fichas,Previsiones, Perfiles, Medicos, Procedencias, Examenes, DetallesPagoFicha, Ficha) {
 
+	//Esta vista tiene campos editables, con $scope.edit aviso a las vistas si mostrar algunos campos editables o fijos.
+	$scope.edit = true;
+	//$scope.saving es true para desactivar botones de save para evitar doble input. (creo que no verifica submit con teclado)
 	$scope.saving = false;
 	$scope.loading = true;
 	$scope.guardado = false;
@@ -8,13 +11,17 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 	$scope.examenesAgregados = [];
 	$scope.medicosArray = [];
 	$scope.procedenciasArray = [];
+	$scope.previsionesArray = [];
 	$scope.examenesArray = [];
 	$scope.medico = {};
+	$scope.prevision = {};
 	$scope.examenes = {};
 	$scope.perfiles = {};
 	$scope.precio_total = 0;
 	$scope.precio_total_edit = 0;
 	$scope.total_pagos = 0;
+	$scope.total_pagos_bonos = 0;
+	$scope.total_pagos_boletas = 0;
 	$scope.editExamenes = false;
 	$scope.examenesSeleccionados = [];
 	$scope.ficha = {};
@@ -61,6 +68,14 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 				$scope.procedencia.selected = $scope.setProcedenciaSeleccionada($scope.ficha.procedencia);
 			}, function(response) {
 				console.log("ERROR obteniendo procedencias");
+			});
+
+			Previsiones.all.get().$promise.then(function(response) {
+				console.log($scope.previsionesArray);
+				$scope.previsionesArray = response.previsiones;
+				$scope.prevision.selected = $scope.setPrevisionSeleccionada($scope.ficha.prevision);
+			}, function(response) {
+				console.log("ERROR obteniendo previsiones");
 			});
 
 			Examenes.all.index({
@@ -144,6 +159,15 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 		};
 	};
 
+	$scope.setPrevisionSeleccionada = function(prevision) {
+		for (var i = 0; i < $scope.previsionesArray.length; i++) {
+			var value = $scope.previsionesArray[i];
+			if (value.id == prevision.id) {
+				return value;
+			}
+		};
+	};
+
 	$scope.setMedicoSeleccionado = function(ficha_medico) {
 		if (ficha_medico != null && $scope.medicosArray.length > 0) {
 			for (var i = 0; i < $scope.medicosArray.length; i++) {
@@ -161,6 +185,22 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 		else
 			return 'Exámenes';
 	};
+
+	$scope.seleccionarPrevision = function(prevision, select)
+	{
+		if(confirm("¿Desea cambiar la prevision de este paciente?"))
+		{
+			//Se cambia la prevision. Debe cambiar en el registro del paciente, de la ficha
+			//y actualizar los precios de los examenes realizados a la tarifa de la nueva prevision.
+			$scope.ficha_edit.prevision = prevision;
+			$scope.limpiarTarifas();		
+		}
+		else
+		{
+			//No se quiere cambiar, se deja la misma prevision que tenia la ficha o el paciente.
+			$scope.prevision.selected = $scope.ficha.prevision;
+		}
+	}
 
 	$scope.seleccionarExamen = function(model2, select) {
 
@@ -311,13 +351,23 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 	$scope.nuevoPago = {};
 
 	$scope.getTotalPagos = function() {
-		var total = 0;
+		var bonos = 0;
+		var boletas = 0;
 		var i = 0;
 		while (i < $scope.detallePagos.length) {
-			total = total + $scope.detallePagos[i].monto_pagado;
+			if($scope.detallePagos[i].tipo_pago_id == 1 || $scope.detallePagos[i].tipo_pago_id == 6 )
+			{
+				bonos = bonos + $scope.detallePagos[i].monto_pagado; 
+			}
+			else
+			{
+				boletas = boletas + $scope.detallePagos[i].monto_pagado; 
+			}
 			i++;
 		}
-		return total;
+		$scope.total_pagos_boletas = boletas;
+		$scope.total_pagos_bonos = bonos;
+		return bonos + boletas;
 	}
 
 	Fichas.id.getPagosRealizados({
@@ -423,6 +473,10 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 		$scope.precio_total_edit = angular.copy($scope.precio_total);
 	}
 
+	$scope.mostrarEnConsola = function(item){
+		console.log(item);
+	}
+
 	$scope.guardar_cambios_ficha = function(ficha_form) {
 		if ($scope.validate_form(ficha_form)) {
 			if ($scope.medico != undefined && $scope.medico.selected != undefined) {
@@ -469,3 +523,4 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 		return $scope.examenesSeleccionados_edit.length > 0 && ficha_form.$valid;
 	}
 });
+
