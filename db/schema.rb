@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150616203517) do
+ActiveRecord::Schema.define(version: 20150618032324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,7 @@ ActiveRecord::Schema.define(version: 20150616203517) do
     t.integer  "medico_id"
     t.string   "observaciones_muestra"
     t.string   "diagnostico"
+    t.integer  "numero_procedencia"
   end
 
   add_index "fichas", ["prevision_id"], name: "index_fichas_on_prevision_id", using: :btree
@@ -208,9 +209,9 @@ ActiveRecord::Schema.define(version: 20150616203517) do
   end
 
   create_table "modificacion_examenes", force: :cascade do |t|
-    t.integer  "user_id",                     null: false
-    t.integer  "examen_id",                   null: false
-    t.datetime "creacion",  default: "now()", null: false
+    t.integer  "user_id"
+    t.integer  "examen_id"
+    t.datetime "creacion",  default: '2015-06-18 02:35:31', null: false
   end
 
   create_table "ordenes_medicas", force: :cascade do |t|
@@ -456,7 +457,6 @@ ActiveRecord::Schema.define(version: 20150616203517) do
   add_foreign_key "pacientes", "users", name: "pacientes_user_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "permisos_rol", "permisos", name: "permisos_rol_permiso_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "permisos_rol", "roles", name: "permisos_rol_rol_id_fkey", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "previsiones", "tarifas", name: "previsiones_tarifa_id_fkey", on_update: :cascade
   add_foreign_key "resultados_examen", "detalles_ficha", column: "detalle_ficha_id", name: "resultados_examen_detalle_ficha_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "resultados_examen", "sustancias", name: "resultados_examen_sustancia_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "roles_usuario", "roles", name: "roles_usuario_rol_id_fkey", on_update: :cascade, on_delete: :cascade
