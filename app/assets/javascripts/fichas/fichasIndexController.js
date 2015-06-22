@@ -33,23 +33,7 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
         id : $stateParams.ficha_id
 		}, function(datos) {
 	        $scope.ficha = datos.data;
-            $scope.paciente = $scope.ficha.paciente;
-            $scope.paciente.rut_completo = $scope.paciente.rut+""+$scope.paciente.rutdv;
-            $scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
-            $scope.ficha.paciente.getEdad = function() {
-	            $scope.ficha.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
-                if ($scope.paciente != null) {
-                        var d = new Date();
-                        var meses = 0;
-                        if ($scope.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth() > 0)
-                                meses += 12 - $scope.paciente.fecha_nacimiento.getUTCMonth() + d.getMonth();
-                        else
-                                meses = Math.abs($scope.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth());
-                        var birthday = +new Date($scope.paciente.fecha_nacimiento);
-                        var anios = ((Date.now() - birthday) / (31556926000));
-                        return ~~anios + " Años " + ~~meses + " meses";
-                }
-            };
+	        $scope.setPaciente($scope.ficha);
             $scope.precio_total = $scope.precio_total_edit = $scope.ficha.precio_total;
             $scope.ficha.numero_programa = parseInt($scope.ficha.numero_programa, 10);
             if ($scope.ficha.receptor)
@@ -71,7 +55,6 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 			});
 
 			Previsiones.all.get().$promise.then(function(response) {
-				console.log($scope.previsionesArray);
 				$scope.previsionesArray = response.previsiones;
 				$scope.prevision.selected = $scope.setPrevisionSeleccionada($scope.ficha.prevision);
 			}, function(response) {
@@ -95,9 +78,29 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 		
 			$scope.ficha_edit = angular.copy($scope.ficha);
 			$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
-			console.log($scope.examenesSeleccionados_edit);
 			$scope.limpiarTarifas();
 	});
+	
+	$scope.setPaciente = function(ficha)
+	{
+		$scope.paciente = ficha.paciente;
+        $scope.paciente.rut_completo = $scope.paciente.rut+""+$scope.paciente.rutdv;
+        $scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
+        $scope.ficha.paciente.getEdad = function() {
+            $scope.ficha.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
+            if ($scope.paciente != null) {
+                    var d = new Date();
+                    var meses = 0;
+                    if ($scope.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth() > 0)
+                            meses += 12 - $scope.paciente.fecha_nacimiento.getUTCMonth() + d.getMonth();
+                    else
+                            meses = Math.abs($scope.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth());
+                    var birthday = +new Date($scope.paciente.fecha_nacimiento);
+                    var anios = ((Date.now() - birthday) / (31556926000));
+                    return ~~anios + " Años " + ~~meses + " meses";
+            }
+        };
+	}
 
 	$scope.crearExamenesArray = function() {
 		$scope.examenesArray = [];
@@ -193,7 +196,10 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 			//Se cambia la prevision. Debe cambiar en el registro del paciente, de la ficha
 			//y actualizar los precios de los examenes realizados a la tarifa de la nueva prevision.
 			$scope.ficha_edit.prevision = prevision;
-			$scope.limpiarTarifas();		
+
+			$scope.limpiarTarifas();
+			$scope.getPrecioTotal(true);
+
 		}
 		else
 		{
@@ -382,6 +388,8 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 
 	$scope.limpiarTarifas = function() {
 		console.log("limpiarTarifas");
+		console.log($scope.examenesSeleccionados_edit);
+		console.log($scope.ficha_edit.prevision);
 		//De examenes ya seleccionados al cargar ficha
 		for (var i = 0; i < $scope.examenesSeleccionados_edit.length; i++) {
 			var temp1 = $scope.examenesSeleccionados_edit[i];
@@ -391,10 +399,15 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 				var temp = null;
 				for (var j = 0; j < temp3.tarifas_examen.length; j++) {
 					var value = temp3.tarifas_examen[j];
-					if (value.tarifa_id == $scope.paciente.prevision.tarifa_id) {
-						temp3.tarifa_prevision = value;
+					if (value.tarifa_id == $scope.ficha_edit.prevision.tarifa_id) {
+						temp3.tarifa_prevision = angular.copy(value);
 						temp1.precio = value.precio;
 						break;
+					}
+					else
+					{
+						temp3.tarifa_prevision = null;
+						temp1.precio = 0;
 					}
 				}
 			}
@@ -407,11 +420,16 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 					var value = detalle.examen;
 					for (var j = 0; j < value.tarifas_examen.length; j++) {
 						var value2 = value.tarifas_examen[j];
-						if (value2.tarifa_id == $scope.paciente.prevision.tarifa_id)
+						if (value2.tarifa_id == $scope.ficha_edit.prevision.tarifa_id)
 						{
-							value.tarifa_prevision = value2;
+							value.tarifa_prevision = angular.copy(value2);
 							value.precio = value2.precio;
 							break;
+						}
+						else
+						{
+							value.tarifa_prevision = null;
+							valueo.precio = 0;
 						}
 					}
 				}
@@ -495,18 +513,25 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 				id : $scope.ficha.id
 			}, $scope.ficha_edit).$promise.then(function(response) {
 				console.log("update correcto");
-				ficha_form.$setPristine();
-				$scope.edit = false;
+				console.log("prevision");
+				$scope.guardado = true;
+				ficha_form.$setPristine();				
+
 				$scope.examenesSeleccionados = [];
 				$scope.examenesSeleccionados_edit = [];
 				$scope.examenesAgregados = [];
 				$scope.examenesBorrados = [];
 				$scope.ficha = response.data;
+				$scope.setPaciente($scope.ficha);
+				console.log($scope.ficha.prevision_id);
+				console.log($scope.ficha.prevision.id);
+				console.log($scope.paciente.prevision_id);
+				console.log($scope.paciente.prevision.id);
 	            $scope.ficha.numero_programa = parseInt($scope.ficha.numero_programa, 10);
 				$scope.precio_total = angular.copy($scope.precio_total_edit);
 				$scope.ordenarExamenes();
-				$scope.limpiarTarifas();
 				$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
+				$scope.limpiarTarifas();
 
 			}, function(response) {
 				console.log("ERROR creando ficha");

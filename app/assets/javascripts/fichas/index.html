@@ -2,24 +2,24 @@
 	<i class="fa fa-spinner fa-pulse fa-2x"></i>
 </div>
 <div ng-if="!loading">
-	<div class="widget-container fluid-height">
-		<div class="widget-content clearfix">
-			<div class="col-sm-4">
-				<ng-include src="'fichas/_informacion_paciente.html'"></ng-include>
-			</div>
-			<div class="col-sm-8">
-				<ng-include src="'fichas/_edit_ficha_form_fields.html'"></ng-include>
+	<form class="form-horizontal" name="form" ng-submit="validate_form(form)" novalidate>
+		<div class="widget-container fluid-height">
+			<div class="widget-content clearfix">
+				<div class="col-sm-4">
+					<ng-include src="'fichas/_informacion_paciente.html'"></ng-include>
+				</div>
+				<div class="col-sm-8">
+					<ng-include src="'fichas/_edit_ficha_form_fields.html'"></ng-include>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="widget-container fluid-height">
-		<form class="form-horizontal" name="form" ng-submit="validate_form(form)" novalidate>
+		<div class="widget-container fluid-height">		
 			<div class="form-group padded">
+				<div class="alert alert-success alert-dismissible" ng-if="guardado && form.$pristine">
+				  <label><strong>Cambios en ficha guardados</strong></label>
+				</div>
 				<div class="alert alert-danger" ng-if="examenesSeleccionados_edit.length == 0 && form.$submitted">
 					<label><strong>Debe agregar examenes</strong></label>
-				</div>
-				<div class="alert alert-success" ng-if="guardado">
-					<label><strong>Cambios guardados</strong></label>
 				</div>
 				<label class="col-sm-2 control-label"><strong>Examenes</strong></label>
 				<div class="col-sm-10">
@@ -49,7 +49,7 @@
 					<a class="btn btn-primary" ng-click="cancelar_cambios()">Cancelar cambios</a>
 				</div>
 			</div>
-		</form>
-	</div>
+		</div>
+	</form>
 </div>
 	
