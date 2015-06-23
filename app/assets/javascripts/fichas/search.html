@@ -2,6 +2,7 @@
 	<table st-table="displayed" class="table table-hover table-striped" st-pipe="callServer">
 		<thead>
 			<tr>
+				<th > #</th>
 				<th >Ficha</th>
 				<th >Apellido Paterno</th>
 				<th >Apellido Materno</th>
@@ -9,6 +10,9 @@
 				<th >Fecha creación</th>
 			</tr>
 			<tr>
+				<th>
+					
+				</th>
 				<th>
 					<input st-search="id" class="input-sm form-control"/>
 				</th>
@@ -29,12 +33,13 @@
 			</tr>
 		</thead>
 		<tbody ng-show="!isLoading">
-			<tr ng-repeat="row in displayed" ui-sref="loginRequired.fichas.info({ficha_id: row.id})">
-			<td>{{row.id}}</td>
-			<td>{{row.paciente.apellido_paterno}}</td>
-			<td>{{row.paciente.apellido_materno}}</td>
-			<td>{{row.paciente.nombre}}</td>
-			<td>{{row.creado | date:'dd-MM-yyyy'}}</td>
+			<tr ng-repeat="row in displayed track by $index" ui-sref="loginRequired.fichas.info({ficha_id: row.id})">
+				<td>{{$index + 1}}</td>
+				<td>{{row.id}}</td>
+				<td>{{row.paciente.apellido_paterno}}</td>
+				<td>{{row.paciente.apellido_materno}}</td>
+				<td>{{row.paciente.nombre}}</td>
+				<td>{{row.creado | date:'dd-MM-yyyy'}}</td>
 			</tr>
 		</tbody>
 		<tbody ng-show="isLoading">

@@ -129,7 +129,7 @@ class Api::FichasController < ApplicationController
       end
     end
 
-    numberOfPages = results.count / params[:number].to_i
+    numberOfPages = (results.count.to_f / params[:number].to_f).ceil
     results = results.limit(params[:number].to_i).offset(params[:start].to_i)
     render json: {
       success: true,
