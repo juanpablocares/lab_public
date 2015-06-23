@@ -10,8 +10,9 @@
 
  */
 
-angular.module('lab').controller('FichasNewController', function($scope, $auth, $state, $http, $resource, $stateParams, Examenes, Perfiles, Cotizaciones, Cotizacion, Procedencias, Ficha, Fichas, Medicos) {
+angular.module('lab').controller('FichasNewController', function($scope, $auth, $state, $http, $resource, $stateParams, Previsiones, Examenes, Perfiles, Cotizaciones, Cotizacion, Procedencias, Ficha, Fichas, Medicos) {
 
+	$scope.edit = true;
 	$scope.ficha = {};
 	$scope.selectModel = {};
 	$scope.procedencia = {};
@@ -20,9 +21,11 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	$scope.examenes = {};
 	$scope.perfiles = {};
 	$scope.paciente = {};
+	$scope.prevision = {};
 	$scope.precio_total_edit = 0;
 	$scope.medicosArray = []; 
 	$scope.procedenciasArray = [];
+	$scope.previsionesArray = [];
 	$scope.examenesArray = [];
 	$scope.examenesSeleccionados_edit = [];
 	$scope.editExamenes = true;
@@ -78,6 +81,14 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 			console.log("ERROR obteniendo examenes");
 		});
 
+
+		Previsiones.all.get().$promise.then(function(response) {
+			$scope.previsionesArray = response.previsiones;
+			$scope.prevision.selected = $scope.setPrevisionSeleccionada($scope.paciente.prevision);
+		}, function(response) {
+			console.log("ERROR obteniendo previsiones");
+		});
+
 		Perfiles.buscar.todos().$promise.then(function(response) {
 			$scope.perfiles = response.data;
 			$scope.crearExamenesArray();
@@ -88,6 +99,15 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	}).error(function(data) {
 		$state.go('loginRequired.index');
 	});
+
+	$scope.setPrevisionSeleccionada = function(prevision) {
+		for (var i = 0; i < $scope.previsionesArray.length; i++) {
+			var value = $scope.previsionesArray[i];
+			if (value.id == prevision.id) {
+				return value;
+			}
+		};
+	};
 
 	$scope.crearExamenesArray = function() {
 		$scope.examenesArray = [];
@@ -145,14 +165,10 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	};
 
 	$scope.seleccionarExamen = function(model2, select) {
-
 		var model = angular.copy(model2);
 		select.selected = "";
 		//model.nuevo = true;
 		var perfil = model.perfil;
-
-		
-
 		if (!perfil) {
 			model = {
 				nuevo : true,
@@ -164,7 +180,6 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 				model.examenes[i].nuevo = true;
 			};
 		}
-
 		for (var i = 0; i < $scope.examenesSeleccionados_edit.length; i++) {
 			var value = $scope.examenesSeleccionados_edit[i];
 			if (perfil && value.perfil) {
@@ -192,6 +207,67 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		$scope.getPrecioTotal();
 	};
 
+	$scope.seleccionarPrevision = function(prevision, select)
+	{
+		//Se cambia la prevision. Debe cambiar en el registro del paciente, de la ficha
+		//y actualizar los precios de los examenes realizados a la tarifa de la nueva prevision.
+		$scope.paciente.prevision = prevision;
+		$scope.crearExamenesArray();
+		$scope.limpiarTarifas();
+		$scope.getPrecioTotal(true);
+	}
+
+	$scope.limpiarTarifas = function() {
+		console.log("limpiarTarifas");
+		console.log($scope.examenesSeleccionados_edit);
+		//De examenes ya seleccionados al cargar ficha
+		for (var i = 0; i < $scope.examenesSeleccionados_edit.length; i++) {
+			var temp1 = $scope.examenesSeleccionados_edit[i];
+			if (!temp1.perfil)
+			{
+				var temp3 = temp1.examen;
+				var temp = null;
+				for (var j = 0; j < temp3.tarifas_examen.length; j++) {
+					var value = temp3.tarifas_examen[j];
+					if (value.tarifa_id == $scope.paciente.prevision.tarifa_id) {
+						temp3.tarifa_prevision = angular.copy(value);
+						temp1.precio = value.precio;
+						break;
+					}
+					else
+					{
+						temp3.tarifa_prevision = null;
+						temp1.precio = 0;
+					}
+				}
+			}
+			else
+			{
+				for (var i = 0; i < temp1.examenes.length; i++)
+				{
+					var detalle = temp1.examenes[i];
+					var temp = null;
+					var value = detalle.examen;
+					for (var j = 0; j < value.tarifas_examen.length; j++) {
+						var value2 = value.tarifas_examen[j];
+						if (value2.tarifa_id == $scope.paciente.prevision.tarifa_id)
+						{
+							value.tarifa_prevision = angular.copy(value2);
+							value.precio = value2.precio;
+							break;
+						}
+						else
+						{
+							value.tarifa_prevision = null;
+							valueo.precio = 0;
+						}
+					}
+				}
+			}
+		}
+		console.log("END limpiarTarifas");
+	}
+
 	$scope.validate_form = function(ficha_form)
 	{
 		return $scope.examenesSeleccionados_edit.length > 0 && ficha_form.$valid;
@@ -209,6 +285,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 			$scope.ficha.precio_total = $scope.precio_total_edit;
 			$scope.ficha.procedencia_id = $scope.procedencia.selected.id;
 			$scope.ficha.examenesAgregados = $scope.examenesAgregados;
+			$scope.ficha.prevision_id = $scope.prevision.selected.id;
 			$scope.ficha.detalles_ficha = null;
 			console.log("Antes de update");
 			Ficha.new($scope.ficha).$promise.then(function(response) {
@@ -233,6 +310,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 			$scope.ficha.precio_total = $scope.precio_total_edit;
 			$scope.ficha.procedencia_id = $scope.procedencia.selected.id;
 			$scope.ficha.examenesAgregados = $scope.examenesAgregados;
+			$scope.ficha.prevision_id = $scope.prevision.selected.id;
 			$scope.ficha.detalles_ficha = null;
 			console.log("Antes de update");
 			Cotizacion.new($scope.ficha).$promise.then(function(response) {

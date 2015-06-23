@@ -191,21 +191,11 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 
 	$scope.seleccionarPrevision = function(prevision, select)
 	{
-		if(confirm("¿Desea cambiar la prevision de este paciente?"))
-		{
-			//Se cambia la prevision. Debe cambiar en el registro del paciente, de la ficha
-			//y actualizar los precios de los examenes realizados a la tarifa de la nueva prevision.
-			$scope.ficha_edit.prevision = prevision;
-
-			$scope.limpiarTarifas();
-			$scope.getPrecioTotal(true);
-
-		}
-		else
-		{
-			//No se quiere cambiar, se deja la misma prevision que tenia la ficha o el paciente.
-			$scope.prevision.selected = $scope.ficha.prevision;
-		}
+		//Se cambia la prevision. Debe cambiar en el registro del paciente, de la ficha
+		//y actualizar los precios de los examenes realizados a la tarifa de la nueva prevision.
+		$scope.ficha_edit.prevision = prevision;
+		$scope.limpiarTarifas();
+		$scope.getPrecioTotal(true);
 	}
 
 	$scope.seleccionarExamen = function(model2, select) {
@@ -523,10 +513,6 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 				$scope.examenesBorrados = [];
 				$scope.ficha = response.data;
 				$scope.setPaciente($scope.ficha);
-				console.log($scope.ficha.prevision_id);
-				console.log($scope.ficha.prevision.id);
-				console.log($scope.paciente.prevision_id);
-				console.log($scope.paciente.prevision.id);
 	            $scope.ficha.numero_programa = parseInt($scope.ficha.numero_programa, 10);
 				$scope.precio_total = angular.copy($scope.precio_total_edit);
 				$scope.ordenarExamenes();

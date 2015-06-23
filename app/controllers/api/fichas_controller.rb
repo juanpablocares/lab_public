@@ -347,6 +347,14 @@ class Api::FichasController < ApplicationController
   		ficha.numero_procedencia = params[:numero_procedencia]
     end
 
+    #check prevision
+    if params.has_key? :prevision_id
+      if params[:prevision_id] != paciente.prevision_id
+        paciente.prevision_id = params[:prevision_id]
+        paciente.save
+      end
+    end
+
     ficha.procedencia_id = params[:procedencia_id]
     ficha.prevision_id = paciente.prevision_id
     ficha.precio_total = params[:precio_total]
