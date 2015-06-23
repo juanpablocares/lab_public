@@ -27,3 +27,4 @@
 //= require angular-ui-select
 //= require ng-csv
 //= require papa.parse
+//= require angular-sweetalert

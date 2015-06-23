@@ -7,7 +7,7 @@ class Api::ResultadosExamenController < ApplicationController
 			  success: true,
 			  message: 'Resultados examen por detalle ficha encontradas',
 			  data: results,
-			}, status: 200, include: [:sustancia, :detalle_ficha]
+			}, status: 200, include: [:sustancia, {:detalle_ficha=> {include: [:examen]}}]
 	end
 	
 	def save_batch_by_detalle_ficha

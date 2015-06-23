@@ -306,8 +306,11 @@
 			Historial modificaciones
 		</div>
 		<div class="col-sm-5">
-			<button type="button" class="btn btn-success" ng-click="mostrar_historial()">
+			<button type="button" class="btn btn-success" ng-hide="historial_modificaciones" ng-click="mostrar_historial()">
 				Mostrar
+			</button>
+			<button type="button" class="btn btn-warning" ng-show="historial_modificaciones" ng-click="mostrar_historial()">
+				Ocultar
 			</button>
 		</div>
 	</div>

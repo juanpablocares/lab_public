@@ -1,4 +1,7 @@
-angular.module('lab').controller('MuestrasIndexController', function($scope, $auth, $state, $http, $stateParams, Ficha, Fichas, DetallesFicha, DetalleFicha) {
+angular.module('lab').controller('MuestrasIndexController', function($scope, $auth, $state, $http, $stateParams, Ficha, Fichas, DetallesFicha, DetalleFicha, SweetAlert) {
+	
+	console.log(SweetAlert);
+	SweetAlert.error('Titulo', 'Algun mensaje');
 	
 	$scope.getEdad = function(data) {
 		if(data != null)
@@ -94,10 +97,12 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 				if (results.data.usuario_muestra_id != null) {
 					item.estado.class = 'success';
 					item.estado.text = 'Muestra realizada';
+					item.nombre_completo = $auth.user.nombre + " " + $auth.user.apellido_paterno;
 				}
 				else {
 					item.estado.class = 'warning';
 					item.estado.text = 'Muestra pendiente';
+					item.nombre_completo = "";
 				}
 			}).catch(function(results) {
 				item.estado = estado;
@@ -121,11 +126,13 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 							value2.estado = {};
 							value2.estado.class = 'warning';
 							value2.estado.text = 'Muestra pendiente';
+							value2.nombre_completo = "";
 						}
 						else {
 							value2.estado = {};
 							value2.estado.class = 'success';
 							value2.estado.text = 'Muestra realizada';
+							value2.nombre_completo = value2.usuario_muestra.nombre + " " + value2.usuario_muestra.apellido_paterno;
 						}
 						$scope.examenesSeleccionados.push(value2);
 						if (value.id == value2.id)
@@ -141,11 +148,13 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 					value.estado = {};
 					value.estado.class = 'warning';
 					value.estado.text = 'Muestra pendiente';
+					value.nombre_completo = "";
 				}
 				else {
 					value.estado = {};
 					value.estado.class = 'success';
 					value.estado.text = 'Muestra realizada';
+					value.nombre_completo = value.usuario_muestra.nombre + " " + value.usuario_muestra.apellido_paterno;
 				}
 				//console.log(value);
 				$scope.examenesSeleccionados.push(value);

@@ -4,7 +4,7 @@
 			<tr>
 				<th class="col-sm-1 text-right">Fecha</th><td ng-bind="masterFicha.creado | date:'dd-MM-yyyy'"></td>
 				<th class="col-sm-1 text-right">Folio</th><td colspan="2">{{masterFicha.id}}</td>
-				<th class="col-sm-2 text-left" ng-if="masterFicha.urgente" colspan="2"><span class="label label-danger">Ficha Urgente</span></th>
+				<th class="col-sm-2 text-left" ng-if="masterFicha.urgente" colspan="2"><span class="label label-danger"><font size="5">Ficha Urgente</font></span></th>
 			</tr>
 			<tr>
 				<th class="col-sm-1 text-right">Procedencia</th><td >{{masterFicha.procedencia.nombre}}</td>
@@ -90,7 +90,7 @@
 						<button type="button" class="btn btn-{{item.estado.class}}" ng-click="cambiarEstadoBoton(item)"><i class="fa fa-pulse fa-spinner" ng-if="item.estado.class=='info'"></i> {{item.estado.text}}</button>
 					</td>
 					<td style="text-align:center;"><input type="checkbox" ng-model="item.urgente" ng-change="actualizar_urgencia(item)"></td>
-					<td>{{item.usuario_muestra.nombre}} {{item.usuario_muestra.apellido_paterno}}</td>
+					<td>{{item.nombre_completo}}</td>
 					<td>{{item.proceso}}</td>
 					<td>{{item.dia_proceso}}</td>
 					<td>{{item.demora}}</td>
