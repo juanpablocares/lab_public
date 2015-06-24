@@ -101,6 +101,13 @@ Rails.application.routes.draw do
 		put 'previsiones/', to: 'previsiones#update_all', defaults: {format: 'json'}
 		delete 'previsiones/:id', to: 'previsiones#delete', defaults: {format: 'json'}
 
+		#Controladores de medicos
+		post 'medicos/range/:start/:number', to: 'medicos#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
+		post 'medicos/', to: 'medicos#create', defaults: {format: 'json'}
+		get 'medicos/:id', to: 'medicos#show', defaults: {format: 'json'}
+		put 'medicos/:id', to: 'medicos#update', defaults: {format: 'json'}
+		delete 'medicos/:id', to: 'medicos#delete', defaults: {format: 'json'}
+		
 		#Controladores detalle_ficha
 		post 'detalles_ficha/muestras_tomadas/:start/:number', to: 'detalles_ficha#muestras_tomadas', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		post 'detalles_ficha/paciente/:id/:start/:number', to: 'detalles_ficha#get_by_paciente', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/, :start=> /[0-9]+/, :number=> /[0-9]+/ }
@@ -125,6 +132,7 @@ Rails.application.routes.draw do
 		resources :sustancias_examen, :defaults => { :format => 'json' }
 		resources :comunas, :defaults => { :format => 'json' }
 		resources :detalles_ficha , :defaults => { :format => 'json' }
+		resources :especialidades, :defaults => { :format => 'json' }
 		resources :fichas, :defaults => { :format => 'json' }
 		resources :horaproceso_examenes, :defaults => { :format => 'json' }
 		resources :indicaciones, :defaults => { :format => 'json' }
