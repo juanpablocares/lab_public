@@ -21,7 +21,6 @@ angular.module('lab').controller('ResultadosMuestrasTomadasController', function
 			$scope.isLoading = false;
 			
 			console.log(result);
-			console.log($scope.muestras);
 		});
 	};
 });

@@ -10,16 +10,14 @@
 				</div>
 				<table class="table table-striped">
 					<thead>
-						<th>Nombre sustancia</th>
+						<th>Nombre examen</th>
 						<th>Cantidad</th>
 						<th>Unidades</th>
 					</thead>
 					<tbody>
-						<tr ng-repeat="item in resultsForm.sustancias">
-							<td>{{item.nombre}}</td>
-							<td><input class="form-control" type="text" ng-model="item.input_value" name="cantidad" required/></td>
-							<td>{{item.unidad}}</td>
-						</tr>
+						<td>{{detalleFicha.examen.nombre}}</td>
+						<td><input class="form-control" type="text" ng-model="detalleFicha.examen.input_value" name="cantidad" required/></td>
+						<td>{{detalleFicha.examen.unidad_medida}}</td>
 					</tbody>
 				</table>
 			</div>

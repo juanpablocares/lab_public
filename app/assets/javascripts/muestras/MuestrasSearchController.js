@@ -44,21 +44,25 @@
 				for(var i in $scope.displayed){
 					$scope.displayed[i].paciente.fecha_nacimiento = new Date($scope.displayed[i].paciente.fecha_nacimiento);
 					$scope.displayed[i].edad = $scope.getEdad($scope.displayed[i].paciente.fecha_nacimiento);
-					$scope.displayed[i].estado = "Atendido";
+					$scope.displayed[i].estado = "Pendiente";
 					//Checkear estado
 					if($scope.displayed[i].detalles_ficha){
 						var sum = 0;
+						var count = 0;
 						var j;
-						for(j in $scope.displayed[i].detalles_ficha)
-							if($scope.displayed[i].detalles_ficha[j].usuario_muestra_id == null)
+						for(j in $scope.displayed[i].detalles_ficha){
+							count++;
+							if($scope.displayed[i].detalles_ficha[j].usuario_muestra_id != null){
 								sum++;
-							else
 								$scope.displayed[i].flebotomista = $scope.displayed[i].detalles_ficha[j].usuario_muestra.nombre + ' ' + $scope.displayed[i].detalles_ficha[j].usuario_muestra.apellido_paterno;
-						if(sum == j){
+							}
+						}
+						if(sum == count){
+							$scope.displayed[i].estado = "Atendido";
+						}
+						else if(sum > 0){
 							$scope.displayed[i].estado = "En proceso";
 						}
-						else if(sum > 0)
-							$scope.displayed[i].estado = "Pendiente";
 					}
 				}
 				

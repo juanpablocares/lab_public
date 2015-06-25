@@ -422,6 +422,33 @@
 			controller : 'FacturasTodasController',
 		});
 		
+		/*Médicos*/
+		$stateProvider.state('loginRequired.medicos', {
+			url : '/medicos',
+			templateUrl : "medicos/menu.html",
+			controller : 'MedicosMenuController',
+		});
+		
+		$stateProvider.state('loginRequired.medicos.search', {
+			url : '/buscar_medicos',
+			templateUrl : "medicos/search.html",
+			controller : 'MedicosSearchController',
+		});
+		
+		$stateProvider.state('loginRequired.medicos.info', {
+			url : '/:medico_id/informacion',
+			templateUrl : "medicos/index.html",
+			controller : 'MedicosIndexController',
+			params: {medico: null}
+		});	
+
+		$stateProvider.state('loginRequired.medicos.nuevo', {
+			url : '/nuevo',
+			templateUrl : "medicos/index.html",
+			controller : 'MedicosNuevoController',
+			params: {medico: null}
+		});			
+		
 		/*Otros*/
 		$stateProvider.state('loginRequired.otros', {
 			url : '/otros',

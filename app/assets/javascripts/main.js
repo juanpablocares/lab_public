@@ -1,5 +1,5 @@
 (function() {
-	var labs = angular.module('lab', ['ngSanitize', 'ngCsv', 'ui.select', 'ngSanitize','smart-table', 'ngResource', 'platanus.rut', 'ui.mask', 'ui.router', 'templates', 'ng-token-auth']);
+	var labs = angular.module('lab', ['oitozero.ngSweetAlert', 'ngSanitize', 'ngCsv', 'ui.select', 'ngSanitize','smart-table', 'ngResource', 'platanus.rut', 'ui.mask', 'ui.router', 'templates', 'ng-token-auth']);
 
 	labs.run(function($rootScope, $auth) {
 		$rootScope.$on('auth:login-success', function(ev) {

@@ -11,19 +11,26 @@ angular.module('lab').controller('OrdenesExamenIngresoResultadosController', fun
 
 	//Recobrar ficha desde el menu
 	$scope.$on('detalleFichaFromMenu', function(event, data) {
+		//console.log(data);
 		if (data != undefined) {
 			$scope.detalleFicha = data;
 			$scope.resultados = {};
+			console.log($scope.detalleFicha);
 			ResultadosExamen.by_detalle_ficha.get({
 				id : $scope.detalleFicha.id
 			}).$promise.then(function(results) {
+				console.log('entro');
+				console.log(results.data);
 				$scope.resultados = results.data;
-				$scope.setValorSustanciaExamen();
+				//$scope.setValorSustanciaExamen();
 			});
+		}
+		else{
+			$scope.resultsForm = data;
 		}
 	});
 
-	$scope.setValorSustanciaExamen = function() {
+	/*$scope.setValorSustanciaExamen = function() {
 		for (var j = 0; j < $scope.detalleFicha.examen.sustancias.length; j++) {
 			var sustancia = $scope.detalleFicha.examen.sustancias[j]
 			for (var i = 0; i < $scope.resultados.length; i++) {
@@ -36,7 +43,7 @@ angular.module('lab').controller('OrdenesExamenIngresoResultadosController', fun
 			}
 			$scope.resultsForm.sustancias.push(sustancia);
 		};
-	}
+	}*/
 
 	$scope.$emit('PedirDetalleFichaFromMenu');
 

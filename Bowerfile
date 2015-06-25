@@ -33,3 +33,5 @@ asset 'ng-csv'
 asset 'papa.parse'
 #Libreria modals
 asset 'angular-dialog-service'
+#Otra libreria de modals...
+asset 'angular-sweetalert'

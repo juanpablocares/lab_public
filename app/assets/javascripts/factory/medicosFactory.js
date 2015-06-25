@@ -9,7 +9,17 @@
 					method : 'GET',
 					isArray: false,
 				},
-			})
+			}),
+			range : $resource("/api/medicos/range/:start/:number", {
+				start : "@start",
+				number : "@number",
+			},
+			{
+				advanced : {
+					method : 'POST',
+					isArray: false,
+				}
+			}),
 		};
 	});
 	

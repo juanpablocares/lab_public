@@ -1,0 +1,55 @@
+<div class="form-group">
+	<div class="row">
+		<label class="control-label col-md-2">Rut</label>
+		<div class="col-md-3">
+			<input ng-rut rut-format="live" ng-model="medico.rut_completo" class="form-control" type="text" ng-disabled="medico.id" name="rut_completo">
+			<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.rut_completo.$pristine) && medico_form.rut_completo.$error.required">Debe ingresar rut del medico</label>
+		</div>
+		<label class="control-label col-md-1">Nombres</label>
+		<div class="col-md-3">
+			<input class="form-control" placeholder="Ingrese nombres" type="text" ng-model="medico.nombre" name="nombre" required>
+			<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.nombre.$pristine) && medico_form.nombre.$error.required">Debe ingresar nombre</label>
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<div class="row">
+		<label class="control-label col-md-2">Apellido Paterno</label>
+		<div class="col-md-3">
+			<input class="form-control" placeholder="Ingrese apellido paterno" type="text" ng-model="medico.apellido_paterno" name="apellido_paterno" required>
+			<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.apellido_paterno.$pristine) && medico_form.apellido_paterno.$error.required">Debe ingresar apellido</label>
+		</div>
+		<label class="control-label col-md-1">Apellido Materno</label>
+		<div class="col-md-3">
+			<input class="form-control" placeholder="Ingrese apellido materno" type="text" ng-model="medico.apellido_materno">
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<div class="row">
+		<label class="control-label col-md-2">Dirección</label>
+		<div class="col-md-3">
+			<input class="form-control" placeholder="Ingrese dirección" type="text" ng-model="medico.direccion" name="direccion">
+		</div>
+		<label class="control-label col-md-1">Teléfono</label>
+		<div class="col-md-3">
+			<input class="form-control" placeholder="Ingrese teléfono" type="text" ng-model="medico.telefono">
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<div class="row">
+		<label class="control-label col-md-2">Especialidad</label>
+		<div class="col-md-3">
+			<select class="form-control" ng-model="medico.especialidad" ng-options="e.nombre for e in especialidades track by e.id | orderBy:'nombre'" name="especialidad">
+				<option value=""></option>
+			</select>
+			<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.especialidad.$pristine) && medico_form.especialidad.$error.required">Debe ingresar especialidad</label>
+		</div>
+		<label class="control-label col-md-1">Institución</label>
+		<div class="col-md-3">
+			<select class="form-control" ng-model="medico.institucion" ng-options="i.nombre for i in instituciones track by i.id | orderBy:'nombre'" name="institucion"></select>
+			<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.institucion.$pristine) && medico_form.institucion.$error.required">Debe ingresar institucion</label>
+		</div>
+	</div>
+</div>

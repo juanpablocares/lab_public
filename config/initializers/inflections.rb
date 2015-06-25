@@ -22,6 +22,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   	inflect.irregular 'detalleFicha', 'detallesFicha'
   	inflect.irregular 'detallePagoFicha', 'detallesPagosFicha'
   	inflect.irregular 'detalle_pago_ficha', 'detalles_pago_ficha'
+	inflect.irregular 'especialidad', 'especialidades'
   	inflect.irregular 'examen', 'examenes'
   	inflect.irregular 'examenPerfil', 'examenesPerfil'
   	inflect.irregular 'examen_perfil', 'examenes_perfil'

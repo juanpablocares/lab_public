@@ -1,0 +1,18 @@
+<div class="widget-container fluid-height">
+	<div class="widget-content padded" >
+		<form class="form-horizontal" ng-submit="guardarDatosMedico(medico)" name="medico_form" novalidate>
+			<div align="center" class="col-md-12" ng-show="isLoading"><i class="fa fa-spinner fa-pulse"></i></div>
+			<div ng-hide="isLoading" ng-include="'medicos/_edit_form_fields.html'"></div>
+			<div class="form-group">
+				<div class="col-sm-11 text-right">
+					<button type="submit" class="btn btn-primary" ng-disabled="buttonSubmit">
+						Guardar
+					</button>
+					<button type="button" class="btn btn-danger" ng-click="cambiarVentanaSinCambios()">
+						Volver
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
