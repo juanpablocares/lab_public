@@ -52,6 +52,7 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 				$scope.precio_total += value.precio;
 			}
 		});
+		$scope.precio_total = $scope.ficha.precio_total;
 	}
 
 	$scope.getPrecioDetalleFicha = function(tarifa_id, examen) {

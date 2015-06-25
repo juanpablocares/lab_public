@@ -179,7 +179,7 @@ class Api::FichasController < ApplicationController
 
     #check prevision
     if params.has_key? :prevision
-      if params[:prevision][:id] != paciente.prevision_id
+      if params[:prevision][:id] != ficha.prevision_id
         paciente.prevision_id = params[:prevision][:id]
         paciente.save
         ficha.prevision_id = params[:prevision][:id]
@@ -223,7 +223,6 @@ class Api::FichasController < ApplicationController
     end
 
     ficha.procedencia_id = params[:procedencia_id]
-    ficha.prevision_id = paciente.prevision_id
     ficha.precio_total = params[:precio_total]
     ficha.programa = params[:programa]
     ficha.numero_programa = params[:numero_programa]
