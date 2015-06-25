@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150618032324) do
+ActiveRecord::Schema.define(version: 20150625075549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,6 +156,7 @@ ActiveRecord::Schema.define(version: 20150618032324) do
     t.string   "observaciones_muestra"
     t.string   "diagnostico"
     t.integer  "numero_procedencia"
+    t.string   "observaciones_pagos"
   end
 
   add_index "fichas", ["prevision_id"], name: "index_fichas_on_prevision_id", using: :btree

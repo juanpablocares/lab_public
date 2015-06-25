@@ -3,26 +3,26 @@
 </div>
 <div class="widget-container fluid-height" ng-if="!loading">
 	<div class="row widget-content padded">
-		<div class="col-md-4">
-			<ng-include src="'fichas/_informacion_paciente.html'"></ng-include>
-		</div>
-		<div class="col-sm-8">
-			<h3>Ingresar pago</h3>
-			<form class="form-horizontal" name="ingresarPagoForm" novalidate>
+		<form class="form-horizontal" name="ingresarPagoForm" novalidate>
+			<div class="col-md-4">
+				<ng-include src="'fichas/_informacion_paciente.html'"></ng-include>
+			</div>
+			<div class="col-sm-8">
+				<h3>Ingresar pago</h3>
 				<table class="table">
 					<tr>
 						<th>Tipo de pago</th>
 						<td>
 							<div ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_tipo_pago.$error.required)}">
-							<ui-select ng-model="nuevoPago.tipo_pago" name="nuevo_pago_tipo_pago" theme="bootstrap" required>
+								<ui-select ng-model="nuevoPago.tipo_pago" name="nuevo_pago_tipo_pago" theme="bootstrap" required>
 								<ui-select-match placeholder="Seleccione tipo de pago">
-									{{$select.selected.nombre}}
+								{{$select.selected.nombre}}
 								</ui-select-match>
 								<ui-select-choices repeat="item in tiposPagoArray | filter: $select.search">
-									<span ng-bind-html="item.nombre | highlight: $select.search"></span>
+								<span ng-bind-html="item.nombre | highlight: $select.search"></span>
 								</ui-select-choices>
-							</ui-select>
-							<label class="error" ng-if="(ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_tipo_pago.$error.required)">Seleccione un tipo de pago.</label>
+								</ui-select>
+								<label class="error" ng-if="(ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_tipo_pago.$error.required)">Seleccione un tipo de pago.</label>
 							</div>
 						</td>
 					</tr>
@@ -36,6 +36,12 @@
 						</td>
 					</tr>
 					<tr>
+						<th>Número factura</th>
+						<td>
+							<input class="form-control" ng-model="nuevoPago.numero_factura" name="numero_factura" type="number">
+						</td>
+					</tr>
+					<tr>
 						<th>Monto a pagar</th>
 						<td>
 							<div ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_monto.$error.required)}">
@@ -44,32 +50,30 @@
 							</div>
 						</td>
 					</tr>
-					<tr>
-						<th>Observaciones</th>
-						<td>
-							<input class="form-control" ng-model="nuevoPago.observaciones" name="observaciones" type="text">
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<div class="form-group">
-								<div class="col-sm-11 text-right">
-									<button type="submit" ui-sref="loginRequired.fichas.info({ficha_id: ficha.id})" class="btn btn-warning">
-										Informacion ficha
-									</button>
-									<button type="submit" ng-click="submitIngresarPagoForm(ingresarPagoForm)" class="btn btn-success">
-										Ingresar pago
-									</button>
-									<button type="button" ng-click="resetIngresarPagoForm(ingresarPagoForm)" class="btn btn-primary">
-										Limpiar formulario
-									</button>
-								</div>
-							</div>
-						</td>
-					</tr>
 				</table>
-			</form>
-		</div>
+			</div>
+			<div class="col-sm-12">
+				<div class="form-group">
+					<label for="observaciones" class="col-sm-2 control-label"><strong>Observaciones pagos</strong></label>
+					<div class="col-sm-10">
+						<input ng-model="nuevoPago.observaciones_pago" type="text" class="form-control" name="observaciones" placeholder="Observaciones">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-11 text-right">
+						<button type="submit" ui-sref="loginRequired.fichas.info({ficha_id: ficha.id})" class="btn btn-warning">
+						Informacion ficha
+						</button>
+						<button type="submit" ng-click="submitIngresarPagoForm(ingresarPagoForm)" class="btn btn-success">
+						Ingresar pago
+						</button>
+						<button type="button" ng-click="resetIngresarPagoForm(ingresarPagoForm)" class="btn btn-primary">
+						Limpiar formulario
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
 	</div>
 </div>
 <div class="widget-container fluid-height">
@@ -81,7 +85,7 @@
 		<div class="col-sm-12" ng-if="detallePagos.length != 0">
 			<table class="table">
 				<thead>
-					<th> Código </th>
+					<th> Número </th>
 					<th> Tipo de pago </th>
 					<th> Doc. N°</th>
 					<th> Fecha </th>
@@ -89,8 +93,8 @@
 					<th> Monto </th>
 				</thead>
 				<tbody>
-					<tr ng-repeat="pago in detallePagos">
-						<td>{{pago.id}}</td>
+					<tr ng-repeat="pago in detallePagos track by $index">
+						<td>{{pago.$index}}</td>
 						<td>{{pago.tipo_pago.nombre}}</td>
 						<td>{{pago.n_documento}}</td>
 						<td>{{pago.creado | date:'dd/MM/yyyy HH:mm'}}</td>

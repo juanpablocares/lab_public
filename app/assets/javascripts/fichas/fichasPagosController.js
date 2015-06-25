@@ -31,6 +31,7 @@ angular.module('lab').controller('FichasPagosController', function($scope,
                             return ~~anios + " Años " + ~~meses + " meses";
                     }
             };
+            $scope.nuevoPago.observaciones = $scope.ficha.observaciones_pagos;
             $scope.paciente = $scope.ficha.paciente;
 			$scope.ordenarExamenes();
 	});
