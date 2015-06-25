@@ -36,9 +36,9 @@
 						</td>
 					</tr>
 					<tr>
-						<th>Número factura</th>
+						<th>Factura</th>
 						<td>
-							<input class="form-control" ng-model="nuevoPago.numero_factura" name="numero_factura" type="number">
+							<input class="form-control" ng-model="nuevoPago.factura" name="factura" type="number">
 						</td>
 					</tr>
 					<tr>
@@ -56,7 +56,7 @@
 				<div class="form-group">
 					<label for="observaciones" class="col-sm-2 control-label"><strong>Observaciones pagos</strong></label>
 					<div class="col-sm-10">
-						<input ng-model="nuevoPago.observaciones_pago" type="text" class="form-control" name="observaciones" placeholder="Observaciones">
+						<input ng-model="nuevoPago.observaciones_pagos" type="text" class="form-control" name="observaciones" placeholder="Observaciones">
 					</div>
 				</div>
 				<div class="form-group">
@@ -86,6 +86,7 @@
 			<table class="table">
 				<thead>
 					<th> Número </th>
+					<th> Codigo pago </th>
 					<th> Tipo de pago </th>
 					<th> Doc. N°</th>
 					<th> Fecha </th>
@@ -94,7 +95,8 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="pago in detallePagos track by $index">
-						<td>{{pago.$index}}</td>
+						<td>{{$index + 1 }}</td>
+						<td>{{pago.id}}</td>
 						<td>{{pago.tipo_pago.nombre}}</td>
 						<td>{{pago.n_documento}}</td>
 						<td>{{pago.creado | date:'dd/MM/yyyy HH:mm'}}</td>

@@ -1,15 +1,29 @@
 class Api::DetallesPagoFichaController < ApplicationController
 	def create
-		if(DetallePagoFicha.create(detalle_pago_ficha_params))
-			render json: {
-				success: true,
-		        message: 'Detalle pago ficha creado',
-		    }, status: 200
-		else
-			render json: {
-				success: false,
-		        message: 'Error al crear detalle ficha',
-		    }, status: 500
+		begin
+			ficha = Ficha.find(params[:ficha_id])
+		rescue ActiveRecord::RecordNotFound
+			render json: {error: exception.message}.to_json, status: 404
+			return
+		end
+
+		if params.has_key? :observaciones_pagos
+			ficha.observaciones_pagos = params[:observaciones_pagos]
+			ficha.save
+		end
+
+		if params.has_key? :monto_pagado and params[:monto_pagado]
+			if(DetallePagoFicha.create(detalle_pago_ficha_params))
+				render json: {
+					success: true,
+			        message: 'Detalle pago ficha creado',
+			    }, status: 200
+			else
+				render json: {
+					success: false,
+			        message: 'Error al crear detalle ficha',
+			    }, status: 500
+			end
 		end
 	end
 
@@ -105,5 +119,4 @@ class Api::DetallesPagoFichaController < ApplicationController
 	def detalle_pago_ficha_params
 		params.require(:detalle_pago_ficha).permit(:ficha_id, :tipo_pago_id, :monto_pagado, :n_documento, :factura, :user_id)
 	end
-
 end

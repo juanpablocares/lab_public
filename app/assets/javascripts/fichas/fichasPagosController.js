@@ -31,7 +31,7 @@ angular.module('lab').controller('FichasPagosController', function($scope,
                             return ~~anios + " Años " + ~~meses + " meses";
                     }
             };
-            $scope.nuevoPago.observaciones = $scope.ficha.observaciones_pagos;
+            $scope.nuevoPago.observaciones_pagos = $scope.ficha.observaciones_pagos;
             $scope.paciente = $scope.ficha.paciente;
 			$scope.ordenarExamenes();
 	});
@@ -129,13 +129,15 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 				n_documento : $scope.nuevoPago.numero_documento,
 				monto_pagado : $scope.nuevoPago.monto,
 				user_id : $auth.user.id,
+				observaciones_pagos: $scope.nuevoPago.observaciones_pagos,
+				factura: $scope.nuevoPago.factura,
 			};
 			DetallesPagoFicha.root.new(data).$promise.then(function(response) {
 				DetallesPagoFicha.by_ficha_id.all({
 					id : $stateParams.ficha_id
 				}).$promise.then(function(result) {
 					$scope.detallePagos = result.data;
-					$scope.resetIngresarPagoForm();
+					$scope.resetIngresarPagoForm(f);
 				}).catch(function(response) {
 					console.error("Error al cargar detalle pagos");
 				});
