@@ -24,7 +24,6 @@ class Api::FichasController < ApplicationController
            :resultados_examen,
            :perfil, {
              :examen => [
-               :sustancias,
                :indicacion,
                :tipo_examen,
            :tarifas_examen]}
@@ -40,7 +39,7 @@ class Api::FichasController < ApplicationController
         :user,
         :prevision,
         :procedencia,
-      {:detalles_ficha => {include: [:usuario_muestra, :resultados_examen,:perfil,{:examen => { include: [:sustancias, :indicacion, :tipo_examen,:tarifas_examen]}}]}}]
+      {:detalles_ficha => {include: [:usuario_muestra, :resultados_examen,:perfil,{:examen => { include: [:indicacion, :tipo_examen,:tarifas_examen]}}]}}]
     end
   end
 
@@ -293,7 +292,7 @@ class Api::FichasController < ApplicationController
           :user,
           :prevision,
           :procedencia,
-        {:detalles_ficha => {include: [:resultados_examen,:perfil,{:examen => { include: [:sustancias, :indicacion, :tipo_examen,:tarifas_examen]}}]}}]
+        {:detalles_ficha => {include: [:resultados_examen,:perfil,{:examen => { include: [:indicacion, :tipo_examen,:tarifas_examen]}}]}}]
       end
     else
       raise "No hay exámenes"

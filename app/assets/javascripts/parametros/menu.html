@@ -1,14 +1,8 @@
 <div class="row">
 	<div class="col-sm-2">
 		<div class="widget-container fluid-height">
-			<div class="widget-content padded clearfix text-center">
-				<h5>{{ficha.id}}</h5>
-				<h5>{{ficha.paciente.nombre}} {{ficha.paciente.apellido_paterno}}</h5>
-			</div>
-		</div>
-		<div class="widget-container fluid-height">
 			<div class="heading">
-				<i class="fa fa-fw fa-user"></i> Resultados
+				<i class="fa fa-fw fa-user"></i> Parámetros
 			</div>
 			<ul class="list-group">
 				<li class="list-group-item" ng-repeat="tab in tabs" ng-class="{active: state.current.name === tab.id}">
@@ -20,5 +14,6 @@
 			</ul>
 		</div>
 	</div>
+
 	<div ui-view class="col-sm-10"></div>
 </div>

@@ -10,14 +10,18 @@
 				</div>
 				<table class="table table-striped">
 					<thead>
+						<th>#</th>
 						<th>Nombre examen</th>
 						<th>Cantidad</th>
 						<th>Unidades</th>
 					</thead>
 					<tbody>
-						<td>{{detalleFicha.examen.nombre}}</td>
-						<td><input class="form-control" type="text" ng-model="detalleFicha.examen.input_value" name="cantidad" required/></td>
-						<td>{{detalleFicha.examen.unidad_medida}}</td>
+						<tr ng-repeat="item in ficha.detalles_ficha track by $index">
+							<td>{{$index + 1}}</td>
+							<td>{{item.examen.nombre}}</td>
+							<td><input class="form-control" placeholder="Ingrese cantidad" type="text" ng-model="item.cantidad"></td>
+							<td>{{item.examen.unidad_medida}}</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>

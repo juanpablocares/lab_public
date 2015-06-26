@@ -11,41 +11,17 @@ Rails.application.routes.draw do
 		get 'alias_examenes/examen/:examen_id', to: 'alias_examenes#by_examen', defaults: {format: 'json'}
 		put 'alias_examenes/', to: 'alias_examenes#update_all', defaults: {format: 'json'}
 		
-		#Controladores procesos examenes
-		put 'proceso_examenes/', to: 'proceso_examenes#update_all', defaults: {format: 'json'}
-		delete 'proceso_examenes/:id', to: 'proceso_examenes#delete', defaults: {format: 'json'}
-		
-		#Controladores procesadores examenes
-		put 'procesadores_examenes/', to: 'procesadores_examenes#update_all', defaults: {format: 'json'}
-		delete 'procesadores_examenes/:id', to: 'procesadores_examenes#delete', defaults: {format: 'json'}
-		
-		#Controladores tipos muestras
-		put 'tipos_muestras/', to: 'tipos_muestras#update_all', defaults: {format: 'json'}
-		delete 'tipos_muestras/:id', to: 'tipos_muestras#delete', defaults: {format: 'json'}
-		
-		#Controladores tipos examen
-		put 'tipo_examenes/', to: 'tipo_examenes#update_all', defaults: {format: 'json'}
-		delete 'tipo_examenes/:id', to: 'tipo_examenes#delete', defaults: {format: 'json'}
-		
-		#Controladores tipos pago
-		put 'tipos_pago/', to: 'tipos_pago#update_all', defaults: {format: 'json'}
-		delete 'tipos_pago/:id', to: 'tipos_pago#delete', defaults: {format: 'json'}
-		
-		#Controladores tipos envases
-		put 'tipos_envase/', to: 'tipos_envase#update_all', defaults: {format: 'json'}
-		delete 'tipos_envase/:id', to: 'tipos_envase#delete', defaults: {format: 'json'}
-		
-		#Controladores tapas tubos
-		put 'tapas_tubo/', to: 'tapas_tubo#update_all', defaults: {format: 'json'}
-		delete 'tapas_tubo/:id', to: 'tapas_tubo#delete', defaults: {format: 'json'}
-		
-		#Controladores indicaciones
-		put 'indicaciones/', to: 'indicaciones#update_all', defaults: {format: 'json'}
-		delete 'indicaciones/:id', to: 'indicaciones#delete', defaults: {format: 'json'}
-		
 		#Controladores indicaciones muestras
 		put 'indicaciones_muestra/', to: 'indicaciones_muestra#update_all', defaults: {format: 'json'}
 		delete 'indicaciones_muestra/:id', to: 'indicaciones_muestra#delete', defaults: {format: 'json'}
+		
+		#Controladores instituciones
+		put 'instituciones/update_all/', to: 'instituciones#update_all', defaults: {format: 'json'}
+		delete 'instituciones/:id', to: 'instituciones#delete', defaults: {format: 'json'}
+		
+		#Controladores especialidades
+		put 'especialidades/update_all/', to: 'especialidades#update_all', defaults: {format: 'json'}
+		delete 'especialidades/:id', to: 'especialidades#delete', defaults: {format: 'json'}
 		
 		#Controladores de pacientes
 		post 'pacientes/range/:start/:number', to: 'pacientes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
@@ -96,11 +72,6 @@ Rails.application.routes.draw do
 		get 'tarifas_examen/examen/:examen_id', to: 'tarifas_examen#show_examen', defaults: {format: 'json'}
 		post 'tarifas_examen/range/:tarifa_id/:start/:number', to: 'tarifas_examen#range', defaults: {format: 'json'}, constraints: { :tarifa_id=> /[0-9]+/, :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		
-		#Controladores de previsiones
-		post 'previsiones/range/:start/:number', to: 'previsiones#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
-		put 'previsiones/', to: 'previsiones#update_all', defaults: {format: 'json'}
-		delete 'previsiones/:id', to: 'previsiones#delete', defaults: {format: 'json'}
-
 		#Controladores de medicos
 		post 'medicos/range/:start/:number', to: 'medicos#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		post 'medicos/', to: 'medicos#create', defaults: {format: 'json'}
@@ -126,6 +97,43 @@ Rails.application.routes.draw do
 		get 'detalles_pago_ficha/ficha/:id', to: 'detalles_pago_ficha#getAllByFicha', defaults: {format: 'json'}
 		put 'detalles_pago_ficha/', to: 'detalles_pago_ficha#update_all', defaults: {format: 'json'}
 		
+		##########################Controladores de parámetros##########################
+		get 'parametros/:nombre', to: 'parametros#get_valores', defaults: {format: 'json'}
+		put 'parametros/', to: 'parametros#update_all', defaults: {format: 'json'}
+		delete 'parametros/:id', to: 'parametros#delete', defaults: {format: 'json'}
+		#Controladores valores parametros
+		put 'valores_parametros/', to: 'valores_parametros#update_all', defaults: {format: 'json'}
+		delete 'valores_parametros/:id', to: 'valores_parametros#delete', defaults: {format: 'json'}
+		
+		##########################Controladores de otros##########################
+		#Controladores procesos examenes
+		put 'proceso_examenes/', to: 'proceso_examenes#update_all', defaults: {format: 'json'}
+		delete 'proceso_examenes/:id', to: 'proceso_examenes#delete', defaults: {format: 'json'}
+		#Controladores procesadores examenes
+		put 'procesadores_examenes/', to: 'procesadores_examenes#update_all', defaults: {format: 'json'}
+		delete 'procesadores_examenes/:id', to: 'procesadores_examenes#delete', defaults: {format: 'json'}
+		#Controladores tipos muestras
+		put 'tipos_muestras/', to: 'tipos_muestras#update_all', defaults: {format: 'json'}
+		delete 'tipos_muestras/:id', to: 'tipos_muestras#delete', defaults: {format: 'json'}
+		#Controladores tipos examen
+		put 'tipo_examenes/', to: 'tipo_examenes#update_all', defaults: {format: 'json'}
+		delete 'tipo_examenes/:id', to: 'tipo_examenes#delete', defaults: {format: 'json'}
+		#Controladores tipos pago
+		put 'tipos_pago/', to: 'tipos_pago#update_all', defaults: {format: 'json'}
+		delete 'tipos_pago/:id', to: 'tipos_pago#delete', defaults: {format: 'json'}
+		#Controladores tipos envases
+		put 'tipos_envase/', to: 'tipos_envase#update_all', defaults: {format: 'json'}
+		delete 'tipos_envase/:id', to: 'tipos_envase#delete', defaults: {format: 'json'}
+		#Controladores tapas tubos
+		put 'tapas_tubo/', to: 'tapas_tubo#update_all', defaults: {format: 'json'}
+		delete 'tapas_tubo/:id', to: 'tapas_tubo#delete', defaults: {format: 'json'}
+		#Controladores indicaciones
+		put 'indicaciones/', to: 'indicaciones#update_all', defaults: {format: 'json'}
+		delete 'indicaciones/:id', to: 'indicaciones#delete', defaults: {format: 'json'}
+		#Controladores de previsiones
+		post 'previsiones/range/:start/:number', to: 'previsiones#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
+		put 'previsiones/', to: 'previsiones#update_all', defaults: {format: 'json'}
+		delete 'previsiones/:id', to: 'previsiones#delete', defaults: {format: 'json'}
 		
 		resources :alias_examenes, :defaults => { :format => 'json' }
 		resources :resultados_examen, :defaults => { :format => 'json' }
@@ -137,7 +145,9 @@ Rails.application.routes.draw do
 		resources :horaproceso_examenes, :defaults => { :format => 'json' }
 		resources :indicaciones, :defaults => { :format => 'json' }
 		resources :indicaciones_muestra, :defaults => { :format => 'json' }
+		resources :instituciones, :defaults => { :format => 'json' }
 		resources :modificacion_examenes, :defaults => { :format => 'json' }
+		resources :parametros, :defaults => { :format => 'json' }
 		resources :previsiones, :defaults => { :format => 'json' }
 		resources :regiones, :defaults => { :format => 'json' }
 		resources :pacientes, :defaults => { :format => 'json' }
@@ -155,6 +165,7 @@ Rails.application.routes.draw do
 		resources :tipos_muestras, :defaults => { :format => 'json' }
 		resources :tipos_pago , :defaults => { :format => 'json' }
 		resources :detalles_pago_ficha, :defaults => { :format => 'json' }
+		resources :valores_parametros, :defaults => { :format => 'json' }
 		
 		resources :users, :defaults => { :format => 'json' } do
 			collection do

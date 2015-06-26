@@ -255,10 +255,23 @@
 			params: {examen: null}
 		});
 		
+		$stateProvider.state('loginRequired.examenes.parametros', {
+			url : '/parametros',
+			templateUrl : "examenes/parametros.html",
+			controller : 'ExamenesParametrosController',
+			params: {examen: null}
+		});
+		
 		/*Rutas de examenes a pacientes*/
 		
+		$stateProvider.state('loginRequired.busqueda_ingreso_resultados', {
+			url : '/busqueda_ingreso_resultados',
+			templateUrl : "ordenes/search.html",
+			controller : 'OrdenesExamenSearchController',
+		});
+		
 		$stateProvider.state('loginRequired.ordenes_examen', {
-			url : '/orden/:detalle_ficha_id',
+			url : '/orden/:ficha_id',
 			templateUrl : "ordenes/menu.html",
 			controller : 'OrdenesExamenMenuController',
 		});
@@ -267,28 +280,24 @@
 			url : '/informacion',
 			templateUrl : "ordenes/index.html",
 			controller : 'OrdenesExamenIndexController',
-			params: {examen: null}
 		});
 		
 		$stateProvider.state('loginRequired.ordenes_examen.ingreso_muestra', {
 			url : '/ingreso_muestra',
 			templateUrl : "ordenes/ingreso_muestra.html",
 			controller : 'OrdenesExamenIngresoMuestraController',
-			params: {examen: null}
 		});
 		
 		$stateProvider.state('loginRequired.ordenes_examen.resultados', {
 			url : '/resultados',
 			templateUrl : "ordenes/resultados.html",
 			controller : 'OrdenesExamenResultadosController',
-			params: {examen: null}
 		});
 		
 		$stateProvider.state('loginRequired.ordenes_examen.ingreso_resultados', {
 			url : '/ingreso_resultados',
 			templateUrl : "ordenes/ingreso_resultados.html",
 			controller : 'OrdenesExamenIngresoResultadosController',
-			params: {examen: null}
 		});
 		
 		/*Rutas tipos tarifas*/
@@ -368,14 +377,6 @@
 			controller : 'MuestrasExamenesController',
 		});
 		
-		//Lista de muestras tomadas disponibles para ingreso de resultados
-		
-		$stateProvider.state('loginRequired.lista_ingreso_resultados_examen', {
-			url : '/resultados/muestras',
-			templateUrl : "resultados/muestras_tomadas_search.html",
-			controller : 'ResultadosMuestrasTomadasController',
-		});
-		
 		/*Rutas Previsiones*/
 		
 		$stateProvider.state('loginRequired.busqueda_previsiones', {
@@ -449,6 +450,19 @@
 			params: {medico: null}
 		});			
 		
+		/*Tipos Parámetros*/
+		$stateProvider.state('loginRequired.parametros', {
+			url : '/parametros',
+			templateUrl : "parametros/menu.html",
+			controller : 'ParametrosMenuController',
+		});
+		
+		$stateProvider.state('loginRequired.parametros.color_orina', {
+			url : '/:parametro_id/color_orina',
+			templateUrl : "parametros/seleccionable.html",
+			controller : 'ParametrosColorOrinaController',
+		});
+		
 		/*Otros*/
 		$stateProvider.state('loginRequired.otros', {
 			url : '/otros',
@@ -514,6 +528,12 @@
 			url : '/tipos_pagos',
 			templateUrl : "otros/tipos_pagos.html",
 			controller : 'OtrosTiposPagosController',
+		});
+		
+		$stateProvider.state('loginRequired.otros.especialidades', {
+			url : '/especialidades',
+			templateUrl : "otros/especialidades.html",
+			controller : 'OtrosEspecialidadesController',
 		});
 		
 		/*

@@ -14,6 +14,10 @@ angular.module('lab').controller('ExamenesMenuController', function($scope, $htt
 		name : 'Precios',
 		state : 'loginRequired.examenes.precios({examen: examen})',
 		id : 'loginRequired.examenes.precios',
+	},{
+		name : 'Parámetros',
+		state : 'loginRequired.examenes.parametros({examen: examen})',
+		id : 'loginRequired.examenes.parametros',
 	}];
 
 	$scope.$on('examenFromEdit', function(event, data) {

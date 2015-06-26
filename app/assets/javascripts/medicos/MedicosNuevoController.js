@@ -44,7 +44,7 @@ angular.module('lab').controller('MedicosNuevoController', function($scope, $aut
 	};
 	
 	$scope.cambiarVentanaSinCambios = function(){
-		console.log('Volver');
+		$state.go('loginRequired.medicos.search');
 	};
 	
 });

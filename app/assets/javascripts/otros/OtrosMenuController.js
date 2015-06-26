@@ -42,5 +42,9 @@ angular.module('lab').controller('OtrosMenuController', function($scope, $http, 
 		name : 'Tipos Pagos',
 		state : 'loginRequired.otros.tipos_pagos({})',
 		id : 'loginRequired.otros.tipos_pagos',
+	},{
+		name : 'Especialidades',
+		state : 'loginRequired.otros.especialidades({})',
+		id : 'loginRequired.otros.especialidades',
 	},];
 });

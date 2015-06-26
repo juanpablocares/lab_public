@@ -1,20 +1,19 @@
-angular.module('lab').controller('OrdenesExamenMenuController', function($scope, $http, $stateParams, $auth, $state, DetalleFicha) {
+angular.module('lab').controller('OrdenesExamenMenuController', function($scope, $http, $stateParams, $auth, $state) {
 
-	if ($stateParams.detalle_ficha_id == null)
-		$state.go('loginRequired.busqueda_examenes');
 	$scope.state = $state;
+
+	if ($stateParams.ficha_id == null){
+		console.log('Ficha id null');
+		$state.go('loginRequired.busqueda_examenes');
+	}
 
 	$scope.tabs = [{
 		name : 'Información',
-		state : 'loginRequired.ordenes_examen.info()',
+		state : 'loginRequired.ordenes_examen.info',
 		id : 'loginRequired.ordenes_examen.info',
 	}, {
-		name : 'Resultados',
-		state : 'loginRequired.ordenes_examen.resultados()',
-		id : 'loginRequired.ordenes_examen.resultados',
-	}, {
 		name : 'Ingreso',
-		state : 'loginRequired.ordenes_examen.ingreso_resultados()',
+		state : 'loginRequired.ordenes_examen.ingreso_resultados',
 		id : 'loginRequired.ordenes_examen.ingreso_resultados',
 	}];
 
@@ -42,24 +41,7 @@ angular.module('lab').controller('OrdenesExamenMenuController', function($scope,
 		}
 	};
 
-	$scope.getEdad = function(data) {
-		if (data != null) {
-			data = new Date(data.getUTCFullYear(), data.getUTCMonth(), data.getUTCDate());
-
-			var d = new Date();
-			var meses = 0;
-			if (data.getUTCMonth() - d.getMonth() > 0)
-				meses += 12 - data.getUTCMonth() + d.getMonth();
-			else
-				meses = Math.abs(data.getUTCMonth() - d.getMonth());
-			var nac = new Date(data);
-			var birthday = +new Date(data);
-			var anios = ((Date.now() - birthday) / (31556926000));
-			return ~~anios + " Años " + ~~meses + " meses";
-		}
-	};
-
-	DetalleFicha.get({
+	/*DetalleFicha.get({
 		id : $stateParams.detalle_ficha_id
 	}, function(result) {
 		$scope.detalleFicha = result.data;
@@ -68,17 +50,14 @@ angular.module('lab').controller('OrdenesExamenMenuController', function($scope,
 		$scope.detalleFicha.ficha.paciente.edad = $scope.getEdad($scope.detalleFicha.ficha.paciente.fecha_nacimiento);
 		$scope.setEstadoExamen();
 		$scope.mandarDetalleFicha();
-	});
-	$scope.$on('detalleFichaFromEdit', function(event, data) {
+	});*/
+	
+	/*$scope.$on('detalleFichaFromEdit', function(event, data) {
 		$scope.detalleFicha = data;
 	});
 
 	$scope.$on('PedirDetalleFichaFromMenu', function(event, data) {
 		$scope.mandarDetalleFicha();
 	});
-
-	$scope.mandarDetalleFicha = function() {
-		console.log("Mandar DetalleFicha desde menu");
-		$scope.$broadcast('detalleFichaFromMenu', $scope.detalleFicha);
-	}
+	*/
 }); 

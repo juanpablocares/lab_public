@@ -25,8 +25,4 @@ class Examen < ActiveRecord::Base
 
 	has_many :examenes_perfil, :class_name => 'ExamenPerfil'
 	has_many :perfiles , through: :examenes_perfil
-
-	has_many :sustancias_examen, :class_name => 'SustanciaExamen'
-	has_many :sustancias , through: :sustancias_examen
-
 end

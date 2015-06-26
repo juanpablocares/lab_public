@@ -1,0 +1,39 @@
+<div ng-if="loading" class="row text-center">
+	<i class="fa fa-spinner fa-pulse fa-2x"></i>	
+</div>
+
+<div class="widget-container fluid-height" ng-if="!isLoading">
+
+	<div class="widget-content padded">
+		<form>
+			<div>
+				<table class="table table-bordered" ng-if="array_valores.length != 0">
+					<thead>
+						<th>#</th>
+						<th>Código</th>
+						<th>Nombre</th>
+						<th>Eliminar</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in array_valores">
+							<td>{{$index + 1}}</td>
+							<td><input class="form-control" type="text" ng-model="item.codigo" name="nombre" ng-change="change($index)"></td>
+							<td><input class="form-control" type="text" ng-model="item.nombre" name="descripcion" ng-change="change($index)"></td>
+							<td><button type="button" class="btn btn-danger btn-lg btn-block" ng-click="remove($index)"><i class="fa fa-trash"></i></button></td>
+						</tr>
+						<tr>
+							<td colspan="3"><button type="button" class="btn btn-primary btn-lg btn-block" ng-click="add()"><i class="fa fa-plus-circle"></i>Agregar dato</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="row form-group">
+				<div class="col-sm-11 text-right">
+					<button ng-click="guardar_cambios(array_valores)" type="submit" class="btn btn-success">
+						Guardar
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

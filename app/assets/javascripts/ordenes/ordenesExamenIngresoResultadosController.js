@@ -1,34 +1,14 @@
-angular.module('lab').controller('OrdenesExamenIngresoResultadosController', function($scope, $auth, $state, $http, $stateParams, ResultadosExamen) {
+angular.module('lab').controller('OrdenesExamenIngresoResultadosController', function($scope, $auth, $state, $http, $stateParams, Ficha) {
 
-	if ($stateParams.detalle_ficha_id == null)
+	if ($stateParams.ficha_id == null)
 		$state.go('loginRequired.index');
-
-	$scope.detalleFicha = {};
-	$scope.resultsForm = {};
-	$scope.resultsForm.sustancias = [];
-	
-	console.log($scope.resultsForm);
-
-	//Recobrar ficha desde el menu
-	$scope.$on('detalleFichaFromMenu', function(event, data) {
-		//console.log(data);
-		if (data != undefined) {
-			$scope.detalleFicha = data;
-			$scope.resultados = {};
-			console.log($scope.detalleFicha);
-			ResultadosExamen.by_detalle_ficha.get({
-				id : $scope.detalleFicha.id
-			}).$promise.then(function(results) {
-				console.log('entro');
-				console.log(results.data);
-				$scope.resultados = results.data;
-				//$scope.setValorSustanciaExamen();
-			});
-		}
-		else{
-			$scope.resultsForm = data;
-		}
-	});
+	else{
+		Ficha.get({
+			id : $stateParams.ficha_id
+		}, function(result) {
+			$scope.ficha = result.data;
+		});
+	}
 
 	/*$scope.setValorSustanciaExamen = function() {
 		for (var j = 0; j < $scope.detalleFicha.examen.sustancias.length; j++) {
@@ -45,18 +25,10 @@ angular.module('lab').controller('OrdenesExamenIngresoResultadosController', fun
 		};
 	}*/
 
-	$scope.$emit('PedirDetalleFichaFromMenu');
+	//$scope.$emit('PedirDetalleFichaFromMenu');
 
-	$scope.guardarResultados = function() {
-		if ($scope.formResultados.$valid) {
-			ResultadosExamen.by_detalle_ficha.save({
-				id: $scope.detalleFicha.id
-			}, {sustancias: $scope.resultsForm.sustancias}).$promise.then(function(results){
-				$state.go('loginRequired.ordenes_examen.info',{detalle_ficha_id : $scope.detalleFicha.id});
-			}).catch(function(results){
-				console.log("error al guardar resultados");
-			});
-		}
+	$scope.guardar_resultados = function() {
+
 	};
 
 });

@@ -1,4 +1,4 @@
-angular.module('lab').controller('ResultadosMuestrasTomadasController', function($scope, $http, $stateParams, $auth, $state, DetallesFicha) {
+angular.module('lab').controller('OrdenesExamenSearchController', function($scope, $http, $stateParams, $auth, $state, DetallesFicha) {
 	$scope.comienzo_tabla = 0;
 	$scope.muestras = [];
 	

@@ -34,7 +34,7 @@
 		</thead>
 		<tbody ng-show="!isLoading">
 			<tr ng-repeat="row in displayed track by $index" ui-sref="loginRequired.fichas.info({ficha_id: row.id})">
-				<td>{{$index + 1}}</td>
+				<td>{{$index + 1 + comienzo_tabla}}</td>
 				<td>{{row.id}}</td>
 				<td>{{row.paciente.apellido_paterno}}</td>
 				<td>{{row.paciente.apellido_materno}}</td>

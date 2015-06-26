@@ -2,11 +2,12 @@
 	<table st-table="displayed" class="table table-striped" st-pipe="callServer">
 		<thead>
 			<tr>
-				<th st-sort="id">ID</th>
-				<th st-sort="apellido_paterno">Apellido Paterno</th>
-				<th st-sort="apellido_materno">Apellido Materno</th>
-				<th st-sort="nombre">Nombre</th>
-				<th st-sort="prevision">Prevision</th>
+				<th>#</th>
+				<th >ID</th>
+				<th >Apellido Paterno</th>
+				<th >Apellido Materno</th>
+				<th >Nombre</th>
+				<th >Prevision</th>
 			</tr>
 			<tr>
 				<th>
@@ -29,7 +30,8 @@
 			</tr>
 		</thead>
 		<tbody ng-show="!isLoading">
-			<tr ng-repeat="row in displayed" ui-sref="loginRequired.pacientes.info({paciente_id: row.id})">
+			<tr ng-repeat="row in displayed track by $index" ui-sref="loginRequired.pacientes.info({paciente_id: row.id})">
+				<td>{{$index + 1}}</td>
 				<td>{{row.id}}</td>
 				<td>{{row.apellido_paterno}}</td>
 				<td>{{row.apellido_materno}}</td>

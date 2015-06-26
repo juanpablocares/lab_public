@@ -1,54 +1,60 @@
-<div class="row">
+<div class="col-sm-12">
 	<div class="widget-container fluid-height">
-		<div class="heading">
-			Información orden examen paciente
-		</div>
 		<div class="widget-content padded">
 			<table class="table">
 				<tr>
-					<th class="col-sm-2 text-right">N° de orden</th><td>{{detalleFicha.id}}</td>
+					<th class="col-sm-1 text-right">Fecha</th><td ng-bind="ficha.creado | date:'dd-MM-yyyy'"></td>
+					<th class="col-sm-1 text-right">Folio</th><td colspan="2">{{ficha.id}}</td>
+					<th class="col-sm-2 text-left" ng-if="ficha.urgente" colspan="2"><span class="label label-danger"><font size="5">Ficha Urgente</font></span></th>
 				</tr>
 				<tr>
-					<th class="col-sm-2 text-right">N° de ficha</th><td><a ui-sref="loginRequired.fichas.info({ficha_id: detalleFicha.ficha_id})">Ir a ficha N°{{detalleFicha.ficha_id}}</a></td>
+					<th class="col-sm-1 text-right">Procedencia</th><td >{{ficha.procedencia.nombre}}</td>
+					<th class="col-sm-1 text-right">N°</th><td >{{ficha.numero_procedencia}}</td>
+					<th class="col-sm-1 text-right">Programa</th><td >{{ficha.programa}}</td>
+					<th class="col-sm-1 text-right">N°</th><td >{{ficha.numero_programa}}</td>
 				</tr>
 				<tr>
-					<th class="col-sm-2 text-right">Codigo examen</th><td><a ui-sref="loginRequired.examenes.info({examen_id: detalleFicha.examen.id})">{{detalleFicha.examen.id}}</a></td>
+					<th class="col-sm-1 text-right">Paciente</th><td>{{ficha.paciente.nombre}} {{ficha.paciente.apellido_paterno}} {{ficha.paciente.apellido_materno}}</td>
+					<th class="col-sm-1 text-right">Edad</th><td>{{ficha.paciente.edad}}</td>
+					<th class="col-sm-1 text-right">Médico</th><td colspan="3">{{ficha.medico.nombre}} {{ficha.medico.apellido_paterno}} {{ficha.medico.apellido_materno}}</td>
 				</tr>
 				<tr>
-					<th class="col-sm-2 text-right">Codigo fonasa</th><td>{{detalleFicha.examen.codigo_fonasa}}</td>
-				</tr>
-				<tr>
-					<th class="col-sm-2 text-right">Nombre examen</th><td><a ui-sref="loginRequired.examenes.info({examen_id: detalleFicha.examen.id})">{{detalleFicha.examen.nombre}}</a></td>
-				</tr>
-				<tr>
-					<th class="col-sm-2 text-right">Estado</th><td><label class="label label-{{detalleFicha.estado.class}}">{{detalleFicha.estado.texto}}</label></td>
+					<th ><label class="control-label"><strong>Diagnostico</strong></label></th>
+					<th width="400" colspan="2"><textarea ng-model="ficha.diagnostico" class="form-control" type="text" rows="2" disabled="true"></textarea></th>
+					<th ><label class="control-label"><strong>Obs. TM</strong></label></th>
+					<th width="400" colspan="3"><textarea ng-model="ficha.observaciones_muestra" class="form-control" rows="2" disabled="true"></textarea></th>
 				</tr>
 			</table>
 		</div>
 	</div>
-
-	<div class="widget-container fluid-height">
-		<div class="heading">
-			Informacion Paciente
-		</div>
-		<div class="widget-content padded">
-			<table class="table">
-				<tr>
-					<th class="col-sm-2 text-right">Nombre</th><td><a ui-sref="loginRequired.pacientes.info({paciente_id: detalleFicha.ficha.paciente.id})">{{detalleFicha.ficha.paciente.nombre}} {{detalleFicha.ficha.paciente.apellido_paterno}} {{detalleFicha.ficha.paciente.apellido_materno}}</a></td>
+</div>
+<div class="widget-container fluid-height">
+	<div class="widget-content padded">
+		<table class="table table-striped" ng-if="ficha.detalles_ficha.length != 0">
+			<thead>
+				<th >#</th>
+				<th >Estado</th>
+				<th> Sel.</th>
+				<th >Examen</th>
+				<th >Flebotomista</th>
+				<th >Fecha-Hora</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in ficha.detalles_ficha track by $index">
+					<td>{{$index + 1}}</td>
+					<td ng-switch="item.estado">
+						<span ng-switch-when="0" class="label label-danger">Pendiente</span>
+						<span ng-switch-when="1" class="label label-warning">Grabado</span>
+						<span ng-switch-when="2" class="label label-success">Validado</span>
+						<span ng-switch-when="3" class="label label-primary">Impreso</span>
+						<span ng-switch-when="3" class="label label-info">Entregado</span>
+					</td>
+					<td ><input ng-disabled="item.imprimir" type="checkbox" name="imprimir" value="imprimir"></td>
+					<td>{{item.examen.nombre}}</td>
+					<td>{{item.usuario_muestra.apellido_paterno}}, {{item.usuario_muestra.nombre}}</td>
+					<td ng-bind="item.fecha_muestra | date:'dd-MM-yyyy HH:mm'"></td>
 				</tr>
-				<tr>
-					<th class="col-sm-2 text-right">Fecha nacimiento</th><td>{{detalleFicha.ficha.paciente.fecha_nacimiento | date : 'dd-MM-yyyy'}}</td>
-				</tr>
-				<tr>
-					<th class="col-sm-2 text-right">Edad</th><td>{{detalleFicha.ficha.paciente.edad}}</td>
-				</tr>
-				<tr>
-					<th class="col-sm-2 text-right">Género</th><td>{{detalleFicha.ficha.paciente.genero?'Masculino':'Femenino'}}</td>
-				</tr>
-				<tr>
-					<th class="col-sm-2 text-right">Observaciones ficha</th><td>{{detalleFicha.ficha.observaciones}}</td>
-				</tr>
-			</table>
-		</div>
+			</tbody>
+		</table>
 	</div>
 </div>
