@@ -197,12 +197,12 @@ ActiveRecord::Schema.define(version: 20150626190503) do
   end
 
   create_table "medicos", force: :cascade do |t|
-    t.string   "rut",              limit: 20,                    null: false
-    t.string   "rutdv",            limit: 1,                     null: false
-    t.string   "nombre",           limit: 100,                   null: false
-    t.string   "apellido_paterno", limit: 100,                   null: false
+    t.string   "rut",              limit: 20,                                  null: false
+    t.string   "rutdv",            limit: 1,                                   null: false
+    t.string   "nombre",           limit: 100,                                 null: false
+    t.string   "apellido_paterno", limit: 100,                                 null: false
     t.string   "apellido_materno", limit: 100
-    t.datetime "creado",                       default: "now()"
+    t.datetime "creado",                       default: '2015-02-20 15:08:40'
     t.integer  "especialidad_id"
     t.integer  "institucion_id"
     t.string   "telefono"
@@ -210,9 +210,9 @@ ActiveRecord::Schema.define(version: 20150626190503) do
   end
 
   create_table "modificacion_examenes", force: :cascade do |t|
-    t.integer  "user_id",                     null: false
-    t.integer  "examen_id",                   null: false
-    t.datetime "creacion",  default: "now()", null: false
+    t.integer  "user_id"
+    t.integer  "examen_id"
+    t.datetime "creacion",  default: '2015-06-18 02:35:31', null: false
   end
 
   create_table "ordenes_medicas", force: :cascade do |t|
@@ -241,9 +241,9 @@ ActiveRecord::Schema.define(version: 20150626190503) do
   end
 
   create_table "parametros", force: :cascade do |t|
-    t.string   "nombre",         limit: 100
-    t.string   "unidad",         limit: 20
-    t.datetime "creado",                     default: "now()", null: false
+    t.string   "nombre",         limit: 100,                                 null: false
+    t.string   "unidad",         limit: 20,                                  null: false
+    t.datetime "creado",                     default: '2015-02-20 15:08:40', null: false
     t.string   "codigo"
     t.string   "nombre_visible"
     t.string   "tipo"
@@ -297,9 +297,9 @@ ActiveRecord::Schema.define(version: 20150626190503) do
   end
 
   create_table "resultados_examen", force: :cascade do |t|
-    t.integer  "detalle_ficha_id",   limit: 8,                   null: false
-    t.integer  "cantidad_sustancia",                             null: false
-    t.datetime "creado",                       default: "now()", null: false
+    t.integer  "detalle_ficha_id",   limit: 8,                                 null: false
+    t.integer  "cantidad_sustancia",                                           null: false
+    t.datetime "creado",                       default: '2015-02-20 15:08:40', null: false
   end
 
   create_table "roles", force: :cascade do |t|
@@ -405,10 +405,10 @@ ActiveRecord::Schema.define(version: 20150626190503) do
   add_index "users_sucursal", ["user_id", "sucursal_id"], name: "user_sucursal", unique: true, using: :btree
 
   create_table "valores_parametros", force: :cascade do |t|
-    t.integer  "parametro_id",                   null: false
+    t.integer  "parametro_id"
     t.string   "codigo"
     t.string   "nombre"
-    t.datetime "creacion",     default: "now()", null: false
+    t.datetime "creacion",     default: '2015-06-27 00:35:16', null: false
   end
 
   add_foreign_key "alias_examenes", "examenes"
@@ -457,7 +457,6 @@ ActiveRecord::Schema.define(version: 20150626190503) do
   add_foreign_key "pacientes", "users", name: "pacientes_user_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "permisos_rol", "permisos", name: "permisos_rol_permiso_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "permisos_rol", "roles", name: "permisos_rol_rol_id_fkey", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "previsiones", "tarifas", name: "previsiones_tarifa_id_fkey", on_update: :cascade
   add_foreign_key "resultados_examen", "detalles_ficha", column: "detalle_ficha_id", name: "resultados_examen_detalle_ficha_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "roles_usuario", "roles", name: "roles_usuario_rol_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "roles_usuario", "users", name: "roles_usuario_user_id_fkey", on_update: :cascade, on_delete: :cascade

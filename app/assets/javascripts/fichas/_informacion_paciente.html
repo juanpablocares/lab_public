@@ -35,15 +35,7 @@
 		<tr ng-if="edit">
 			<td><strong>Prevision</strong></td>
 			<td colspan="3">
-				<ui-select ng-model="prevision.selected" theme="bootstrap" on-select="seleccionarPrevision($item, $select)">
-					<ui-select-match placeholder="Seleccione prevision">
-						<span >{{$select.selected.nombre}}</span>
-					</ui-select-match>
-					<ui-select-choices repeat="item in previsionesArray | filter: $select.search">
-						<span style="width=10px;" ng-bind-html="item.id | highlight: $select.search"></span> |
-						<span ng-bind-html="item.nombre | highlight: $select.search"></span>
-					</ui-select-choices>
-				</ui-select>
+				<select class="form-control" ng-model="prevision" ng-options="prevision.nombre for prevision in previsionesArray track by prevision.id | orderBy:'nombre'" name="prevision" ng-change="seleccionarPrevision(prevision)" required></select>
 			</td>
 		</tr>
 		<tr>

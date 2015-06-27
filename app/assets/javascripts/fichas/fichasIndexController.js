@@ -56,7 +56,7 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 
 			Previsiones.all.get().$promise.then(function(response) {
 				$scope.previsionesArray = response.previsiones;
-				$scope.prevision.selected = $scope.setPrevisionSeleccionada($scope.ficha.prevision);
+				$scope.prevision = $scope.setPrevisionSeleccionada($scope.ficha.prevision);
 			}, function(response) {
 				console.log("ERROR obteniendo previsiones");
 			});
@@ -189,7 +189,7 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 			return 'Exámenes';
 	};
 
-	$scope.seleccionarPrevision = function(prevision, select)
+	$scope.seleccionarPrevision = function(prevision)
 	{
 		//Se cambia la prevision. Debe cambiar en el registro del paciente, de la ficha
 		//y actualizar los precios de los examenes realizados a la tarifa de la nueva prevision.

@@ -14,14 +14,7 @@
 						<th>Tipo de pago</th>
 						<td>
 							<div ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_tipo_pago.$error.required)}">
-								<ui-select ng-model="nuevoPago.tipo_pago" name="nuevo_pago_tipo_pago" theme="bootstrap" required>
-								<ui-select-match placeholder="Seleccione tipo de pago">
-								{{$select.selected.nombre}}
-								</ui-select-match>
-								<ui-select-choices repeat="item in tiposPagoArray | filter: $select.search">
-								<span ng-bind-html="item.nombre | highlight: $select.search"></span>
-								</ui-select-choices>
-								</ui-select>
+								<select class="form-control" ng-model="nuevoPago.tipo_pago" ng-options="tipoPago.nombre for tipoPago in tiposPagoArray track by tipoPago.id | orderBy:'nombre'" name="tipo_pago" required></select>
 								<label class="error" ng-if="(ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_tipo_pago.$error.required)">Seleccione un tipo de pago.</label>
 							</div>
 						</td>
@@ -76,44 +69,59 @@
 		</form>
 	</div>
 </div>
-<div class="widget-container fluid-height">
+<div ng-if="loading" class="row text-center">
+	<i class="fa fa-spinner fa-pulse fa-2x"></i>
+</div>
+<div class="widget-container fluid-height" ng-if="!loading">
 	<div class="heading">
 		Pagos realizados
 	</div>
 	<div class="row widget-content padded">
-		<h4 ng-if="detallePagos.length == 0"> No hay pagos realizados aún. </h4>
-		<div class="col-sm-12" ng-if="detallePagos.length != 0">
+		<div class="col-sm-12">
 			<table class="table">
 				<thead>
-					<th> Número </th>
-					<th> Codigo pago </th>
-					<th> Tipo de pago </th>
-					<th> Doc. N°</th>
+					<th class="col-sm-1"> Número </th>
+					<th class="col-sm-1"> Codigo pago </th>
+					<th class="col-sm-2"> Tipo de pago </th>
+					<th class="col-sm-1"> Doc. N°</th>
+					<th class="col-sm-1"> Factura </th>
 					<th> Fecha </th>
 					<th> Recaudador </th>
 					<th> Monto </th>
+					<th class="text-center col-sm-1"> Opciones </th>
 				</thead>
 				<tbody>
-					<tr ng-repeat="pago in detallePagos track by $index">
+					<tr ng-if="detallePagos.length != 0" ng-repeat="pago in detallePagos track by $index">
 						<td>{{$index + 1 }}</td>
 						<td>{{pago.id}}</td>
-						<td>{{pago.tipo_pago.nombre}}</td>
-						<td>{{pago.n_documento}}</td>
+						<td><select class="form-control" ng-model="pago.tipo_pago" ng-options="tipoPago.nombre for tipoPago in tiposPagoArray track by tipoPago.id | orderBy:'nombre'" name="tipo_pago" ng-change="setPagoChanged(pago,true)" required></select></td>
+						<td><input ng-model="pago.n_documento" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>
+						<td><input ng-model="pago.factura" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>
 						<td>{{pago.creado | date:'dd/MM/yyyy HH:mm'}}</td>
 						<td>{{pago.user.nombre}} {{pago.user.apellido_paterno}}</td>
-						<td>{{pago.monto_pagado}}</td>
+						<td><input type="number" ng-model="pago.monto_pagado" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>
+						<td class="text-center">
+							<a class="clickable" ng-if="pago.changed" ng-click="pagoUpdate(pago)"><i class="fa fa-save fa-fw"></i></a>
+							<a class="clickable" ng-click="pagoDelete(pago)"><i class="fa fa-trash-o fa-fw text-danger"></i></a>
+						</td>
+					</tr>
+					<tr ng-if="detallePagos.length == 0">
+						<td colspan="9"><h4>No hay pagos realizados aún.</h4></td>
 					</tr>
 					<tr>
-						<td colspan="6"><strong>Precio total</strong></td>
+						<td colspan="7"><strong>Precio total</strong></td>
 						<td class="text-danger">{{precio_total}}</td>
+						<td></td>
 					</tr>
 					<tr>
-						<td colspan="6"><strong>Pagado</strong></td>
+						<td colspan="7"><strong>Pagado</strong></td>
 						<td class="text-success">{{getTotalPagos()}}</td>
+						<td></td>
 					</tr>
 					<tr>
-						<td colspan="6"><strong>Total</strong></td>
+						<td colspan="7"><strong>Total</strong></td>
 						<td ng-class="{'text-success': precio_total < getTotalPagos(), 'text-danger': precio_total > getTotalPagos()}">{{precio_total - getTotalPagos()}}</td>
+						<td></td>
 					</tr>
 				</tbody>
 			</table>

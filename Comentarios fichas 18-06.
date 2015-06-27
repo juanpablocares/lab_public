@@ -1,15 +1,4 @@
 hacer pull
-
-Comentarios fichas.
-
 En Crear/Editar ficha/cotizacion.
-
 	Prevision seleccionable.
-	
-En vista Pagos:
-	Editar pago
-	Crear modo edicion en linea en tabla de pagos. tipo, doc , monto y fecha.
-	boton eliminar pago
-	Cambiar columna codigo por un indice correlativo 123456...
-
 Crear ficha desde cotizacion

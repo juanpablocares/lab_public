@@ -26,7 +26,7 @@
 					<td>{{item.examen.demora?item.examen.demora:'---'}}</td>
 					<td><label class="label label-{{item.estado.class}}">{{item.estado.texto}}</label></td>
 					<td>{{item.precio?item.precio:0 }}</td>
-					<td class="text-center"><a ng-if="item.delete" class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar examen"><i class="fa fa-trash-o fa-lg"></i></a>
+					<td class="text-center"><a ng-if="item.delete" class="clickable text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar examen"><i class="fa fa-trash-o fa-lg"></i></a>
 					<a class="text-primary" ui-sref="loginRequired.examenes.info({examen_id: item.examen.id})" target="_blank" title="Información examen"><i class="fa fa-info-circle fa-lg"></i></a>
 					<a ng-click="mostrarEnConsola(item)"><i class="fa fa-terminal fa-lg"></i></a>
 					</td>
@@ -35,7 +35,7 @@
 			<tbody ng-repeat="item in examenesSeleccionados_edit track by $index" ng-if="examenesSeleccionados_edit.length != 0 && item.perfil">
 				<tr>
 					<td colspan="10"><strong>{{item.nombre}}</strong></td>
-					<td ng-if="item.delete" class="text-center"><a class="text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar perfil"><i class="fa fa-trash-o fa-lg"></i></a></td>
+					<td ng-if="item.delete" class="text-center"><a class="clickable text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar perfil"><i class="fa fa-trash-o fa-lg"></i></a></td>
 				</tr>
 				<tr ng-repeat="detalle in item.examenes" ng-if="!item.nuevo">
 					<td>{{detalle.examen.id}}</td>
