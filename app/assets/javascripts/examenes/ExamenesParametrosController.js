@@ -1,14 +1,32 @@
-angular.module('lab').controller('ExamenesParametrosController', function($scope, $http, $stateParams, $auth, $state, ValorParametro, ValoresParametros) {
+angular.module('lab').controller('ExamenesParametrosController', function($scope, $http, $stateParams, $auth, $state, ExamenParametro, ExamenesParametros) {
 
 	$scope.isLoading = true;
 	$scope.array_parametros = [];
-	$http.get('/api/parametros/').success(function(data) {
-		$scope.parametros = data;
-		console.log($scope.parametros);
-		$scope.isLoading = false;
-	}).error(function(data) {
-		// log error
-	});
+	
+	$scope.set_initial_data = function(){
+		$http.get('/api/parametros').success(function(data) {
+			//console.log(data);
+			$scope.parametros = data;
+			$http.get('/api/examenes_parametros/examen/' + $stateParams.examen_id).success(function(data) {
+				$scope.array_parametros = data.examenes_parametros;
+				
+				for(i in $scope.array_parametros)
+					for(j in $scope.parametros)
+						if($scope.array_parametros[i].parametro_id == $scope.parametros[j].id){
+							$scope.array_parametros[i].parametro = $scope.parametros[j];
+							break;
+						}
+				
+				$scope.isLoading = false;
+			}).error(function(data) {
+				// log error
+			});
+		}).error(function(data) {
+			// log error
+		});
+	}
+	
+	$scope.set_initial_data();
 	
 	$scope.change = function(indice){
 		$scope.array_parametros[indice].boton_agregar = false;
@@ -17,49 +35,37 @@ angular.module('lab').controller('ExamenesParametrosController', function($scope
 	$scope.add = function(){
 		$scope.array_parametros.push({
 			examen_id: $stateParams.examen_id,
-			unidad: '',
-			nombre_visible: '',
           });
-	};
-	
-	$scope.create = function(indice){
-		console.log($scope.array_parametros[indice]);
-		ProcesoExamen.update({id:$scope.array_parametros[indice].id}, $scope.array_parametros[indice]).
-			$promise.
-				then(function(response) {
-					console.log("Edicion de tipo examenes");
-				}, function(response) {
-					console.log("ERROR editando tipo examenes");
-					$scope.resetTarifaExamen();
-				});
 	};
 	
 	$scope.guardar_cambios = function(array_parametros){
 		console.log(array_parametros);
-		ValoresParametros.all.update({
-				valores_parametros : array_parametros,
+		for(i in array_parametros)
+			if(array_parametros[i].parametro)
+				array_parametros[i].parametro_id = array_parametros[i].parametro.id;
+			else{
+				alert('Falta ingresar un valor de parámetro');
+				return ;
+			}
+		ExamenesParametros.all.update({
+				examenes_parametros : array_parametros,
 			}).
 			$promise.then(function(result) {
-				console.log('update colores orina');
-				$http.get('/api/parametros/color_orina').success(function(data) {
-					$scope.array_parametros = data.valores_parametros;
-				}).error(function(data) {
-					// log error
-				});
-				console.log(result);
+				console.log('update examenes parametros');
+				$scope.set_initial_data();
 			});
 	};
 	
 	$scope.remove = function(indice){
-		ValorParametro.delete({id: $scope.array_parametros[indice].id}).
+		ExamenParametro.delete({id: $scope.array_parametros[indice].id}).
 			$promise.
 				then(function(response) {
 					if (indice > -1) {
 						$scope.array_parametros.splice(indice, 1);
 					}
-					console.log("Eliminado color orina");
+					console.log("Eliminado parametro de examen");
 				}, function(response) {
-					console.log("ERROR eliminando color orina");
+					console.log("ERROR eliminando parametro de examen");
 				});
 	};
 });

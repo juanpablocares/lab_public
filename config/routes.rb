@@ -7,23 +7,7 @@ Rails.application.routes.draw do
 		get 'users/paterno/:paterno', to: 'users#search_paterno', defaults: {format: 'json'}
 		get 'users/paterno/:materno', to: 'users#search_materno', defaults: {format: 'json'}
 		
-		#Controladores alias examenes
-		get 'alias_examenes/examen/:examen_id', to: 'alias_examenes#by_examen', defaults: {format: 'json'}
-		put 'alias_examenes/', to: 'alias_examenes#update_all', defaults: {format: 'json'}
-		
-		#Controladores indicaciones muestras
-		put 'indicaciones_muestra/', to: 'indicaciones_muestra#update_all', defaults: {format: 'json'}
-		delete 'indicaciones_muestra/:id', to: 'indicaciones_muestra#delete', defaults: {format: 'json'}
-		
-		#Controladores instituciones
-		put 'instituciones/update_all/', to: 'instituciones#update_all', defaults: {format: 'json'}
-		delete 'instituciones/:id', to: 'instituciones#delete', defaults: {format: 'json'}
-		
-		#Controladores especialidades
-		put 'especialidades/update_all/', to: 'especialidades#update_all', defaults: {format: 'json'}
-		delete 'especialidades/:id', to: 'especialidades#delete', defaults: {format: 'json'}
-		
-		#Controladores de pacientes
+		##########################Controladores de pacientes##########################
 		post 'pacientes/range/:start/:number', to: 'pacientes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		put 'pacientes/rut/:rut', to: 'pacientes#update_byrut', defaults: {format: 'json'}
 		get 'pacientes/rut/:rut', to: 'pacientes#search', defaults: {format: 'json'}
@@ -33,24 +17,24 @@ Rails.application.routes.draw do
 		get 'pacientes/paterno/:paterno', to: 'pacientes#search_paterno', defaults: {format: 'json'}
 		get 'pacientes/paterno/:materno', to: 'pacientes#search_materno', defaults: {format: 'json'}
 		
-		#Controladores de fichas
+		##########################Controladores de fichas##########################
 		get 'fichas/pagos/:id', to: 'fichas#pagos', defaults: {format: 'json'}
 		get 'fichas/paciente/:id', to: 'fichas#show_bypaciente', defaults: {format: 'json'}
 		post 'fichas/range/:start/:number', to: 'fichas#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		post 'fichas/muestras/:start/:number', to: 'fichas#muestras', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
-		
 		#controladores de cotizaciones
 		get 'cotizaciones/paciente/:id', to: 'cotizaciones#show_bypaciente', defaults: {format: 'json'}
-
-
-		#Controladores de hora preoceso examenes
-		get 'horaproceso_examenes/examen/:examen_id', to: 'horaproceso_examenes#by_examen', defaults: {format: 'json'}
-		put 'horaproceso_examenes/', to: 'horaproceso_examenes#update_all', defaults: {format: 'json'}
+		#Controladores detalle_ficha
+		post 'detalles_ficha/muestras_tomadas/:start/:number', to: 'detalles_ficha#muestras_tomadas', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
+		post 'detalles_ficha/paciente/:id/:start/:number', to: 'detalles_ficha#get_by_paciente', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/, :start=> /[0-9]+/, :number=> /[0-9]+/ }
+		post 'detalles_ficha/ficha/:id/:start/:number', to: 'detalles_ficha#get_by_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/, :start=> /[0-9]+/, :number=> /[0-9]+/ }
+		get 'detalles_ficha/ficha/:id', to: 'detalles_ficha#get_by_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/}
+		#Controlador detalle pago ficha
+		post 'detalles_pago_ficha/range/:start/:number/:facturadas', to: 'detalles_pago_ficha#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
+		get 'detalles_pago_ficha/ficha/:id', to: 'detalles_pago_ficha#getAllByFicha', defaults: {format: 'json'}
+		put 'detalles_pago_ficha/', to: 'detalles_pago_ficha#update_all', defaults: {format: 'json'}
 		
-		#Controladores de perfiles
-		get 'perfiles/filtrar_tarifas/:id', to: 'perfiles#filtrar_tarifas', defaults: {format: 'json'},  constraints: { :id=> /[0-9]+/}
-	
-		#Controladores de examenes 
+		##########################Controladores de examenes##########################
 		get 'examenes/filtrar_tarifas/:id', to: 'examenes#filtrar_tarifas', defaults: {format: 'json'},  constraints: { :id=> /[0-9]+/}
 		get 'examenes/select', to: 'examenes#select', defaults: {format: 'json'}
 		put 'examenes/', to: 'examenes#update_all', defaults: {format: 'json'}
@@ -58,12 +42,39 @@ Rails.application.routes.draw do
 		#Controladores modificaciones examenes
 		get 'modificacion_examenes/examen/:examen_id', to: 'modificacion_examenes#findby_examen', defaults: {format: 'json'},  constraints: { :id=> /[0-9]+/}
 		post 'modificacion_examenes/crear/:examen_id/:user_id', to: 'modificacion_examenes#create', defaults: {format: 'json'}
+		#Controladores alias examenes
+		get 'alias_examenes/examen/:examen_id', to: 'alias_examenes#by_examen', defaults: {format: 'json'}
+		put 'alias_examenes/', to: 'alias_examenes#update_all', defaults: {format: 'json'}
+		#Controladores indicaciones muestras
+		put 'indicaciones_muestra/', to: 'indicaciones_muestra#update_all', defaults: {format: 'json'}
+		delete 'indicaciones_muestra/:id', to: 'indicaciones_muestra#delete', defaults: {format: 'json'}
+		#Controladores instituciones
+		put 'instituciones/update_all/', to: 'instituciones#update_all', defaults: {format: 'json'}
+		delete 'instituciones/:id', to: 'instituciones#delete', defaults: {format: 'json'}
+		#Controladores de hora preoceso examenes
+		get 'horaproceso_examenes/examen/:examen_id', to: 'horaproceso_examenes#by_examen', defaults: {format: 'json'}
+		put 'horaproceso_examenes/', to: 'horaproceso_examenes#update_all', defaults: {format: 'json'}
+		#Controladores de perfiles
+		get 'perfiles/filtrar_tarifas/:id', to: 'perfiles#filtrar_tarifas', defaults: {format: 'json'},  constraints: { :id=> /[0-9]+/}
+		#Controladores examenes parametros
+		get 'examenes_parametros/examen/:examen_id', to: 'examenes_parametros#get_parametros', defaults: {format: 'json'}
+		put 'examenes_parametros/', to: 'examenes_parametros#update_all', defaults: {format: 'json'}
+		delete 'examenes_parametros/:id', to: 'examenes_parametros#delete', defaults: {format: 'json'}
 		
+		##########################Controladores de medicos##########################
+		post 'medicos/range/:start/:number', to: 'medicos#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
+		post 'medicos/', to: 'medicos#create', defaults: {format: 'json'}
+		get 'medicos/:id', to: 'medicos#show', defaults: {format: 'json'}
+		put 'medicos/:id', to: 'medicos#update', defaults: {format: 'json'}
+		delete 'medicos/:id', to: 'medicos#delete', defaults: {format: 'json'}
+		#Controladores especialidades
+		put 'especialidades/update_all/', to: 'especialidades#update_all', defaults: {format: 'json'}
+		delete 'especialidades/:id', to: 'especialidades#delete', defaults: {format: 'json'}
+		
+		##########################Controladores de tarifas##########################
 		#Controladores de tarifas
 		get 'tarifas/examenes', to: 'tarifas#examenes', defaults: {format: 'json'}
 		post 'tarifas/range/:start/:number', to: 'tarifas#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
-		
-
 		#Controladores de tarifas examenes
 		get 'tarifas_examen/', to: 'tarifas_examen#index', defaults: {format: 'json'}
 		get 'tarifas_examen/:id', to: 'tarifas_examen#show', defaults: {format: 'json'}
@@ -71,31 +82,6 @@ Rails.application.routes.draw do
 		put 'tarifas_examen/', to: 'tarifas_examen#update_all', defaults: {format: 'json'}
 		get 'tarifas_examen/examen/:examen_id', to: 'tarifas_examen#show_examen', defaults: {format: 'json'}
 		post 'tarifas_examen/range/:tarifa_id/:start/:number', to: 'tarifas_examen#range', defaults: {format: 'json'}, constraints: { :tarifa_id=> /[0-9]+/, :start=> /[0-9]+/, :number=> /[0-9]+/ } 
-		
-		#Controladores de medicos
-		post 'medicos/range/:start/:number', to: 'medicos#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
-		post 'medicos/', to: 'medicos#create', defaults: {format: 'json'}
-		get 'medicos/:id', to: 'medicos#show', defaults: {format: 'json'}
-		put 'medicos/:id', to: 'medicos#update', defaults: {format: 'json'}
-		delete 'medicos/:id', to: 'medicos#delete', defaults: {format: 'json'}
-		
-		#Controladores detalle_ficha
-		post 'detalles_ficha/muestras_tomadas/:start/:number', to: 'detalles_ficha#muestras_tomadas', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
-		post 'detalles_ficha/paciente/:id/:start/:number', to: 'detalles_ficha#get_by_paciente', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/, :start=> /[0-9]+/, :number=> /[0-9]+/ }
-		post 'detalles_ficha/ficha/:id/:start/:number', to: 'detalles_ficha#get_by_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/, :start=> /[0-9]+/, :number=> /[0-9]+/ }
-		get 'detalles_ficha/ficha/:id', to: 'detalles_ficha#get_by_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/}
-		
-		#Controladores sustancias_examen
-		get 'sustancias_examen/examen/:id', to: 'sustancias_examen#get_by_examen', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/}
-		
-		#Controladores sustancias_examen
-		get 'resultados_examen/detalle_ficha/:id', to: 'resultados_examen#get_by_detalle_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/}
-		post 'resultados_examen/detalle_ficha/:id', to: 'resultados_examen#save_batch_by_detalle_ficha', defaults: {format: 'json'}, constraints: {:id =>/[0-9]+/}
-		
-		#Controlador detalle pago ficha
-		post 'detalles_pago_ficha/range/:start/:number/:facturadas', to: 'detalles_pago_ficha#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
-		get 'detalles_pago_ficha/ficha/:id', to: 'detalles_pago_ficha#getAllByFicha', defaults: {format: 'json'}
-		put 'detalles_pago_ficha/', to: 'detalles_pago_ficha#update_all', defaults: {format: 'json'}
 		
 		##########################Controladores de parámetros##########################
 		get 'parametros/:nombre', to: 'parametros#get_valores', defaults: {format: 'json'}
@@ -136,35 +122,35 @@ Rails.application.routes.draw do
 		delete 'previsiones/:id', to: 'previsiones#delete', defaults: {format: 'json'}
 		
 		resources :alias_examenes, :defaults => { :format => 'json' }
-		resources :resultados_examen, :defaults => { :format => 'json' }
-		resources :sustancias_examen, :defaults => { :format => 'json' }
 		resources :comunas, :defaults => { :format => 'json' }
+		resources :cotizaciones, :defaults => { :format => 'json' }
+		resources :detalles_pago_ficha, :defaults => { :format => 'json' }
 		resources :detalles_ficha , :defaults => { :format => 'json' }
 		resources :especialidades, :defaults => { :format => 'json' }
+		resources :examenes, :defaults => { :format => 'json' }
+		resources :examenes_parametros, :defaults => { :format => 'json' }
 		resources :fichas, :defaults => { :format => 'json' }
 		resources :horaproceso_examenes, :defaults => { :format => 'json' }
 		resources :indicaciones, :defaults => { :format => 'json' }
 		resources :indicaciones_muestra, :defaults => { :format => 'json' }
 		resources :instituciones, :defaults => { :format => 'json' }
+		resources :medicos, :defaults => { :format => 'json' }
 		resources :modificacion_examenes, :defaults => { :format => 'json' }
+		resources :pacientes, :defaults => { :format => 'json' }
 		resources :parametros, :defaults => { :format => 'json' }
 		resources :previsiones, :defaults => { :format => 'json' }
-		resources :regiones, :defaults => { :format => 'json' }
-		resources :pacientes, :defaults => { :format => 'json' }
 		resources :procesadores_examenes, :defaults => { :format => 'json' }
 		resources :proceso_examenes, :defaults => { :format => 'json' }
-		resources :examenes, :defaults => { :format => 'json' }
-		resources :tarifas, :defaults => { :format => 'json' }
-		resources :cotizaciones, :defaults => { :format => 'json' }
-		resources :medicos, :defaults => { :format => 'json' }
+		resources :regiones, :defaults => { :format => 'json' }
 		resources :procedencias, :defaults => { :format => 'json' }
 		resources :perfiles, :defaults => { :format => 'json' }
+		resources :resultados_examen, :defaults => { :format => 'json' }
 		resources :tapas_tubo, :defaults => { :format => 'json' }
+		resources :tarifas, :defaults => { :format => 'json' }
 		resources :tipos_envase , :defaults => { :format => 'json' }
 		resources :tipo_examenes, :defaults => { :format => 'json' }
 		resources :tipos_muestras, :defaults => { :format => 'json' }
 		resources :tipos_pago , :defaults => { :format => 'json' }
-		resources :detalles_pago_ficha, :defaults => { :format => 'json' }
 		resources :valores_parametros, :defaults => { :format => 'json' }
 		
 		resources :users, :defaults => { :format => 'json' } do

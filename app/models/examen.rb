@@ -22,7 +22,7 @@ class Examen < ActiveRecord::Base
 	has_many :alias_examenes
 	has_many :horaproceso_examenes
 	has_many :detalles_cotizacion, :class_name => 'DetalleCotizacion'
-
+	has_many :examenes_parametros
 	has_many :examenes_perfil, :class_name => 'ExamenPerfil'
 	has_many :perfiles , through: :examenes_perfil
 end

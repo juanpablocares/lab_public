@@ -20,7 +20,7 @@
 							<td>{{$index + 1}}</td>
 							<td><input class="form-control" type="text" ng-model="item.nombre" name="nombre" ng-change="change($index)"></td>
 							<td>
-								<select class="form-control" ng-model="item.parametro_id" ng-options="p.nombre_visible for p in parametros track by p.id | orderBy:'nombre_visible'" name="parametro_id"  required></select>
+								<select class="form-control" ng-model="item.parametro" ng-options="p.nombre_visible for p in parametros track by p.id | orderBy:'nombre_visible'" name="parametro_id"  required></select>
 							</td>
 							<td><input class="form-control" type="text" ng-model="item.unidad" name="descripcion" ng-change="change($index)"></td>
 							<td><button type="button" class="btn btn-danger btn-lg btn-block" ng-click="remove($index)"><i class="fa fa-trash"></i></button></td>
