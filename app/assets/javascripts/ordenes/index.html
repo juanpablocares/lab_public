@@ -3,20 +3,20 @@
 		<div class="widget-content padded">
 			<table class="table">
 				<tr>
-					<th class="col-sm-1 text-right">Fecha</th><td ng-bind="ficha.creado | date:'dd-MM-yyyy'"></td>
-					<th class="col-sm-1 text-right">Folio</th><td colspan="2">{{ficha.id}}</td>
+					<th class="col-sm-1 text-left">Fecha</th><td ng-bind="ficha.creado | date:'dd-MM-yyyy'"></td>
+					<th class="col-sm-1 text-left">Folio</th><td >{{ficha.id}}</td>
 					<th class="col-sm-2 text-left" ng-if="ficha.urgente" colspan="2"><span class="label label-danger"><font size="5">Ficha Urgente</font></span></th>
 				</tr>
 				<tr>
-					<th class="col-sm-1 text-right">Procedencia</th><td >{{ficha.procedencia.nombre}}</td>
-					<th class="col-sm-1 text-right">N°</th><td >{{ficha.numero_procedencia}}</td>
-					<th class="col-sm-1 text-right">Programa</th><td >{{ficha.programa}}</td>
-					<th class="col-sm-1 text-right">N°</th><td >{{ficha.numero_programa}}</td>
+					<th class="col-sm-1 text-left">Procedencia</th><td >{{ficha.procedencia.nombre}}</td>
+					<th class="col-sm-1 text-left">N°</th><td >{{ficha.numero_procedencia}}</td>
+					<th class="col-sm-1 text-left">Programa</th><td >{{ficha.programa}}</td>
+					<th class="col-sm-1 text-left">N°</th><td >{{ficha.numero_programa}}</td>
 				</tr>
 				<tr>
-					<th class="col-sm-1 text-right">Paciente</th><td>{{ficha.paciente.nombre}} {{ficha.paciente.apellido_paterno}} {{ficha.paciente.apellido_materno}}</td>
-					<th class="col-sm-1 text-right">Edad</th><td>{{ficha.paciente.edad}}</td>
-					<th class="col-sm-1 text-right">Médico</th><td colspan="3">{{ficha.medico.nombre}} {{ficha.medico.apellido_paterno}} {{ficha.medico.apellido_materno}}</td>
+					<th class="col-sm-1 text-left">Paciente</th><td>{{ficha.paciente.nombre}} {{ficha.paciente.apellido_paterno}} {{ficha.paciente.apellido_materno}}</td>
+					<th class="col-sm-1 text-left">Edad</th><td>{{ficha.paciente.edad}}</td>
+					<th class="col-sm-1 text-left">Médico</th><td colspan="3">{{ficha.medico.nombre}} {{ficha.medico.apellido_paterno}} {{ficha.medico.apellido_materno}}</td>
 				</tr>
 				<tr>
 					<th ><label class="control-label"><strong>Diagnostico</strong></label></th>

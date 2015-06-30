@@ -52,7 +52,15 @@
 					isArray : false,
 					// no es necesario agregar params, se agregan dentro de la funcion cuando se llame. Ficha.buscar(params);
 				}
-			})
+			}),
+			input_resultados : $resource("/api/fichas/:id/input_resultados/", {
+				id : "@id",
+			}, {
+				get : {
+					method : 'GET',
+					isArray : false
+				},
+			}),
 		};
 	});
 })();

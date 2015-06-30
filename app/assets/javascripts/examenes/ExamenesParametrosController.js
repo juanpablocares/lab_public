@@ -39,6 +39,7 @@ angular.module('lab').controller('ExamenesParametrosController', function($scope
 	};
 	
 	$scope.guardar_cambios = function(array_parametros){
+		$scope.isLoading = true;
 		console.log(array_parametros);
 		for(i in array_parametros)
 			if(array_parametros[i].parametro)

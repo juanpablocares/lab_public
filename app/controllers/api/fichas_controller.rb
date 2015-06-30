@@ -42,6 +42,37 @@ class Api::FichasController < ApplicationController
       {:detalles_ficha => {include: [:usuario_muestra, :resultados_examen,:perfil,{:examen => { include: [:indicacion, :tipo_examen,:tarifas_examen]}}]}}]
     end
   end
+  
+  def input_resultados
+	  
+	if @results = Ficha.find(params[:id].to_i)
+      render json: {
+        success: true,
+        message: '[show] Ficha encontrada',
+        data: @results,
+      }, status: 200, include: [
+        {:paciente => {include: [:prevision, :comuna]}},
+        :medico,
+        :user,
+        :prevision,
+        :procedencia,
+      {:detalles_ficha => {include: [
+		:usuario_muestra,
+		:resultados_examen,
+		:perfil,
+		{:examen => { include: [
+			:indicacion,
+			:tipo_examen,
+			:tarifas_examen,
+			{:examenes_parametros => {include: [
+				{:parametro => {include: [
+					:valor_parametro]}
+				}]}
+			}]}
+		}]}
+	  }]
+    end
+  end
 
   def pagos
     if @results = DetallePagoFicha.includes(:tipo_pago, :user).where(	ficha_id: params[:id])

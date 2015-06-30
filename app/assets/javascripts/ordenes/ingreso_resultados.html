@@ -16,10 +16,21 @@
 						<th>Unidades</th>
 					</thead>
 					<tbody>
-						<tr ng-repeat="item in ficha.detalles_ficha track by $index">
+						<tr ng-repeat="item in mostrar_parametros track by $index">
 							<td>{{$index + 1}}</td>
-							<td>{{item.examen.nombre}}</td>
-							<td><input class="form-control" placeholder="Ingrese cantidad" type="text" ng-model="item.cantidad"></td>
+							<td>
+								{{item.nombre}}
+							</td>
+							<td ng-switch="item.tipo" ng-show="item.mostrar">
+								<select ng-switch-when="seleccionable"  class="form-control" ng-model="item.resultado" ng-options="s.nombre for s in item.datos track by s.id | orderBy:'nombre'">
+									<option value=""></option>
+								</select>
+								<input ng-switch-when="numerico" class="form-control" placeholder="Ingrese cantidad" type="number" ng-model="item.cantidad"/>
+								<input ng-switch-default class="form-control" placeholder="Ingrese cantidad" type="text" ng-model="item.cantidad"/>
+							</td>
+							<td ng-hide="item.mostrar" colspan="2">
+								<a class="text-primary" ui-sref="loginRequired.examenes.parametros({examen_id: item.examen_id})" title="Información examen"><i class="fa fa-info-circle fa-lg"></i></a> Examen sin parámetros asignados
+							</td >
 							<td>{{item.examen.unidad_medida}}</td>
 						</tr>
 					</tbody>

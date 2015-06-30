@@ -1,7 +1,7 @@
 class Parametro < ActiveRecord::Base
 	
-	has_many :valores_parametros
-	has_many :examenes_parametros
+	has_many :valor_parametro
+	has_many :examen_parametro
 	
 	self.table_name = "parametros"
 
