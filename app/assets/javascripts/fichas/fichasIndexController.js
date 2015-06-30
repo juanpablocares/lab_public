@@ -247,6 +247,10 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 	};
 
 	$scope.setEstadoExamenes = function() {
+
+
+
+
 		for ( i = 0; i < $scope.examenesSeleccionados.length; i++) {
 			value = $scope.examenesSeleccionados[i];
 			if (value.perfil) {
@@ -254,6 +258,14 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 				for ( j = 0; j < value.examenes.length; j++) {
 					value2 = value.examenes[j];
 					value2.estado = {};
+
+					//Cambio temporal, entrega siempre le mismo estaod
+					value2.estado.class = 'warning';
+					value2.estado.texto = 'Pendiente';
+					return;
+					//END
+
+
 					if (value2.usuario_muestra_id == null) {
 						value2.estado.class = 'warning';
 						value2.estado.texto = 'Pendiente';
@@ -280,6 +292,13 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 			else {
 				value.delete = true;
 				value.estado = {};
+
+				//Cambio temporal entrega siempre le mismo estaod
+				value.estado.class = 'warning';
+				value.estado.texto = 'Pendiente';
+				return;
+				//End
+
 				if (value.usuario_muestra_id == null) {
 					value.estado.class = 'warning';
 					value.estado.texto = 'Pendiente';
@@ -419,7 +438,7 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 						else
 						{
 							value.tarifa_prevision = null;
-							valueo.precio = 0;
+							value.precio = 0;
 						}
 					}
 				}
