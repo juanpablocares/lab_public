@@ -3,19 +3,34 @@ angular.module('lab').controller('ExamenesParametrosController', function($scope
 	$scope.isLoading = true;
 	$scope.array_parametros = [];
 	
+	$scope.update_parametro = function(indice){
+		console.log(indice);
+		console.log($scope.array_parametros);
+	}
+	
 	$scope.set_initial_data = function(){
 		$http.get('/api/parametros').success(function(data) {
 			//console.log(data);
-			$scope.parametros = data;
+			$scope.parametros = data.parametros;
 			$http.get('/api/examenes_parametros/examen/' + $stateParams.examen_id).success(function(data) {
 				$scope.array_parametros = data.examenes_parametros;
 				
-				for(i in $scope.array_parametros)
+				for(i in $scope.array_parametros){
 					for(j in $scope.parametros)
 						if($scope.array_parametros[i].parametro_id == $scope.parametros[j].id){
 							$scope.array_parametros[i].parametro = $scope.parametros[j];
 							break;
 						}
+					if($scope.array_parametros[i].parametro.tipo == 'seleccionable'){
+						for(j in $scope.array_parametros[i].parametro.valor_parametro)
+							if($scope.array_parametros[i].parametro.valor_parametro[j].nombre == $scope.array_parametros[i].valor_defecto){
+								$scope.array_parametros[i].valor = $scope.array_parametros[i].parametro.valor_parametro[j];
+								break;
+							}
+					}
+					if($scope.array_parametros[i].parametro.tipo == 'numerico')
+						$scope.array_parametros[i].valor_defecto = parseInt($scope.array_parametros[i].valor_defecto);
+				}
 				
 				$scope.isLoading = false;
 			}).error(function(data) {
@@ -42,8 +57,14 @@ angular.module('lab').controller('ExamenesParametrosController', function($scope
 		$scope.isLoading = true;
 		console.log(array_parametros);
 		for(i in array_parametros)
-			if(array_parametros[i].parametro)
+			if(array_parametros[i].parametro){
 				array_parametros[i].parametro_id = array_parametros[i].parametro.id;
+				if(array_parametros[i].parametro.tipo == 'seleccionable')
+					if(array_parametros[i].valor)
+						array_parametros[i].valor_defecto = array_parametros[i].valor.nombre;
+					else
+						array_parametros[i].valor_defecto = '';
+			}
 			else{
 				alert('Falta ingresar un valor de parámetro');
 				return ;

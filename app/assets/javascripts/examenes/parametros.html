@@ -12,6 +12,7 @@
 						<th>#</th>
 						<th>Nombre</th>
 						<th>Parámetro</th>
+						<th>V. por defecto</th>
 						<th>Unidad</th>
 						<th>Eliminar</th>
 					</thead>
@@ -20,9 +21,16 @@
 							<td>{{$index + 1}}</td>
 							<td><input class="form-control" type="text" ng-model="item.nombre" name="nombre" ng-change="change($index)"></td>
 							<td>
-								<select class="form-control" ng-model="item.parametro" ng-options="p.nombre_visible for p in parametros track by p.id | orderBy:'nombre_visible'" name="parametro_id"  required></select>
+								<select ng-change="update_parametro($index)" class="form-control" ng-model="item.parametro" ng-options="p.nombre_visible for p in parametros track by p.id | orderBy:'nombre_visible'" name="parametro_id"  required></select>
 							</td>
-							<td><input class="form-control" type="text" ng-model="item.unidad" name="descripcion" ng-change="change($index)"></td>
+							<td ng-switch="item.parametro.tipo" >
+								<select ng-switch-when="seleccionable"  class="form-control" ng-model="item.valor" ng-options="vp.nombre for vp in item.parametro.valor_parametro track by vp.id | orderBy:'nombre'">
+									<option value=""></option>
+								</select>
+								<input ng-switch-when="numerico" class="form-control" placeholder="Ingrese cantidad" type="number" ng-model="item.valor_defecto"/>
+								<input ng-disabled="!item.parametro" ng-switch-default class="form-control" placeholder="Ingrese cantidad" type="text" ng-model="item.valor_defecto"/>
+							</td>
+							<td><input class="form-control" type="text" ng-model="item.unidad_medida" name="descripcion" ng-change="change($index)"></td>
 							<td><button type="button" class="btn btn-danger btn-lg btn-block" ng-click="remove($index)"><i class="fa fa-trash"></i></button></td>
 						</tr>
 						<tr>
