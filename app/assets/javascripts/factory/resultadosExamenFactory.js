@@ -25,6 +25,17 @@
 					method : 'PUT',
 				},
 			}),
+			exaparam_detficha_validar : $resource("/api/resultados_examen/detalle_ficha_validar/:detalle_ficha_id/examen_parametro/:examen_parametro_id", {
+				detalle_ficha_id : '@detalle_ficha_id',
+				examen_parametro_id: '@examen_parametro_id'
+			}, {
+				get : {
+					method : 'GET',
+				},
+				update : {
+					method : 'PUT',
+				},
+			}),
 		};
 	});
 

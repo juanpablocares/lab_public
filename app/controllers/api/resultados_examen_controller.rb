@@ -27,12 +27,13 @@ class Api::ResultadosExamenController < ApplicationController
 	end
 	
 	def update_resultado
-		result = ResultadoExamen.where(examen_parametro_id: params[:examen_parametro_id], detalle_ficha_id: params[:detalle_ficha_id])
+		result = ResultadoExamen.where(examen_parametro_id: params[:examen_parametro_id], detalle_ficha_id: params[:detalle_ficha_id]).first
 		r = params[:resultado]
-		if !(result.empty?)
+		if result != nil
 			result.detalle_ficha_id = r["detalle_ficha_id"]
 			result.examen_parametro_id = r["examen_parametro_id"]
 			result.cantidad = r["cantidad"]
+			result.user_id = r["user_id"]
 			result.creado = Time.now
 			result.save
 			render json: {
@@ -45,12 +46,36 @@ class Api::ResultadosExamenController < ApplicationController
 			resultado.detalle_ficha_id = r["detalle_ficha_id"]
 			resultado.examen_parametro_id = r["examen_parametro_id"]
 			resultado.cantidad = r["cantidad"]
+			result.user_id = r["user_id"]
 			resultado.save
 			render json: {
 			  success: true,
 			  message: 'Resultado nuevo ingresado',
 			  data: resultado,
 			}, status: 200
+		end
+	end
+	
+	def update_validar_resultado
+		result = ResultadoExamen.where(examen_parametro_id: params[:examen_parametro_id], detalle_ficha_id: params[:detalle_ficha_id]).first
+		r = params[:resultado]
+		if result != nil
+			result.detalle_ficha_id = r["detalle_ficha_id"]
+			result.examen_parametro_id = r["examen_parametro_id"]
+			result.usuario_valida_id = r["usuario_valida_id"]
+			result.fecha_usuario_valida = Time.now
+			result.save
+			render json: {
+				  success: true,
+				  message: 'Validado el resultado',
+				  data: result,
+				}, status: 200
+		elsif
+			render json: {
+			  success: true,
+			  message: 'Validando resultado nuevo ',
+			  data: resultado,
+			}, status: 500
 		end
 	end
 	
@@ -95,6 +120,6 @@ class Api::ResultadosExamenController < ApplicationController
 	end
 
 	def resultados_examen_params
-		params.permit(:examen_parametro_id, :detalle_ficha_id, :cantidad, :creado)
+		params.permit(:examen_parametro_id, :detalle_ficha_id, :cantidad, :user_id, :creado, :usuario_valida_id, :fecha_usuario_valida)
 	end
 end

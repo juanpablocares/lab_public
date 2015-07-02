@@ -14,8 +14,10 @@
 						<th>Nombre examen</th>
 						<th>Parámetro</th>
 						<th>Cantidad</th>
-						<th>Unidades</th>
+						<th>Un.</th>
 						<th>Flebotomista</th>
+						<th>Grabado</th>
+						<th>Validador</th>
 						<th>Estado</th>
 						<th>Opciones</th>
 					</thead>
@@ -36,16 +38,19 @@
 								Examen sin parámetros asignados
 							</td >
 							<td>{{item.unidad_medida}}</td>
-							<td>{{item.flebotomista}}</td>
+							<td title="{{item.fecha_muestra}}">{{item.flebotomista}}</td>
+							<td title="{{item.fecha_grabacion}}">{{item.grabado}}</td>
+							<td title="{{item.fecha_validacion}}">{{item.validador}}</td>
 							<td ng-switch="item.estado">
 								<span ng-switch-when="0" class="label label-danger">M. Pendiente</span>
 								<span ng-switch-when="1" class="label label-warning">Sin resultado</span>
 								<span ng-switch-when="2" class="label label-success">Grabado</span>
 								<span ng-switch-when="3" class="label label-primary">Validado</span>
-								<span ng-switch-when="3" class="label label-info">Impreso</span>
+								<span ng-switch-when="4" class="label label-info">Impreso</span>
 							</td>
 							<td align="center">
-								<a ng-show="item.mostrar" ng-click="guardar_resultado($index, item)" style="color: {{item.color_save}};" class="text-primary" title="Guardar resultado"><i class="fa fa-floppy-o fa-lg"></i></a>
+								<a ng-show="item.mostrar" ng-click="guardar_resultado($index, item)" style="color: {{item.color_save}}; cursor:pointer;" class="text-primary" title="Guardar resultado"><i class="fa fa-floppy-o fa-lg"></i></a>
+								<a ng-show="item.mostrar" ng-click="validar_resultado($index, item)" style="color: {{item.color_validado}}; cursor:pointer;" class="text-primary" title="Validar resultado"><i class="fa fa-check fa-lg"></i></a>
 								<a class="text-primary" ui-sref="loginRequired.examenes.parametros({examen_id: item.examen_id})" title="Información examen"><i class="fa fa-info-circle fa-lg"></i></a>
 							</td>
 						</tr>

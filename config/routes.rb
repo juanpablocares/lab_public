@@ -37,6 +37,7 @@ Rails.application.routes.draw do
 		#Controlador de resultados asignados
 		get 'resultados_examen/detalle_ficha/:detalle_ficha_id/examen_parametro/:examen_parametro_id', to: 'resultados_examen#get_resultado', defaults: {format: 'json'}
 		put 'resultados_examen/detalle_ficha/:detalle_ficha_id/examen_parametro/:examen_parametro_id', to: 'resultados_examen#update_resultado', defaults: {format: 'json'}
+		put 'resultados_examen/detalle_ficha_validar/:detalle_ficha_id/examen_parametro/:examen_parametro_id', to: 'resultados_examen#update_validar_resultado', defaults: {format: 'json'}
 		
 		##########################Controladores de examenes##########################
 		get 'examenes/filtrar_tarifas/:id', to: 'examenes#filtrar_tarifas', defaults: {format: 'json'},  constraints: { :id=> /[0-9]+/}

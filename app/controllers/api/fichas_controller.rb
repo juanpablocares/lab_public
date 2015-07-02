@@ -58,7 +58,7 @@ class Api::FichasController < ApplicationController
         :procedencia,
       {:detalles_ficha => {include: [
 		:usuario_muestra,
-		:resultados_examen,
+		{:resultados_examen => {include: [:usuario_graba, :usuario_valida]}},
 		:perfil,
 		{:examen => { include: [
 			:indicacion,

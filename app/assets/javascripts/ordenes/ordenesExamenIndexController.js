@@ -7,19 +7,22 @@ angular.module('lab').controller('OrdenesExamenIndexController', function($scope
 			id : $stateParams.ficha_id
 		}, function(result) {
 			$scope.ficha = result.data;
+			console.log($scope.ficha);
 			$scope.ficha.paciente.edad = $scope.getEdad($scope.ficha.paciente.fecha_nacimiento);
 			for(var i in $scope.ficha.detalles_ficha){
+				$scope.ficha.detalles_ficha[i].imprimir = true;
+				$scope.ficha.detalles_ficha[i].estado = 0;
+				if($scope.ficha.detalles_ficha[i].usuario_muestra_id != null){
+					$scope.ficha.detalles_ficha[i].flebotomista = $scope.ficha.detalles_ficha[i].usuario_muestra.apellido_paterno + ', ' + $scope.ficha.detalles_ficha[i].usuario_muestra.nombre;
+					if($scope.ficha.detalles_ficha[i].estado != undefined && $scope.ficha.detalles_ficha[i].estado < 1)
+						$scope.ficha.detalles_ficha[i].estado = 1;
+				}
 				for(var j in $scope.ficha.detalles_ficha[i].examen.examenes_parametros){
 						for(var k in $scope.ficha.detalles_ficha[i].resultados_examen)
 							if($scope.ficha.detalles_ficha[i].resultados_examen[k].examen_parametro_id == $scope.ficha.detalles_ficha[i].examen.examenes_parametros[j].id && $scope.ficha.detalles_ficha[i].estado != undefined && $scope.ficha.detalles_ficha[i].estado < 2){
 								$scope.ficha.detalles_ficha[i].estado = 2;
+								$scope.ficha.detalles_ficha[i].imprimir = false;
 							}
-						if($scope.ficha.detalles_ficha[i].usuario_muestra != undefined && $scope.ficha.detalles_ficha[i].estado != undefined && $scope.ficha.detalles_ficha[i].estado < 1){
-							$scope.ficha.detalles_ficha[i].estado = 1;
-						}
-						else{
-							$scope.ficha.detalles_ficha[i].estado = 0;
-						}
 				}
 			}
 		});
