@@ -97,12 +97,14 @@
 						<td><select class="form-control" ng-model="pago.tipo_pago" ng-options="tipoPago.nombre for tipoPago in tiposPagoArray track by tipoPago.id | orderBy:'nombre'" name="tipo_pago" ng-change="setPagoChanged(pago,true)" required></select></td>
 						<td><input ng-model="pago.n_documento" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>
 						<td><input ng-model="pago.factura" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>
-						<td>{{pago.creado | date:'dd/MM/yyyy HH:mm'}}</td>
+						<td>
+							<input class="form-control" type="date" ng-model="pago.fecha_creacion" ng-change="setPagoChanged(pago,true)"/>
+						</td>
 						<td>{{pago.user.nombre}} {{pago.user.apellido_paterno}}</td>
 						<td><input type="number" ng-model="pago.monto_pagado" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>
 						<td class="text-center">
-							<a class="clickable" ng-if="pago.changed" ng-click="pagoUpdate(pago)"><i class="fa fa-save fa-fw"></i></a>
-							<a class="clickable" ng-click="pagoDelete(pago)"><i class="fa fa-trash-o fa-fw text-danger"></i></a>
+							<a ng-disabled="pago.saving" class="clickable" ng-if="pago.changed" ng-click="pagoUpdate(pago)"><i ng-class="{'text-danger' : pago.saving}" class="fa fa-save fa-fw"></i></a>
+							<a ng-disabled="pago.deleting" class="clickable" ng-click="pagoDelete(pago)"><i ng-class="{'text-danger' : pago.deleting}" class="fa fa-trash-o fa-fw text-danger"></i></a>
 						</td>
 					</tr>
 					<tr ng-if="detallePagos.length == 0">

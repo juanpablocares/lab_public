@@ -158,6 +158,6 @@ class Api::DetallesPagoFichaController < ApplicationController
   end
 
   def detalle_pago_ficha_params
-    params.require(:detalle_pago_ficha).permit(:ficha_id, :tipo_pago_id, :monto_pagado, :n_documento, :factura, :user_id)
+    params.require(:detalle_pago_ficha).permit(:ficha_id, :tipo_pago_id, :monto_pagado, :n_documento, :factura, :user_id, :creado)
   end
 end

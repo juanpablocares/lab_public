@@ -110,8 +110,13 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 		id : $stateParams.ficha_id
 	}).$promise.then(function(result) {
 		$scope.detallePagos = result.data;
+		for (var i = 0; i < $scope.detallePagos.length; i++)
+		{
+			$scope.detallePagos[i].fecha_creacion = new Date($scope.detallePagos[i].creado);
+		}
 		$scope.loading = false;
-	}).catch(function(response) {
+	}).
+	catch(function(response) {
 		console.error("Error al cargar detalle pagos");
 	});
 
@@ -154,12 +159,18 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 
 	$scope.pagoUpdate = function(pago)
 	{
-		console.log(pago);
+		console.log(pago.creado);
+
 		pago.tipo_pago_id = pago.tipo_pago.id;
+		pago.saving = true;
+		pago.creado = pago.fecha_creacion.toJSON();
+		console.log(pago.creado);
 		DetallePagoFicha.update({id: pago.id}, pago).$promise.then(function(response){
 			pago.changed = false;
+			pago.saving = false;
 			console.log("update pago");
 		},function(response){
+			pago.saving = false;
 			console.log("Error al hacer update pago");
 		});
 	}
@@ -168,13 +179,15 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 	{
 		if( confirm("¿Está seguro de eliminar este pago?"))
 		{
+			pago.deleting = true;
 			DetallePagoFicha.delete({id: pago.id}).$promise.then(function(response){
 				console.log("Delete pago successful");
 				pago.changed = false;
 				var index = $scope.detallePagos.indexOf(pago);
 				$scope.detallePagos.splice(index, 1);
 			},function(response){
-				console.log("Error al hacer update pago");
+				console.log("Error al hacer delete pago");
+				pago.deleting = false;
 			});
 		}
 	}

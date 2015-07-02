@@ -1,2 +1,15 @@
 hacer pull
 Crear ficha desde cotizacion
+
+Revisar error que no muestra informacion de recepcionista y ficha (if ficha.id)
+
+Realizar impresion de ficha
+	Examenes seleccionables antes de impresion 
+	Solo se pueden seleccionar examenes que tienen resultados
+	Si no tienen estado "resultado listo" no son imprimibles
+
+
+Revisar edicion multiple de tarifa (Excel)
+	Revisar edicion de informacion examen
+	Revisar edicion de valores tarifas por examen
+	Agregar creacion de nuevos examenes si se agregan nuevas filas al final del excel. 
