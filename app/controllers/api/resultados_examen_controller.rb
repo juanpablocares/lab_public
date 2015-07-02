@@ -46,7 +46,7 @@ class Api::ResultadosExamenController < ApplicationController
 			resultado.detalle_ficha_id = r["detalle_ficha_id"]
 			resultado.examen_parametro_id = r["examen_parametro_id"]
 			resultado.cantidad = r["cantidad"]
-			result.user_id = r["user_id"]
+			resultado.user_id = r["user_id"]
 			resultado.save
 			render json: {
 			  success: true,

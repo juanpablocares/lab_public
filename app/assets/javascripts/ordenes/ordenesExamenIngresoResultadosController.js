@@ -99,7 +99,6 @@ angular.module('lab').controller('OrdenesExamenIngresoResultadosController', fun
 		}
 		
 		resultado.user_id = $auth.user.id;
-		resultado.estado = 2;
 		console.log(resultado);
 		ResultadosExamen.exaparam_detficha.update({
 			detalle_ficha_id 	: resultado.detalle_ficha_id,
@@ -109,6 +108,7 @@ angular.module('lab').controller('OrdenesExamenIngresoResultadosController', fun
 		$promise.
 			then(function(response) {
 				console.log(response);
+				resultado.estado = 2;
 				resultado.color_save = 'green';
 				resultado.fecha_grabacion = $scope.formatear_fecha((new Date()).toString());
 				resultado.grabado = $auth.user.apellido_paterno + ', ' + $auth.user.nombre;
@@ -124,7 +124,6 @@ angular.module('lab').controller('OrdenesExamenIngresoResultadosController', fun
 		}
 		
 		resultado.usuario_valida_id = $auth.user.id;
-		$scope.mostrar_parametros[indice].estado = 3;
 		console.log(resultado);
 		ResultadosExamen.exaparam_detficha_validar.update({
 			detalle_ficha_id 	: resultado.detalle_ficha_id,
@@ -134,6 +133,7 @@ angular.module('lab').controller('OrdenesExamenIngresoResultadosController', fun
 		$promise.
 			then(function(response) {
 				console.log(response);
+				$scope.mostrar_parametros[indice].estado = 3;
 				resultado.color_validado = 'green';
 				resultado.fecha_validacion = $scope.formatear_fecha((new Date()).toString());
 				resultado.validador = $auth.user.apellido_paterno + ', ' + $auth.user.nombre;

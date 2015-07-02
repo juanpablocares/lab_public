@@ -14,15 +14,13 @@ angular.module('lab').controller('OrdenesExamenIndexController', function($scope
 				$scope.ficha.detalles_ficha[i].estado = 0;
 				if($scope.ficha.detalles_ficha[i].usuario_muestra_id != null){
 					$scope.ficha.detalles_ficha[i].flebotomista = $scope.ficha.detalles_ficha[i].usuario_muestra.apellido_paterno + ', ' + $scope.ficha.detalles_ficha[i].usuario_muestra.nombre;
-					if($scope.ficha.detalles_ficha[i].estado != undefined && $scope.ficha.detalles_ficha[i].estado < 1)
-						$scope.ficha.detalles_ficha[i].estado = 1;
+					$scope.ficha.detalles_ficha[i].estado = 1;
 				}
 				for(var j in $scope.ficha.detalles_ficha[i].examen.examenes_parametros){
-						for(var k in $scope.ficha.detalles_ficha[i].resultados_examen)
-							if($scope.ficha.detalles_ficha[i].resultados_examen[k].examen_parametro_id == $scope.ficha.detalles_ficha[i].examen.examenes_parametros[j].id && $scope.ficha.detalles_ficha[i].estado != undefined && $scope.ficha.detalles_ficha[i].estado < 2){
-								$scope.ficha.detalles_ficha[i].estado = 2;
-								$scope.ficha.detalles_ficha[i].imprimir = false;
-							}
+					if($scope.ficha.detalles_ficha[i].resultados_examen.length == $scope.ficha.detalles_ficha[i].examen.examenes_parametros.length){
+						$scope.ficha.detalles_ficha[i].estado = 2;
+						$scope.ficha.detalles_ficha[i].imprimir = false;
+					}
 				}
 			}
 		});
