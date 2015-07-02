@@ -44,7 +44,13 @@
 				<td>{{row.ficha.paciente.nombre}}</td>
 				<td>{{row.examen.nombre}}</td>
 				<td ng-bind="row.fecha_muestra | date:'dd-MM-yyyy'"></td>
-				<td align="center" ng-if="true"><span class="label label-danger">Pendiente</span></td>
+				<td ng-switch="row.estado">
+					<span ng-switch-when="0" class="label label-danger">M. Pendiente</span>
+					<span ng-switch-when="1" class="label label-warning">Sin resultado</span>
+					<span ng-switch-when="2" class="label label-success">Grabado</span>
+					<span ng-switch-when="3" class="label label-primary">Validado</span>
+					<span ng-switch-when="3" class="label label-info">Impreso</span>
+				</td>
 			</tr>
 		</tbody>
 		<tbody ng-show="isLoading">

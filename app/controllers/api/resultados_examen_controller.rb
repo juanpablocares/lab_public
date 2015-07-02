@@ -10,6 +10,50 @@ class Api::ResultadosExamenController < ApplicationController
 			}, status: 200, include: [:sustancia, {:detalle_ficha=> {include: [:examen]}}]
 	end
 	
+	def get_resultado
+		result = ResultadoExamen.where(examen_parametro_id: params[:examen_parametro_id], detalle_ficha_id: params[:detalle_ficha_id])
+		if !(result.empty?)
+			render json: {
+				  success: true,
+				  message: 'Resultados examen encontrado',
+				  data: result.first,
+				}, status: 200
+		elsif
+			render json: {
+			  success: false,
+			  message: 'Resultados examen no encontrado',
+			}, status: 200
+		end
+	end
+	
+	def update_resultado
+		result = ResultadoExamen.where(examen_parametro_id: params[:examen_parametro_id], detalle_ficha_id: params[:detalle_ficha_id])
+		r = params[:resultado]
+		if !(result.empty?)
+			result.detalle_ficha_id = r["detalle_ficha_id"]
+			result.examen_parametro_id = r["examen_parametro_id"]
+			result.cantidad = r["cantidad"]
+			result.creado = Time.now
+			result.save
+			render json: {
+				  success: true,
+				  message: 'Resultado actualizado',
+				  data: result,
+				}, status: 200
+		elsif
+			resultado = ResultadoExamen.new
+			resultado.detalle_ficha_id = r["detalle_ficha_id"]
+			resultado.examen_parametro_id = r["examen_parametro_id"]
+			resultado.cantidad = r["cantidad"]
+			resultado.save
+			render json: {
+			  success: true,
+			  message: 'Resultado nuevo ingresado',
+			  data: resultado,
+			}, status: 200
+		end
+	end
+	
 	def save_batch_by_detalle_ficha
 		if DetalleFicha.find(params[:id])
 			params[:sustancias].each do |sustancia|
@@ -51,6 +95,6 @@ class Api::ResultadosExamenController < ApplicationController
 	end
 
 	def resultados_examen_params
-		params.permit(:sustancia_id, :detalle_ficha_id, :cantidad_sustancia, :creado)
+		params.permit(:examen_parametro_id, :detalle_ficha_id, :cantidad, :creado)
 	end
 end

@@ -12,34 +12,45 @@
 					<thead>
 						<th>#</th>
 						<th>Nombre examen</th>
+						<th>Parámetro</th>
 						<th>Cantidad</th>
 						<th>Unidades</th>
+						<th>Flebotomista</th>
+						<th>Estado</th>
+						<th>Opciones</th>
 					</thead>
 					<tbody>
 						<tr ng-repeat="item in mostrar_parametros track by $index">
-							<td>{{$index + 1}}</td>
+							<td>{{item.indice}}</td>
 							<td>
 								{{item.nombre}}
 							</td>
-							<td ng-switch="item.tipo" ng-show="item.mostrar">
-								<select ng-switch-when="seleccionable"  class="form-control" ng-model="item.resultado" ng-options="s.nombre for s in item.datos track by s.id | orderBy:'nombre'">
-									<option value=""></option>
-								</select>
-								<input ng-switch-when="numerico" class="form-control" placeholder="Ingrese cantidad" type="number" ng-model="item.cantidad"/>
-								<input ng-switch-default class="form-control" placeholder="Ingrese cantidad" type="text" ng-model="item.cantidad"/>
+							<td>
+								{{item.nombre_parametro}}
 							</td>
-							<td ng-hide="item.mostrar" colspan="2">
-								<a class="text-primary" ui-sref="loginRequired.examenes.parametros({examen_id: item.examen_id})" title="Información examen"><i class="fa fa-info-circle fa-lg"></i></a> Examen sin parámetros asignados
+							<td ng-switch="item.tipo" ng-show="item.mostrar">
+								<input ng-disabled="item.deshabilitar" ng-switch-when="numerico" class="form-control" placeholder="Ingrese cantidad" type="number" ng-model="item.cantidad"/>
+								<input ng-disabled="item.deshabilitar" ng-switch-default class="form-control" placeholder="Ingrese cantidad" type="text" ng-model="item.cantidad"/>
+							</td>
+							<td ng-hide="item.mostrar" >
+								Examen sin parámetros asignados
 							</td >
-							<td>{{item.examen.unidad_medida}}</td>
+							<td>{{item.unidad_medida}}</td>
+							<td>{{item.flebotomista}}</td>
+							<td ng-switch="item.estado">
+								<span ng-switch-when="0" class="label label-danger">M. Pendiente</span>
+								<span ng-switch-when="1" class="label label-warning">Sin resultado</span>
+								<span ng-switch-when="2" class="label label-success">Grabado</span>
+								<span ng-switch-when="3" class="label label-primary">Validado</span>
+								<span ng-switch-when="3" class="label label-info">Impreso</span>
+							</td>
+							<td align="center">
+								<a ng-show="item.mostrar" ng-click="guardar_resultado($index, item)" style="color: {{item.color_save}};" class="text-primary" title="Guardar resultado"><i class="fa fa-floppy-o fa-lg"></i></a>
+								<a class="text-primary" ui-sref="loginRequired.examenes.parametros({examen_id: item.examen_id})" title="Información examen"><i class="fa fa-info-circle fa-lg"></i></a>
+							</td>
 						</tr>
 					</tbody>
 				</table>
-			</div>
-			<div>
-				<button class="btn btn-primary">
-					Guardar resultados
-				</button>
 			</div>
 		</form>
 	</div>

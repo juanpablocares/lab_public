@@ -1,21 +1,26 @@
-angular.module('lab').controller('OrdenesExamenIndexController', function($scope, $auth, $state, $http, $stateParams, Ficha) {
+angular.module('lab').controller('OrdenesExamenIndexController', function($scope, $auth, $state, $http, $stateParams, Fichas) {
 
 	if ($stateParams.ficha_id == null)
 		$state.go('loginRequired.index');
 	else{
-		Ficha.get({
+		Fichas.input_resultados.get({
 			id : $stateParams.ficha_id
 		}, function(result) {
 			$scope.ficha = result.data;
 			$scope.ficha.paciente.edad = $scope.getEdad($scope.ficha.paciente.fecha_nacimiento);
 			for(var i in $scope.ficha.detalles_ficha){
-				//El estado después se debe cambiar al valor real correspondiente
-				$scope.ficha.detalles_ficha[i].estado = i;
-				//console.log($scope.ficha.detalles_ficha[i].estado);
-				if($scope.ficha.detalles_ficha[i].estado < 2)
-					$scope.ficha.detalles_ficha[i].imprimir = true;
-				else
-					$scope.ficha.detalles_ficha[i].imprimir = false;
+				for(var j in $scope.ficha.detalles_ficha[i].examen.examenes_parametros){
+						for(var k in $scope.ficha.detalles_ficha[i].resultados_examen)
+							if($scope.ficha.detalles_ficha[i].resultados_examen[k].examen_parametro_id == $scope.ficha.detalles_ficha[i].examen.examenes_parametros[j].id && $scope.ficha.detalles_ficha[i].estado != undefined && $scope.ficha.detalles_ficha[i].estado < 2){
+								$scope.ficha.detalles_ficha[i].estado = 2;
+							}
+						if($scope.ficha.detalles_ficha[i].usuario_muestra != undefined && $scope.ficha.detalles_ficha[i].estado != undefined && $scope.ficha.detalles_ficha[i].estado < 1){
+							$scope.ficha.detalles_ficha[i].estado = 1;
+						}
+						else{
+							$scope.ficha.detalles_ficha[i].estado = 0;
+						}
+				}
 			}
 		});
 	}
@@ -37,13 +42,4 @@ angular.module('lab').controller('OrdenesExamenIndexController', function($scope
 			return ~~anios + " Años " + ~~meses + " meses";
 		}
 	};
-	
-	$scope.estado_examen = function(examen){
-		if(examen.usuario_muestra_id == null)
-			return 0;
-	};
-	//$scope.$emit('PedirDetalleFichaFromMenu');
-	
-	
-
 });

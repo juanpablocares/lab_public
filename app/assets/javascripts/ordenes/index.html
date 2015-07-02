@@ -43,11 +43,11 @@
 				<tr ng-repeat="item in ficha.detalles_ficha track by $index">
 					<td>{{$index + 1}}</td>
 					<td ng-switch="item.estado">
-						<span ng-switch-when="0" class="label label-danger">Pendiente</span>
-						<span ng-switch-when="1" class="label label-warning">Grabado</span>
-						<span ng-switch-when="2" class="label label-success">Validado</span>
-						<span ng-switch-when="3" class="label label-primary">Impreso</span>
-						<span ng-switch-when="3" class="label label-info">Entregado</span>
+						<span ng-switch-when="0" class="label label-danger">M. Pendiente</span>
+						<span ng-switch-when="1" class="label label-warning">Sin resultado</span>
+						<span ng-switch-when="2" class="label label-success">Grabado</span>
+						<span ng-switch-when="3" class="label label-primary">Validado</span>
+						<span ng-switch-when="3" class="label label-info">Impreso</span>
 					</td>
 					<td ><input ng-disabled="item.imprimir" type="checkbox" name="imprimir" value="imprimir"></td>
 					<td>{{item.examen.nombre}}</td>

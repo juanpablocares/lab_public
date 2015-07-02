@@ -34,6 +34,9 @@ Rails.application.routes.draw do
 		post 'detalles_pago_ficha/range/:start/:number/:facturadas', to: 'detalles_pago_ficha#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		get 'detalles_pago_ficha/ficha/:id', to: 'detalles_pago_ficha#getAllByFicha', defaults: {format: 'json'}
 		put 'detalles_pago_ficha/', to: 'detalles_pago_ficha#update_all', defaults: {format: 'json'}
+		#Controlador de resultados asignados
+		get 'resultados_examen/detalle_ficha/:detalle_ficha_id/examen_parametro/:examen_parametro_id', to: 'resultados_examen#get_resultado', defaults: {format: 'json'}
+		put 'resultados_examen/detalle_ficha/:detalle_ficha_id/examen_parametro/:examen_parametro_id', to: 'resultados_examen#update_resultado', defaults: {format: 'json'}
 		
 		##########################Controladores de examenes##########################
 		get 'examenes/filtrar_tarifas/:id', to: 'examenes#filtrar_tarifas', defaults: {format: 'json'},  constraints: { :id=> /[0-9]+/}
