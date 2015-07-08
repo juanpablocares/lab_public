@@ -37,19 +37,20 @@
 			</tr>
 		</thead>
 		<tbody ng-show="!isLoading">
-			<tr ng-repeat="row in muestras track by $index" ui-sref="loginRequired.ingreso_resultados({ficha_id: row.ficha.id})">
-				<td>{{$index + 1 + comienzo_tabla}}</td>
-				<td>{{row.ficha.id}}</td>
-				<td>{{row.ficha.paciente.apellido_paterno}}</td>
-				<td>{{row.ficha.paciente.nombre}}</td>
-				<td>{{row.examen.nombre}}</td>
+			<tr ng-repeat="row in muestras track by $index" >
+				<td><a class="text-primary" ui-sref="loginRequired.ingreso_resultados({ficha_id: row.ficha.id})" title="Ingresar resultado" >{{$index + 1 + comienzo_tabla}}</a></td>
+				<td><a class="text-primary" ui-sref="loginRequired.fichas.info({ficha_id: row.id})" title="Información ficha">{{row.ficha.id}}</a></td>
+				<td><a class="text-primary" ui-sref="loginRequired.pacientes.info({paciente_id: row.ficha.paciente.id})" title="Información paciente">{{row.ficha.paciente.apellido_paterno}}</a></td>
+				<td><a class="text-primary" ui-sref="loginRequired.pacientes.info({paciente_id: row.ficha.paciente.id})" title="Información paciente">{{row.ficha.paciente.nombre}}</a></td>
+				<td><a class="text-primary" ui-sref="loginRequired.examenes.info({examen_id: row.examen.id})" title="Información examen" >{{row.examen.nombre}}</a></td>
 				<td ng-bind="row.fecha_muestra | date:'dd-MM-yyyy'"></td>
 				<td ng-switch="row.estado">
 					<span ng-switch-when="0" class="label label-danger">M. Pendiente</span>
 					<span ng-switch-when="1" class="label label-warning">Sin resultado</span>
 					<span ng-switch-when="2" class="label label-success">Grabado</span>
 					<span ng-switch-when="3" class="label label-primary">Validado</span>
-					<span ng-switch-when="3" class="label label-info">Impreso</span>
+					<span ng-switch-when="4" class="label label-info">Impreso</span>
+					<span ng-switch-default class="label label-danger">¡Sin parámetros!</span>
 				</td>
 			</tr>
 		</tbody>

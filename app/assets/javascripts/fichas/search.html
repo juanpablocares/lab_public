@@ -33,9 +33,9 @@
 			</tr>
 		</thead>
 		<tbody ng-show="!isLoading">
-			<tr ng-repeat="row in displayed track by $index" ui-sref="loginRequired.fichas.info({ficha_id: row.id})">
+			<tr ng-repeat="row in displayed track by $index" >
 				<td>{{$index + 1 + comienzo_tabla}}</td>
-				<td>{{row.id}}</td>
+				<td><a class="text-primary" ui-sref="loginRequired.fichas.info({ficha_id: row.id})" title="Información ficha">{{row.id}}</a></td>
 				<td>{{row.paciente.apellido_paterno}}</td>
 				<td>{{row.paciente.apellido_materno}}</td>
 				<td>{{row.paciente.nombre}}</td>
@@ -44,12 +44,12 @@
 		</tbody>
 		<tbody ng-show="isLoading">
 			<tr>
-			<td colspan="6" class="text-center"><i class="fa fa-spinner fa-pulse"></i></td>
+			<td colspan="7" class="text-center"><i class="fa fa-spinner fa-pulse"></i></td>
 		</tr>
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="6" class="text-center"><div st-pagination="" st-items-by-page="10" st-displayed-pages="10"></div></td>
+				<td colspan="7" class="text-center"><div st-pagination="" st-items-by-page="10" st-displayed-pages="10"></div></td>
 			</tr>
 		</tfoot>
 	</table>

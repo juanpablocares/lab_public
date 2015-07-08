@@ -7,7 +7,7 @@
 				</tr>
 				<tr>
 					<th class="col-sm-1 text-left">Fecha</th><td ng-bind="ficha.creado | date:'dd-MM-yyyy'"></td>
-					<th class="col-sm-1 text-left">Folio</th><td >{{ficha.id}}</td>
+					<th class="col-sm-1 text-left">Folio</th><td ><a class="text-primary" ui-sref="loginRequired.fichas.info({ficha_id: ficha.id})" title="Información ficha" >{{ficha.id}}</a></td>
 				</tr>
 				<tr>
 					<th class="col-sm-1 text-left">Procedencia</th><td >{{ficha.procedencia.nombre}}</td>
@@ -16,7 +16,7 @@
 					<th class="col-sm-1 text-left">N°</th><td >{{ficha.numero_programa}}</td>
 				</tr>
 				<tr>
-					<th class="col-sm-1 text-left">Paciente</th><td>{{ficha.paciente.nombre}} {{ficha.paciente.apellido_paterno}} {{ficha.paciente.apellido_materno}}</td>
+					<th class="col-sm-1 text-left">Paciente</th><td><a class="text-primary" ui-sref="loginRequired.pacientes.info({paciente_id: ficha.paciente.id})" title="Información paciente" >{{ficha.paciente.nombre}} {{ficha.paciente.apellido_paterno}} {{ficha.paciente.apellido_materno}}</td></a>
 					<th class="col-sm-1 text-left">Edad</th><td>{{ficha.paciente.edad}}</td>
 					<th class="col-sm-1 text-left">Médico</th><td colspan="3">{{ficha.medico.nombre}} {{ficha.medico.apellido_paterno}} {{ficha.medico.apellido_materno}}</td>
 				</tr>
@@ -39,11 +39,11 @@
 				</div>
 				<table class="table table-striped">
 					<thead>
-						<th>#</th>
-						<th>Nombre examen</th>
 						<th style="text-align:center;">
 							<input type="checkbox" ng-model="seleccionar_todos" ng-change="select_all()">
 						</th>
+						<th>#</th>
+						<th>Nombre examen</th>
 						<th>Parámetro</th>
 						<th>Cantidad</th>
 						<th>Un.</th>
@@ -55,11 +55,11 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat="item in mostrar_parametros track by $index">
+							<td ng-hide="{{item.agrupar}}" rowspan="{{item.cantidad_parametros}}" style="text-align:center;"><input type="checkbox" ng-model="item.imprimir" ng-change="imprimir($index, item)"></td>
 							<td ng-hide="{{item.agrupar}}" rowspan="{{item.cantidad_parametros}}">{{item.indice}}</td>
 							<td ng-hide="{{item.agrupar}}" rowspan="{{item.cantidad_parametros}}">
 								{{item.nombre}}
 							</td>
-							<td ng-hide="{{item.agrupar}}" rowspan="{{item.cantidad_parametros}}" style="text-align:center;"><input type="checkbox" ng-model="item.imprimir" ng-change="imprimir($index, item)"></td>
 							<td>
 								{{item.nombre_parametro}}
 							</td>
@@ -71,7 +71,7 @@
 								Examen sin parámetros asignados
 							</td >
 							<td>{{item.unidad_medida}}</td>
-							<td title="{{item.fecha_muestra}}">{{item.flebotomista}}</td>
+							<td ng-hide="{{item.agrupar}}" rowspan="{{item.cantidad_parametros}}" title="{{item.fecha_muestra}}">{{item.flebotomista}}</td>
 							<td title="{{item.fecha_grabacion}}">{{item.grabado}}</td>
 							<td title="{{item.fecha_validacion}}">{{item.validador}}</td>
 							<td ng-switch="item.estado">

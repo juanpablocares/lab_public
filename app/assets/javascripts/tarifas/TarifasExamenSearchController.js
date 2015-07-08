@@ -1,30 +1,35 @@
 (function() {
 	angular.module('lab').controller('TarifasExamenSearchController', function($scope, $auth, $state, $http, $stateParams, TarifasExamen, TarifaExamen) {
 		$scope.displayed = [];
-		
+		var indice = -1;
 		$scope.editar = false;
-		$scope.editarTarifaExamen = function(tarifa_examen_id){
+		$scope.editarTarifaExamen = function(i, tarifa_examen_input){
+			indice = i;
 			$scope.editar = true;
-			console.log(tarifa_examen_id);
-			
-			$http.get('/api/tarifas_examen/' + tarifa_examen_id).success(function(data) {
+			console.log(tarifa_examen_input);
+			$scope.tarifa_examen = tarifa_examen_input;
+			/*$http.get('/api/tarifas_examen/' + tarifa_examen_id).success(function(data) {
 				$scope.tarifa_examen = data.tarifa_examen;
 				console.log($scope.tarifa_examen);
 			}).error(function(data) {
 				$state.go('loginRequired.index');
-			});
+			});*/
 		}
 		
 		$scope.guardarDatosEditarTarifaExamen = function(tarifa_examen){
+			
 			TarifaExamen.update({id:tarifa_examen.id}, tarifa_examen).
 			$promise.
 				then(function(response) {
+					$scope.displayed[indice].precio = tarifa_examen.precio;
+					$scope.displayed[indice].precio_fonasa = tarifa_examen.precio_fonasa;
 					console.log("Edicion de Tarifa Examen");
 				}, function(response) {
 					console.log("ERROR editando tarifa");
 					$scope.resetTarifaExamen();
 				});
-			callServer();
+			//callServer();
+			$scope.editar = false;
 		}
 		
 		$scope.resetTarifaExamen = function() {
@@ -42,14 +47,14 @@
 
 			var pagination = tableState.pagination;
 
-			var start = pagination.start || 0;
+			$scope.comienzo_tabla = pagination.start || 0;
 			// This is NOT the page number, but the index of item in the list that you want to use to display the table.
 			var number = pagination.number || 10;
 			// Number of entries showed per page.
 			
 			TarifasExamen.range.advanced({
 				tarifa_id : $stateParams.tarifa_id,
-				start : start,
+				start : $scope.comienzo_tabla,
 				number : number
 			}, tableState).
 			$promise.then(function(result) {

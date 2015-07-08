@@ -18,6 +18,25 @@ angular.module('lab').controller('OrdenesExamenSearchController', function($scop
 		}, tableState).$promise.then(function(result) {
 			$scope.muestras = result.data;
 			tableState.pagination.numberOfPages = result.numberOfPages;
+			
+			for(var i in $scope.muestras){
+				if($scope.muestras[i].examen.examenes_parametros.length == 0){
+					$scope.muestras[i].estado = -1;
+				}
+				else{
+					$scope.muestras[i].estado = 1;
+					if($scope.muestras[i].examen.examenes_parametros.length > 0 && $scope.muestras[i].resultados_examen.length == $scope.muestras[i].examen.examenes_parametros.length)
+						$scope.muestras[i].estado = 2;
+					var count = 0;
+					for(var j in $scope.muestras[i].resultados_examen)
+						if($scope.muestras[i].resultados_examen[j].usuario_valida_id != null)
+							count++;
+					if($scope.muestras[i].resultados_examen.length == count)
+						$scope.muestras[i].estado = 3;
+					console.log($scope.muestras[i]);
+				}
+			}
+			
 			$scope.isLoading = false;
 		});
 	};
