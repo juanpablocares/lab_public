@@ -1,7 +1,36 @@
-<div class="widget-container fluid-height">
-	<div class="heading">
-		Ingreso manual resultados examen
+<div class="col-sm-12">
+	<div class="widget-container fluid-height">
+		<div class="widget-content padded">
+			<table class="table">
+				<tr ng-if="ficha.urgente" >
+					<th class="col-sm-2 text-center" colspan="8"><span class="label label-danger"><font size="5">Ficha Urgente</font></span></th>
+				</tr>
+				<tr>
+					<th class="col-sm-1 text-left">Fecha</th><td ng-bind="ficha.creado | date:'dd-MM-yyyy'"></td>
+					<th class="col-sm-1 text-left">Folio</th><td >{{ficha.id}}</td>
+				</tr>
+				<tr>
+					<th class="col-sm-1 text-left">Procedencia</th><td >{{ficha.procedencia.nombre}}</td>
+					<th class="col-sm-1 text-left">N°</th><td >{{ficha.numero_procedencia}}</td>
+					<th class="col-sm-1 text-left">Programa</th><td >{{ficha.programa}}</td>
+					<th class="col-sm-1 text-left">N°</th><td >{{ficha.numero_programa}}</td>
+				</tr>
+				<tr>
+					<th class="col-sm-1 text-left">Paciente</th><td>{{ficha.paciente.nombre}} {{ficha.paciente.apellido_paterno}} {{ficha.paciente.apellido_materno}}</td>
+					<th class="col-sm-1 text-left">Edad</th><td>{{ficha.paciente.edad}}</td>
+					<th class="col-sm-1 text-left">Médico</th><td colspan="3">{{ficha.medico.nombre}} {{ficha.medico.apellido_paterno}} {{ficha.medico.apellido_materno}}</td>
+				</tr>
+				<tr>
+					<th ><label class="control-label"><strong>Diagnostico</strong></label></th>
+					<th colspan="3"><textarea style="width: 300px;" ng-model="ficha.diagnostico" class="form-control" type="text" rows="2" disabled="true"></textarea></th>
+					<th "><label class="control-label"><strong>Obs. TM</strong></label></th>
+					<th colspan="3"><textarea style="width: 300px;" ng-model="ficha.observaciones_muestra" class="form-control" rows="2" disabled="true"></textarea></th>
+				</tr>
+			</table>
+		</div>
 	</div>
+</div>
+<div class="widget-container fluid-height">
 	<div class="widget-content padded">
 		<form class="form-horizontal" ng-submit="guardarResultados()" name="formResultados" novalidate>
 			<div>
@@ -12,6 +41,9 @@
 					<thead>
 						<th>#</th>
 						<th>Nombre examen</th>
+						<th style="text-align:center;">
+							<input type="checkbox" ng-model="seleccionar_todos" ng-change="select_all()">
+						</th>
 						<th>Parámetro</th>
 						<th>Cantidad</th>
 						<th>Un.</th>
@@ -23,10 +55,11 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat="item in mostrar_parametros track by $index">
-							<td>{{item.indice}}</td>
-							<td>
+							<td ng-hide="{{item.agrupar}}" rowspan="{{item.cantidad_parametros}}">{{item.indice}}</td>
+							<td ng-hide="{{item.agrupar}}" rowspan="{{item.cantidad_parametros}}">
 								{{item.nombre}}
 							</td>
+							<td ng-hide="{{item.agrupar}}" rowspan="{{item.cantidad_parametros}}" style="text-align:center;"><input type="checkbox" ng-model="item.imprimir" ng-change="imprimir($index, item)"></td>
 							<td>
 								{{item.nombre_parametro}}
 							</td>

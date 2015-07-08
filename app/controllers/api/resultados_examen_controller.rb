@@ -35,6 +35,8 @@ class Api::ResultadosExamenController < ApplicationController
 			result.cantidad = r["cantidad"]
 			result.user_id = r["user_id"]
 			result.creado = Time.now
+			result.usuario_valida_id = nil
+			result.fecha_usuario_valida = nil
 			result.save
 			render json: {
 				  success: true,

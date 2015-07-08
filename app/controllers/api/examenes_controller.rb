@@ -66,7 +66,7 @@ class Api::ExamenesController < ApplicationController
 	def select
 		#@examenes = Examen.select(:id, :codigo_fonasa, :codigo, :nombre, :tarifas_examen.tarifa_id, :tarifas_examen.precio).includes(:tarifas_examen).all
 
-		@examenes = Examen.select(:id, :codigo_fonasa, :codigo, :nombre).all
+		@examenes = Examen.select(:id, :codigo_fonasa, :codigo, :nombre).all.order(:nombre)
 		
 		render json: {
 		          success: true,

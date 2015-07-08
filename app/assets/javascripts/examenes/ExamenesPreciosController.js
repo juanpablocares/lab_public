@@ -13,15 +13,11 @@ angular.module('lab').controller('ExamenesPreciosController', function($scope, $
 	
 	$scope.isLoading = false;
 	
-	$scope.quitar_precio_seleccionado = function(precio){
-		console.log(precio);
-		var index = $scope.tarifas_examen.indexOf(precio);
-		console.log(index);
-		var r = confirm("Confirma eliminar?");
+	$scope.quitar_precio = function(indice, item){
+		var r = confirm("Confirma limpiar?");
 		if (r == true){
-			if (index > -1)
-				$scope.tarifas_examen.splice(index, 1);
-			//Eliminar de la BD
+			item.precio = '';
+			item.precio_fonasa = '';
 		}
 	}
 	
@@ -38,7 +34,7 @@ angular.module('lab').controller('ExamenesPreciosController', function($scope, $
 						console.log("ERROR editando tarifa examen");
 					});
 		}
-		if(status)
+		if(!status)
 			$state.go('loginRequired.index');
 	}
 });

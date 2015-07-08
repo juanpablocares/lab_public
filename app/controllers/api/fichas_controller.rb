@@ -140,6 +140,9 @@ class Api::FichasController < ApplicationController
 
     if(params.has_key?(:search))
       if(params[:search].has_key?(:predicateObject))
+		if(params[:search][:predicateObject].has_key?(:fecha))
+			results = results.where('fichas.creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha].to_date.beginning_of_day, params[:search][:predicateObject][:fecha].to_date.end_of_day)
+		end
         if(params[:search][:predicateObject].has_key?(:id))
           results = results.where(id: params[:search][:predicateObject][:id].to_i)
         end

@@ -270,14 +270,14 @@
 			controller : 'OrdenesExamenSearchController',
 		});
 		
-		$stateProvider.state('loginRequired.ordenes_examen', {
+		/*$stateProvider.state('loginRequired.ordenes_examen', {
 			url : '/orden/:ficha_id',
 			templateUrl : "ordenes/menu.html",
 			controller : 'OrdenesExamenMenuController',
 		});
 		
-		$stateProvider.state('loginRequired.ordenes_examen.info', {
-			url : '/informacion',
+		$stateProvider.state('loginRequired.ordenes_examen', {
+			url : '/orden/:ficha_id',
 			templateUrl : "ordenes/index.html",
 			controller : 'OrdenesExamenIndexController',
 		});
@@ -292,10 +292,10 @@
 			url : '/resultados',
 			templateUrl : "ordenes/resultados.html",
 			controller : 'OrdenesExamenResultadosController',
-		});
+		});*/
 		
-		$stateProvider.state('loginRequired.ordenes_examen.ingreso_resultados', {
-			url : '/ingreso_resultados',
+		$stateProvider.state('loginRequired.ingreso_resultados', {
+			url : '/resultados/:ficha_id',
 			templateUrl : "ordenes/ingreso_resultados.html",
 			controller : 'OrdenesExamenIngresoResultadosController',
 		});

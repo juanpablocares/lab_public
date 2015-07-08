@@ -10,6 +10,7 @@ angular.module('lab').controller('OrdenesExamenIngresoResultadosController', fun
 			id : $stateParams.ficha_id
 		}, function(result) {
 			$scope.ficha = result.data;
+			$scope.ficha.paciente.edad = $scope.getEdad($scope.ficha.paciente.fecha_nacimiento);
 			console.log($scope.ficha);
 			var contador = 1;
 			for(var i in $scope.ficha.detalles_ficha){
@@ -71,9 +72,13 @@ angular.module('lab').controller('OrdenesExamenIngresoResultadosController', fun
 							tmp.nombre = $scope.ficha.detalles_ficha[i].examen.nombre;
 							tmp.indice = contador;
 							contador++;
+							tmp.agrupar = false;
 						}
-						else
+						else{
 							tmp.flebotomista = '';
+							tmp.agrupar = true;
+						}
+						tmp.cantidad_parametros = $scope.ficha.detalles_ficha[i].examen.examenes_parametros.length;
 						$scope.mostrar_parametros.push(tmp);
 					}
 				}
@@ -112,6 +117,10 @@ angular.module('lab').controller('OrdenesExamenIngresoResultadosController', fun
 				resultado.color_save = 'green';
 				resultado.fecha_grabacion = $scope.formatear_fecha((new Date()).toString());
 				resultado.grabado = $auth.user.apellido_paterno + ', ' + $auth.user.nombre;
+				
+				resultado.color_validado = 'red';
+				resultado.fecha_validacion = '';
+				resultado.validador = '';
 			}, function(response) {
 				console.log("ERROR guardando resultado");
 			});
@@ -153,5 +162,23 @@ angular.module('lab').controller('OrdenesExamenIngresoResultadosController', fun
 		var fecha = new Date(fecha_string);
 		var fecha_formato = $scope.agregar_zero(fecha.getDate()) + "-" + $scope.agregar_zero(fecha.getMonth() + 1) + "-" + fecha.getFullYear() + " " + $scope.agregar_zero(fecha.getHours()) + ":" + $scope.agregar_zero(fecha.getMinutes());
 		return fecha_formato;
+	};
+	
+	$scope.getEdad = function(data) {
+		if (data != null) {
+			data = new Date(data);
+			data = new Date(data.getUTCFullYear(), data.getUTCMonth(), data.getUTCDate());
+
+			var d = new Date();
+			var meses = 0;
+			if (data.getUTCMonth() - d.getMonth() > 0)
+				meses += 12 - data.getUTCMonth() + d.getMonth();
+			else
+				meses = Math.abs(data.getUTCMonth() - d.getMonth());
+			var nac = new Date(data);
+			var birthday = +new Date(data);
+			var anios = ((Date.now() - birthday) / (31556926000));
+			return ~~anios + " Años " + ~~meses + " meses";
+		}
 	};
 });

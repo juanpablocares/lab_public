@@ -37,7 +37,7 @@
 			</tr>
 		</thead>
 		<tbody ng-show="!isLoading">
-			<tr ng-repeat="row in muestras track by $index" ui-sref="loginRequired.ordenes_examen.info({ficha_id: row.ficha.id})">
+			<tr ng-repeat="row in muestras track by $index" ui-sref="loginRequired.ingreso_resultados({ficha_id: row.ficha.id})">
 				<td>{{$index + 1 + comienzo_tabla}}</td>
 				<td>{{row.ficha.id}}</td>
 				<td>{{row.ficha.paciente.apellido_paterno}}</td>
