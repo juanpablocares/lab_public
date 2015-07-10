@@ -1,8 +1,8 @@
 #angularjs
-asset 'angular'
+asset 'angular', "1.3.15"
 
 #twitter bootstrap
-asset 'bootstrap-sass-official'
+#asset 'bootstrap-sass-official'
 
 #fontawesome
 asset 'font-awesome'
@@ -13,9 +13,16 @@ asset 'angular-ui-router'
 #libreria para manejar autentificacion con devise_token_auth 
 asset 'ng-token-auth'
 
-asset 'angular-sanitize', "1.3.15" 
+#asset 'angular-sanitize', "1.3.15" 
 
+#Librería para utilizar ng-bootstrap ui-select
 asset 'angular-ui-select'
+
+#Librería para modal que depende solo de angular
+asset 'ngDialog'
+
+#Librería para crear pdf 
+asset 'pdfmake'
 
 
 #Agregadas por JP
@@ -31,7 +38,3 @@ asset 'angular-smart-table'
 asset 'ng-csv'
 #Libreria para subir archivos
 asset 'papa.parse'
-#Libreria modals
-asset 'angular-dialog-service'
-#Otra libreria de modals...
-asset 'angular-sweetalert'

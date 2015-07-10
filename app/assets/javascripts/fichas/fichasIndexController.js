@@ -1,4 +1,8 @@
-angular.module('lab').controller('FichasIndexController', function($scope, $auth, $state, $http, $stateParams, Fichas,Previsiones, Perfiles, Medicos, Procedencias, Examenes, DetallesPagoFicha, Ficha) {
+angular.module('lab').controller('FichasIndexController', function(
+	$scope, $auth, $state, $http, $stateParams, 
+	Fichas, Previsiones, Perfiles, Medicos, 
+	Procedencias, Examenes, DetallesPagoFicha, 
+	Ficha) {
 
 	//Esta vista tiene campos editables, con $scope.edit aviso a las vistas si mostrar algunos campos editables o fijos.
 	$scope.edit = true;
@@ -552,5 +556,52 @@ angular.module('lab').controller('FichasIndexController', function($scope, $auth
 	$scope.validate_form = function(ficha_form) {
 		return $scope.examenesSeleccionados_edit.length > 0 && ficha_form.$valid;
 	}
-});
 
+	
+
+	$scope.getInfoPaciente = function(paciente)
+	{
+		var paciente_info = {}
+		return paciente_info;
+	}
+	$scope.getInfoFicha = function(ficha)
+	{
+		var ficha_info = {}
+		return ficha_info;
+	}
+
+	$scope.getTableExamenes = function(examenes_array){
+		var body = [];
+		var headerArray = [];
+
+		var style = "table_default";
+		var color = "#444";
+		var table_examenes = {
+			style : style,
+			color : color, 
+			table : {
+				headerRows: 2,
+				body: [
+          [ 'First', 'Second', 'Third', 'The last one' ],
+          [ 'Value 1', 'Value 2', 'Value 3', 'Value 4' ],
+          [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
+        ]
+			}
+		};
+		return table_examenes;
+	}
+
+	$scope.getPDF = function(){
+		var tableExamenes = $scope.getTableExamenes($scope.examenesSeleccionados_edit);
+		var docDefinition = {
+			content: [
+				{ text: 'This is an sample PDF printed with pdfMake' },
+				tableExamenes
+			]
+		};
+		pdfMake.createPdf(docDefinition).open();
+		//pdfMake.createPdf(docDefinition).print();
+		//pdfMake.createPdf(docDefinition).download('optionalName.pdf');
+
+	}
+});

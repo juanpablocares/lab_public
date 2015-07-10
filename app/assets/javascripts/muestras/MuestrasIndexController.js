@@ -1,8 +1,16 @@
-angular.module('lab').controller('MuestrasIndexController', function($scope, $auth, $state, $http, $stateParams, Ficha, Fichas, DetallesFicha, DetalleFicha, SweetAlert) {
+angular.module('lab').controller('MuestrasIndexController', function($scope, $auth, $state, $http, $stateParams, Ficha, Fichas, DetallesFicha, DetalleFicha, ngDialog) {
 	
-	console.log(SweetAlert);
-	SweetAlert.error('Titulo', 'Algun mensaje');
-	
+	console.log("ngDialog example");
+
+	$scope.showModal = function()
+	{
+		var modal = ngDialog.open({
+		    template: "templateId"
+		});
+		console.log(modal);
+	}
+
+
 	$scope.getEdad = function(data) {
 		if(data != null)
 		{

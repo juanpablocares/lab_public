@@ -1,10 +1,10 @@
 <div ng-if="loading" class="row text-center">
 	<i class="fa fa-spinner fa-pulse fa-2x"></i>
 </div>
-<div ng-if="!loading">
+<div id="printable" ng-if="!loading">
 	<form class="form-horizontal" name="form" ng-submit="validate_form(form)" novalidate>
 		<div class="widget-container fluid-height">
-			<div class="widget-content clearfix">
+			<div class="widget-content clearfix" id="ignore">
 				<div class="col-sm-4">
 					<ng-include src="'fichas/_informacion_paciente.html'"></ng-include>
 				</div>
@@ -41,12 +41,13 @@
 					</ui-select>
 				</div>
 			</div>
-			<ng-include src="'fichas/_examenes_table_new.html'"></ng-include>
+			<ng-include src="'fichas/_examenes_table_new.html'" id="ignore"></ng-include>
 			<div class="row form-group padded">
 				<div class="col-sm-11 text-right">
 					<a class="btn btn-warning" ui-sref="loginRequired.fichas.pagos({ficha_id: ficha.id})">Realizar pago</a>
 					<button class="btn btn-success" ng-click="guardar_cambios_ficha(form)">Guardar cambios a ficha</button>
-					<a class="btn btn-primary" ng-click="cancelar_cambios()">Cancelar cambios</a>
+					<button type="button" class="btn btn-primary" ng-click="cancelar_cambios()">Cancelar cambios</button>
+					<button type="button" class="btn btn-danger" ng-click="getPDF()">Imprimir</button>
 				</div>
 			</div>
 		</div>
