@@ -95,7 +95,9 @@ class Api::FichasController < ApplicationController
 
   def muestras
 
-    if(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha))
+	if params[:fecha_anterior] != ''
+		results = Ficha.where('creado BETWEEN ? and ?', params[:fecha_anterior].to_date.beginning_of_day, params[:fecha_anterior].to_date.end_of_day).order(id: :desc)
+    elsif(params.has_key?(:search) and params[:search].has_key?(:predicateObject) and params[:search][:predicateObject].has_key?(:fecha))
       results = Ficha.where('creado BETWEEN ? and ?', params[:search][:predicateObject][:fecha].to_date.beginning_of_day, params[:search][:predicateObject][:fecha].to_date.end_of_day).order(id: :desc)
     else
       results = Ficha.where('creado BETWEEN ? and ?', DateTime.now.beginning_of_day, DateTime.now.end_of_day).order(id: :desc)

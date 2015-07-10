@@ -1,6 +1,9 @@
 <script type="text/ng-template" id="templateId">
-    <h1>Template heading</h1>
-    <p>Content goes here</p>
+	<h3>{{examen.nombre}}</h3>
+	<p>Sigla: {{examen.sigla ? examen.sigla:'---'}}</p>
+	<p>Código I.: {{examen.codigo ? examen.codigo:'---'}}</p>
+	<p>Código F.: {{examen.codigo_fonasa ? examen.codigo_fonasa:'---'}}</p>
+	<p>T. muestra: {{examen.tipo_muestra ? examen.tipo_muestra.muestra:'---'}}</p>
 </script>
 
 <div class="widget-container fluid-height">
@@ -56,9 +59,6 @@
 						<button type="button" class="btn btn-danger" ng-click="cambiarVentanaSinCambios()">
 							Volver
 						</button>
-						<button type="button" class="btn btn-danger" ng-click="showModal()">
-							Show modal
-						</button>
 					</div>
 				</div>
 			</form>
@@ -73,7 +73,6 @@
 				<th >Código</th>
 				<th >Examen</th>
 				<th >Tapa tubo</th>
-				<th >Ficha Técnica</th>
 				<th >Muestra</th>
 				<th >Indicaciones</th>
 				<th >Opciones</th>
@@ -87,11 +86,8 @@
 				<tr ng-repeat="item in examenesSeleccionados track by $index">
 					<td>{{$index + 1}}</td>
 					<td>{{item.codigo}}</td>
-					<td>{{item.examen.nombre}}</td>
+					<td ng-click="showModal(item.examen.id)" style="cursor: pointer;">{{item.examen.nombre}}</td>
 					<td>{{item.examen.tapa_tubo.codigo}}</td>
-					<td>
-						<button type="button" class="btn btn-default" ng-click="abrirFichaTecnica(item.examen.id)"><i class="fa fa-info-circle"></i></button>
-					</td>
 					<td data-toggle="tooltip" data-placement="top" title="{{item.examen.tipo_muestra.muestra}}">{{item.examen.tipo_muestra.codigo}}</td>
 					<td data-toggle="tooltip" data-placement="top" title="{{item.examen.indicacion.descripcion}}">{{item.examen.indicacion.codigo}}</td>
 					<td>

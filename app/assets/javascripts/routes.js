@@ -338,7 +338,7 @@
 		/*Rutas de muestras*/
 		
 		$stateProvider.state('loginRequired.busqueda_muestras', {
-			url : '/muestras/buscar',
+			url : '/muestras/buscar/:fecha_anterior',
 			templateUrl : "muestras/search.html",
 			controller : 'MuestrasSearchController',
 			params : {

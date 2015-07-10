@@ -31,7 +31,7 @@ angular.module('lab').controller('OrdenesExamenSearchController', function($scop
 					for(var j in $scope.muestras[i].resultados_examen)
 						if($scope.muestras[i].resultados_examen[j].usuario_valida_id != null)
 							count++;
-					if($scope.muestras[i].resultados_examen.length == count)
+					if($scope.muestras[i].resultados_examen.length > 0 && $scope.muestras[i].resultados_examen.length == count)
 						$scope.muestras[i].estado = 3;
 					console.log($scope.muestras[i]);
 				}

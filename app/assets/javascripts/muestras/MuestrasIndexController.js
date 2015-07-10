@@ -1,13 +1,25 @@
-angular.module('lab').controller('MuestrasIndexController', function($scope, $auth, $state, $http, $stateParams, Ficha, Fichas, DetallesFicha, DetalleFicha, ngDialog) {
+angular.module('lab').controller('MuestrasIndexController', function($scope, $auth, $state, $http, $stateParams, Ficha, Fichas, DetallesFicha, ngDialog, Examen, DetalleFicha) {
 	
 	console.log("ngDialog example");
 
-	$scope.showModal = function()
+	$scope.showModal = function(examen_id)
 	{
-		var modal = ngDialog.open({
-		    template: "templateId"
+		Examen.get({
+			id : examen_id
+		}).$promise.then(function(result) {
+				console.log('Examen');
+				$scope.examen = result.examen;
+				console.log($scope.examen)
+				var modal = ngDialog.open({
+					template: "templateId",
+					scope: $scope
+				});
+		}).catch(function(response) {
+			console.error('Error al obtener examen');
+			$state.go('loginRequired.index');
 		});
-		console.log(modal);
+		//console.log(modal);
+		//console.log(examen_id);
 	}
 
 
@@ -52,7 +64,7 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 		$scope.masterFicha = angular.copy($scope.ficha);
 	}
 	
-	console.log("Muestra Examenes");
+	//console.log("Muestra Examenes");
 	$scope.$on('fichaFromMenu', function(event, data) {
 		$scope.ficha = data;
 		$scope.ficha.paciente.fecha_nacimiento = new Date($scope.ficha.paciente.fecha_nacimiento);
@@ -69,7 +81,7 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 	Fichas.id.get({
 		id : $stateParams.ficha_id
 	}).$promise.then(function(result) {
-		console.log("getficha");
+		//console.log("getficha");
 		$scope.ficha = result.data;
 		$scope.ordenarExamenes();
 	}).catch(function(response) {
@@ -80,7 +92,7 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 	$scope.ficha = {};
 	
 	$scope.cambiarEstadoBoton = function(item) {
-		console.log("Definitivo");
+		//console.log("Definitivo");
 		estado = item.estado;
 		item.estado.class = 'info';
 		item.estado.text = 'Cargando';
@@ -169,21 +181,25 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 			}
 			i++;
 		}
-		console.log("Ordenar examenes");
-		console.log($scope.examenesSeleccionados);
-	};
-	
-	$scope.abrirFichaTecnica = function(examen_id){
-            $window.open('www.aideas.cl:3000/#/ficha_tecnica/'+ examen_id, '_blank');
-		console.log(examen_id);
+		//console.log("Ordenar examenes");
+		//console.log($scope.examenesSeleccionados);
 	};
 	
 	$scope.cambiarVentanaSinCambios = function(){
-		$state.go('loginRequired.busqueda_muestras');
+		var fecha_local = new Date($scope.masterFicha.creado);
+		var d = fecha_local.getDate();
+		if(d < 10)
+			d = '0' + d;
+		var m = fecha_local.getMonth() + 1;
+		if(m < 10)
+			m = '0' + m;
+		var y = fecha_local.getFullYear();
+		fecha_local = d + '-' + m + '-' + y;
+		$state.go('loginRequired.busqueda_muestras', {'fecha_anterior' : fecha_local});
 	}
 	
 	$scope.actualizar_urgencia = function(detalle_ficha){
-		console.log(detalle_ficha);
+		//console.log(detalle_ficha);
 		DetallesFicha.id.update({
 				id :  detalle_ficha.id
 			}, detalle_ficha).$promise.then(function(results) {
@@ -194,7 +210,7 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 	};
 	
 	$scope.guardarDatosMuestra = function(ficha) {
-		console.log(ficha);
+		//console.log(ficha);
 		Ficha.update({id:ficha.id}, ficha).
 			$promise.
 				then(function(response) {

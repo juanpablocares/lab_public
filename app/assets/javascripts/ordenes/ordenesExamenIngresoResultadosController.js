@@ -1,4 +1,24 @@
-angular.module('lab').controller('OrdenesExamenIngresoResultadosController', function($scope, $auth, $state, $http, $stateParams, Fichas, ResultadosExamen) {
+angular.module('lab').controller('OrdenesExamenIngresoResultadosController', function($scope, $auth, $state, $http, $stateParams, Fichas, ResultadosExamen, Examen, ngDialog) {
+
+	$scope.showModal = function(examen_id)
+	{
+		Examen.get({
+			id : examen_id
+		}).$promise.then(function(result) {
+				console.log('Examen');
+				$scope.examen = result.examen;
+				console.log($scope.examen)
+				var modal = ngDialog.open({
+					template: "templateId",
+					scope: $scope
+				});
+		}).catch(function(response) {
+			console.error('Error al obtener examen');
+			$state.go('loginRequired.index');
+		});
+		//console.log(modal);
+		//console.log(examen_id);
+	}
 
 	$scope.valores_seleccionables = {};
 	$scope.mostrar_parametros = [];
@@ -179,6 +199,12 @@ angular.module('lab').controller('OrdenesExamenIngresoResultadosController', fun
 			var birthday = +new Date(data);
 			var anios = ((Date.now() - birthday) / (31556926000));
 			return ~~anios + " Años " + ~~meses + " meses";
+		}
+	};
+	
+	$scope.select_all = function(){
+		for(i in $scope.mostrar_parametros){
+			$scope.mostrar_parametros[i].imprimir = true;
 		}
 	};
 });

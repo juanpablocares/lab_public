@@ -1,6 +1,11 @@
 (function() {
 	angular.module('lab').controller('MuestrasSearchController', function($scope, $auth, $state, $http, $stateParams, Fichas) {
-		$scope.fecha = new Date();
+		if($stateParams.fecha_anterior == '')
+			$scope.fecha = new Date();
+		else
+			$scope.fecha = new Date(parseInt($stateParams.fecha_anterior.slice(6, 10)), parseInt($stateParams.fecha_anterior.slice(3, 5))-1, parseInt($stateParams.fecha_anterior.slice(0, 2)));
+		//console.log($scope.fecha);
+		//console.log($stateParams.fecha_anterior);
 		$scope.getEdad = function(data) {
 			if(data != null)
 			{
@@ -19,6 +24,10 @@
 			}
 		};
 	
+		$scope.cambio_fecha = function(){
+			$stateParams.fecha_anterior = '';
+		}
+	
 		$scope.displayed = [];
 		$scope.callServer = function callServer(tableState) {
 			$scope.displayed = [];
@@ -30,15 +39,16 @@
 			// This is NOT the page number, but the index of item in the list that you want to use to display the table.
 			var number = pagination.number || 10;
 			// Number of entries showed per page.
-			
+
 			Fichas.muestras.advanced({
 				//fecha : $scope.fecha,
 				start : start,
-				number : number
+				number : number,
+				fecha_anterior : $stateParams.fecha_anterior
 			}, tableState).
 			$promise.then(function(result) {
 				$scope.displayed = result.data;
-				console.log(result.data);
+				//console.log(result.data);
 				tableState.pagination.numberOfPages = result.numberOfPages;
 				
 				for(var i in $scope.displayed){

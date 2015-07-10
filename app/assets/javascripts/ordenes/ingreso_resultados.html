@@ -57,7 +57,7 @@
 						<tr ng-repeat="item in mostrar_parametros track by $index">
 							<td ng-hide="{{item.agrupar}}" rowspan="{{item.cantidad_parametros}}" style="text-align:center;"><input type="checkbox" ng-model="item.imprimir" ng-change="imprimir($index, item)"></td>
 							<td ng-hide="{{item.agrupar}}" rowspan="{{item.cantidad_parametros}}">{{item.indice}}</td>
-							<td ng-hide="{{item.agrupar}}" rowspan="{{item.cantidad_parametros}}">
+							<td ng-hide="{{item.agrupar}}" rowspan="{{item.cantidad_parametros}}" ng-click="showModal(item.examen_id)" style="cursor: pointer;">
 								{{item.nombre}}
 							</td>
 							<td>

@@ -2,8 +2,8 @@
 	<table st-table="displayed" class="table table-hover table-striped" st-pipe="callServer">
 		<thead>
 			<tr>
-				<td >#</th>
-				<th >Ficha</th>
+				<th colspan="2">#</th>
+				<th  width="30">Ficha</th>
 				<th >Apellido paciente</th>
 				<th >Nombre paciente</th>
 				<th >Examen</th>
@@ -11,9 +11,7 @@
 				<th >Estado</th>
 			</tr>
 			<tr>
-				<th>
-					
-				</th>
+				<th colspan="2"></th>
 				<th>
 					<input st-search="ficha_id" class="input-sm form-control"/>
 				</th>
@@ -38,8 +36,9 @@
 		</thead>
 		<tbody ng-show="!isLoading">
 			<tr ng-repeat="row in muestras track by $index" >
-				<td><a class="text-primary" ui-sref="loginRequired.ingreso_resultados({ficha_id: row.ficha.id})" title="Ingresar resultado" >{{$index + 1 + comienzo_tabla}}</a></td>
-				<td><a class="text-primary" ui-sref="loginRequired.fichas.info({ficha_id: row.id})" title="Información ficha">{{row.ficha.id}}</a></td>
+				<td>{{$index + 1 + comienzo_tabla}}</td>
+				<td><a class="text-primary" ui-sref="loginRequired.ingreso_resultados({ficha_id: row.ficha.id})" title="Ingresar resultado"><i class="fa fa-info-circle fa-lg"></i></a></td>
+				<td><a class="text-primary" ui-sref="loginRequired.fichas.info({ficha_id: row.ficha.id})" title="Información ficha">{{row.ficha.id}}</a></td>
 				<td><a class="text-primary" ui-sref="loginRequired.pacientes.info({paciente_id: row.ficha.paciente.id})" title="Información paciente">{{row.ficha.paciente.apellido_paterno}}</a></td>
 				<td><a class="text-primary" ui-sref="loginRequired.pacientes.info({paciente_id: row.ficha.paciente.id})" title="Información paciente">{{row.ficha.paciente.nombre}}</a></td>
 				<td><a class="text-primary" ui-sref="loginRequired.examenes.info({examen_id: row.examen.id})" title="Información examen" >{{row.examen.nombre}}</a></td>

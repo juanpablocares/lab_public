@@ -33,7 +33,7 @@
 					isArray : false
 				},
 			}),
-			search : $resource("/api/fichas/range/:start/:number", {
+			search : $resource("/api/fichas/range/:start/:number/", {
 				start : "@start",
 				number : "@number",
 			}, {

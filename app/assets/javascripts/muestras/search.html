@@ -3,10 +3,10 @@
 		<thead>
 			<tr>
 				<th>Indice</th>
-				<th st-sort="ficha_id">Folio</th>
-				<th st-sort="apellido_paterno">Apellido Paterno</th>
-				<th st-sort="apellido_materno">Apellido Materno</th>
-				<th st-sort="nombre">Nombre</th>
+				<th >Folio</th>
+				<th >Apellido Paterno</th>
+				<th >Apellido Materno</th>
+				<th >Nombre</th>
 				<th>Edad</th>
 				<th>Urgente</th>
 				<th>Estado</th>
@@ -15,7 +15,7 @@
 			<tr>
 				<th>
 					<div class="input-group date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
-						<input st-search="fecha" class="input-sm form-control" type="date" id="exampleInput" name="input" ng-model="fecha" name="fecha" required/>
+						<input st-search="fecha" class="input-sm form-control" type="date" id="exampleInput" name="input" ng-change="cambio_fecha()" ng-model="fecha" name="fecha" required/>
 					</div>
 				</th>
 				<th>
