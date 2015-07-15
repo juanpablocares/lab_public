@@ -28,3 +28,5 @@
 //= require ng-csv
 //= require papa.parse
 //= require ngDialog
+//= require pdfmake
+//= require pdfmake/build/vfs_fonts

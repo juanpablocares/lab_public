@@ -83,6 +83,7 @@ angular.module('lab').controller('FichasIndexController', function(
 			$scope.ficha_edit = angular.copy($scope.ficha);
 			$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
 			$scope.limpiarTarifas();
+			$scope.getPDF();
 	});
 	
 	$scope.setPaciente = function(ficha)
@@ -90,8 +91,8 @@ angular.module('lab').controller('FichasIndexController', function(
 		$scope.paciente = ficha.paciente;
         $scope.paciente.rut_completo = $scope.paciente.rut+""+$scope.paciente.rutdv;
         $scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
-        $scope.ficha.paciente.getEdad = function() {
-            $scope.ficha.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
+        $scope.paciente.getEdad = function() {
+            $scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
             if ($scope.paciente != null) {
                     var d = new Date();
                     var meses = 0;
@@ -104,6 +105,13 @@ angular.module('lab').controller('FichasIndexController', function(
                     return ~~anios + " Años " + ~~meses + " meses";
             }
         };
+        $scope.paciente.getFormatedBirth = function()
+        {	
+        	var day = $scope.paciente.fecha_nacimiento.getUTCDate();
+        	if(day<10)day = "0"+day;
+        	return day+"/"+($scope.paciente.fecha_nacimiento.getUTCMonth()+1)+"/"+$scope.paciente.fecha_nacimiento.getFullYear();
+        }
+        ficha.paciente = $scope.paciente;
 	}
 
 	$scope.crearExamenesArray = function() {
@@ -559,46 +567,145 @@ angular.module('lab').controller('FichasIndexController', function(
 
 	
 
-	$scope.getInfoPaciente = function(paciente)
+	$scope.getInfoPaciente = function(ficha)
 	{
-		var paciente_info = {}
-		return paciente_info;
+		var paciente = ficha.paciente;
+		var paciente_info = [];
+		paciente_info.push([{ text: 'Rut', bold: true},paciente.rut_completo]);
+		paciente_info.push([{ text: 'Paciente', bold: true},paciente.nombre +" "+ paciente.apellido_paterno]);
+		paciente_info.push([{ text: 'Genero', bold: true},paciente.genero?'Masculino':'Femenino']);
+		paciente_info.push([{ text: 'Fecha nacimiento', bold: true},paciente.getFormatedBirth()+ " - "+ paciente.getEdad()]);
+		if(paciente.telefono)paciente_info.push([{ text: 'Teléfono', bold: true},paciente.telefono]);
+		if(paciente.celular)paciente_info.push([{ text: 'Celular', bold: true},paciente.celular]);
+		paciente_info.push([{ text: 'Prevision', bold: true},ficha.prevision.nombre]);
+		if(paciente.email)paciente_info.push([{ text: 'Email', bold: true},paciente.email]);
+
+		return {
+			table:{
+				body: paciente_info
+			},
+			layout: 'noBorders'
+		};
 	}
+
 	$scope.getInfoFicha = function(ficha)
 	{
-		var ficha_info = {}
-		return ficha_info;
+		var ficha_info = [];
+		var row = [];
+		
+		ficha.creado = new Date(ficha.creado);
+		var day = ficha.creado.getUTCDate();
+    	if(day<10)day = '0'+day;
+    	var month = ficha.creado.getUTCMonth()+1;
+    	if (month< 10 )month = '0'+month;
+    	day = day+'/'+month+'/'+ficha.creado.getFullYear();
+
+    	if(ficha.urgente)
+    	{
+	    	row.push({colSpan: 4, text: "Ficha Urgente", bold: true});
+			ficha_info.push(row);
+			row=[];
+		}
+		
+		row.push({text: 'Ficha N°', bold: true});
+		row.push({text: ficha.id?ficha.id+"":"NULO"});
+		row.push({text: 'Fecha', bold: true});
+    	row.push({text: day});
+    	ficha_info.push(row);
+		row = [];
+		row.push({text: 'Recepcionista', bold: true});
+		row.push({colSpan: 3, text: ficha.user.nombre +" "+ficha.user.apellido_paterno});
+		ficha_info.push(row);
+		row = [];
+		row.push({text: 'Procedencia', bold: true});
+		row.push({text: ficha.procedencia.nombre});
+		row.push({text: 'Folio Proc.', bold: true});
+		row.push({text: ficha.numero_procedencia?ficha.numero_procedencia:"NULO"});
+		ficha_info.push(row);
+		row = [];
+		row.push({text: "Programa", bold: true});
+		row.push({text: ficha.programa});
+		row.push({text: "N° Prog", bold: true});
+		row.push({text: ficha.numero_programa});
+		ficha_info.push(row);
+		row = [];
+		if(ficha.medico_id)
+		{
+			row.push({text: "Médico", bold: true});
+			row.push({colSpan: 3, text: ficha.medico.nombre+ " "+ficha.medico.apellido_paterno+ " "+ficha.medico.apellido_materno});
+			ficha_info.push(row);
+			row=[];
+		}
+		if(ficha.observaciones)
+		{
+			row.push({text: "Observaciones", bold: true});
+			row.push({colSpan: 3, text: ficha.observaciones});
+			ficha_info.push(row);
+			row=[];
+		}
+
+		return {
+			table: {
+				body: ficha_info
+			},
+			layout: 'noBorders'
+		};
 	}
 
-	$scope.getTableExamenes = function(examenes_array){
-		var body = [];
-		var headerArray = [];
+	$scope.getTableExamenes = function(ficha, examenes_array){
+		var tabla_examenes = [];
+		var row = [];
 
-		var style = "table_default";
-		var color = "#444";
-		var table_examenes = {
-			style : style,
-			color : color, 
-			table : {
-				headerRows: 2,
-				body: [
-          [ 'First', 'Second', 'Third', 'The last one' ],
-          [ 'Value 1', 'Value 2', 'Value 3', 'Value 4' ],
-          [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
-        ]
-			}
+		for (var i = 0; i < examenes_array.length; i++)
+		{
+			var value = examenes_array[i];
+			row.push({text: value.examen_id+""});
+			row.push({text: value.examen.nombre, bold:true});
+			row.push({text: "$ " +value.precio });
+			tabla_examenes.push(row);
+			row = [];
 		};
-		return table_examenes;
+		/*
+
+		row.push({text: "N° Arancel", bold: true});
+		row.push({text: ficha.prevision.tarifa_id+" "});
+		row.push({text: "Precio Total", bold: true});
+		row.push({text: $scope.precio_total_edit+" "});
+		tabla_examenes.push(row);
+		row = [];
+		row.push({text: "Abonos bonos", bold: true});
+		row.push({text: $scope.total_pagos_bonos});
+		row.push({text: "Abonos boletas", bold: true});
+		row.push({text: $scope.total_pagos_boletas});
+		row.push({text: "Abonos boletas", bold: true});
+		row.push({text: $scope.total_pagos});
+		tabla_examenes.push(row);
+		
+		*/
+
+		return {
+			table:{
+				widths: [30, '*', 30],
+				body: tabla_examenes
+			},
+		};
 	}
 
 	$scope.getPDF = function(){
-		var tableExamenes = $scope.getTableExamenes($scope.examenesSeleccionados_edit);
 		var docDefinition = {
+			pageMargins: [40, 40, 40, 40],
+            pageOrientation: 'landscape',
 			content: [
-				{ text: 'This is an sample PDF printed with pdfMake' },
-				tableExamenes
-			]
+				{
+					columns: [$scope.getInfoPaciente($scope.ficha),$scope.getInfoFicha($scope.ficha)]
+				},
+				$scope.getTableExamenes($scope.ficha, $scope.examenesSeleccionados_edit)
+			],
+			defaultStyle: {
+				// alignment: 'justify'
+			}
 		};
+		console.log(docDefinition);
 		pdfMake.createPdf(docDefinition).open();
 		//pdfMake.createPdf(docDefinition).print();
 		//pdfMake.createPdf(docDefinition).download('optionalName.pdf');

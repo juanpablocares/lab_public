@@ -7,16 +7,17 @@
 			<td class="col-sm-2">
 				{{ficha.id}}
 			</td>
+			<td class="col-sm-2"><strong>Recepcionista</strong></td>
+			<td class="col-sm-2">
+				{{ficha.user.nombre}} {{ficha.user.apellido_paterno}}
+			</td>
 			<td class="col-sm-2">
 				<strong>Fecha</strong>
 			</td>
 			<td class="col-sm-2">
 				{{ficha.creado | date:'dd/MM/yyyy'}} 
 			</td>
-			<td class="col-sm-2"><strong>Recepcionista</strong></td>
-			<td class="col-sm-2">
-				{{ficha.user.nombre}} {{ficha.user.apellido_paterno}}
-			</td>
+			
 		</tr>
 		<tr>
 			<td><strong>Procedencia</strong></td>
