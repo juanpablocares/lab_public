@@ -39,7 +39,44 @@ class Api::FichasController < ApplicationController
         :user,
         :prevision,
         :procedencia,
-      {:detalles_ficha => {include: [:usuario_muestra, :resultados_examen,:perfil,{:examen => { include: [:indicacion, :tipo_examen,:tarifas_examen]}}]}}]
+        {
+          :detalles_ficha => {
+            include: [
+              :usuario_muestra,
+              {
+                :resultados_examen => {
+                  include:
+                  [
+                    {
+                      :examen_parametro => {
+                        include: [
+                          {:parametro => {include: [:valor_parametro]}}
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              :perfil,
+              {
+                :examen => {
+                  include: [
+                    {
+                      :examenes_parametros => {
+                        include: [
+                          {:parametro => {include: [:valor_parametro]}}
+                        ]
+                      }
+                    },
+                    :indicacion,
+                    :tipo_examen,
+                    :tarifas_examen
+                  ]
+                }
+              }
+            ]
+          }
+        }]
     end
   end
   
@@ -266,7 +303,14 @@ class Api::FichasController < ApplicationController
 
     #Borrar examenes eliminados de la ficha
     cant_detalles_ficha = DetalleFicha.count(:conditions => ["ficha_id = ?",ficha.id])
-    if params[:examenesBorrados] != nil and params[:examenesBorrados].length > 0 and params[:examenesBorrados].length < cant_detalles_ficha or params[:examenesBorrados] != nil and params[:examenesBorrados].length > 0 and params[:examenesBorrados].length == cant_detalles_ficha and params[:examenesAgregados] != nil and params[:examenesAgregados].length > 0
+    if (params[:examenesBorrados] != nil and 
+      params[:examenesBorrados].length > 0 and 
+      params[:examenesBorrados].length < cant_detalles_ficha) or 
+      (params[:examenesBorrados] != nil and 
+      params[:examenesBorrados].length > 0 and 
+      params[:examenesBorrados].length == cant_detalles_ficha and 
+      params[:examenesAgregados] != nil and 
+      params[:examenesAgregados].length > 0)
       params[:examenesBorrados].each do |borrado|
         if borrado[:perfil]
           detalles_borrados = DetalleFicha.where(ficha_id: ficha.id).where(perfil_id: borrado[:id])

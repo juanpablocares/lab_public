@@ -258,11 +258,21 @@ angular.module('lab').controller('FichasIndexController', function(
 		$scope.getPrecioTotal(true);
 	};
 
+	$scope.countResultadosParametrosValidados = function(resultados_examen)
+	{
+		console.log(resultados_examen);
+		var count = 0;
+		for (var i = 0; i < resultados_examen.length; i++)
+		{
+			var value = resultados_examen[i];
+			console.log(value);
+			if(value.usuario_valida_id != null)
+				count++;
+		}
+		return count;
+	}
+
 	$scope.setEstadoExamenes = function() {
-
-
-
-
 		for ( i = 0; i < $scope.examenesSeleccionados.length; i++) {
 			value = $scope.examenesSeleccionados[i];
 			if (value.perfil) {
@@ -271,30 +281,30 @@ angular.module('lab').controller('FichasIndexController', function(
 					value2 = value.examenes[j];
 					value2.estado = {};
 
-					//Cambio temporal, entrega siempre le mismo estaod
-					value2.estado.class = 'warning';
-					value2.estado.texto = 'Pendiente';
-					return;
-					//END
-
 
 					if (value2.usuario_muestra_id == null) {
-						value2.estado.class = 'warning';
-						value2.estado.texto = 'Pendiente';
+						value2.estado.class = 'danger';
+						value2.estado.texto = 'M Pendiente';
 					}
 					else {
-						if (value2.resultados_examen.length == value2.examen.sustancias.length) {
-							value.delete = false;
-							value2.estado.texto = 'Ingresado',
-							value2.estado.class = 'success';
+
+						value.delete = false;
+						if (value2.examen.examenes_parametros.length == $scope.countResultadosParametrosValidados(value2.resultados_examen))
+						{
+							value2.estado.class = 'primary';
+							value2.estado.texto = 'Validado';
 						}
 						else
-						if (value2.resultados_examen.length < value2.examen.sustancias.length || value2.examen.sustancias.length == 0) {
-							value.delete = false;
-							value2.estado.class = 'info';
-							value2.estado.texto = 'Examen';
+						if (value2.examen.examenes_parametros.length > $scope.countResultadosParametrosValidados(value2.resultados_examen))
+						{
+							value2.estado.class = 'warning';
+							value2.estado.texto = 'Sin resultados';
 						}
-						else {
+						else if(value2.examen.examenes_parametros.length == 0){
+							value2.estado.class = 'danger';
+							value2.estado.texto = 'Sin Parametros';
+						}
+						else{
 							value2.estado.class = 'danger';
 							value2.estado.texto = 'Error';
 						}
@@ -305,29 +315,28 @@ angular.module('lab').controller('FichasIndexController', function(
 				value.delete = true;
 				value.estado = {};
 
-				//Cambio temporal entrega siempre le mismo estaod
-				value.estado.class = 'warning';
-				value.estado.texto = 'Pendiente';
-				return;
-				//End
-
 				if (value.usuario_muestra_id == null) {
-					value.estado.class = 'warning';
-					value.estado.texto = 'Pendiente';
+					value.estado.class = 'danger';
+					value.estado.texto = 'M Pendiente';
 				}
 				else {
-					if (value.resultados_examen.length == value.examen.sustancias.length) {
+					if (value.examen.examenes_parametros.length == $scope.countResultadosParametrosValidados(value.resultados_examen)) {
 						value.delete = false;
-						value.estado.texto = 'Ingresado',
-						value.estado.class = 'success';
+						value.estado.texto = 'Validado';
+						value.estado.class = 'primary';
 					}
 					else
-					if (value.resultados_examen.length < value.examen.sustancias.length || value.examen.sustancias.length == 0) {
+					if (value.examen.examenes_parametros.length > $scope.countResultadosParametrosValidados(value.resultados_examen	)) {
 						value.delete = false;
-						value.estado.class = 'info';
-						value.estado.texto = 'Examen';
+						value.estado.texto = 'Sin resultados';
+						value.estado.class = 'warning';
 					}
-					else {
+					else if(value2.examen.examenes_parametros.length == 0){
+						value.estado.class = 'danger';
+						value.estado.texto = 'Sin Parametros';
+					}
+					else
+					{
 						value.estado.class = 'danger';
 						value.estado.texto = 'Error';
 					}
@@ -600,9 +609,9 @@ angular.module('lab').controller('FichasIndexController', function(
     	if (month< 10 )month = '0'+month;
     	day = day+'/'+month+'/'+ficha.creado.getFullYear();
 
-    	if(ficha.urgente)
+    	if(ficha.urgente == true)
     	{
-	    	row.push({colSpan: 4, text: "Ficha Urgente", bold: true});
+	    	row.push({colSpan: 4, text: "Ficha Urgente", bold: true},{},{},{});
 			ficha_info.push(row);
 			row=[];
 		}
@@ -629,14 +638,14 @@ angular.module('lab').controller('FichasIndexController', function(
 		row.push({text: ficha.numero_programa});
 		ficha_info.push(row);
 		row = [];
-		if(ficha.medico_id)
+		if(ficha.medico_id != null)
 		{
 			row.push({text: "Médico", bold: true});
 			row.push({colSpan: 3, text: ficha.medico.nombre+ " "+ficha.medico.apellido_paterno+ " "+ficha.medico.apellido_materno});
 			ficha_info.push(row);
 			row=[];
 		}
-		if(ficha.observaciones)
+		if(ficha.observaciones != null)
 		{
 			row.push({text: "Observaciones", bold: true});
 			row.push({colSpan: 3, text: ficha.observaciones});
@@ -659,11 +668,39 @@ angular.module('lab').controller('FichasIndexController', function(
 		for (var i = 0; i < examenes_array.length; i++)
 		{
 			var value = examenes_array[i];
+			var row2 = [];
+			var resultados_examen = [[
+				{text: 'Parametro', bold: true }, 
+				{text: 'Resultado', bold: true },
+				{text: 'Unidad', bold: true },
+				{text: 'Valor de referencia', bold: true },
+				{text: 'Método', bold: true }]];
+
 			row.push({text: value.examen_id+""});
 			row.push({text: value.examen.nombre, bold:true});
-			row.push({text: "$ " +value.precio });
 			tabla_examenes.push(row);
 			row = [];
+			for (var i = 0; i < value.resultados_examen.length; i++) {
+				var result = value.resultados_examen[i];
+				var result_row = [];
+				result_row.push({text: result.examen_parametro.nombre});
+				result_row.push({text: result.cantidad});
+				result_row.push({text: result.examen_parametro.unidad_medida});
+				result_row.push({text: ''});
+				result_row.push({text: ''});
+				resultados_examen.push(result_row);
+			};
+
+			console.log(resultados_examen);
+			row.push("");
+			row.push({
+				table: {
+					headerRows: 1,
+					body: resultados_examen
+			}});
+			tabla_examenes.push(row);
+			row = [];
+			
 		};
 		/*
 
@@ -685,7 +722,7 @@ angular.module('lab').controller('FichasIndexController', function(
 
 		return {
 			table:{
-				widths: [30, '*', 30],
+				widths: [30, '*'],
 				body: tabla_examenes
 			},
 		};

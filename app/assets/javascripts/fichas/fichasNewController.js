@@ -41,7 +41,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		$scope.paciente.getRutCompleto = function() {
 			return this.rut + "" + this.rutdv;
 		};
-		
+		$scope.prevision = $scope.paciente.prevision;
 		$scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
 		$scope.paciente.getEdad = function() {
             $scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
