@@ -665,6 +665,29 @@ angular.module('lab').controller('FichasIndexController', function(
 		};
 	}
 
+	$scope.getDatosLaboratorio = function(){
+		return {
+			table: {
+				body: [
+					[
+						{
+					     	image: 'data:image/jpeg;base64,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',
+					      	fit: [50, 50]
+					    },
+					    {
+					    	stack: [
+					            { text: 'Laboratorios sin nombre'},
+					            { text: 'calle falsa 123'},
+					            { text: 'Telefonos: 569123988 - 569123956'}
+				          	]
+					    }
+				    ]
+			    ]
+			},
+			margin: [50,20,50,30] 
+		}
+	}
+
 	$scope.getTableExamenes = function(ficha, examenes_array){
 		var tabla_examenes = [];
 		var row = [];
@@ -694,41 +717,27 @@ angular.module('lab').controller('FichasIndexController', function(
 				result_row.push({text: ''});
 				resultados_examen.push(result_row);
 			};
-
-			console.log(resultados_examen);
 			row.push("");
 			row.push({
 				table: {
 					headerRows: 1,
+					widths: ['*','*','*','*','*'],
 					body: resultados_examen
-			}});
+			},
+			margin: [0,10,0,5],
+			layout: 'noBorders'
+			});
 			tabla_examenes.push(row);
 			row = [];
 			
 		};
-		/*
-
-		row.push({text: "N° Arancel", bold: true});
-		row.push({text: ficha.prevision.tarifa_id+" "});
-		row.push({text: "Precio Total", bold: true});
-		row.push({text: $scope.precio_total_edit+" "});
-		tabla_examenes.push(row);
-		row = [];
-		row.push({text: "Abonos bonos", bold: true});
-		row.push({text: $scope.total_pagos_bonos});
-		row.push({text: "Abonos boletas", bold: true});
-		row.push({text: $scope.total_pagos_boletas});
-		row.push({text: "Abonos boletas", bold: true});
-		row.push({text: $scope.total_pagos});
-		tabla_examenes.push(row);
-		
-		*/
-
 		return {
 			table:{
 				widths: [30, '*'],
 				body: tabla_examenes
 			},
+			margin: [0,20,0,10], 
+			layout: 'noBorders'
 		};
 	}
 
@@ -752,8 +761,10 @@ angular.module('lab').controller('FichasIndexController', function(
 		{
 
 			var docDefinition = {
-				pageMargins: [40, 40, 40, 40],
-	            pageOrientation: 'landscape',
+				pageMargins: [50, 100, 50, 50],
+	            //pageOrientation: 'landscape',
+	            header: $scope.getDatosLaboratorio(),
+	            footer: function(currentPage, pageCount) { return currentPage.toString() + ' of ' + pageCount; },
 				content: [
 					{
 						columns: [$scope.getInfoPaciente($scope.ficha),$scope.getInfoFicha($scope.ficha)]
@@ -764,7 +775,6 @@ angular.module('lab').controller('FichasIndexController', function(
 					// alignment: 'justify'
 				}
 			};
-			console.log(docDefinition);
 			pdfMake.createPdf(docDefinition).open();
 			//pdfMake.createPdf(docDefinition).print();
 			//pdfMake.createPdf(docDefinition).download('optionalName.pdf');
