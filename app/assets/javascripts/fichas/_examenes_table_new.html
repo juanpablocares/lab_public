@@ -2,6 +2,7 @@
 	<div class="col-sm-12">
 		<table class="table table-bordered">
 			<thead>
+				<th ng-if="ficha.id"><input type="checkbox" ng-change="toogleAllCheckbox(checked)" ng-model="checked"></th>
 				<th>ID</th>
 				<th>Código</th>
 				<th>Examen</th>
@@ -16,6 +17,9 @@
 			</thead>
 			<tbody ng-repeat="item in examenesSeleccionados_edit track by $index"  ng-if="examenesSeleccionados_edit.length != 0 && !item.perfil">
 				<tr >
+					<td ng-if="ficha.id">
+						<input type="checkbox" ng-model="item.checked" ng-if="item.estado.texto == 'Validado'">
+					</td>
 					<td>{{item.examen.id}}</td>
 					<td>{{item.examen.codigo_fonasa}}</td>
 					<td>{{item.examen.nombre}}</td>
@@ -34,6 +38,9 @@
 			</tbody>
 			<tbody ng-repeat="item in examenesSeleccionados_edit track by $index" ng-if="examenesSeleccionados_edit.length != 0 && item.perfil">
 				<tr>
+					<td ng-if="ficha.id">
+						<input type="checkbox" ng-model="item.checked">
+					</td>
 					<td colspan="10"><strong>{{item.nombre}}</strong></td>
 					<td ng-if="item.delete" class="text-center"><a class="clickable text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar perfil"><i class="fa fa-trash-o fa-lg"></i></a></td>
 				</tr>
@@ -71,14 +78,15 @@
 			</tbody>
 			<tbody> 
 				<tr>
-					<td colspan="2"><strong>Número Arancel</strong></td>
+					<td colspan="3" ng-if="ficha.id"><strong>Número Arancel</strong></td>
+					<td colspan="2" ng-if="!ficha.id"><strong>Número Arancel</strong></td>
 					<td colspan="2">{{ficha_edit.prevision.tarifa_id}}</td>
 					<td colspan="5"><strong>Precio Total</strong></td>
 					<td >{{precio_total_edit}}</td>
 					<td></td>
 				</tr> 
 				<tr ng-if="ficha.id">
-					<td colspan="2"><strong>Abonos bonos</strong></td>
+					<td colspan="3"><strong>Abonos bonos</strong></td>
 					<td>{{total_pagos_bonos}}</td>
 					<td colspan="2"><strong>Abonos boletas</strong></td>
 					<td>{{total_pagos_boletas}}</td>
@@ -86,7 +94,7 @@
 					<td class="text-success">{{total_pagos}}</td>
 				</tr>
 				<tr ng-if="ficha.id">
-					<td colspan="9"><strong>Saldo</strong></td>
+					<td colspan="10"><strong>Saldo</strong></td>
 					<td ng-class="{'text-success': precio_total_edit < total_pagos, 'text-danger': precio_total_edit > total_pagos}">{{precio_total_edit - total_pagos}}</td>
 				</tr>
 			</tbody>

@@ -10,6 +10,7 @@ angular.module('lab').controller('FichasIndexController', function(
 	$scope.saving = false;
 	$scope.loading = true;
 	$scope.guardado = false;
+	$scope.checked = false;
 	$scope.procedencia = {};
 	$scope.examenesBorrados = [];
 	$scope.examenesAgregados = [];
@@ -83,9 +84,15 @@ angular.module('lab').controller('FichasIndexController', function(
 			$scope.ficha_edit = angular.copy($scope.ficha);
 			$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
 			$scope.limpiarTarifas();
-			$scope.getPDF();
 	});
-	
+
+	$scope.toogleAllCheckbox = function(checkbox){
+		for (var i = 0; i < $scope.examenesSeleccionados_edit.length; i++) {
+			var value = $scope.examenesSeleccionados_edit[i];
+			value.checked = checkbox;
+		};
+	}
+
 	$scope.setPaciente = function(ficha)
 	{
 		$scope.paciente = ficha.paciente;
@@ -417,9 +424,6 @@ angular.module('lab').controller('FichasIndexController', function(
 	});
 
 	$scope.limpiarTarifas = function() {
-		console.log("limpiarTarifas");
-		console.log($scope.examenesSeleccionados_edit);
-		console.log($scope.ficha_edit.prevision);
 		//De examenes ya seleccionados al cargar ficha
 		for (var i = 0; i < $scope.examenesSeleccionados_edit.length; i++) {
 			var temp1 = $scope.examenesSeleccionados_edit[i];
@@ -729,23 +733,41 @@ angular.module('lab').controller('FichasIndexController', function(
 	}
 
 	$scope.getPDF = function(){
-		var docDefinition = {
-			pageMargins: [40, 40, 40, 40],
-            pageOrientation: 'landscape',
-			content: [
-				{
-					columns: [$scope.getInfoPaciente($scope.ficha),$scope.getInfoFicha($scope.ficha)]
-				},
-				$scope.getTableExamenes($scope.ficha, $scope.examenesSeleccionados_edit)
-			],
-			defaultStyle: {
-				// alignment: 'justify'
+
+		var examenes_checked = [];
+		for (var i = 0; i < $scope.examenesSeleccionados_edit.length; i++) {
+			var value = $scope.examenesSeleccionados_edit[i];
+			if (value.checked)
+			{
+				examenes_checked.push(value);
 			}
 		};
-		console.log(docDefinition);
-		pdfMake.createPdf(docDefinition).open();
-		//pdfMake.createPdf(docDefinition).print();
-		//pdfMake.createPdf(docDefinition).download('optionalName.pdf');
 
+		if(examenes_checked.length == 0)
+		{
+			alert("Debe seleccionar al menos un examen");
+			return false;
+		}
+		else
+		{
+
+			var docDefinition = {
+				pageMargins: [40, 40, 40, 40],
+	            pageOrientation: 'landscape',
+				content: [
+					{
+						columns: [$scope.getInfoPaciente($scope.ficha),$scope.getInfoFicha($scope.ficha)]
+					},
+					$scope.getTableExamenes($scope.ficha, examenes_checked)
+				],
+				defaultStyle: {
+					// alignment: 'justify'
+				}
+			};
+			console.log(docDefinition);
+			pdfMake.createPdf(docDefinition).open();
+			//pdfMake.createPdf(docDefinition).print();
+			//pdfMake.createPdf(docDefinition).download('optionalName.pdf');
+		}
 	}
 });
