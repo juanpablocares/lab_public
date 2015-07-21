@@ -1,0 +1,35 @@
+<div ng-if="isLoading" class="row text-center">
+	<i class="fa fa-spinner fa-pulse fa-2x"></i>	
+</div>
+<div class="widget-container fluid-height clearfix col-md-12" ng-if="!isLoading">
+	<div class="widget-content padded col-md-12">
+		<form>
+			<div class="form-group">
+				<div class="col-md-3">
+					<select class="form-control" ng-model="permiso" ng-options="p.nombre for p in permisos track by p.id | orderBy:'nombre':true" name="permisos">
+						<option value=""></option>
+					</select>
+				</div>
+				<div class="col-md-2">
+					<button style="float: center;" type="button" class="btn btn-danger" ng-click="eliminar_permiso()"><i class="fa fa-trash"></i></button>
+				</div>
+				<label class="control-label col-md-2">Nombre</label>
+				<div class="col-md-4" align="left">
+					<input placeholder="Ingrese nombre" ng-model="permiso.nombre" class="form-control" type="text" ng-disabled="permiso.editar_nombre" name="nombre">
+				</div>
+				<div class="col-md-12">
+					<label class="control-label col-md-2">Permisos</label>
+					<div class="col-md-7">
+					  <label class="checkbox"><input type="checkbox" ng-model="permiso.crear_paciente" name="crear_paciente"><span>Crear paciente</span></label>
+					  <label class="checkbox"><input type="checkbox" ng-model="permiso.ingresar_resultados" name="ingresar_resultados"><span>Ingresar resultados</span></label>
+					  <label class="checkbox"><input type="checkbox" ng-model="permiso.validar_resultados" name="validar_resultados"><span>Validar resultados</span></label>
+					  <label class="checkbox"><input type="checkbox" ng-model="permiso.valorar_examen" name ="valorar_examen"><span>Valorar examen</span></label>
+					</div>
+				</div>
+			</div>	
+		</form>
+		<div class="col-md-3">
+			<button type="button" class="btn btn-success" ng-click="guardar_permiso(permiso)"><i class="fa fa-floppy-o"></i>Guardar</button>
+		</div>
+	</div>
+</div>

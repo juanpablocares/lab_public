@@ -1,0 +1,14 @@
+<div class="form-group">
+	<div class="row">
+		<label class="control-label col-md-2">Rut</label>
+		<div class="col-md-3">
+			<input ng-rut rut-format="live" ng-model="user.rut_completo" class="form-control" type="text" ng-disabled="user.id" name="rut_completo">
+			<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.rut_completo.$pristine) && medico_form.rut_completo.$error.required">Debe ingresar rut del usuario</label>
+		</div>
+		<label class="control-label col-md-1">Nombres</label>
+		<div class="col-md-3">
+			<input class="form-control" placeholder="Ingrese nombres" type="text" ng-model="user.nombre" name="nombre" required>
+			<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.nombre.$pristine) && medico_form.nombre.$error.required">Debe ingresar nombre</label>
+		</div>
+	</div>
+</div>

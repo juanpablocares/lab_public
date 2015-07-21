@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
           :recoverable, :rememberable, :trackable, :validatable
   include DeviseTokenAuth::Concerns::User
   
+  belongs_to :permiso
+  
   has_many :modificacion_examenes
   has_many :fichas
   has_many :detalles_pago_ficha

@@ -1,0 +1,49 @@
+<div ng-if="isLoading" class="row text-center">
+	<i class="fa fa-spinner fa-pulse fa-2x"></i>	
+</div>
+
+<div class="widget-container fluid-height" ng-if="!isLoading">
+	<div class="widget-content padded">
+		<form>
+			<div>
+				<table class="table table-bordered" ng-if="tipos_pago.length != 0">
+					<thead>
+						<th>#</th>
+						<th>Rut</th>
+						<th>Nombre</th>
+						<th>A. Paterno</th>
+						<th>A. Materno</th>
+						<th>E-mail</th>
+						<th>Tipo</th>
+						<th></th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in users">
+							<td >{{$index + 1}}</td>
+							<td width="100">{{item.rut}}-{{item.rutdv}}</td>
+							<td width="100"><input class="form-control" type="text" ng-model="item.apellido_paterno" name="apellido_paterno"></td>
+							<td width="100"><input class="form-control" type="text" ng-model="item.apellido_materno" name="apellido_materno"></td>
+							<td width="120"><input class="form-control" type="text" ng-model="item.nombre" name="nombre"></td>
+							<td><input class="form-control" type="email" ng-model="item.email" name="email"></td>
+							<td>
+								<select class="form-control" ng-model="item.permiso" ng-options="p.nombre for p in permisos track by p.id | orderBy:'nombre'" name="permisos">
+									<option value=""></option>
+								</select>
+							</td>
+							<td width="30">
+								<a class="text-primary" ng-click="remove($index)" title="Eliminar usuario" style="cursor:pointer;"><i class="fa fa-trash fa-lg"></i></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="row form-group">
+				<div class="col-sm-11 text-right">
+					<button ng-click="guardar_cambios()" type="submit" class="btn btn-success">
+						Guardar
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

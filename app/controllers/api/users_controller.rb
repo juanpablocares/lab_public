@@ -25,6 +25,37 @@ class Api::UsersController < ActionController::Base
 		render json: @results
 	end
 	
+	def update_all
+		@result = params[:users]
+		@result.each do |r|
+			@tmp = User.where(id: r["id"]).first
+			if @tmp != nil
+				@tmp.nombre = r["nombre"]
+				@tmp.apellido_paterno = r["apellido_paterno"]
+				@tmp.apellido_materno = r["apellido_materno"]
+				@tmp.email = r["email"]
+				if r["permiso_id"]
+					@tmp.permiso_id = r["permiso_id"].to_i
+				end
+				@tmp.save
+			else
+				usuario = User.new
+				usuario.nombre = r["nombre"]
+				usuario.apellido_paterno = r["apellido_paterno"]
+				usuario.apellido_materno = r["apellido_materno"]
+				usuario.email = r["email"]
+				if r["permiso_id"]
+					usuario.permiso_id = r["permiso_id"].to_i
+				end
+				usuario.save
+			end
+		end
+		render json: {
+			  success: true,
+			  message: 'Usuarios successfully modified',
+			}, status: 200
+	end
+	
 	def accountAttributes
 		
 	end

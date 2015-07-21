@@ -36,6 +36,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   	inflect.irregular 'ordenMedica', 'ordenesMedicas'
 	inflect.irregular 'parametro', 'parametros'
   	inflect.irregular 'perfil', 'perfiles'
+	inflect.irregular 'permiso', 'permisos'
   	inflect.irregular 'permisoRol', 'permisosRol'
   	inflect.irregular 'prevision', 'previsiones'
   	inflect.irregular 'procedencia', 'procedencias'

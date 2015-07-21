@@ -423,6 +423,31 @@
 			controller : 'FacturasTodasController',
 		});
 		
+		/*Users*/
+		$stateProvider.state('loginRequired.users', {
+			url : '/usuarios',
+			templateUrl : "users/menu.html",
+			controller : 'UsersMenuController',
+		});
+		
+		$stateProvider.state('loginRequired.users.editar', {
+			url : '/usuarios/editar',
+			templateUrl : "users/todos.html",
+			controller : 'UsersTodosController',
+		});
+		
+		$stateProvider.state('loginRequired.users.permisos', {
+			url : '/usuarios/permisos',
+			templateUrl : "users/permisos.html",
+			controller : 'UsersPermisosController',
+		});
+		
+		$stateProvider.state('loginRequired.users.nuevo', {
+			url : '/usuarios/nuevo',
+			templateUrl : "users/index.html",
+			controller : 'UsersIndexController',
+		});
+		
 		/*Médicos*/
 		$stateProvider.state('loginRequired.medicos', {
 			url : '/medicos',

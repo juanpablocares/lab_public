@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
 
 	namespace :api do
+		##########################Controladores de usuarios##########################
 		get 'users', to: 'users#index', defaults: {format: 'json'}
+		put 'users', to: 'users#update_all', defaults: {format: 'json'}
 		get 'users/rut/:rut', to: 'users#search', defaults: {format: 'json'}
 		get 'users/nombre/:nombre', to: 'users#search_nombre', defaults: {format: 'json'}
 		get 'users/paterno/:paterno', to: 'users#search_paterno', defaults: {format: 'json'}
 		get 'users/paterno/:materno', to: 'users#search_materno', defaults: {format: 'json'}
+		##########################Controladores de ##########################
+		get 'permisos', to: 'permisos#index', defaults: {format: 'json'}
+		put 'permisos/:id', to: 'permisos#update', defaults: {format: 'json'}
 		
 		##########################Controladores de pacientes##########################
 		post 'pacientes/range/:start/:number', to: 'pacientes#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
@@ -143,6 +148,7 @@ Rails.application.routes.draw do
 		resources :modificacion_examenes, :defaults => { :format => 'json' }
 		resources :pacientes, :defaults => { :format => 'json' }
 		resources :parametros, :defaults => { :format => 'json' }
+		resources :permisos, :defaults => { :format => 'json' }
 		resources :previsiones, :defaults => { :format => 'json' }
 		resources :procesadores_examenes, :defaults => { :format => 'json' }
 		resources :proceso_examenes, :defaults => { :format => 'json' }
