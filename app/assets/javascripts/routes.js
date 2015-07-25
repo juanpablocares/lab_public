@@ -431,21 +431,21 @@
 		});
 		
 		$stateProvider.state('loginRequired.users.editar', {
-			url : '/usuarios/editar',
+			url : '/editar',
 			templateUrl : "users/todos.html",
 			controller : 'UsersTodosController',
 		});
 		
 		$stateProvider.state('loginRequired.users.permisos', {
-			url : '/usuarios/permisos',
+			url : '/permisos',
 			templateUrl : "users/permisos.html",
 			controller : 'UsersPermisosController',
 		});
 		
 		$stateProvider.state('loginRequired.users.nuevo', {
-			url : '/usuarios/nuevo',
-			templateUrl : "users/index.html",
-			controller : 'UsersIndexController',
+			url : '/nuevo',
+			templateUrl : "users/nuevo.html",
+			controller : 'UsersNewController',
 		});
 		
 		/*Médicos*/

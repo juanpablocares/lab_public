@@ -4,7 +4,8 @@
 		'platanus.rut', 'ui.router', 'templates', 
 		'ng-token-auth', 'ngDialog']);
 
-	labs.run(function($rootScope, $auth) {
+	labs.run(function($rootScope, $auth, regionesService) {
+
 		$rootScope.$on('auth:login-success', function(ev) {
 			console.log('login-success');
 		});

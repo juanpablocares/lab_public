@@ -10,7 +10,7 @@
 
  */
 
-angular.module('lab').controller('FichasNewController', function($scope, $auth, $state, $http, $resource, $stateParams, Previsiones, Examenes, Perfiles, Cotizaciones, Cotizacion, Procedencias, Ficha, Fichas, Medicos) {
+angular.module('lab').controller('FichasNewController', function($scope, $auth, $state, $http, $resource, $stateParams, Previsiones, Examenes, Perfiles, Cotizaciones, Cotizacion, Procedencias, Ficha, Fichas, Medicos, previsionesService) {
 
 	$scope.edit = true;
 	$scope.ficha = {};
@@ -81,13 +81,21 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 			console.log("ERROR obteniendo examenes");
 		});
 
-
-		Previsiones.all.get().$promise.then(function(response) {
-			$scope.previsionesArray = response.previsiones;
+		if(!previsionesService.getPrevisiones())
+		{
+			Previsiones.all.get().$promise.then(function(data) {
+				previsionesService.setPrevisiones(data.previsiones);
+				$scope.previsionesArray = previsionesService.getPrevisiones();
+				$scope.prevision.selected = $scope.setPrevisionSeleccionada($scope.paciente.prevision);
+			}, function(data) {
+				console.log('Error getting previsiones');
+			});
+		}
+		else
+		{
+			$scope.previsionesArray = previsionesService.getPrevisiones();
 			$scope.prevision.selected = $scope.setPrevisionSeleccionada($scope.paciente.prevision);
-		}, function(response) {
-			console.log("ERROR obteniendo previsiones");
-		});
+		}
 
 		Perfiles.buscar.todos().$promise.then(function(response) {
 			$scope.perfiles = response.data;

@@ -1,5 +1,5 @@
 (function() {
-	angular.module('lab').controller('FacturasTodasController', function($scope, $auth, $state, $http, $stateParams, DetallesPagoFicha) {
+	angular.module('lab').controller('FacturasTodasController', function($scope, $auth, $state, $http, $stateParams, DetallesPagoFicha, previsionesService) {
 
 		$scope.resultadosBusqueda = null;
 		$scope.seleccionar_todos = false;
@@ -9,11 +9,19 @@
 		$scope.total_bonos = 0;
 		$scope.total_factura = 0;
 		
-		$http.get('/api/previsiones').success(function(data) {
-			$scope.plans = data.previsiones;
-		}).error(function(data) {
-			// log error
-		});
+		if(!previsionesService.getPrevisiones())
+		{
+			$http.get('/api/previsiones').success(function(data) {
+				previsionesService.setPrevisiones(data.previsiones);
+				$scope.plans = previsionesService.getPrevisiones();
+			}).error(function(data) {
+				console.log('Error getting previsiones');
+			});
+		}
+		else
+		{
+			$scope.plans = previsionesService.getPrevisiones();
+		}
 		
 		$http.get('/api/procedencias').success(function(data) {
 			$scope.procedencias = data.data;

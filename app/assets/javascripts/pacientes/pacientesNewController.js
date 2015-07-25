@@ -1,4 +1,4 @@
-angular.module('lab').controller('PacientesNewController', function($scope, $auth, $state, $http, $resource, $stateParams) {
+angular.module('lab').controller('PacientesNewController', function($scope, $auth, $state, $http, $resource, $stateParams, regionesService, previsionesService) {
 
 	$scope.paciente = {};
 	$scope.paciente_nuevo = true;
@@ -37,24 +37,44 @@ angular.module('lab').controller('PacientesNewController', function($scope, $aut
 		}
 	};
 
-	$http.get('/api/regiones').success(function(data) {
-		$scope.regiones = data;
-			angular.forEach(data, function(r, key) {
-				if (r.id == 5) {
-					$scope.paciente.region = r;
-					angular.forEach(r.comunas, function(c, key) {
-						if (c.id == 42) {
-							$scope.paciente.comuna = c;
-						}
-					});
-				}
-			});
-	}).error(function(data) {
-	});
+	if(!regionesService.getRegiones())
+	{
+		$http.get('/api/regiones').success(function(data) {
+			regionesService.setRegiones(data);
+			$scope.setRegiones();
+		}).error(function(data) {
+			console.log('Error getting regiones');
+		});
+	}
+	else {
+		$scope.setRegiones();
+	}
 
-	$http.get('/api/previsiones').success(function(data) {
-		$scope.plans = data.previsiones;
-	}).error(function(data) {
-		// log error
-	});
+	$scope.setRegiones = function(regiones)
+	{
+		$scope.regiones = regionesService.getRegiones();
+		angular.forEach($scope.regiones, function(r, key) {
+			if (r.id == 5) {
+				$scope.paciente.region = r;
+				angular.forEach(r.comunas, function(c, key) {
+					if (c.id == 42) {
+						$scope.paciente.comuna = c;
+					}
+				});
+			}
+		});
+	}
+
+	if(!previsionesService.getPrevisiones())
+	{
+		$http.get('/api/previsiones').success(function(data) {
+			$scope.plans = previsionesService.getPrevisiones();
+		}).error(function(data) {
+			console.log('Error getting previsiones');
+		});
+	}
+	else
+	{
+		$scope.plans = previsionesService.getPrevisiones();
+	}
 });

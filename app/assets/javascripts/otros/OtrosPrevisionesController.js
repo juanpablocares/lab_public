@@ -1,4 +1,4 @@
-angular.module('lab').controller('OtrosPrevisionesController', function($scope, $http, $stateParams, $auth, $state, Prevision, Previsiones) {
+angular.module('lab').controller('OtrosPrevisionesController', function($scope, $http, $stateParams, $auth, $state, Prevision, Previsiones, previsionesService) {
 
 	$scope.isLoading = true;
 	
@@ -8,6 +8,34 @@ angular.module('lab').controller('OtrosPrevisionesController', function($scope, 
 		// log error
 	});
 	
+	$scope.setPrevisiones = function(){
+		$scope.previsiones = previsionesService.getPrevisiones();
+		for(i = 0; i < $scope.previsiones.length; i++){
+			$scope.previsiones[i].boton_agregar = true;
+			angular.forEach($scope.tarifas, function(tarifa, key) {
+				if ($scope.previsiones[i].tarifa && tarifa.id == $scope.previsiones[i].tarifa.id) {
+					$scope.previsiones[i].tarifa = tarifa;
+				}
+			});
+		};
+		$scope.isLoading = false;
+	}
+
+	if(!previsionesService.getPrevisiones())
+	{
+		Previsiones.all.get().$promise.then(function(data) {
+			previsionesService.setPrevisiones(data.previsiones);
+			$scope.setPrevisiones();
+		}).error(function(data) {
+			console.log('Error getting previsiones');
+		});
+	}
+	else
+	{
+		$scope.setPrevisiones();
+	}
+
+
 	$http.get('/api/previsiones').success(function(data) {
 		$scope.previsiones = data.previsiones;
 		for(i = 0; i < $scope.previsiones.length; i++){
