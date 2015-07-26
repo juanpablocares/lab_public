@@ -2,7 +2,8 @@ angular.module('lab').controller('FichasIndexController', function(
 	$scope, $auth, $state, $http, $stateParams, 
 	Fichas, Previsiones, Perfiles, Medicos, 
 	Procedencias, Examenes, DetallesPagoFicha, 
-	Ficha, previsionesService) {
+	Ficha, previsionesService, examenesService, medicosService,
+	procedenciasService, perfilesService) {
 
 	//Esta vista tiene campos editables, con $scope.edit aviso a las vistas si mostrar algunos campos editables o fijos.
 	$scope.edit = true;
@@ -45,19 +46,37 @@ angular.module('lab').controller('FichasIndexController', function(
                     $scope.ficha.restringido = true;
             $scope.ordenarExamenes();
 
-			Medicos.buscar.todos().$promise.then(function(response) {
-				$scope.medicosArray = response.data;
+			if(!medicosService.getMedicos())
+			{
+				Medicos.buscar.todos().$promise.then(function(data) {
+					medicosService.setMedicos(data.data);
+					$scope.medicosArray = medicosService.getMedicos();
+					$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha.medico);
+				}, function(response) {
+					console.log("ERROR obteniendo medicos");
+				});
+			}
+			else
+			{
+				$scope.medicosArray = medicosService.getMedicos();
 				$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha.medico);
-			}, function(response) {
-				console.log("ERROR obteniendo medicos");
-			});
+			}
 
-			Procedencias.buscar.todos().$promise.then(function(response) {
-				$scope.procedenciasArray = response.data;
+			if(!procedenciasService.getProcedencias())
+			{
+				Procedencias.buscar.todos().$promise.then(function(data) {
+					procedenciasService.setProcedencias(data.data);
+					$scope.procedenciasArray = procedenciasService.getProcedencias();
 				$scope.procedencia.selected = $scope.setProcedenciaSeleccionada($scope.ficha.procedencia);
-			}, function(response) {
-				console.log("ERROR obteniendo procedencias");
-			});
+				}, function(data) {
+					console.log('Error getting procedencias');
+				});
+			}
+			else
+			{
+				procedenciasService.setProcedencias(data.data);
+				$scope.procedenciasArray = procedenciasService.getProcedencias();
+			}
 
 			if(!previsionesService.getPrevisiones())
 			{
@@ -75,21 +94,39 @@ angular.module('lab').controller('FichasIndexController', function(
 				$scope.prevision = $scope.setPrevisionSeleccionada($scope.ficha.prevision);
 			}
 
-			Examenes.all.index({
-			}).$promise.then(function(response) {
-				$scope.examenes = response.data;
+			if(!examenesService.getExamenes())
+			{
+				Examenes.all.index({
+				}).$promise.then(function(data) {
+					examenesService.setExamenes(data.data);
+					$scope.examenes = examenesService.getExamenes();
+					$scope.crearExamenesArray();
+				}, function(response) {
+					console.log("ERROR obteniendo examenes");
+				});
+			}
+			else
+			{
+				$scope.examenes = examenesService.getExamenes();
 				$scope.crearExamenesArray();
-			}, function(response) {
-				console.log("ERROR obteniendo examenes");
-			});
+			}
 
-			Perfiles.buscar.todos().$promise.then(function(response) {
-				$scope.perfiles = response.data;
-				$scope.crearExamenesArray();
-			}, function(response) {
-				console.log("ERROR obteniendo perfiles");
-			});
-		
+			if(!perfilesService.getPerfiles())
+			{
+				Perfiles.buscar.todos().$promise.then(function(data) {
+					perfilesService.setPerfiles(data.data);
+					$scope.perfiles = perfilesService.getPerfiles();
+					$scope.crearExamenesArray();
+				}, function(data) {
+					console.log('Error getting perfiles');
+				});
+			}
+			else
+			{
+				$scope.perfiles = perfilesService.getPerfiles();
+				$scope.crearExamenesArray();	
+			}
+
 			$scope.ficha_edit = angular.copy($scope.ficha);
 			$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
 			$scope.limpiarTarifas();

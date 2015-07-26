@@ -10,7 +10,10 @@
 
  */
 
-angular.module('lab').controller('FichasNewController', function($scope, $auth, $state, $http, $resource, $stateParams, Previsiones, Examenes, Perfiles, Cotizaciones, Cotizacion, Procedencias, Ficha, Fichas, Medicos, previsionesService) {
+angular.module('lab').controller('FichasNewController', function($scope, $auth, $state,
+ $http, $resource, $stateParams, Previsiones, Examenes, Perfiles,
+  Cotizaciones, Cotizacion, Procedencias, Ficha,
+   Fichas, Medicos, previsionesService, examenesService, procedenciasService, perfilesService) {
 
 	$scope.edit = true;
 	$scope.ficha = {};
@@ -61,25 +64,54 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		$scope.paciente.rut_completo = $scope.paciente.getRutCompleto();
 		$scope.paciente.nombre_completo = $scope.paciente.getNombreCompleto();
 
-		Medicos.buscar.todos().$promise.then(function(response) {
-			$scope.medicosArray = response.data;
-		}, function(response) {
-			console.log("ERROR obteniendo medicos");
-		});
+		if(!medicosService.getMedicos())
+		{
+			Medicos.buscar.todos().$promise.then(function(data) {
+				medicosService.setMedicos(data.data);
+				$scope.medicosArray = medicosService.getMedicos();
+				$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha.medico);
+			}, function(response) {
+				console.log("ERROR obteniendo medicos");
+			});
+		}
+		else
+		{
+			$scope.medicosArray = medicosService.getMedicos();
+			$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha.medico);
+		}
 
-		Procedencias.buscar.todos().$promise.then(function(response) {
-			$scope.procedenciasArray = response.data;
-		}, function(response) {
-			console.log("ERROR obteniendo procedencias");
-		});
+		if(!procedenciasService.getProcedencias())
+		{
+			Procedencias.buscar.todos().$promise.then(function(data) {
+				procedenciasService.setProcedencias(data.data);
+				$scope.procedenciasArray = procedenciasService.getProcedencias();
+			$scope.procedencia.selected = $scope.setProcedenciaSeleccionada($scope.ficha.procedencia);
+			}, function(data) {
+				console.log('Error getting procedencias');
+			});
+		}
+		else
+		{
+			procedenciasService.setProcedencias(data.data);
+			$scope.procedenciasArray = procedenciasService.getProcedencias();
+		}
 
-		Examenes.all.index({
-		}).$promise.then(function(response) {
-			$scope.examenes = response.data;
+		if(!examenesService.getExamenes())
+		{
+			Examenes.all.index({
+			}).$promise.then(function(data) {
+				examenesService.setExamenes(data.data);
+				$scope.examenes = examenesService.getExamenes();
+				$scope.crearExamenesArray();
+			}, function(response) {
+				console.log("ERROR obteniendo examenes");
+			});
+		}
+		else
+		{
+			$scope.examenes = examenesService.getExamenes();
 			$scope.crearExamenesArray();
-		}, function(response) {
-			console.log("ERROR obteniendo examenes");
-		});
+		}
 
 		if(!previsionesService.getPrevisiones())
 		{
@@ -97,12 +129,21 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 			$scope.prevision.selected = $scope.setPrevisionSeleccionada($scope.paciente.prevision);
 		}
 
-		Perfiles.buscar.todos().$promise.then(function(response) {
-			$scope.perfiles = response.data;
-			$scope.crearExamenesArray();
-		}, function(response) {
-			console.log("ERROR obteniendo perfiles");
-		});
+		if(!perfilesService.getPerfiles())
+		{
+			Perfiles.buscar.todos().$promise.then(function(data) {
+				perfilesService.setPerfiles(data.data);
+				$scope.perfiles = perfilesService.getPerfiles();
+				$scope.crearExamenesArray();
+			}, function(data) {
+				console.log('Error getting perfiles');
+			});
+		}
+		else
+		{
+			$scope.perfiles = perfilesService.getPerfiles();
+			$scope.crearExamenesArray();	
+		}
 
 	}).error(function(data) {
 		$state.go('loginRequired.index');

@@ -23,11 +23,19 @@
 			$scope.plans = previsionesService.getPrevisiones();
 		}
 		
-		$http.get('/api/procedencias').success(function(data) {
-			$scope.procedencias = data.data;
-		}).error(function(data) {
-			// log error
-		});
+		if(!procedenciasService.getProcedencias())
+		{
+			Procedencias.buscar.todos().$promise.then(function(data) {
+				procedenciasService.setProcedencias(data.data);
+				$scope.procedencias = procedenciasService.getProcedencias();
+			}, function(data) {
+				console.log('Error getting procedencias');
+			});
+		}
+		else
+		{
+			$scope.procedencias = procedenciasService.getProcedencias();
+		}
 		
 		$http.get('/api/tipos_pago').success(function(data) {
 			$scope.tipos_pagos = data.data;

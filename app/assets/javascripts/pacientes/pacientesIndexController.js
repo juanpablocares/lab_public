@@ -1,38 +1,63 @@
-angular.module('lab').controller('PacientesIndexController', function($scope, $auth, $state, $http, $stateParams, Pacientes) {
+angular.module('lab').controller('PacientesIndexController', function($scope, $auth, $state, $http, $stateParams, Pacientes, Previsiones,  previsionesService, regionesService) {
 
 	$scope.masterPaciente = {};
+	$scope.paciente = {};
+
+	$scope.setRegiones = function()
+	{
+		$scope.regiones = regionesService.getRegiones();
+		angular.forEach($scope.regiones, function(region, key) {
+			if (region.id == $scope.paciente.comuna.region.id) {
+				$scope.paciente.region = region;
+				$scope.masterPaciente = angular.copy($scope.paciente);
+			}
+		});
+	}
 
 	$scope.$on('pacienteFromMenu', function(event, data) {
-		
-		if (data.fecha_nacimiento != undefined) {
-			data.fecha_nacimiento = new Date(data.fecha_nacimiento.getUTCFullYear(), data.fecha_nacimiento.getUTCMonth(), data.fecha_nacimiento.getUTCDate());
+		if(data.comuna)
+		{
+			if (data.fecha_nacimiento != undefined) {
+				data.fecha_nacimiento = new Date(data.fecha_nacimiento.getUTCFullYear(), data.fecha_nacimiento.getUTCMonth(), data.fecha_nacimiento.getUTCDate());
+			}
+			
+			if (data.creado != undefined) {
+				data.creado = new Date(data.creado);
+			}
+			
+			$scope.paciente = data;
+			$scope.masterPaciente = angular.copy($scope.paciente);
+
+
+			if(!regionesService.getRegiones())
+			{
+				$http.get('/api/regiones').success(function(data) {
+					regionesService.setRegiones(data);
+					$scope.setRegiones();
+				}).error(function(data) {
+					console.log('Error getting regiones');
+				});
+			}
+			else {
+				$scope.setRegiones();
+			}
 		}
-		
-		if (data.creado != undefined) {
-			data.creado = new Date(data.creado);
-		}
-		
-		$scope.paciente = data;
-		$scope.masterPaciente = angular.copy($scope.paciente);
-		$http.get('/api/regiones').success(function(data) {
-			$scope.regiones = data;
-			angular.forEach(data, function(region, key) {
-				if (region.id == $scope.paciente.comuna.region.id) {
-					$scope.paciente.region = region;
-					$scope.masterPaciente = angular.copy($scope.paciente);
-				}
-			});
-		}).error(function(data) {
-			// log error
-		});
 	});
 	$scope.$emit('PedirPacienteFromMenu');
 
-	$http.get('/api/previsiones').success(function(data) {
-		$scope.plans = data.previsiones;
-	}).error(function(data) {
-		// log error
-	});
+	if(!previsionesService.getPrevisiones())
+	{
+		Previsiones.all.get().$promise.then(function(data) {
+			previsionesService.setPrevisiones(data.previsiones);
+			$scope.plans = previsionesService.getPrevisiones();
+		}, function(data) {
+			console.log('Error getting previsiones');
+		});
+	}
+	else
+	{
+		$scope.plans = previsionesService.getPrevisiones();
+	}
 
 	$scope.pacienteEditing = false;
 

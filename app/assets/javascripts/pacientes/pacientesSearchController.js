@@ -1,13 +1,21 @@
 (function() {
-	angular.module('lab').controller('PacientesSearchController', function($scope, $auth, $state, $http, $stateParams, Pacientes) {
+	angular.module('lab').controller('PacientesSearchController', function($scope, $auth, $state, $http, $stateParams, Pacientes, Previsiones, previsionesService) {
 
 		$scope.resultadosBusqueda = null;
 
-		$http.get('/api/previsiones').success(function(data) {
-			$scope.plans = data.previsiones;
-		}).error(function(data) {
-			// log error
-		});
+		if(!previsionesService.getPrevisiones())
+		{
+			Previsiones.all.get().$promise.then(function(data) {
+				previsionesService.setPrevisiones(data.previsiones);
+				$scope.plans = previsionesService.getPrevisiones();
+			}, function(data) {
+				console.log('Error getting previsiones');
+			});
+		}
+		else
+		{
+			$scope.plans = previsionesService.getPrevisiones();
+		}
 		
 		if ($stateParams.rut_completo != null) {
 			var value = $stateParams.rut_completo;

@@ -1,4 +1,4 @@
-angular.module('lab').controller('PrevisionesMenuController', function($scope, $http, $stateParams, $auth, $state) {
+angular.module('lab').controller('PrevisionesMenuController', function($scope, $http, $stateParams, $auth, $state, previsionesService) {
 
 	$scope.state = $state;
 
@@ -15,7 +15,7 @@ angular.module('lab').controller('PrevisionesMenuController', function($scope, $
 	$scope.$on('previsionFromEdit', function(event, data) {
 		$scope.prevision = data;
 	});
-	
+
 	$http.get('/api/previsiones/' + $stateParams.prevision_id).success(function(data) {
 		$scope.prevision = data.prevision;
 		$scope.$broadcast('previsionFromMenu', $scope.prevision);
