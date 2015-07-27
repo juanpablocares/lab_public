@@ -67,15 +67,15 @@ angular.module('lab').controller('FichasIndexController', function(
 				Procedencias.buscar.todos().$promise.then(function(data) {
 					procedenciasService.setProcedencias(data.data);
 					$scope.procedenciasArray = procedenciasService.getProcedencias();
-				$scope.procedencia.selected = $scope.setProcedenciaSeleccionada($scope.ficha.procedencia);
+					$scope.procedencia.selected = $scope.setProcedenciaSeleccionada($scope.ficha.procedencia);
 				}, function(data) {
 					console.log('Error getting procedencias');
 				});
 			}
 			else
 			{
-				procedenciasService.setProcedencias(data.data);
 				$scope.procedenciasArray = procedenciasService.getProcedencias();
+				$scope.procedencia.selected = $scope.setProcedenciaSeleccionada($scope.ficha.procedencia);
 			}
 
 			if(!previsionesService.getPrevisiones())

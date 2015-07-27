@@ -13,7 +13,7 @@
 angular.module('lab').controller('FichasNewController', function($scope, $auth, $state,
  $http, $resource, $stateParams, Previsiones, Examenes, Perfiles,
   Cotizaciones, Cotizacion, Procedencias, Ficha,
-   Fichas, Medicos, previsionesService, examenesService, procedenciasService, perfilesService) {
+   Fichas, Medicos, medicosService, previsionesService, examenesService, procedenciasService, perfilesService) {
 
 	$scope.edit = true;
 	$scope.ficha = {};
@@ -85,14 +85,12 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 			Procedencias.buscar.todos().$promise.then(function(data) {
 				procedenciasService.setProcedencias(data.data);
 				$scope.procedenciasArray = procedenciasService.getProcedencias();
-			$scope.procedencia.selected = $scope.setProcedenciaSeleccionada($scope.ficha.procedencia);
 			}, function(data) {
 				console.log('Error getting procedencias');
 			});
 		}
 		else
 		{
-			procedenciasService.setProcedencias(data.data);
 			$scope.procedenciasArray = procedenciasService.getProcedencias();
 		}
 
@@ -149,15 +147,6 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		$state.go('loginRequired.index');
 	});
 
-	$scope.setPrevisionSeleccionada = function(prevision) {
-		for (var i = 0; i < $scope.previsionesArray.length; i++) {
-			var value = $scope.previsionesArray[i];
-			if (value.id == prevision.id) {
-				return value;
-			}
-		};
-	};
-
 	$scope.crearExamenesArray = function() {
 		$scope.examenesArray = [];
 		angular.forEach($scope.perfiles, function(value, key) {
@@ -188,6 +177,26 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 			}
 			$scope.examenesArray.push(value);
 		});
+	};
+
+	$scope.setPrevisionSeleccionada = function(prevision) {
+		for (var i = 0; i < $scope.previsionesArray.length; i++) {
+			var value = $scope.previsionesArray[i];
+			if (value.id == prevision.id) {
+				return value;
+			}
+		};
+	};
+
+	$scope.setMedicoSeleccionado = function(ficha_medico) {
+		if (ficha_medico != null && $scope.medicosArray.length > 0) {
+			for (var i = 0; i < $scope.medicosArray.length; i++) {
+				var value = $scope.medicosArray[i];
+				if (value.id == ficha_medico.id) {
+					return value;
+				}
+			};
+		}
 	};
 
 	$scope.quitarExamenSeleccionado = function(item) {
