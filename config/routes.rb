@@ -172,8 +172,9 @@ Rails.application.routes.draw do
 	end
 
 	mount_devise_token_auth_for 'User', at: '/auth', skip: [:omniauth_callbacks], controllers: {
-		sessions:           'overrides/sessions',
-		passwords:           'overrides/passwords',
+		sessions: 			'overrides/sessions',
+		passwords:          'overrides/passwords',
+		registrations: 		'overrides/registrations',
 	}
 	# The priority is based upon order of creation: first created -> highest priority.
 	# See how all your routes lay out with "rake routes".

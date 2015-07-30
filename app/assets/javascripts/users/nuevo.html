@@ -1,56 +1,84 @@
 <div class="widget-container fluid-height">
 	<div class="widget-content padded" >
-		<form ng-submit="guadarNuevoUsuario(user)" name="user_form" novalidate>
+		<form class="form-horizontal" ng-submit="guadarNuevoUsuario(user)" name="user_form" novalidate>
 			<div class="form-group">
-			    <label class="control-label">Rut</label>
-			    <input class="form-control" ng-rut rut-format="live" placeholder="Rut usuario" ng-model="user.rut_completo">
-			</div>
-			<div class="form-group">
-			    <label class="control-label">Nombre</label>
-			    <input class="form-control" placeholder="Nombre usuario" ng-model="user.nombre">
-			</div>
-			<div class="form-group">
-			    <label class="control-label">Apellido paterno</label>
-			    <input class="form-control" placeholder="Apellido paterno" ng-model="user.apellido_paterno">
-			</div>
-			<div class="form-group">
-			    <label class="control-label">Apellido materno</label>
-			    <input class="form-control" placeholder="Apellido materno" ng-model="user.apellido_materno">
-			</div>
-			<div class="form-group">
-			    <label class="control-label">Correo electrónico</label>
-			    <input type="email" class="form-control" placeholder="Email" ng-model="user.email">
-			</div>
-			<div class="form-group">
-			    <label class="control-label">Teléfono</label>
-			    <input class="form-control" placeholder="Teléfono" ng-model="user.telefono">
-			</div>
-			<div class="form-group">
-			    <label class="control-label">Dirección</label>
-			    <input class="form-control" placeholder="Dirección" ng-model="user.direccion">
-			</div>
-			<div class="form-group">
-				<div class="row">
-					<label class="control-label col-md-2">Región</label>
-					<div class="col-md-3">
-						<select class="form-control" ng-model="user.region" ng-selected="user.region_id" ng-options="r.nombre for r in regiones track by r.id| orderBy:'nombre'" name="region" required></select>
-						<label class="text-danger" ng-if="(user_form.$submitted || !user_form.region.$pristine) && user_form.region.$error.required">Debe ingresar región</label>
-					</div>
-					<label class="control-label col-md-1">Comuna</label>
-					<div class="col-md-3">
-						<select class="form-control" ng-model="user.comuna" ng-options="c.nombre for c in user.region.comunas track by c.id| orderBy:'nombre'" name="comuna"  required></select>
-						<label class="text-danger" ng-if="(user_form.$submitted || !user_form.comuna.$pristine) && user_form.comuna.$error.required">Debe ingresar comuna</label>
-					</div>
+			    <label class="control-label col-sm-2">Rut</label>
+			    <div class="col-sm-10">
+			    	<input class="form-control" name="rut_completo" ng-rut rut-format="live" placeholder="Rut usuario" ng-model="user.rut_completo" required>
+			    	<label class="text-danger" ng-if="(user_form.$submitted || !user_form.rut_completo.$pristine) && user_form.rut_completo.$error.required">Debe ingresar rut</label>
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-11 text-right">
-					<button type="submit" class="btn btn-primary">
-						Guardar
-					</button>
-					<button type="button" class="btn btn-danger" ng-click="volver()">
-						Volver
-					</button>
+			    <label class="control-label col-sm-2">Nombre</label>
+			    <div class="col-sm-10">
+				    <input class="form-control" name="nombre" placeholder="Nombre usuario" ng-model="user.nombre" required>
+					<label class="text-danger" ng-if="(user_form.$submitted || !user_form.nombre.$pristine) && user_form.nombre.$error.required">Debe ingresar nombre</label>
+				</div>	
+			</div>
+			<div class="form-group">
+			    <label class="control-label col-sm-2">Apellido paterno</label>
+			    <div class="col-sm-10">
+				    <input class="form-control" placeholder="Apellido paterno" ng-model="user.apellido_paterno" name="apellido_paterno" required>
+				    <label class="text-danger" ng-if="(user_form.$submitted || !user_form.apellido_paterno.$pristine) && user_form.apellido_paterno.$error.required">Debe ingresar apellido paterno</label>
+				</div>
+			</div>
+			<div class="form-group">
+			    <label class="control-label col-sm-2">Apellido materno</label>
+			    <div class="col-sm-10">
+			    	<input class="form-control" placeholder="Apellido materno" ng-model="user.apellido_materno">
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="control-label col-sm-2">Correo electrónico</label>
+			    <div class="col-sm-10">
+			    	<input type="email" class="form-control" placeholder="Email" ng-model="user.email" name="email"required>
+			    	<label class="text-danger" ng-if="(user_form.$submitted || !user_form.email.$pristine) && user_form.email.$error.required">Debe ingresar email</label>
+			    	<label class="text-danger" ng-if="(user_form.$submitted || !user_form.email.$pristine) && user_form.email.$error.email">Esto no es un email!</label>
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="control-label col-sm-2">Teléfono</label>
+			    <div class="col-sm-10">
+				    <input class="form-control" placeholder="Teléfono" ng-model="user.telefono">
+				</div>
+			</div>
+			<div class="form-group">
+			    <label class="control-label col-sm-2">Dirección</label>
+			    <div class="col-sm-10">
+			    	<input class="form-control" placeholder="Dirección" ng-model="user.direccion">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2">Región</label>
+				<div class="col-sm-4">
+					<select class="form-control" ng-model="user.region" ng-selected="user.region_id" ng-options="r.nombre for r in regiones track by r.id| orderBy:'nombre'" name="region" required></select>
+					<label class="text-danger" ng-if="(user_form.$submitted || !user_form.region.$pristine) && user_form.region.$error.required">Debe ingresar región</label>
+				</div>
+				<label class="control-label col-sm-2">Comuna</label>
+				<div class="col-sm-4">
+					<select class="form-control" ng-model="user.comuna" ng-options="c.nombre for c in user.region.comunas track by c.id| orderBy:'nombre'" name="comuna"  required></select>
+					<label class="text-danger" ng-if="(user_form.$submitted || !user_form.comuna.$pristine) && user_form.comuna.$error.required">Debe ingresar comuna</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2">Permiso</label>
+				<div class="col-sm-10">
+					<select class="form-control" name="permiso" ng-model="user.permiso" ng-options="p.nombre for p in permisos track by p.id | orderBy:'nombre':true" name="permisos" required>
+						<option value=""></option>
+					</select>
+					<label class="text-danger" ng-if="(user_form.$submitted || !user_form.permiso.$pristine) && user_form.permiso.$error.required">Debe seleccionar un permiso de usuario</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<div class="col-sm-11 text-right">
+						<button type="submit" class="btn btn-primary">
+							Guardar
+						</button>
+						<button type="button" class="btn btn-danger" ng-click="volver()">
+							Volver
+						</button>
+					</div>
 				</div>
 			</div>
 		</form>

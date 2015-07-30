@@ -37,19 +37,6 @@ angular.module('lab').controller('PacientesNewController', function($scope, $aut
 		}
 	};
 
-	if(!regionesService.getRegiones())
-	{
-		$http.get('/api/regiones').success(function(data) {
-			regionesService.setRegiones(data);
-			$scope.setRegiones();
-		}).error(function(data) {
-			console.log('Error getting regiones');
-		});
-	}
-	else {
-		$scope.setRegiones();
-	}
-
 	$scope.setRegiones = function(regiones)
 	{
 		$scope.regiones = regionesService.getRegiones();
@@ -64,6 +51,20 @@ angular.module('lab').controller('PacientesNewController', function($scope, $aut
 			}
 		});
 	}
+
+	if(!regionesService.getRegiones())
+	{
+		$http.get('/api/regiones').success(function(data) {
+			regionesService.setRegiones(data);
+			$scope.setRegiones();
+		}).error(function(data) {
+			console.log('Error getting regiones');
+		});
+	}
+	else {
+		$scope.setRegiones();
+	}
+
 
 	if(!previsionesService.getPrevisiones())
 	{
