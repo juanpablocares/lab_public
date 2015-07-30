@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150721140621) do
+ActiveRecord::Schema.define(version: 20150730221039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -407,6 +407,7 @@ ActiveRecord::Schema.define(version: 20150721140621) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "permiso_id"
+    t.integer  "comuna_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
@@ -487,6 +488,7 @@ ActiveRecord::Schema.define(version: 20150721140621) do
   add_foreign_key "sucursales", "laboratorios", name: "sucursales_laboratorio_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "tarifas_examen", "examenes", name: "precios_examen_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "tarifas_examen", "tarifas", name: "tarifas_examen_tarifa_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "users", "comunas"
   add_foreign_key "users", "permisos"
   add_foreign_key "users_sucursal", "sucursales", name: "users_sucursal_sucursal_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "users_sucursal", "users", name: "users_sucursal_user_id_fkey", on_update: :cascade, on_delete: :cascade

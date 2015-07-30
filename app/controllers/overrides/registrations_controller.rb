@@ -6,6 +6,7 @@ module Overrides
     skip_after_filter :update_auth_header, :only => [:create, :destroy]
 
     def create
+
       @resource            = resource_class.new(sign_up_params)
       @resource.provider   = "email"
 
@@ -28,8 +29,8 @@ module Overrides
           unless @resource.confirmed?
             # user will require email authentication
             @resource.send_confirmation_instructions({
-                                                       client_config: params[:config_name],
-                                                       redirect_url: redirect_url
+                   client_config: params[:config_name],
+                   redirect_url: redirect_url
             })
 
           else

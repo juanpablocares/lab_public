@@ -22,6 +22,8 @@ class ApplicationController < ActionController::Base
 		devise_parameter_sanitizer.for(:sign_up) << :rutdv
 		devise_parameter_sanitizer.for(:sign_up) << :direccion
 		devise_parameter_sanitizer.for(:sign_up) << :telefono
+		devise_parameter_sanitizer.for(:sign_up) << :comuna_id
+		devise_parameter_sanitizer.for(:sign_up) << :permiso_id
 		
 		devise_parameter_sanitizer.for(:account_update) << :nombre
 		devise_parameter_sanitizer.for(:account_update) << :apellido_paterno

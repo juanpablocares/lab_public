@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
   
   belongs_to :permiso
+  belongs_to :comuna
   
   has_many :modificacion_examenes
   has_many :fichas

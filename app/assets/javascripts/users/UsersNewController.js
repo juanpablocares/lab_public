@@ -26,9 +26,15 @@ angular.module('lab').controller('UsersNewController', function($scope, $auth, $
 	$scope.guadarNuevoUsuario = function(){
 
 		console.log($scope.user_form.$valid);
+		console.log($scope.user.permiso);
+		console.log($scope.user.comuna);
 		if($scope.user_form.$valid)
 		{
-			console.log($scope.user);
+			$scope.user.rut = parseInt($scope.user.rut_completo / 10);
+			$scope.user.rutdv = parseInt($scope.user.rut_completo % 10);
+			$scope.user.permiso_id = $scope.user.permiso.id;
+			$scope.user.comuna_id = $scope.user.comuna.id;
+
 			$auth.submitRegistration($scope.user)
 	        .then(function(resp) {
 	          // handle success response
