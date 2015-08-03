@@ -46,6 +46,9 @@ module Overrides
             @resource.save!
 
             update_auth_header
+
+            LabMailer.new_user(@user).deliver_later
+
           end
 
           render json: {
