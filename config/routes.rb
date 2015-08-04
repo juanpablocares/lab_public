@@ -131,6 +131,7 @@ Rails.application.routes.draw do
 		post 'previsiones/range/:start/:number', to: 'previsiones#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		put 'previsiones/', to: 'previsiones#update_all', defaults: {format: 'json'}
 		delete 'previsiones/:id', to: 'previsiones#delete', defaults: {format: 'json'}
+		get 'previsiones/cantidades_ficha', to: 'previsiones#cantidades_ficha', defaults: {format: 'json'}
 		
 		resources :alias_examenes, :defaults => { :format => 'json' }
 		resources :comunas, :defaults => { :format => 'json' }

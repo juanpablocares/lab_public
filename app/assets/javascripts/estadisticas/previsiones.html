@@ -1,0 +1,11 @@
+<div class="widget-container fluid-height">
+	<div class="widget-content padded" ng-show="isLoading">
+		<span><i class="fa fa-spinner fa-pulse"></i></span>
+	</div>
+	<div class="widget-content padded" ng-hide="isLoading">
+		<div class="heading">
+			<i class="fa fa-bars"></i>Pacientes
+		</div>
+		<canvas id="pie" class="chart chart-pie ng-isolate-scope" data="data" labels="previsiones" legend="true" series="previsiones_show" click="onClick"></canvas> 
+	</div>
+</div>

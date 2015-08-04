@@ -6,5 +6,9 @@ angular.module('lab').controller('EstadisticasMenuController', function($scope, 
 		name : 'Fichas',
 		state : 'loginRequired.estadisticas.fichas',
 		id : 'loginRequired.estadisticas.fichas',
+	},{
+		name : 'Previsiones',
+		state : 'loginRequired.estadisticas.previsiones',
+		id : 'loginRequired.estadisticas.previsiones',
 	},];
 });

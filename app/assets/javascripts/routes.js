@@ -488,6 +488,12 @@
 			controller : 'EstadisticasFichasController',
 		});
 		
+		$stateProvider.state('loginRequired.estadisticas.previsiones', {
+			url : '/previsiones',
+			templateUrl : "estadisticas/previsiones.html",
+			controller : 'EstadisticasPrevisionesController',
+		});
+		
 		/*Tipos Parámetros*/
 		$stateProvider.state('loginRequired.parametros', {
 			url : '/parametros',
