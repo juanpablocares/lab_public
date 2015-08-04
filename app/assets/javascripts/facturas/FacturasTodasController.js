@@ -1,5 +1,5 @@
 (function() {
-	angular.module('lab').controller('FacturasTodasController', function($scope, $auth, $state, $http, $stateParams, DetallesPagoFicha, previsionesService) {
+	angular.module('lab').controller('FacturasTodasController', function($scope, $auth, $state, $http, $stateParams, DetallesPagoFicha, previsionesService, procedenciasService, Procedencias) {
 
 		$scope.resultadosBusqueda = null;
 		$scope.seleccionar_todos = false;

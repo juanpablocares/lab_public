@@ -475,6 +475,19 @@
 			params: {medico: null}
 		});			
 		
+		/*Estadisticas*/
+		$stateProvider.state('loginRequired.estadisticas', {
+			url : '/estadisticas',
+			templateUrl : "estadisticas/menu.html",
+			controller : 'EstadisticasMenuController',
+		});
+		
+		$stateProvider.state('loginRequired.estadisticas.fichas', {
+			url : '/fichas',
+			templateUrl : "estadisticas/fichas.html",
+			controller : 'EstadisticasFichasController',
+		});
+		
 		/*Tipos Parámetros*/
 		$stateProvider.state('loginRequired.parametros', {
 			url : '/parametros',

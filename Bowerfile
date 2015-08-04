@@ -38,3 +38,5 @@ asset 'angular-smart-table'
 asset 'ng-csv'
 #Libreria para subir archivos
 asset 'papa.parse'
+#Libreria para graficos
+asset 'angular-chart.js'

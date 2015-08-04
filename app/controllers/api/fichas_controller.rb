@@ -80,6 +80,29 @@ class Api::FichasController < ApplicationController
     end
   end
   
+  def cantidades
+	@result = Hash.new
+	@annos = Ficha.all.group_by{|m| m.creado.year}
+	if @annos != nil
+		
+		@annos.each do |key_y, y|
+			@meses = @annos[key_y].group_by{|m| m.creado.month}
+			
+			@result_m = Hash.new
+			@meses.each do |key_m, m|
+				@result_m[key_m] = m.count
+			end
+			@result[key_y] = @result_m
+		end
+		
+		 render json: {
+			success: true,
+			message: '[cantidades] Fichas encontradas',
+			data: @result,
+		  }, status: 200
+	end
+  end
+  
   def input_resultados
 	  
 	if @results = Ficha.find(params[:id].to_i)

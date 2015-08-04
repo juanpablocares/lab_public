@@ -2,7 +2,7 @@
 	var labs = angular.module('lab', ['ngSanitize', 'ngCsv', 'ui.select', 
 		'ngSanitize','smart-table', 'ngResource', 
 		'platanus.rut', 'ui.router', 'templates', 
-		'ng-token-auth', 'ngDialog']);
+		'ng-token-auth', 'ngDialog', 'chart.js']);
 
 	labs.run(function($rootScope, $auth, regionesService) {
 
