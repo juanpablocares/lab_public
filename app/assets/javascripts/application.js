@@ -24,7 +24,7 @@
 //= require angular-resource
 //= require angular-smart-table
 //= require angular-sanitize
-//= require angular-ui-select
+//require angular-ui-select
 //= require ng-csv
 //= require papa.parse
 //= require ngDialog
@@ -32,3 +32,4 @@
 //= require pdfmake/build/vfs_fonts
 //= require Chart.js/Chart.min.js
 //= require angular-chart.js/dist/angular-chart.js
+//= require angular-bootstrap

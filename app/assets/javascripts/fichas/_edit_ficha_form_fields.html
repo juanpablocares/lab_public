@@ -1,3 +1,12 @@
+<script type="text/ng-template" id="medicosTemplate.html">
+  <a>
+  		<strong ng-bind-html="match.model.rut+'-'+match.model.rutdv | typeaheadHighlight:query"></strong> - 
+  		<span ng-bind-html="match.model.nombre+' '+match.model.apellido_paterno+' '+match.model.apellido_materno | typeaheadHighlight:query">
+  		</span>
+  </a>
+</script>
+
+
 <div ng-init="!ficha_edit?ficha_edit=ficha:ficha=ficha"> </div>
 <table class="table table-condensed">
 	<tbody>
@@ -22,15 +31,7 @@
 		<tr>
 			<td><strong>Procedencia</strong></td>
 			<td colspan="3">
-				<ui-select ng-model="procedencia.selected" theme="bootstrap" required>
-					<ui-select-match placeholder="Seleccione procedencia">
-						<span >{{$select.selected.nombre}}</span>
-					</ui-select-match>
-					<ui-select-choices repeat="item in procedenciasArray | filter: $select.search">
-						<span style="width=10px;" ng-bind-html="item.id | highlight: $select.search"></span> |
-						<span ng-bind-html="item.nombre | highlight: $select.search"></span>
-					</ui-select-choices>
-				</ui-select>
+			    <input type="text" ng-model="procedencia.selected" typeahead="item.nombre for item in procedenciasArray | filter:$viewValue | limitTo:10" class="form-control">
 			</td>
 			<td>
 				<strong>
@@ -70,16 +71,7 @@
 		<tr>
 			<td><strong>Médico</strong></td>
 			<td colspan="4">
-				<ui-select ng-model="medico.selected" theme="bootstrap">
-					<ui-select-match placeholder="Seleccione medico">
-						{{$select.selected.nombre}} {{$select.selected.apellido_paterno}} {{$select.selected.apellido_materno}}
-					</ui-select-match>
-					<ui-select-choices repeat="item in medicosArray | filter: $select.search">
-						<div ng-if="item.rut != null && item.rutdv != null">
-							<strong ng-bind-html="item.rut+'-'+item.rutdv | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre + ' ' + item.apellido_paterno + ' ' + item.apellido_materno | highlight: $select.search"></span>		
-						</div>
-					</ui-select-choices>
-				</ui-select>					
+				<input type="text" ng-model="medico.selected" typeahead="medico as medico.nombre+' '+ medico.apellido_paterno+' '+medico.apellido_materno for medico in medicosArray | filter:medicoFilter($viewValue) | limitTo: 10" typeahead-template-url="medicosTemplate.html" class="form-control">
 			</td>
 			<td>
 				<button ng-click="borrarMedico()">

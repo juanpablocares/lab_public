@@ -839,4 +839,26 @@ angular.module('lab').controller('FichasIndexController', function(
 			//pdfMake.createPdf(docDefinition).download('optionalName.pdf');
 		}
 	}
+
+	//Cambiar esto en el futuro y usar filter
+	//http://stackoverflow.com/questions/25851515/angularjs-filter-with-multiple-parameters
+	//Tambien revisar
+	//http://toddmotto.com/everything-about-custom-filters-in-angular-js/
+	$scope.medicoFilter = function(valor)
+	{
+		return function(item)
+		{
+			valor = valor.toLowerCase();
+			var nombre_completo = item.nombre.trim()+" "+item.apellido_paterno.trim()+" "+item.apellido_materno.trim();
+			nombre_completo = nombre_completo.toLowerCase();
+
+			if(item.rut.indexOf(valor) == 0 || 
+				item.rutdv.indexOf(valor) == 0 ||
+				nombre_completo.indexOf(valor) != -1
+				)
+			{
+				return item;
+			}
+		}
+	}
 });

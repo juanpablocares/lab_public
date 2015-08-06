@@ -23,7 +23,7 @@
 				</div>
 				<label class="col-sm-2 control-label"><strong>Examenes</strong></label>
 				<div class="col-sm-10">
-					<ui-select ng-model="selectModel.selected" theme="bootstrap" reset-search-input="true" on-select="seleccionarExamen($item, $select)">
+					<!--ui-select ng-model="selectModel.selected" theme="bootstrap" reset-search-input="true" on-select="seleccionarExamen($item, $select)">
 						<ui-select-match placeholder="Seleccione un examen o perfil para agregar">
 							{{$select.selected.nombre}}
 						</ui-select-match>
@@ -38,7 +38,7 @@
 								<strong ng-bind-html="item.codigo_fonasa| highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span>
 							</div>
 						</ui-select-choices>
-					</ui-select>
+					</ui-select-->
 				</div>
 			</div>
 			<ng-include src="'fichas/_examenes_table_new.html'" id="ignore"></ng-include>
