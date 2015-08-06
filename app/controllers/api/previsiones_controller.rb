@@ -9,23 +9,26 @@ class Api::PrevisionesController < ApplicationController
 	end
   
 	def cantidades_ficha
-		@result = Hash.new
-		@annos = Ficha.all.group_by{|m| m.creado.year}
-		if @annos != nil
 		
-			@annos.each do |key_y, y|
-				@meses = @annos[key_y].group_by{|m| m.creado.month}
-			
-				@result_m = Hash.new
-				@meses.each do |key_m, m|
-					@result_m[key_m] = m.count
-				end
-				@result[key_y] = @result_m
-			end
+		@result = Ficha.joins(:prevision).group('previsiones.nombre').count
+		if @result != nil
 		
 			render json: {
 				success: true,
-				message: '[cantidades] Fichas encontradas',
+				message: '[cantidades] Fichas por prevision encontradas',
+				data: @result,
+			}, status: 200
+		end
+	end
+  
+	def cantidades_pacientes
+		
+		@result = Paciente.joins(:prevision).group('previsiones.nombre').count
+		if @result != nil
+		
+			render json: {
+				success: true,
+				message: '[cantidades] Fichas por pacientes encontradas',
 				data: @result,
 			}, status: 200
 		end

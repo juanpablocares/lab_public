@@ -132,6 +132,7 @@ Rails.application.routes.draw do
 		put 'previsiones/', to: 'previsiones#update_all', defaults: {format: 'json'}
 		delete 'previsiones/:id', to: 'previsiones#delete', defaults: {format: 'json'}
 		get 'previsiones/cantidades_ficha', to: 'previsiones#cantidades_ficha', defaults: {format: 'json'}
+		get 'previsiones/cantidades_pacientes', to: 'previsiones#cantidades_pacientes', defaults: {format: 'json'}
 		
 		resources :alias_examenes, :defaults => { :format => 'json' }
 		resources :comunas, :defaults => { :format => 'json' }
