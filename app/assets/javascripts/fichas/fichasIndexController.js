@@ -326,8 +326,10 @@ angular.module('lab').controller('FichasIndexController', function(
 	}
 
 	$scope.setEstadoExamenes = function() {
+		console.log("Set estado examenes");
 		for ( i = 0; i < $scope.examenesSeleccionados.length; i++) {
 			value = $scope.examenesSeleccionados[i];
+			console.log(value);
 			if (value.perfil) {
 				value.delete = true;
 				for ( j = 0; j < value.examenes.length; j++) {

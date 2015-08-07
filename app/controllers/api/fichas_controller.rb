@@ -395,7 +395,45 @@ class Api::FichasController < ApplicationController
           :user,
           :prevision,
           :procedencia,
-        {:detalles_ficha => {include: [:resultados_examen,:perfil,{:examen => { include: [:indicacion, :tipo_examen,:tarifas_examen]}}]}}]
+          :procedencia,
+        {
+          :detalles_ficha => {
+            include: [
+              :usuario_muestra,
+              {
+                :resultados_examen => {
+                  include:
+                  [
+                    {
+                      :examen_parametro => {
+                        include: [
+                          {:parametro => {include: [:valor_parametro]}}
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              :perfil,
+              {
+                :examen => {
+                  include: [
+                    {
+                      :examenes_parametros => {
+                        include: [
+                          {:parametro => {include: [:valor_parametro]}}
+                        ]
+                      }
+                    },
+                    :indicacion,
+                    :tipo_examen,
+                    :tarifas_examen
+                  ]
+                }
+              }
+            ]
+          }
+        }]
       end
     else
       raise "No hay exámenes"
