@@ -494,6 +494,12 @@
 			controller : 'EstadisticasPrevisionesController',
 		});
 		
+		$stateProvider.state('loginRequired.estadisticas.medicos', {
+			url : '/medicos',
+			templateUrl : "estadisticas/medicos.html",
+			controller : 'EstadisticasMedicosController',
+		});
+		
 		/*Tipos Parámetros*/
 		$stateProvider.state('loginRequired.parametros', {
 			url : '/parametros',

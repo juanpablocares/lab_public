@@ -10,5 +10,9 @@ angular.module('lab').controller('EstadisticasMenuController', function($scope, 
 		name : 'Previsiones',
 		state : 'loginRequired.estadisticas.previsiones',
 		id : 'loginRequired.estadisticas.previsiones',
+	},{
+		name : 'Medicos',
+		state : 'loginRequired.estadisticas.medicos',
+		id : 'loginRequired.estadisticas.medicos',
 	},];
 });

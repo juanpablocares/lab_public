@@ -78,6 +78,8 @@ Rails.application.routes.draw do
 		get 'medicos/:id', to: 'medicos#show', defaults: {format: 'json'}
 		put 'medicos/:id', to: 'medicos#update', defaults: {format: 'json'}
 		delete 'medicos/:id', to: 'medicos#delete', defaults: {format: 'json'}
+		get 'medicos/fichas/cantidades_ficha', to: 'medicos#cantidades_ficha', defaults: {format: 'json'}
+		get 'medicos/count/cantidades_total', to: 'medicos#cantidades_total', defaults: {format: 'json'}
 		#Controladores especialidades
 		put 'especialidades/update_all/', to: 'especialidades#update_all', defaults: {format: 'json'}
 		delete 'especialidades/:id', to: 'especialidades#delete', defaults: {format: 'json'}
