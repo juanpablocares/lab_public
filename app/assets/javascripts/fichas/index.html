@@ -1,3 +1,11 @@
+<script type="text/ng-template" id="examenTemplate.html">
+	<a>
+		<strong ng-bind-html="match.model.codigo_fonasa | typeaheadHighlight:query"></strong>
+		<strong ng-bind-html="match.model.codigo | typeaheadHighlight:query"></strong>
+		 - <span ng-bind-html="match.model.nombre | typeaheadHighlight:query"></span>
+  	</a>
+</script>
+
 <div ng-if="loading" class="row text-center">
 	<i class="fa fa-spinner fa-pulse fa-2x"></i>
 </div>
@@ -23,22 +31,7 @@
 				</div>
 				<label class="col-sm-2 control-label"><strong>Examenes</strong></label>
 				<div class="col-sm-10">
-					<!--ui-select ng-model="selectModel.selected" theme="bootstrap" reset-search-input="true" on-select="seleccionarExamen($item, $select)">
-						<ui-select-match placeholder="Seleccione un examen o perfil para agregar">
-							{{$select.selected.nombre}}
-						</ui-select-match>
-						<ui-select-choices group-by="agruparPerfiles" repeat="item in examenesArray | filter: $select.search">
-							<div ng-if="item.codigo_fonasa == null">
-								<strong ng-bind-html="item.codigo | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span>
-							</div>
-							<div ng-if="item.codigo != null && item.codigo_fonasa != null">
-								<strong ng-bind-html="item.codigo_fonasa+'-'+item.codigo | highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span>
-							</div>
-							<div ng-if="item.codigo === null" >
-								<strong ng-bind-html="item.codigo_fonasa| highlight: $select.search"></strong> - <span ng-bind-html="item.nombre | highlight: $select.search"></span>
-							</div>
-						</ui-select-choices>
-					</ui-select-->
+				<input type="text" ng-model="selectModel.selected" typeahead="examen for examen in examenesArray | examenFilter:$viewValue | limitTo: 10" typeahead-template-url="examenTemplate.html" class="form-control" typeahead-on-select='onSelect($item, $model, $label)'>
 				</div>
 			</div>
 			<ng-include src="'fichas/_examenes_table_new.html'" id="ignore"></ng-include>

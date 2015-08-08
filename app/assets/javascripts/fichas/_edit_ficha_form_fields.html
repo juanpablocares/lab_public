@@ -71,7 +71,7 @@
 		<tr>
 			<td><strong>Médico</strong></td>
 			<td colspan="4">
-				<input type="text" ng-model="medico.selected" typeahead="medico as medico.nombre+' '+ medico.apellido_paterno+' '+medico.apellido_materno for medico in medicosArray | filter:medicoFilter($viewValue) | limitTo: 10" typeahead-template-url="medicosTemplate.html" class="form-control">
+				<input type="text" ng-model="medico.selected" typeahead="medico as medico.nombre+' '+ medico.apellido_paterno+' '+medico.apellido_materno for medico in medicosArray | medicoFilter:$viewValue | limitTo: 10" typeahead-template-url="medicosTemplate.html" class="form-control">
 			</td>
 			<td>
 				<button ng-click="borrarMedico()">
