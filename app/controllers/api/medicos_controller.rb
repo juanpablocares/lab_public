@@ -8,6 +8,33 @@ class Api::MedicosController < ApplicationController
 		        }, status: 200
 	end
 	
+	def cantidades_ficha
+		
+		@result = Ficha.joins(:medico => :especialidad).group('especialidades.nombre').count
+		
+		if @result != nil
+		
+			render json: {
+				success: true,
+				message: '[cantidades] Fichas por medico encontradas',
+				data: @result,
+			}, status: 200
+		end
+	end
+  
+	def cantidades_total
+		
+		@result = Medico.joins(:especialidad).group('especialidades.nombre').count
+		if @result != nil
+		
+			render json: {
+				success: true,
+				message: '[cantidades] Medicos encontradas',
+				data: @result,
+			}, status: 200
+		end
+	end
+	
 	def range
 		results = Medico.all
 		
