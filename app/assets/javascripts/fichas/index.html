@@ -31,7 +31,7 @@
 				</div>
 				<label class="col-sm-2 control-label"><strong>Examenes</strong></label>
 				<div class="col-sm-10">
-				<input type="text" ng-model="selectModel.selected" typeahead="examen for examen in examenesArray | examenFilter:$viewValue | limitTo: 10" typeahead-template-url="examenTemplate.html" class="form-control" typeahead-on-select='onSelect($item, $model, $label)'>
+					<input type="text" ng-model="selectModel.selected" typeahead="examen for examen in examenesArray | examenFilter:$viewValue | limitTo: 10" typeahead-template-url="examenTemplate.html" class="form-control" typeahead-on-select='seleccionarExamen($model)' typeahead-input-formatter=""/>
 				</div>
 			</div>
 			<ng-include src="'fichas/_examenes_table_new.html'" id="ignore"></ng-include>

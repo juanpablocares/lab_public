@@ -222,9 +222,9 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 			return 'Exámenes';
 	};
 
-	$scope.seleccionarExamen = function(model2, select) {
+	$scope.seleccionarExamen = function(model2) {
 		var model = angular.copy(model2);
-		select.selected = "";
+		$scope.selectModel.selected = null;
 		//model.nuevo = true;
 		var perfil = model.perfil;
 		if (!perfil) {

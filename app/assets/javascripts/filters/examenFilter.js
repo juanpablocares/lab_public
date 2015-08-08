@@ -29,16 +29,6 @@ angular.module('lab').filter('examenFilter', [function($filter) {
 					   (item.sigla != null && item.sigla != '' && item.sigla.toLowerCase().indexOf(valor) == -1))
 					{
 						//Coincide
-						if(item.nombre != null && item.nombre != '' && item.nombre.indexOf(valor) != -1)
-							console.log("COINCIDE NOMBRE "+ item.nombre);
-						if(item.nombre_impreso != null && item.nombre_impreso != '' && item.nombre.indexOf(valor) != -1)
-							console.log("COINCIDE nombre_impreso "+ item.nombre_impreso);
-						if(item.codigo != null && item.codigo != '' && item.nombre.indexOf(valor) != -1)
-							console.log("COINCIDE codigo "+ item.codigo);
-						if(item.codigo_fonasa != null && item.codigo_fonasa != '' && item.codigo_fonasa.indexOf(valor) != -1)
-							console.log("COINCIDE codigo_fonasa "+ item.codigo_fonasa);
-						if(item.sigla != null && item.sigla != '' && item.sigla.indexOf(valor) != -1)
-							console.log("COINCIDE sigla "+ item.sigla);
 					}
 					else
 					{
