@@ -1,3 +1,15 @@
+<script type="text/ng-template" id="templateId">
+	<h3>{{examen.nombre}}</h3>
+	<p>Sigla: {{examen.sigla ? examen.sigla:'---'}}</p>
+	<p>Código I.: {{examen.codigo ? examen.codigo:'---'}}</p>
+	<p>Código F.: {{examen.codigo_fonasa ? examen.codigo_fonasa:'---'}}</p>
+	<p>T. muestra: {{examen.tipo_muestra ? examen.tipo_muestra.muestra:'---'}}</p>
+</script>
+
+<script type="text/ng-template" id="template_sin_muestra">
+	<h3 align="center">No se ha ingresado muestra para el examen</h3>
+</script>
+
 <div class="col-sm-12">
 	<div class="widget-container fluid-height">
 		<div class="widget-content padded">
