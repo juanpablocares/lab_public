@@ -127,30 +127,27 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 	}
 
 	$scope.submitIngresarPagoForm = function(f) {
-
-		if (f.$valid && confirm('Confirme ingreso de pago.')) {
-			data = {
-				ficha_id : $stateParams.ficha_id,
-				tipo_pago_id : $scope.nuevoPago.tipo_pago.id,
-				n_documento : $scope.nuevoPago.numero_documento,
-				monto_pagado : $scope.nuevoPago.monto,
-				user_id : $auth.user.id,
-				observaciones_pagos: $scope.nuevoPago.observaciones_pagos,
-				factura: $scope.nuevoPago.factura,
-			};
-			DetallesPagoFicha.root.new(data).$promise.then(function(response) {
-				DetallesPagoFicha.by_ficha_id.all({
-					id : $stateParams.ficha_id
-				}).$promise.then(function(result) {
-					$scope.detallePagos = result.data;
-					$scope.resetIngresarPagoForm(f);
-				}).catch(function(response) {
-					console.error("Error al cargar detalle pagos");
-				});
-			}, function(response) {
-				alert("Error creando el pago");
+		data = {
+			ficha_id : $stateParams.ficha_id,
+			tipo_pago_id : $scope.nuevoPago.tipo_pago.id,
+			n_documento : $scope.nuevoPago.numero_documento,
+			monto_pagado : $scope.nuevoPago.monto,
+			user_id : $auth.user.id,
+			observaciones_pagos: $scope.nuevoPago.observaciones_pagos,
+			factura: $scope.nuevoPago.factura,
+		};
+		DetallesPagoFicha.root.new(data).$promise.then(function(response) {
+			DetallesPagoFicha.by_ficha_id.all({
+				id : $stateParams.ficha_id
+			}).$promise.then(function(result) {
+				$scope.detallePagos = result.data;
+				$scope.resetIngresarPagoForm(f);
+			}).catch(function(response) {
+				console.error("Error al cargar detalle pagos");
 			});
-		}
+		}, function(response) {
+			alert("Error creando el pago");
+		});
 	}
 
 	$scope.setPagoChanged = function(pago , value){
