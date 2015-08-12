@@ -6,7 +6,6 @@
     "font-awesome": "latest",
     "angular-ui-router": "latest",
     "ng-token-auth": "latest",
-    "angular-ui-select": "latest",
     "ngDialog": "latest",
     "pdfmake": "latest",
     "angular-rut": "latest",
@@ -16,5 +15,7 @@
     "ng-csv": "latest",
     "papa.parse": "latest",
     "angular-chart.js": "latest"
+  },
+  "resolutions": {
   }
 }
