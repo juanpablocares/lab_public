@@ -1,6 +1,78 @@
+<script type="text/ng-template" id="aside.html">
+	<div class="modal-header">
+		<h3 class="modal-title">Menu</h3>
+	</div>
+	<div class="container-fluid main-nav clearfix modal-body" ng-class="asideState.position">
+		<div class="nav-collapse">
+			<ul class="nav">
+				<li>
+					<a ui-sref="loginRequired.index"><span aria-hidden="true" class="se7en-home"></span>Inicio</a>
+				</li>
+				<li>
+					<a ui-sref="loginRequired.busqueda_paciente"><span class="fa-stack"> <i class="fa fa-user fa-stack-icon"></i> <i class="fa fa-search fa-stack-icon fa-stack-corner-icon"></i></span>Buscar Paciente</a>
+				</li>
+				<li>
+					<a ui-sref="loginRequired.busqueda_ficha"><span class="fa-stack"> <i class="fa fa-file-text-o fa-stack-icon"></i> <i class="fa fa-search fa-stack-icon fa-stack-corner-icon"></i></span>Buscar Ficha</a>
+				</li>
+				<li>
+					<a ui-sref="loginRequired.busqueda_examen"><span class="fa-stack"> <i class="fa fa-heartbeat fa-stack-icon"></i> <i class="fa fa-search fa-stack-icon fa-stack-corner-icon"></i></span>Buscar Examen</a>
+				</li>
+				<li>
+					<a ui-sref="loginRequired.busqueda_muestras"><span class="fa-stack"> <i class="fa fa-stethoscope fa-stack-icon"></i> <i class="fa fa-search fa-stack-icon fa-stack-corner-icon"></i></span>Buscar Muestras</a>
+				</li>
+				<li>
+					<a ui-sref="loginRequired.busqueda_ingreso_resultados"><span class="fa-stack"> <i class="fa fa-calculator fa-stack-icon"></i> <i class="fa fa-pencil fa-stack-icon fa-stack-corner-icon"></i></span>
+						Ingreso resultados
+					</a>
+				</li>
+				<li>
+					<a ui-sref="loginRequired.medicos.search"><span class="fa-stack"> <i class="fa fa-user-md fa-stack-icon"></i> <i class="fa fa-search fa-stack-icon fa-stack-corner-icon"></i></span>Buscar Médico</a>
+				</li>
+				<li class="dropdown" dropdown>
+					<a data-toggle="dropdown" dropdown-toggle> <span aria-hidden="true"><i class="fa fa-money fa-2x"></i></span>Tarifas<b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu">
+						<li>
+							<a ui-sref="loginRequired.busqueda_tarifas">Búsqueda</a>
+						</li>
+						<li>
+							<a ui-sref="loginRequired.nueva_tarifa">Nueva</a>
+						</li>
+						<li>
+							<a ui-sref="loginRequired.csv_tarifa">Editar</a>
+						</li>
+					</ul>
+				</li>
+				<li class="dropdown" dropdown>
+					<a data-toggle="dropdown" dropdown-toggle> <span aria-hidden="true" class="fa fa-fw fa-cog fa-2x"></span>Administración<b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu">
+						<li>
+							<a ui-sref="loginRequired.estadisticas.fichas">Estadísticas</a>
+						</li>
+						<li>
+							<a ui-sref="loginRequired.facturas.asignar">Facturas</a>
+						</li>
+						<li>
+							<a ui-sref="loginRequired.otros.procesos">Otros</a>
+						</li>
+						<li>
+							<a ui-sref="loginRequired.parametros.color_orina({parametro_id: 1})">Parametros</a>
+						</li>
+						<li>
+							<a ui-sref="loginRequired.users.editar">Usuarios</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-danger" ng-click="cancel($event)">Cerrar</button>
+	</div>
+</script>
+
 <div id="navbar-menu" ng-show="user.signedIn">
 	<div class="navbar navbar-fixed-top scroll-hide">
-		<div class="container-fluid top-bar">
+		<div class="container-fluid top-bar" >
 			<div class="pull-right">
 				<ul class="nav navbar-nav pull-right">
 					<li class="dropdown user" dropdown>
@@ -16,6 +88,13 @@
 					</li>
 				</ul>
 			</div>
+			<p>
+				<span class="pull-left">
+					<button type="button" class="btn btn-default" ng-click="openAside('left')">
+						<span><i class="fa fa-bar"></i></span>				  
+					</button>
+				</span>
+			</p>
 			<button class="navbar-toggle">
 				<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 			</button>
@@ -29,69 +108,6 @@
 			<form class="navbar-form form-inline col-lg-2 hidden-xs"  name="searchRutForm" ng-submit="searchByRut(searchForm.rut_value)" ng-show="showSearchRutForm">
 				<input class="form-control" placeholder="Buscar paciente rut" id="searchBoxRut" ng-rut rut-format="live" ng-model="searchForm.rut_value" type="text">
 			</form>
-		</div>
-		<div class="container-fluid main-nav clearfix">
-			<div class="nav-collapse">
-				<ul class="nav">
-					<li>
-						<a ui-sref="loginRequired.index"><span aria-hidden="true" class="se7en-home"></span>Inicio</a>
-					</li>
-					<li>
-						<a ui-sref="loginRequired.busqueda_paciente"><span class="fa-stack"> <i class="fa fa-user fa-stack-icon"></i> <i class="fa fa-search fa-stack-icon fa-stack-corner-icon"></i></span>Buscar Paciente</a>
-					</li>
-					<li>
-						<a ui-sref="loginRequired.busqueda_ficha"><span class="fa-stack"> <i class="fa fa-file-text-o fa-stack-icon"></i> <i class="fa fa-search fa-stack-icon fa-stack-corner-icon"></i></span>Buscar Ficha</a>
-					</li>
-					<li>
-						<a ui-sref="loginRequired.busqueda_examen"><span class="fa-stack"> <i class="fa fa-heartbeat fa-stack-icon"></i> <i class="fa fa-search fa-stack-icon fa-stack-corner-icon"></i></span>Buscar Examen</a>
-					</li>
-					<li>
-						<a ui-sref="loginRequired.busqueda_muestras"><span class="fa-stack"> <i class="fa fa-stethoscope fa-stack-icon"></i> <i class="fa fa-search fa-stack-icon fa-stack-corner-icon"></i></span>Buscar Muestras</a>
-					</li>
-					<li>
-						<a ui-sref="loginRequired.busqueda_ingreso_resultados"><span class="fa-stack"> <i class="fa fa-calculator fa-stack-icon"></i> <i class="fa fa-pencil fa-stack-icon fa-stack-corner-icon"></i></span>
-							Ingreso resultados
-						</a>
-					</li>
-					<li>
-						<a ui-sref="loginRequired.medicos.search"><span class="fa-stack"> <i class="fa fa-user-md fa-stack-icon"></i> <i class="fa fa-search fa-stack-icon fa-stack-corner-icon"></i></span>Buscar Médico</a>
-					</li>
-					<li class="dropdown" dropdown>
-						<a data-toggle="dropdown" dropdown-toggle> <span aria-hidden="true"><i class="fa fa-money"></i></span>Tarifas<b class="caret"></b></a>
-						<ul class="dropdown-menu" role="menu">
-							<li>
-								<a ui-sref="loginRequired.busqueda_tarifas">Búsqueda</a>
-							</li>
-							<li>
-								<a ui-sref="loginRequired.nueva_tarifa">Nueva</a>
-							</li>
-							<li>
-								<a ui-sref="loginRequired.csv_tarifa">Editar</a>
-							</li>
-						</ul>
-					</li>
-					<li class="dropdown" dropdown>
-						<a data-toggle="dropdown" dropdown-toggle> <span aria-hidden="true" class="fa fa-fw fa-cog fa-2x"></span>Administración<b class="caret"></b></a>
-						<ul class="dropdown-menu" role="menu">
-							<li>
-								<a ui-sref="loginRequired.estadisticas.fichas">Estadísticas</a>
-							</li>
-							<li>
-								<a ui-sref="loginRequired.facturas.asignar">Facturas</a>
-							</li>
-							<li>
-								<a ui-sref="loginRequired.otros.procesos">Otros</a>
-							</li>
-							<li>
-								<a ui-sref="loginRequired.parametros.color_orina({parametro_id: 1})">Parametros</a>
-							</li>
-							<li>
-								<a ui-sref="loginRequired.users.editar">Usuarios</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
 		</div>
 	</div>
 </div>

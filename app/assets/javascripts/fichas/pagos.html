@@ -111,17 +111,17 @@
 						<td colspan="9"><h4>No hay pagos realizados aún.</h4></td>
 					</tr>
 					<tr>
-						<td colspan="7"><strong>Precio total</strong></td>
-						<td class="text-danger">{{precio_total}}</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td colspan="7"><strong>Pagado</strong></td>
+						<td colspan="7"><strong>Total Bonos</strong></td>
 						<td class="text-success">{{getTotalPagos()}}</td>
 						<td></td>
 					</tr>
 					<tr>
-						<td colspan="7"><strong>Total</strong></td>
+						<td colspan="7"><strong>Total exámenes</strong></td>
+						<td class="text-danger">{{precio_total}}</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td colspan="7"><strong>Diferencia</strong></td>
 						<td ng-class="{'text-success': precio_total < getTotalPagos(), 'text-danger': precio_total > getTotalPagos()}">{{precio_total - getTotalPagos()}}</td>
 						<td></td>
 					</tr>

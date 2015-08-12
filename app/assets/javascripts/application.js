@@ -33,3 +33,4 @@
 //= require Chart.js/Chart.min.js
 //= require angular-chart.js/dist/angular-chart.js
 //= require angular-bootstrap
+//= require angular-aside

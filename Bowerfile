@@ -40,3 +40,5 @@ asset 'ng-csv'
 asset 'papa.parse'
 #Libreria para graficos
 asset 'angular-chart.js'
+#Libreria para menu lateral desplegable
+asset 'angular-aside'

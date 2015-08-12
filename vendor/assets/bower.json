@@ -14,8 +14,7 @@
     "angular-smart-table": "latest",
     "ng-csv": "latest",
     "papa.parse": "latest",
-    "angular-chart.js": "latest"
-  },
-  "resolutions": {
+    "angular-chart.js": "latest",
+    "angular-aside": "latest"
   }
 }

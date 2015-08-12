@@ -119,7 +119,11 @@ angular.module('lab').controller('OrdenesExamenIngresoResultadosController', fun
 
 	$scope.guardar_resultado = function(indice, resultado){
 		if(resultado.estado < 1){
-			alert('Examen sin muestra');
+			
+			var modal = ngDialog.open({
+					template: "template_sin_muestra",
+					scope: $scope
+				});
 			return ;
 		}
 		
