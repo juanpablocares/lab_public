@@ -27,7 +27,7 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 			
 			$scope.paciente = data;
 			$scope.masterPaciente = angular.copy($scope.paciente);
-
+			console.log($scope.masterPaciente);
 
 			if(!regionesService.getRegiones())
 			{

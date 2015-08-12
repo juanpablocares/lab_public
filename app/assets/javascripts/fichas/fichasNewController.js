@@ -265,6 +265,12 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		$scope.getPrecioTotal();
 	};
 
+	$scope.borrarMedico = function() {
+		$scope.ficha.medico = null;
+		$scope.ficha.medico_id = null;
+		$scope.medico.selected = null;
+	}
+
 	$scope.seleccionarPrevision = function(prevision, select)
 	{
 		//Se cambia la prevision. Debe cambiar en el registro del paciente, de la ficha

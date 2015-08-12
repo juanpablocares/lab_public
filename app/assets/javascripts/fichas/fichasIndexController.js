@@ -570,6 +570,10 @@ angular.module('lab').controller('FichasIndexController', function(
 		$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
 		$scope.ordenarExamenes();
 		$scope.limpiarTarifas();
+		$scope.examenesBorrados = [];
+		$scope.examenesAgregados = [];
+		$scope.ficha_edit.examenesAgregados = $scope.examenesAgregados;
+		$scope.ficha_edit.examenesBorrados = $scope.examenesBorrados;
 		$scope.ficha_edit = angular.copy($scope.ficha);
 		$scope.precio_total_edit = angular.copy($scope.precio_total);
 	}
@@ -613,7 +617,9 @@ angular.module('lab').controller('FichasIndexController', function(
 				$scope.limpiarTarifas();
 
 			}, function(response) {
-				console.log("ERROR creando ficha");
+				alert("Error guardando cambios, deshaciendo cambios...");
+				$scope.cancelar_cambios();
+				console.log("ERROR guardando cambios en ficha");
 			});
 		}
 	}
@@ -626,8 +632,6 @@ angular.module('lab').controller('FichasIndexController', function(
 	$scope.validate_form = function(ficha_form) {
 		return $scope.examenesSeleccionados_edit.length > 0 && ficha_form.$valid;
 	}
-
-	
 
 	$scope.getInfoPaciente = function(ficha)
 	{
@@ -798,12 +802,6 @@ angular.module('lab').controller('FichasIndexController', function(
 			layout: 'noBorders'
 		};
 	}
-
-	$scope.onSelect = function ($item, $model, $label) {
-		console.log($item);
-		console.log($model);
-		console.log($label);
-	};
 
 	$scope.getPDF = function(){
 

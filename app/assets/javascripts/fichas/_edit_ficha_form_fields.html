@@ -31,7 +31,7 @@
 		<tr>
 			<td><strong>Procedencia</strong></td>
 			<td colspan="3">
-			    <input type="text" ng-model="procedencia.selected" typeahead="item.nombre for item in procedenciasArray | filter:$viewValue | limitTo:10" class="form-control">
+				<select class="form-control" ng-model="procedencia.selected" ng-options="procedencia.nombre for procedencia in procedenciasArray track by procedencia.id | orderBy:'nombre'" name="procedencia"></select>
 			</td>
 			<td>
 				<strong>

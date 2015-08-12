@@ -11,7 +11,10 @@
 				<th class="col-sm-2 text-right">Celular</th><td>{{masterPaciente.celular}}</td>
 			</tr>
 			<tr>
-				<th class="col-sm-2 text-right">Teléfono Fijo</th><td>{{masterPaciente.telefono}}</td>
+				<th class="col-sm-2 text-right">Teléfono Fijo</th><td>{{masterPaciente.telefono || 'Sin telefono'}}</td>
+			</tr>
+			<tr>
+				<th class="col-sm-2 text-right">Dirección</th><td>{{masterPaciente.direccion +', '+masterPaciente.comuna.nombre }}</td>
 			</tr>
 			<tr>
 				<th class="col-sm-2 text-right">Fecha de nacimiento</th><td>{{masterPaciente.fecha_nacimiento | date : 'dd-MM-yyyy'}}</td>
@@ -23,7 +26,7 @@
 				<th class="col-sm-2 text-right" >Género</th> <td ng-if="masterPaciente.genero == 0">Femenino</td><td ng-if="masterPaciente.genero == 1">Masculino</td>
 			</tr>
 			<tr>
-				<th class="col-sm-2 text-right">Correo electrónico</th><td>{{masterPaciente.correo}}</td>
+				<th class="col-sm-2 text-right">Correo electrónico</th><td>{{masterPaciente.correo || 'Sin correo electrónico'}}</td>
 			</tr>
 			<tr>
 				<th class="col-sm-2 text-right">Previsión</th><td>{{masterPaciente.prevision.nombre}}</td>

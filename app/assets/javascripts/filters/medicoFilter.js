@@ -7,8 +7,7 @@ angular.module('lab').filter('medicoFilter', [function($filter) {
 		texto = texto.trim().toLowerCase();
 		texto = texto.split(' ');
 		angular.forEach(inputArray, function(item){
-			var nombre_completo = item.nombre.trim()+" "+
-			item.apellido_paterno.trim()+" "+
+			var nombre_completo = item.apellido_paterno.trim()+" "+
 			item.apellido_materno.trim();
 			nombre_completo = nombre_completo.toLowerCase();
 
