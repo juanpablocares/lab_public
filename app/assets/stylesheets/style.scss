@@ -275,7 +275,7 @@ body.login1 {
     }
     input.form-control {
       height: 48px;
-      font-size: 15px;
+      font-size: 13px;
       box-shadow: none;
       border-radius: 0;
       border: 0;
@@ -435,7 +435,7 @@ body.login1 {
       left: 10px;
       width: 48px;
       height: 32px;
-      padding: 8px 12px;
+      padding: 3px 12px;
       margin: 0;
       background-color: transparent;
       border: 1px solid #dddddd;
@@ -772,7 +772,7 @@ body.sidebar-nav {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   .style-selector-container {
     position: relative;
-    padding: 15px;
+    padding: 3px;
     .style-toggle {
       position: absolute;
       right: 100%;
@@ -1288,12 +1288,13 @@ th:active {
 /*  Tables */
 /*----------------------------------------------------------------------------------- */
 .table {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   th {
-    font-size: 14px;
+    font-size: 13px;
   }
   td {
-    font-size: 14px;
+	padding-top: 3px;
+    font-size: 13px;
     &.actions {
       width: 90px;
       padding-right: 0;
@@ -1554,7 +1555,7 @@ th:active {
       font-weight: 100;
       color: #007aff;
       line-height: 1.4em;
-      padding-top: 8px;
+      padding-top: 3px;
       letter-spacing: -0.06em;
       .icon {
         background: url("info-data-sprite.png") no-repeat left top;
@@ -2444,7 +2445,7 @@ th:active {
     left: 0;
     width: 100%;
     height: 52px;
-    padding: 8px 60px 8px 8px;
+    padding: 3px 60px 3px 8px;
     background: #f2f2f2;
     border-top: 1px solid #cccccc;
     input[type="text"] {
@@ -2511,7 +2512,7 @@ th:active {
           left: -15px;
           width: 220px;
           padding-left: 15px;
-          padding: 8px 0 8px 15px;
+          padding: 3px 0 3px 15px;
           color: #888888;
           &:hover {
             background-color: #e6e6e6;
@@ -4518,7 +4519,7 @@ body.fourofour {
             span {
               display: block;
               float: left;
-              margin: 8px 15px 0 0;
+              margin: 3px 15px 0 0;
               background-position: left -140px;
             }
             .caret {

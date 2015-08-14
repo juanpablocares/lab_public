@@ -2,11 +2,10 @@
 	<tbody>
 		<tr>
 			<td><strong>Rut</strong></td>
-			<td colspan="3"><a ui-sref="loginRequired.pacientes.info({paciente_id: paciente.id})"><phy-rut rut='paciente.rut_completo'></phy-rut></a></td>
-		</tr>
-		<tr>
+			<td ><a ui-sref="loginRequired.pacientes.info({paciente_id: paciente.id})"><phy-rut rut='paciente.rut_completo'></phy-rut></a></td>
+			
 			<td><strong>Paciente</strong></td>
-			<td colspan="3"><a ui-sref="loginRequired.pacientes.info({paciente_id: paciente.id})">{{paciente.nombre}} {{paciente.apellido_paterno}} {{paciente.apellido_materno}}</a></td>
+			<td ><a ui-sref="loginRequired.pacientes.info({paciente_id: paciente.id})">{{paciente.nombre}} {{paciente.apellido_paterno}}</a></td>
 		</tr>
 		<tr>
 			<td><strong>Genero</strong></td>
@@ -26,11 +25,11 @@
 		</tr>
 		<tr>
 		<td><strong>Dirección</strong></td>
-			<td colspan="3">{{paciente.direccion}} {{paciente.comuna.nombre}}</td>
+			<td colspan="3"> {{paciente.direccion}}, {{paciente.comuna.nombre}}</td>
 		</tr>
 		<tr ng-if="!edit">
 			<td><strong>Prevision</strong></td>
-			<td colspan="3">{{paciente.prevision.nombre}}</td>
+			<td >{{paciente.prevision.nombre}}</td>
 		</tr>
 		<tr ng-if="edit">
 			<td><strong>Prevision</strong></td>
