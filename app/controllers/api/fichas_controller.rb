@@ -209,13 +209,13 @@ class Api::FichasController < ApplicationController
           results = results.where(id: params[:search][:predicateObject][:id].to_i)
         end
         if(params[:search][:predicateObject].has_key?(:nombre))
-          results = results.where(paciente_id: Paciente.where(nombre: params[:search][:predicateObject][:nombre]))
+          results = results.where("lower(nombre) like ?", "#{params[:search][:predicateObject][:nombre].downcase}%")
         end
         if(params[:search][:predicateObject].has_key?(:apellido_paterno))
-          results = results.where(:pacientes => {:apellido_paterno => params[:search][:predicateObject][:apellido_paterno]})
+			results = results.where("lower(apellido_paterno) like ?", "#{params[:search][:predicateObject][:apellido_paterno].downcase}%")
         end
         if(params[:search][:predicateObject].has_key?(:apellido_materno))
-          results = results.where(Paciente.arel_table[:apellido_materno].matches("%#{params[:search][:predicateObject][:apellido_materno]}%"))
+			results = results.where("lower(apellido_materno) like ?", "#{params[:search][:predicateObject][:apellido_materno].downcase}%")
         end
         if(params[:search][:predicateObject].has_key?(:prevision))
           results = results.where(prevision_id: params[:search][:predicateObject][:prevision])
