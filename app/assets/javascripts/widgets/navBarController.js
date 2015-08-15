@@ -61,7 +61,7 @@ angular.module('lab').controller('NavBarController', function($rootScope, $state
 		$scope.checkSearchInput(newValue);
 		$scope.checkEmptySearchInput(newValue);
 	});
-
+	
 	$scope.$watch('searchForm.rut_value', function(newValue, oldValue) {
 		$scope.checkEmptySearchInput(newValue);
 	});
@@ -70,6 +70,13 @@ angular.module('lab').controller('NavBarController', function($rootScope, $state
 		$scope.checkEmptySearchInput(newValue);
 	});
 
+	$scope.checkSearchFicha = function(value) {
+		if(value != null && value.length != 0 && !isNaN(value))
+			$state.go('loginRequired.fichas.info', { 
+				ficha_id : value
+			});
+	};
+	
 	$scope.checkSearchInput = function(value) {
 		if (value != null && value.length != 0) {
 			if (!isNaN(value)) {

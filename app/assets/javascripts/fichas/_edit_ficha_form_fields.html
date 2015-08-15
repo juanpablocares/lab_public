@@ -10,27 +10,26 @@
 <div ng-init="!ficha_edit?ficha_edit=ficha:ficha=ficha"> </div>
 <table class="table table-condensed">
 	<tbody>
-		<tr ng-if="ficha.id">	
-			<td class="col-sm-2"><strong>N° Ficha
+		<tr ng-if="ficha_edit">	
+			<td ><strong>N° Ficha
 			</strong></td>
-			<td class="col-sm-2">
-				{{ficha.id}}
+			<td >
+				{{ficha_edit.id}}
 			</td>
-			<td class="col-sm-2"><strong>Recepcionista</strong></td>
-			<td class="col-sm-2">
-				{{ficha.user.nombre}} {{ficha.user.apellido_paterno}}
+			<td ><strong>Recepcionista</strong></td>
+			<td >
+				{{ficha_edit.user.nombre}} {{ficha_edit.user.apellido_paterno}}
 			</td>
-			<td class="col-sm-2">
+			<td >
 				<strong>Fecha</strong>
 			</td>
-			<td class="col-sm-2">
-				{{ficha.creado | date:'dd/MM/yyyy'}} 
+			<td >
+				{{ficha_edit.creado | date:'dd/MM/yyyy'}} 
 			</td>
-			
 		</tr>
 		<tr>
 			<td><strong>Procedencia</strong></td>
-			<td colspan="3">
+			<td >
 				<select class="form-control" ng-model="procedencia.selected" ng-options="procedencia.nombre for procedencia in procedenciasArray track by procedencia.id | orderBy:'nombre'" name="procedencia"></select>
 			</td>
 			<td>
@@ -39,19 +38,23 @@
 				</strong>
 			</td>
 			<td><input class="form-control" type="text" ng-model="ficha_edit.numero_procedencia"></td>
+			<td><strong>Email</strong></td>
+			<td>
+				<input class="form-control" type="checkbox" ng-model="ficha_edit.mandar_email" style="height:20px; width:20px;">
+			</td>
 		</tr>
 		<tr>
 			<td><strong>Restringido</strong></td>
 			<td>
-			<input class="form-control" type="checkbox" ng-change="ficha_edit.receptor = ''" ng-checked="ficha_edit.receptor" ng-model="ficha_edit.restringido">
+			<input class="form-control" type="checkbox" ng-change="ficha_edit.receptor = ''" ng-checked="ficha_edit.receptor" ng-model="ficha_edit.restringido" style="height:20px; width:20px;">
 			</td>
 			<td><strong>Entregar a</strong></td>
 			<td>
 			<input class="form-control" type="text" ng-model="ficha_edit.receptor" ng-disabled="!ficha_edit.restringido">
 			</td>
-			<td><strong>Email</strong></td>
+			<td><strong>Urgente</strong></td>
 			<td>
-				<input class="form-control" type="checkbox" ng-model="ficha_edit.mandar_email">
+				<input class="form-control" type="checkbox" ng-model="ficha_edit.urgente" style="height:20px; width:20px;">
 			</td>
 		</tr>
 		<tr>
@@ -63,17 +66,13 @@
 			<td>
 			<input class="form-control" placeholder="Ingrese número" type="number" ng-model="ficha_edit.numero_programa" required>
 			</td>
-			<td><strong>Urgente</strong></td>
-			<td>
-				<input class="form-control" type="checkbox" ng-model="ficha_edit.urgente">
-			</td>
 		</tr>
 		<tr>
 			<td><strong>Médico</strong></td>
-			<td colspan="4">
+			<td colspan="3">
 				<input type="text" ng-model="medico.selected" typeahead="medico as medico.nombre+' '+ medico.apellido_paterno+' '+medico.apellido_materno for medico in medicosArray | medicoFilter:$viewValue | limitTo: 10" typeahead-template-url="medicosTemplate.html" class="form-control">
 			</td>
-			<td>
+			<td colspan="2">
 				<button ng-click="borrarMedico()">
 					<i class="fa fa-close text-danger"></i>
 				</button>

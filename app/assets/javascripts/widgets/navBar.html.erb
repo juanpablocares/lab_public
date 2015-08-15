@@ -88,19 +88,20 @@
 					</li>
 				</ul>
 			</div>
-			<p>
 				<span class="pull-left">
 					<button type="button" class="btn btn-default" ng-click="openAside('left')">
-						<span><i class="fa fa-bar"></i></span>				  
+						<i class="fa fa-bar"></i>
 					</button>
 				</span>
-			</p>
 			<button class="navbar-toggle">
 				<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 			</button>
 			<a class="logo" ui-sref="loginRequired.index">se7en</a>
 			<form class="navbar-form form-inline col-lg-2" name="searchFormTemp" ng-show="showSearchTempForm">
-				<input class="form-control" placeholder="Buscar paciente temp" id="searchBoxTemp" ng-model="searchForm.valor" type="text">
+				<input class="form-control" placeholder="Buscar paciente" id="searchBoxTemp" ng-model="searchForm.valor" type="text">
+			</form>
+			<form class="navbar-form form-inline col-lg-2" name="searchFormFicha" ng-show="showSearchTempForm" ng-submit="checkSearchFicha(searchForm.id_ficha)">
+				<input class="form-control" placeholder="Buscar ficha" id="searchFormFicha" ng-model="searchForm.id_ficha" type="text">
 			</form>
 			<form class="navbar-form form-inline col-lg-2 hidden-xs" name="searchTextForm" ng-submit="searchByText(searchForm.text_value)" ng-show="showSearchTextForm">
 				<input class="form-control" placeholder="Buscar paciente nombre" id="searchBoxText" ng-model="searchForm.text_value" type="text" >
