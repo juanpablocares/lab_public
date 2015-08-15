@@ -54,7 +54,7 @@ angular.module('lab').controller('FichasIndexController', function(
 					$scope.medicosArray = medicosService.getMedicos();
 					$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha.medico);
 				}, function(response) {
-					console.log("ERROR obteniendo medicos");
+					console.error('ERROR obteniendo medicos');
 				});
 			}
 			else
@@ -70,7 +70,7 @@ angular.module('lab').controller('FichasIndexController', function(
 					$scope.procedenciasArray = procedenciasService.getProcedencias();
 					$scope.procedencia.selected = $scope.setProcedenciaSeleccionada($scope.ficha.procedencia);
 				}, function(data) {
-					console.log('Error getting procedencias');
+					console.error('ERROR getting procedencias');
 				});
 			}
 			else
@@ -86,7 +86,7 @@ angular.module('lab').controller('FichasIndexController', function(
 					$scope.previsionesArray = previsionesService.getPrevisiones();
 					$scope.prevision = $scope.setPrevisionSeleccionada($scope.ficha.prevision);
 				}, function(data) {
-					console.log('Error getting previsiones');
+					console.error('ERROR getting previsiones');
 				});
 			}
 			else
@@ -103,7 +103,7 @@ angular.module('lab').controller('FichasIndexController', function(
 					$scope.examenes = examenesService.getExamenes();
 					$scope.crearExamenesArray();
 				}, function(response) {
-					console.log("ERROR obteniendo examenes");
+					console.error('ERROR obteniendo examenes');
 				});
 			}
 			else
@@ -119,7 +119,7 @@ angular.module('lab').controller('FichasIndexController', function(
 					$scope.perfiles = perfilesService.getPerfiles();
 					$scope.crearExamenesArray();
 				}, function(data) {
-					console.log('Error getting perfiles');
+					console.error('ERROR getting perfiles');
 				});
 			}
 			else
@@ -133,17 +133,20 @@ angular.module('lab').controller('FichasIndexController', function(
 			$scope.limpiarTarifas();
 	});
 
-	$scope.toogleAllCheckbox = function(checkbox){
+	$scope.toggleAllCheckbox = function(checkbox){
 		for (var i = 0; i < $scope.examenesSeleccionados_edit.length; i++) {
 			var value = $scope.examenesSeleccionados_edit[i];
-			value.checked = checkbox;
+			if(value.valido_impresion)
+			{
+				value.checked = checkbox;
+			}
 		};
 	}
 
 	$scope.setPaciente = function(ficha)
 	{
 		$scope.paciente = ficha.paciente;
-        $scope.paciente.rut_completo = $scope.paciente.rut+""+$scope.paciente.rutdv;
+        $scope.paciente.rut_completo = $scope.paciente.rut+''+$scope.paciente.rutdv;
         $scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
         $scope.paciente.getEdad = function() {
             $scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
@@ -156,14 +159,14 @@ angular.module('lab').controller('FichasIndexController', function(
                             meses = Math.abs($scope.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth());
                     var birthday = +new Date($scope.paciente.fecha_nacimiento);
                     var anios = ((Date.now() - birthday) / (31556926000));
-                    return ~~anios + " Años " + ~~meses + " meses";
+                    return ~~anios + ' Años ' + ~~meses + ' meses';
             }
         };
         $scope.paciente.getFormatedBirth = function()
         {	
         	var day = $scope.paciente.fecha_nacimiento.getUTCDate();
-        	if(day<10)day = "0"+day;
-        	return day+"/"+($scope.paciente.fecha_nacimiento.getUTCMonth()+1)+"/"+$scope.paciente.fecha_nacimiento.getFullYear();
+        	if(day<10)day = '0'+day;
+        	return day+'/'+($scope.paciente.fecha_nacimiento.getUTCMonth()+1)+'/'+$scope.paciente.fecha_nacimiento.getFullYear();
         }
         ficha.paciente = $scope.paciente;
 	}
@@ -287,14 +290,14 @@ angular.module('lab').controller('FichasIndexController', function(
 			var value = $scope.examenesSeleccionados_edit[i];
 			if (perfil && value.perfil) {
 				if (model.id == value.id) {
-					alert("Perfil ya agregado");
+					alert('Perfil ya agregado');
 					return;
 				}
 			}
 			else
 			if (!perfil && !value.perfil) {
 				if (model.examen.id == value.examen.id) {
-					alert("Examen ya agregado");
+					alert('Examen ya agregado');
 					return;
 				}
 			}
@@ -314,12 +317,10 @@ angular.module('lab').controller('FichasIndexController', function(
 
 	$scope.countResultadosParametrosValidados = function(resultados_examen)
 	{
-		console.log(resultados_examen);
 		var count = 0;
 		for (var i = 0; i < resultados_examen.length; i++)
 		{
 			var value = resultados_examen[i];
-			console.log(value);
 			if(value.usuario_valida_id != null)
 				count++;
 		}
@@ -327,10 +328,8 @@ angular.module('lab').controller('FichasIndexController', function(
 	}
 
 	$scope.setEstadoExamenes = function() {
-		console.log("Set estado examenes");
 		for ( i = 0; i < $scope.examenesSeleccionados.length; i++) {
 			value = $scope.examenesSeleccionados[i];
-			console.log(value);
 			if (value.perfil) {
 				value.delete = true;
 				for ( j = 0; j < value.examenes.length; j++) {
@@ -372,27 +371,32 @@ angular.module('lab').controller('FichasIndexController', function(
 				value.estado = {};
 
 				if (value.usuario_muestra_id == null) {
+					value.valido_impresion = false;
 					value.estado.class = 'danger';
 					value.estado.texto = 'M Pendiente';
 				}
 				else {
 					if (value.examen.examenes_parametros.length == $scope.countResultadosParametrosValidados(value.resultados_examen)) {
+						value.valido_impresion = true;
 						value.delete = false;
 						value.estado.texto = 'Validado';
 						value.estado.class = 'primary';
 					}
 					else
 					if (value.examen.examenes_parametros.length > $scope.countResultadosParametrosValidados(value.resultados_examen	)) {
+						value.valido_impresion = false;
 						value.delete = false;
 						value.estado.texto = 'Sin resultados';
 						value.estado.class = 'warning';
 					}
 					else if(value2.examen.examenes_parametros.length == 0){
+						value.valido_impresion = false;
 						value.estado.class = 'danger';
 						value.estado.texto = 'Sin Parametros';
 					}
 					else
 					{
+						value.valido_impresion = false;
 						value.estado.class = 'danger';
 						value.estado.texto = 'Error';
 					}
@@ -469,7 +473,7 @@ angular.module('lab').controller('FichasIndexController', function(
 		$scope.total_pagos = $scope.getTotalPagos();
 		$scope.loading = false;
 	}).catch(function(response) {
-		console.error("ERROR al cargar detalle pagos");
+		console.error('ERROR al cargar detalle pagos');
 	});
 
 	$scope.limpiarTarifas = function() {
@@ -518,11 +522,9 @@ angular.module('lab').controller('FichasIndexController', function(
 				}
 			}
 		}
-		console.log("END limpiarTarifas");
 	}		
 
 	$scope.getPrecioTotal = function(edit) {
-		console.log('Calculando nuevo precio');
 		var total = 0;
 		var examenes = [];
 		if (edit) {
@@ -554,7 +556,6 @@ angular.module('lab').controller('FichasIndexController', function(
 			}
 		}
 		if (edit) {
-			console.log("precio total edit = "+total);
 			$scope.precio_total_edit = total;
 		}
 		else {
@@ -595,12 +596,9 @@ angular.module('lab').controller('FichasIndexController', function(
 			$scope.ficha_edit.examenesAgregados = $scope.examenesAgregados;
 			$scope.ficha_edit.examenesBorrados = $scope.examenesBorrados;
 			$scope.ficha_edit.detalles_ficha = null;
-			console.log("Antes de update");
 			Ficha.update({
 				id : $scope.ficha.id
 			}, $scope.ficha_edit).$promise.then(function(response) {
-				console.log("update correcto");
-				console.log("prevision");
 				$scope.guardado = true;
 				ficha_form.$setPristine();				
 
@@ -617,9 +615,9 @@ angular.module('lab').controller('FichasIndexController', function(
 				$scope.limpiarTarifas();
 
 			}, function(response) {
-				alert("Error guardando cambios, deshaciendo cambios...");
+				alert('Error guardando cambios, deshaciendo cambios...');
 				$scope.cancelar_cambios();
-				console.log("ERROR guardando cambios en ficha");
+				console.error('ERROR guardando cambios en ficha');
 			});
 		}
 	}
@@ -638,9 +636,9 @@ angular.module('lab').controller('FichasIndexController', function(
 		var paciente = ficha.paciente;
 		var paciente_info = [];
 		paciente_info.push([{ text: 'Rut', bold: true},paciente.rut_completo]);
-		paciente_info.push([{ text: 'Paciente', bold: true},paciente.nombre +" "+ paciente.apellido_paterno]);
+		paciente_info.push([{ text: 'Paciente', bold: true},paciente.nombre +' '+ paciente.apellido_paterno]);
 		paciente_info.push([{ text: 'Genero', bold: true},paciente.genero?'Masculino':'Femenino']);
-		paciente_info.push([{ text: 'Fecha nacimiento', bold: true},paciente.getFormatedBirth()+ " - "+ paciente.getEdad()]);
+		paciente_info.push([{ text: 'Fecha nacimiento', bold: true},paciente.getFormatedBirth()+ ' - '+ paciente.getEdad()]);
 		if(paciente.telefono)paciente_info.push([{ text: 'Teléfono', bold: true},paciente.telefono]);
 		if(paciente.celular)paciente_info.push([{ text: 'Celular', bold: true},paciente.celular]);
 		paciente_info.push([{ text: 'Prevision', bold: true},ficha.prevision.nombre]);
@@ -667,45 +665,38 @@ angular.module('lab').controller('FichasIndexController', function(
     	if (month< 10 )month = '0'+month;
     	day = day+'/'+month+'/'+ficha.creado.getFullYear();
 
-    	/*if(ficha.urgente == true)
-    	{
-	    	row.push({colSpan: 4, text: "Ficha Urgente", bold: true},{},{},{});
-			ficha_info.push(row);
-			row=[];
-		}*/
-		
 		row.push({text: 'Ficha N°', bold: true});
-		row.push({text: ficha.id?ficha.id+"":"NULO"});
+		row.push({text: ficha.id?ficha.id+'':'NULO'});
 		row.push({text: 'Fecha', bold: true});
     	row.push({text: day});
     	ficha_info.push(row);
 		row = [];
 		row.push({text: 'Recepcionista', bold: true});
-		row.push({colSpan: 3, text: ficha.user.nombre +" "+ficha.user.apellido_paterno});
+		row.push({colSpan: 3, text: ficha.user.nombre +' '+ficha.user.apellido_paterno});
 		ficha_info.push(row);
 		row = [];
 		row.push({text: 'Procedencia', bold: true});
 		row.push({text: ficha.procedencia.nombre});
 		row.push({text: 'Folio Proc.', bold: true});
-		row.push({text: ficha.numero_procedencia?ficha.numero_procedencia:"NULO"});
+		row.push({text: ficha.numero_procedencia?ficha.numero_procedencia:'NULO'});
 		ficha_info.push(row);
 		row = [];
-		row.push({text: "Programa", bold: true});
+		row.push({text: 'Programa', bold: true});
 		row.push({text: ficha.programa});
-		row.push({text: "N° Prog", bold: true});
+		row.push({text: 'N° Prog', bold: true});
 		row.push({text: ficha.numero_programa});
 		ficha_info.push(row);
 		row = [];
 		if(ficha.medico_id != null)
 		{
-			row.push({text: "Médico", bold: true});
-			row.push({colSpan: 3, text: ficha.medico.nombre+ " "+ficha.medico.apellido_paterno+ " "+ficha.medico.apellido_materno});
+			row.push({text: 'Médico', bold: true});
+			row.push({colSpan: 3, text: ficha.medico.nombre+ ' '+ficha.medico.apellido_paterno+' '+ficha.medico.apellido_materno});
 			ficha_info.push(row);
 			row=[];
 		}
 		if(ficha.observaciones != null)
 		{
-			row.push({text: "Observaciones", bold: true});
+			row.push({text: 'Observaciones', bold: true});
 			row.push({colSpan: 3, text: ficha.observaciones});
 			ficha_info.push(row);
 			row=[];
@@ -765,12 +756,12 @@ angular.module('lab').controller('FichasIndexController', function(
 				{text: 'Valor de referencia', bold: true },
 				{text: 'Método', bold: true }]];
 
-			row.push({text: value.examen_id+""});
+			row.push({text: value.examen_id+''});
 			row.push({text: value.examen.nombre, bold:true});
 			tabla_examenes.push(row);
 			row = [];
-			for (var i = 0; i < value.resultados_examen.length; i++) {
-				var result = value.resultados_examen[i];
+			for (var j = 0; j < value.resultados_examen.length; j++) {
+				var result = value.resultados_examen[j];
 				var result_row = [];
 				result_row.push({text: result.examen_parametro.nombre});
 				result_row.push({text: result.cantidad});
@@ -779,7 +770,7 @@ angular.module('lab').controller('FichasIndexController', function(
 				result_row.push({text: ''});
 				resultados_examen.push(result_row);
 			};
-			row.push("");
+			row.push('');
 			row.push({
 				table: {
 					headerRows: 1,
@@ -804,7 +795,6 @@ angular.module('lab').controller('FichasIndexController', function(
 	}
 
 	$scope.getPDF = function(){
-
 		var examenes_checked = [];
 		for (var i = 0; i < $scope.examenesSeleccionados_edit.length; i++) {
 			var value = $scope.examenesSeleccionados_edit[i];
@@ -813,10 +803,9 @@ angular.module('lab').controller('FichasIndexController', function(
 				examenes_checked.push(value);
 			}
 		};
-
 		if(examenes_checked.length == 0)
 		{
-			alert("Debe seleccionar al menos un examen");
+			alert('Debe seleccionar al menos un examen');
 			return false;
 		}
 		else

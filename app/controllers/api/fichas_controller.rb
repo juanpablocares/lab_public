@@ -307,14 +307,6 @@ class Api::FichasController < ApplicationController
 
     if params.has_key? :diagnostico and params[:diagnostico] != nil
       ficha.diagnostico = params[:diagnostico]
-      ficha.save
-      render json:
-      {
-        success: true,
-        data:  ficha,
-        message: 'Modificación simple de ficha',
-      }, status: 200
-      return true
     end
 
     ficha.procedencia_id = params[:procedencia_id]
