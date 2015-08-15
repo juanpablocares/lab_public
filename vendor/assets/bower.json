@@ -8,6 +8,7 @@
     "ng-token-auth": "latest",
     "ngDialog": "latest",
     "pdfmake": "latest",
+    "angular-animate": "latest",
     "angular-rut": "latest",
     "angular-ui-utils": "latest",
     "angular-resource": "latest",

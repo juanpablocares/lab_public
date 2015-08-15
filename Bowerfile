@@ -24,6 +24,9 @@ asset 'ngDialog'
 #Librería para crear pdf 
 asset 'pdfmake'
 
+#Libreria para activar animaciones
+asset 'angular-animate'
+
 
 #Agregadas por JP
 #Libreria para el manejo de rut

@@ -88,28 +88,35 @@
 					</li>
 				</ul>
 			</div>
-				<span class="pull-left">
-					<button type="button" class="btn btn-default" ng-click="openAside('left')">
-						<i class="fa fa-bar"></i>
-					</button>
-				</span>
+			<span class="pull-left">
+				<button type="button" class="btn btn-default" ng-click="openAside('left')">
+					<i class="fa fa-bar"></i>
+				</button>
+			</span>
 			<button class="navbar-toggle">
 				<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 			</button>
 			<a class="logo" ui-sref="loginRequired.index">se7en</a>
 			<form class="navbar-form form-inline col-lg-2" name="searchFormTemp" ng-show="showSearchTempForm">
-				<input class="form-control" placeholder="Buscar paciente" id="searchBoxTemp" ng-model="searchForm.valor" type="text">
-			</form>
-			<form class="navbar-form form-inline col-lg-2" name="searchFormFicha" ng-show="showSearchTempForm" ng-submit="checkSearchFicha(searchForm.id_ficha)">
-				<input class="form-control" placeholder="Buscar ficha" id="searchFormFicha" ng-model="searchForm.id_ficha" type="text">
+				<input class="form-control" placeholder="Buscar paciente/Rut" id="searchBoxTemp" ng-model="searchForm.valor" type="text">
 			</form>
 			<form class="navbar-form form-inline col-lg-2 hidden-xs" name="searchTextForm" ng-submit="searchByText(searchForm.text_value)" ng-show="showSearchTextForm">
-				<input class="form-control" placeholder="Buscar paciente nombre" id="searchBoxText" ng-model="searchForm.text_value" type="text" >
+				<input class="form-control" placeholder="Buscar paciente" id="searchBoxText" ng-model="searchForm.text_value" type="text" >
 			</form>
 			<form class="navbar-form form-inline col-lg-2 hidden-xs"  name="searchRutForm" ng-submit="searchByRut(searchForm.rut_value)" ng-show="showSearchRutForm">
-				<input class="form-control" placeholder="Buscar paciente rut" id="searchBoxRut" ng-rut rut-format="live" ng-model="searchForm.rut_value" type="text">
+				<input class="form-control" placeholder="Buscar paciente" id="searchBoxRut" ng-rut rut-format="live" ng-model="searchForm.rut_value" type="text">
+			</form>
+
+			<form class="navbar-form form-inline col-lg-2" name="searchFormFicha" ng-submit="checkSearchFicha(searchForm.ficha_id)">
+				<input class="form-control" placeholder="Buscar ficha" id="searchFormFicha" ng-model="searchForm.ficha_id" type="text">
 			</form>
 		</div>
 	</div>
 </div>
+<span class="global-alert-span animated" ng-if="globalAlert.show" ng-click="removeAlert()"> 
+	<div class="alert" ng-class="globalAlert.class">
+		<strong>{{globalAlert.boldMessage}} </strong>{{globalAlert.message}}
+	</div>
+</span>
 <div ui-view class="main-view"></div>
+

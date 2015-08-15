@@ -647,7 +647,7 @@ body.login1 {
 /*----------------------------------------------------------------------------------- */
 body.sidebar-nav {
   .login2{
-    margin: 0px 0px 0px -220px;
+    margin: 0px 0px 0px 0px;
   }
   
   padding: 50px 0 0 0px;
@@ -4947,3 +4947,36 @@ body.fourofour {
       }
     }
   }
+
+
+.global-alert-span
+{
+    position: fixed;
+    margin: 1% 10%;
+    z-index: 1029;
+    min-width: 80%;
+}
+.global-alert-span{
+  .alert{
+    width: 1px;
+    max-width: 60%;
+    min-width: 50%;
+    text-align: center;
+    margin: 0 auto;
+  }
+}
+
+.global-alert-span.ng-enter, .global-alert-span.ng-move{
+  -webkit-animation: slideInDown 1s;
+  -moz-animation: slideInDown 1s;
+  -o-animation: slideInDown 1s;
+  animation: slideInDown 1s;
+}
+
+.global-alert-span.ng-leave{
+  -webkit-animation: fadeOut 1s;
+  -moz-animation: fadeOut 1s;
+  -o-animation: fadeOut 1s;
+  animation: fadeOut 1s;
+}
+

@@ -1,6 +1,6 @@
 (function() {
 	var labs = angular.module('lab', ['ngSanitize', 'ngCsv', //'ui.select', 
-		'ngSanitize','smart-table', 'ngResource', 
+		'ngSanitize','smart-table', 'ngResource', 'ngAnimate',
 		'platanus.rut', 'ui.router', 'templates', 'ui.bootstrap', 'ngAside',
 		'ng-token-auth', 'ngDialog', 'chart.js']);
 

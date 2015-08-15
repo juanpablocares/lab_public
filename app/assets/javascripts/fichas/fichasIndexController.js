@@ -290,14 +290,14 @@ angular.module('lab').controller('FichasIndexController', function(
 			var value = $scope.examenesSeleccionados_edit[i];
 			if (perfil && value.perfil) {
 				if (model.id == value.id) {
-					alert('Perfil ya agregado');
+					$scope.$emit('showGlobalAlert', {boldMessage: 'Agregar perfil', message: 'Operación inválida. El perfil ya fue agregado.',class: 'alert-warning'});
 					return;
 				}
 			}
 			else
 			if (!perfil && !value.perfil) {
 				if (model.examen.id == value.examen.id) {
-					alert('Examen ya agregado');
+					$scope.$emit('showGlobalAlert', {boldMessage: 'Agregar examen', message: 'Operación inválida. El examen ya fue agregado.',class: 'alert-warning'});
 					return;
 				}
 			}
@@ -583,8 +583,11 @@ angular.module('lab').controller('FichasIndexController', function(
 		console.log(item);
 	}
 
+
 	$scope.guardar_cambios_ficha = function(ficha_form) {
+		console.log("guardar_cambios_ficha");
 		if ($scope.validate_form(ficha_form)) {
+
 			if ($scope.medico != undefined && $scope.medico.selected != undefined) {
 				$scope.ficha_edit.medico_id = $scope.medico.selected.id;
 			}
@@ -600,8 +603,7 @@ angular.module('lab').controller('FichasIndexController', function(
 				id : $scope.ficha.id
 			}, $scope.ficha_edit).$promise.then(function(response) {
 				$scope.guardado = true;
-				ficha_form.$setPristine();				
-
+				ficha_form.$setPristine();
 				$scope.examenesSeleccionados = [];
 				$scope.examenesSeleccionados_edit = [];
 				$scope.examenesAgregados = [];
@@ -613,9 +615,10 @@ angular.module('lab').controller('FichasIndexController', function(
 				$scope.ordenarExamenes();
 				$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
 				$scope.limpiarTarifas();
+				$scope.$emit('showGlobalAlert', {boldMessage: 'Editar Ficha', message: 'Cambios guardados satisfactoriamente.',class: 'alert-success'});
 
 			}, function(response) {
-				alert('Error guardando cambios, deshaciendo cambios...');
+				$scope.$emit('showGlobalAlert', {boldMessage: 'Editar Ficha',message: 'Problemas al guardar ficha. Deshaciendo los cambios realizados.',class: 'alert-danger'});
 				$scope.cancelar_cambios();
 				console.error('ERROR guardando cambios en ficha');
 			});
@@ -628,7 +631,26 @@ angular.module('lab').controller('FichasIndexController', function(
 	}
 
 	$scope.validate_form = function(ficha_form) {
-		return $scope.examenesSeleccionados_edit.length > 0 && ficha_form.$valid;
+		var mensaje = '<ul>';
+		if(ficha_form.$valid)
+			mensaje = mensaje + '<li>Debe completar la información mínima</li>';
+		if($scope.examenesSeleccionados_edit.length == 0)
+			mensaje = mensaje + '<li>Debe agregar un examen</li>';
+
+		mensaje = mensaje + '</ul>';
+
+		console.log("validate_form");
+		console.log($scope.examenesSeleccionados_edit.length > 0 && ficha_form.$valid);
+
+		if($scope.examenesSeleccionados_edit.length > 0 && ficha_form.$valid)
+		{
+			return true;
+		}
+		else
+		{
+			$scope.$emit('showGlobalAlert', {boldMessage: 'Editar Ficha',message: mensaje,class: 'alert-danger'});
+			return false;
+		}
 	}
 
 	$scope.getInfoPaciente = function(ficha)
@@ -805,7 +827,7 @@ angular.module('lab').controller('FichasIndexController', function(
 		};
 		if(examenes_checked.length == 0)
 		{
-			alert('Debe seleccionar al menos un examen');
+			$scope.$emit('showGlobalAlert', {boldMessage: 'Impresion de ficha',message: 'Debe seleccionar al menos un examen para imprimir.',class: 'alert-info'});
 			return false;
 		}
 		else
