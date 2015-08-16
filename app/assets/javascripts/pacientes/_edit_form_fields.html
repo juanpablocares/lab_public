@@ -1,115 +1,106 @@
+<!-- Nueva linea -->
 <div class="form-group">
-	<div class="row">
-		<label class="control-label col-md-2">Rut</label>
-		<div class="col-md-3">
-			<input ng-rut rut-format="live" ng-model="paciente.rut_completo" class="form-control" type="text" ng-disabled="true" name="rut_completo">
-			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.rut_completo.$pristine) && paciente_form.rut_completo.$error.required">Debe ingresar rut del paciente</label>
-		</div>
-		<label class="control-label col-md-1">Nombres</label>
-		<div class="col-md-3">
-			<input class="form-control" placeholder="Ingrese nombres" type="text" ng-model="paciente.nombre" name="nombre" capitalize required>
-			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.nombre.$pristine) && paciente_form.nombre.$error.required">Debe ingresar nombre</label>
-		</div>
+	<label class="control-label col-md-1">Rut</label>
+	<div class="col-md-4 col-sm-8">
+		<input ng-rut rut-format="live" ng-model="paciente.rut_completo" class="form-control" type="text" ng-disabled="true" name="rut_completo">
+		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.rut_completo.$pristine) && paciente_form.rut_completo.$error.required">Debe ingresar rut del paciente</label>
 	</div>
 </div>
-<div class="form-group">
-	<div class="row">
-		<label class="control-label col-md-2">Apellido Paterno</label>
-		<div class="col-md-3">
-			<input class="form-control" placeholder="Ingrese apellido paterno" type="text" ng-model="paciente.apellido_paterno" name="apellido_paterno" capitalize required>
-			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.apellido_paterno.$pristine) && paciente_form.apellido_paterno.$error.required">Debe ingresar apellido</label>
-		</div>
-		<label class="control-label col-md-1">Apellido Materno</label>
-		<div class="col-md-3">
-			<input class="form-control" placeholder="Ingrese apellido materno" type="text" ng-model="paciente.apellido_materno" capitalize>
-		</div>
+<!-- Nueva linea -->
+<div class="form-group">	
+	<label class="control-label col-md-1">Nombre</label>
+	<div class="col-md-3">
+		<input class="form-control" placeholder="Ingrese nombres" type="text" ng-model="paciente.nombre" name="nombre" capitalize required>
+		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.nombre.$pristine) && paciente_form.nombre.$error.required">Debe ingresar nombre</label>
+	</div>
+	<label class="control-label col-md-1">Apellido Paterno</label>
+	<div class="col-md-3">
+		<input class="form-control" placeholder="Ingrese apellido paterno" type="text" ng-model="paciente.apellido_paterno" name="apellido_paterno" capitalize required>
+		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.apellido_paterno.$pristine) && paciente_form.apellido_paterno.$error.required">Debe ingresar apellido</label>
+	</div>
+	<label class="control-label col-md-1">Apellido Materno</label>
+	<div class="col-md-3">
+		<input class="form-control" placeholder="Ingrese apellido materno" type="text" ng-model="paciente.apellido_materno" capitalize>
 	</div>
 </div>
+<!-- Nueva linea -->
 <div class="form-group">
-	<label class="control-label col-md-2">Correo electrónico</label>
-	<div class="col-md-7">
+	<label class="control-label col-md-1">Email</label>
+	<div class="col-md-3">
 		<input class="form-control" placeholder="Ingrese correo electrónico" type="email" ng-model="paciente.correo" lowercase>
 	</div>
-</div>
-<div class="form-group">
-	<div class="row">
-		<label class="control-label col-md-2">Celular</label>
-		<div class="col-md-3">
-			<input class="form-control" type="text" ui-mask="(9) 999-9999" ng-model="paciente.celular" name="celular" required>
-			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.celular.$pristine) && paciente_form.celular.$error.required">Debe ingresar celular</label>
-		</div>
-		<label class="control-label col-md-1">Teléfono fijo</label>
-		<div class="col-md-3">
-			<input class="form-control" type="text" ng-model="paciente.telefono" name="telefono">
-		</div>
+	<label class="control-label col-md-1">Celular</label>
+	<div class="col-md-3">
+		<input class="form-control" type="text" ui-mask="(9) 999-9999" ng-model="paciente.celular" name="celular" required>
+		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.celular.$pristine) && paciente_form.celular.$error.required">Debe ingresar celular</label>
+	</div>
+	<label class="control-label col-md-1">Teléfono fijo</label>
+	<div class="col-md-3">
+		<input class="form-control" type="text" ng-model="paciente.telefono" name="telefono">
 	</div>
 </div>
+<!-- Nueva linea -->
 <div class="form-group">
-	<label class="control-label col-md-2">Dirección</label>
-	<div class="col-md-7">
+	<label class="control-label col-md-1">Dirección</label>
+	<div class="col-md-3">
 		<input class="form-control" placeholder="Ingrese dirección" type="text" ng-model="paciente.direccion" capitalize>
 	</div>
-</div>
-<div class="form-group">
-	<div class="row">
-		<label class="control-label col-md-2">Región</label>
-		<div class="col-md-3">
-			<select class="form-control" ng-model="paciente.region" ng-selected="paciente.region_id" ng-options="r.nombre for r in regiones track by r.id| orderBy:'nombre'" name="region" required></select>
-			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.region.$pristine) && paciente_form.region.$error.required">Debe ingresar region</label>
-		</div>
-		<label class="control-label col-md-1">Comuna</label>
-		<div class="col-md-3">
-			<select class="form-control" ng-model="paciente.comuna" ng-options="c.nombre for c in paciente.region.comunas track by c.id| orderBy:'nombre'" name="comuna"  required></select>
-			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.comuna.$pristine) && paciente_form.comuna.$error.required">Debe ingresar comuna</label>
-		</div>
+	<label class="control-label col-md-1">Región</label>
+	<div class="col-md-3">
+		<select class="form-control" ng-model="paciente.region" ng-selected="paciente.region_id" ng-options="r.nombre for r in regiones track by r.id| orderBy:'nombre'" name="region" required></select>
+		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.region.$pristine) && paciente_form.region.$error.required">Debe ingresar region</label>
+	</div>
+	<label class="control-label col-md-1">Comuna</label>
+	<div class="col-md-3">
+		<select class="form-control" ng-model="paciente.comuna" ng-options="c.nombre for c in paciente.region.comunas track by c.id| orderBy:'nombre'" name="comuna"  required></select>
+		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.comuna.$pristine) && paciente_form.comuna.$error.required">Debe ingresar comuna</label>
 	</div>
 </div>
+<!-- Nueva linea -->
 <div class="form-group">
-	<div class="row">
-		<label class="control-label col-md-2">F. nacimiento</label>
-		<div class="col-md-3">
-			<div class="input-group date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
-				<input class="form-control" type="date" id="exampleInput" name="input" ng-model="paciente.fecha_nacimiento" ng-change="paciente.edad = paciente.getEdad()" name="fecha_nacimiento" required/>
-			</div>
-			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.fecha_nacimiento.$pristine) && paciente_form.fecha_nacimiento.$error.required">Debe ingresar fecha nacimiento</label>
+	<label class="control-label col-md-1">Fecha de nacimiento</label>
+	<div class="col-md-3">
+		<div class="date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
+			<input class="form-control" type="date" id="exampleInput" name="input" ng-model="paciente.fecha_nacimiento" ng-change="paciente.edad = paciente.getEdad()" name="fecha_nacimiento" required/>
 		</div>
-		<label class="control-label col-md-1">Edad</label>
-		<div class="col-md-3">
-			<input ng-model="paciente.edad" class="form-control" id="disabledInput" type="text" disabled>
-		</div>
+		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.fecha_nacimiento.$pristine) && paciente_form.fecha_nacimiento.$error.required">Debe ingresar fecha nacimiento</label>
+	</div>
+	<label class="control-label col-md-1">Edad</label>
+	<div class="col-md-3">
+		<input ng-model="paciente.edad" class="form-control" id="disabledInput" type="text" disabled>
 	</div>
 </div>
+<!-- Nueva linea -->
 <div class="form-group">
-	<div class="row">
-		<label class="control-label col-md-2">Género</label>
-		<div class="col-md-2">
-			<label class="radio">
-				<input ng-model="paciente.genero" name="seleccionar_genero" type="radio" value="1">
-				<span>Masculino</span></label>
-			<label class="radio">
-				<input ng-model="paciente.genero" name="seleccionar_genero" type="radio" value="0">
-				<span>Femenino</span> </label>
-		</div>
-		<label class="control-label col-md-2">Previsión</label>
-		<div class="col-md-3">
-			<select class="form-control" ng-model="paciente.prevision" ng-options="plan.nombre for plan in plans track by plan.id | orderBy:'nombre'" name="prevision" required></select>
-			<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.prevision.$pristine) && paciente_form.prevision.$error.required">Debe ingresar prevision</label>
-		</div>
+	<label class="control-label col-md-1">Género</label>
+	<div class="col-md-3">
+		<label class="radio">
+			<input ng-model="paciente.genero" name="seleccionar_genero" type="radio" value="1">
+			<span>Masculino</span></label>
+		<label class="radio">
+			<input ng-model="paciente.genero" name="seleccionar_genero" type="radio" value="0">
+			<span>Femenino</span> </label>
+	</div>
+	<label class="control-label col-md-1">Previsión</label>
+	<div class="col-md-3">
+		<select class="form-control" ng-model="paciente.prevision" ng-options="plan.nombre for plan in plans track by plan.id | orderBy:'nombre'" name="prevision" required></select>
+		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.prevision.$pristine) && paciente_form.prevision.$error.required">Debe ingresar prevision</label>
 	</div>
 </div>
+<!-- Nueva linea -->
 <div class="form-group" ng-show="!paciente_nuevo">
-	<div class="row">
-		<label class="control-label col-md-2">F. incorporación</label>
-		<div class="col-md-3">
-			<input class="form-control" type="date" ng-model="paciente.creado" name="creado" disabled="true">
-		</div>
-		<label class="control-label col-md-1">Recepción</label>
-		<label class="control-label col-md-2">{{paciente.user.nombre}} {{paciente.user.apellido_paterno}}</label>
+	<label class="control-label col-md-1">Fecha ingreso</label>
+	<div class="col-md-3">
+		<input class="form-control" type="date" ng-model="paciente.creado" name="creado" disabled="true">
 	</div>
+	<label class="control-label col-md-2">Recepcionista</label>
+	<p class="col-md-6 text-left">
+		<label class="control-label">{{paciente.user.nombre}} {{paciente.user.apellido_paterno}}</label>
+	</p>
 </div>
 <div class="form-group">
 	<label class="control-label col-md-2">Observaciones</label>
-	<div class="col-md-7">
+	<div class="col-md-8">
 		<textarea class="form-control" placeholder="Ingrese observaciones" ng-model="paciente.observaciones"></textarea>
 	</div>
 </div>

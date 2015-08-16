@@ -63,7 +63,8 @@ angular.module('lab').controller('PacientesMenuController', function($scope, $ht
 		$scope.paciente.region_id = $scope.paciente.comuna.region.id;
 		$scope.mandarPaciente();
 	}).error(function(data) {
-		$state.go('loginRequired.index');
+		$scope.$emit('showGlobalAlert', {boldMessage: 'Información Paciente', message: 'Paciente no encontrado.',class: 'alert-danger'});
+		$state.go('loginRequired.buscar_paciente');
 	});
 	
 	$scope.$on('PedirPacienteFromMenu', function(event, data) {

@@ -6,25 +6,31 @@
   </a>
 </script>
 
-
 <div ng-init="!ficha_edit?ficha_edit=ficha:ficha=ficha"> </div>
 <table class="table table-condensed">
 	<tbody>
 		<tr ng-if="ficha_edit && ficha_edit.id">	
-			<td ><strong>N° Ficha
-			</strong></td>
-			<td >
-				{{ficha_edit.id}}
-			</td>
-			<td ><strong>Recepcionista</strong></td>
-			<td >
-				{{ficha_edit.user.nombre}} {{ficha_edit.user.apellido_paterno}}
-			</td>
 			<td >
 				<strong>Fecha</strong>
 			</td>
 			<td >
-				{{ficha_edit.creado | date:'dd/MM/yyyy'}} 
+				{{ficha_edit.creado | date:'dd/MM/yyyy hh::mm'}} 
+			</td>
+			<td >
+				<strong>
+					Recepcionista
+				</strong>
+			</td>
+			<td >
+				{{ficha_edit.user.nombre}} {{ficha_edit.user.apellido_paterno}}
+			</td>
+			<td >
+				<strong>
+					N° Ficha
+				</strong>
+			</td>
+			<td >
+				{{ficha_edit.id}}
 			</td>
 		</tr>
 		<tr>

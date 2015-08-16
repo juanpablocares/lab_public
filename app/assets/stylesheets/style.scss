@@ -102,6 +102,8 @@ body {
 
 .main-view{
   margin: 10px;
+  margin-top: 40px;
+  margin-left: 30px;
 }
 
 .main-content {
@@ -645,13 +647,16 @@ body.login1 {
 /*----------------------------------------------------------------------------------- */
 /*  Sidebar nav */
 /*----------------------------------------------------------------------------------- */
+
+
 body.sidebar-nav {
   .login2{
     margin: 0px 0px 0px 0px;
   }
   
-  padding: 50px 0 0 0px;
+  padding: 20px 0 0 0px;
   .navbar {
+    padding-left: 20px;
     height: 45px !important;
     &.scroll-hide.closed {
       top: 0;
@@ -1476,6 +1481,9 @@ th:active {
   &.gallery {
     min-height: 400px;
   }
+  .padded {
+    padding: 10px;
+  }
   .heading {
     background: rgba(255, 255, 255, 0.94);
     height: 50px;
@@ -1530,10 +1538,6 @@ th:active {
       -webkit-overflow-scrolling: touch;
     }
   }
-}
-
-.padded {
-  padding: 0 10px;
 }
 
 /*----------------------------------------------------------------------------------- */
@@ -4685,7 +4689,7 @@ body.fourofour {
     }
   }
   .padded {
-    padding: 0 10px;
+    padding: 10px;
   }
   .table th {
     font-size: 13px;

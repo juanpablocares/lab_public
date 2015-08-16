@@ -1,8 +1,11 @@
 #angularjs
-asset 'angular', "1.3.15"
+asset 'angular', "1.4.4"
 
-#twitter bootstrap
-asset 'angular-bootstrap'
+#Libreria para activar animaciones
+asset 'angular-animate'
+
+#angular directives for twitter bootstrap, depends on ng-animate
+asset 'angular-bootstrap', "0.13.3"
 
 #fontawesome
 asset 'font-awesome'
@@ -13,7 +16,7 @@ asset 'angular-ui-router'
 #libreria para manejar autentificacion con devise_token_auth 
 asset 'ng-token-auth'
 
-#asset 'angular-sanitize', "1.3.15" 
+#asset 'angular-sanitize'
 
 #Librería para utilizar ng-bootstrap ui-select
 #asset 'angular-ui-select'
@@ -23,10 +26,6 @@ asset 'ngDialog'
 
 #Librería para crear pdf 
 asset 'pdfmake'
-
-#Libreria para activar animaciones
-asset 'angular-animate'
-
 
 #Agregadas por JP
 #Libreria para el manejo de rut
@@ -43,5 +42,6 @@ asset 'ng-csv'
 asset 'papa.parse'
 #Libreria para graficos
 asset 'angular-chart.js'
-#Libreria para menu lateral desplegable
+#Libreria para menu lateral desplegable, instala bootstrap 0.12 pero estoy forzando el 0.13.3, 
+#si hay problemas volver a 0.12 en angular bootstrap
 asset 'angular-aside'

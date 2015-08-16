@@ -43,6 +43,7 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 			}
 		}
 	});
+
 	$scope.$emit('PedirPacienteFromMenu');
 
 	if(!previsionesService.getPrevisiones())
@@ -59,7 +60,7 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 		$scope.plans = previsionesService.getPrevisiones();
 	}
 
-	$scope.pacienteEditing = false;
+	$scope.pacienteEditing = true;
 
 	$scope.crear_ficha_temporal = function() {
 
@@ -94,7 +95,6 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 	$scope.guardarDatosPersonales = function(paciente) {
 		if($scope.paciente_form.$valid)
 		{
-			console.log("Guardar cambios en paciente");
 			paciente.prevision_id = paciente.prevision.id;
 			paciente.comuna_id = paciente.comuna.id;
 			Pacientes.by_rut.show({
@@ -105,6 +105,7 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 				}, paciente).$promise.then(function(response) {
 					$scope.updatePaciente();
 					$scope.pacienteEditing = !$scope.pacienteEditing;
+					$scope.$emit('showGlobalAlert', {boldMessage: 'Editar Paciente', message: 'Cambios a paciente guardados exitosamente.',class: 'alert-success'});
 				}, function(response) {
 					$scope.resetPaciente();
 					console.log("ERROR editando paciente");

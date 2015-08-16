@@ -1,4 +1,31 @@
+<style type="text/css">
+.open-side-nav-button
+{
+	position: absolute;
+	top: 0px;
+	height: 100%;
+	width: 20px;
+	background-color: lightgray;
+	z-index: 1031;
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	border-radius: 0px;
+	vertical-align: middle;
+	color: gray;
+}
+.open-side-nav-button.left{
+	left: 0px;
+}
+.open-side-nav-button.right{
+	right: 0px;
+}	
+
+</style>
 <script type="text/ng-template" id="aside.html">
+	<button type="button" class="btn-default open-side-nav-button right" ng-click="cancel($event)">
+		<i class="fa fa-angle-double-left"></i>
+	</button>
 	<div class="modal-header">
 		<h3 class="modal-title">Menu</h3>
 	</div>
@@ -69,9 +96,11 @@
 		<button class="btn btn-danger" ng-click="cancel($event)">Cerrar</button>
 	</div>
 </script>
-
+<button type="button" class="btn-default open-side-nav-button left" ng-click="openAside('left')">
+	<i class="fa fa-angle-double-right"></i>
+</button>
 <div id="navbar-menu" ng-show="user.signedIn">
-	<div class="navbar navbar-fixed-top scroll-hide">
+	<div class="navbar navbar-fixed-top scroll-hide ">
 		<div class="container-fluid top-bar" >
 			<div class="pull-right">
 				<ul class="nav navbar-nav pull-right">
@@ -88,11 +117,6 @@
 					</li>
 				</ul>
 			</div>
-			<span class="pull-left">
-				<button type="button" class="btn btn-default" ng-click="openAside('left')">
-					<i class="fa fa-bar"></i>
-				</button>
-			</span>
 			<button class="navbar-toggle">
 				<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 			</button>

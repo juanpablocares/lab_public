@@ -20,7 +20,7 @@ angular.module('lab').controller('NavBarController', function($rootScope, $state
             templateUrl: 'aside.html',
             placement: position,
             size: 'sm',
-            backdrop: backdrop,
+            backdrop: true,
             controller: function($scope, $modalInstance) {
                 $scope.ok = function(e) {
                     $modalInstance.close();
@@ -98,9 +98,16 @@ angular.module('lab').controller('NavBarController', function($rootScope, $state
     $scope.searchByRut = function(value) {
         $scope.searchForm.rut_value = "";
         $scope.searchFormTemp.$setPristine();
-        $state.go('loginRequired.busqueda_paciente', {
-            rut_completo: value
-        });
+        if($scope.searchRutForm.$valid)
+        {
+            $state.go('loginRequired.busqueda_paciente', {
+                rut_completo: value
+            });
+        }
+        else
+        {
+            $scope.$emit('showGlobalAlert', {boldMessage: 'Buscar paciente', message: 'Formato de rut inválido.',class: 'alert-danger'});
+        }
     };
     $scope.searchByText = function(value) {
         $scope.searchForm.text_value = "";
@@ -127,8 +134,6 @@ angular.module('lab').controller('NavBarController', function($rootScope, $state
 
     $scope.$on('showGlobalAlert', function(event, data)
     {
-        console.log("Recibiendo broadcast de showGlobalAlert");
-        console.log(data);
         $scope.globalAlert.show = false;
     	$scope.globalAlert = data;
     	$scope.globalAlert.show = true;

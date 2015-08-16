@@ -36,9 +36,16 @@ angular.module('lab').controller('FichasIndexController', function(
 	$scope.paciente = {};
 	$scope.selectModel = {};
 
+	//Sin ficha, enviar al home
+	if ($stateParams.ficha_id == null)
+	{
+		console.log('sin id, redirigiendo a buscar ficha');
+		$state.go('loginRequired.busqueda_ficha');
+	}
+
 	Ficha.get({
         id : $stateParams.ficha_id
-		}, function(datos) {
+		}).$promise.then(function(datos) {
 	        $scope.ficha = datos.data;
 	        $scope.setPaciente($scope.ficha);
             $scope.precio_total = $scope.precio_total_edit = $scope.ficha.precio_total;
@@ -131,6 +138,10 @@ angular.module('lab').controller('FichasIndexController', function(
 			$scope.ficha_edit = angular.copy($scope.ficha);
 			$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
 			$scope.limpiarTarifas();
+	}, function(response) {
+		console.error('ERROR obteniendo ficha con id '+$stateParams.ficha_id);
+		$scope.$emit('showGlobalAlert', {boldMessage: 'Información Ficha', message: 'N° Ficha no encontrado.',class: 'alert-danger'});
+		$state.go('loginRequired.busqueda_ficha');
 	});
 
 	$scope.toggleAllCheckbox = function(checkbox){
@@ -563,10 +574,6 @@ angular.module('lab').controller('FichasIndexController', function(
 		}
 	}
 	
-	//Sin ficha, enviar al home
-	if ($stateParams.ficha_id == null)
-		$state.go('loginRequired.busqueda_fichas');
-
 	$scope.cancelar_cambios = function() {
 		$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
 		$scope.ordenarExamenes();

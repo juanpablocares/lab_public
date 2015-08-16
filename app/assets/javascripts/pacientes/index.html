@@ -1,58 +1,17 @@
 <div class="widget-container fluid-height">
-	<div class="widget-content padded" ng-show="!pacienteEditing">
-		<table class="table">
-			<tr>
-				<th class="col-sm-2 text-right">Rut</th><td><phy-rut rut='masterPaciente.rut_completo'></phy-rut></td>
-			</tr>
-			<tr>
-				<th class="col-sm-2 text-right">Nombre</th><td>{{masterPaciente.nombre_completo}}</td>
-			</tr>
-			<tr>
-				<th class="col-sm-2 text-right">Celular</th><td>{{masterPaciente.celular}}</td>
-			</tr>
-			<tr>
-				<th class="col-sm-2 text-right">Teléfono Fijo</th><td>{{masterPaciente.telefono || 'Sin telefono'}}</td>
-			</tr>
-			<tr>
-				<th class="col-sm-2 text-right">Dirección</th><td>{{masterPaciente.direccion +', '+masterPaciente.comuna.nombre }}</td>
-			</tr>
-			<tr>
-				<th class="col-sm-2 text-right">Fecha de nacimiento</th><td>{{masterPaciente.fecha_nacimiento | date : 'dd-MM-yyyy'}}</td>
-			</tr>
-			<tr>
-				<th class="col-sm-2 text-right">Edad</th><td>{{masterPaciente.edad}}</td>
-			</tr>
-			<tr>
-				<th class="col-sm-2 text-right" >Género</th> <td ng-if="masterPaciente.genero == 0">Femenino</td><td ng-if="masterPaciente.genero == 1">Masculino</td>
-			</tr>
-			<tr>
-				<th class="col-sm-2 text-right">Correo electrónico</th><td>{{masterPaciente.correo || 'Sin correo electrónico'}}</td>
-			</tr>
-			<tr>
-				<th class="col-sm-2 text-right">Previsión</th><td>{{masterPaciente.prevision.nombre}}</td>
-			</tr>
-		</table>
-		<div class="row form-group">
-			<div class="col-sm-11 text-right">
-					<a ui-sref="loginRequired.nueva_ficha({paciente_id: paciente.id})" class="btn btn-success">
-						Ficha/Cotización
-					</a>
-				<button type="button" class="btn btn-primary" ng-click="cambiarVentanaSinCambios()">
-					Editar información
-				</button>
-			</div>
-		</div>
-	</div>
-	<div class="widget-content padded" ng-show="pacienteEditing">
+	<div class="widget-content padded">
 		<form class="form-horizontal" ng-submit="guardarDatosPersonales(paciente)" name="paciente_form" novalidate>
 			<div ng-include="'pacientes/_edit_form_fields.html'"></div>
 			<div class="form-group">
 				<div class="col-sm-11 text-right">
+					<a ui-sref="loginRequired.nueva_ficha({paciente_id: paciente.id})" class="btn btn-success">
+						Ficha/Cotización
+					</a>
 					<button type="submit" class="btn btn-primary" ng-disabled="buttonSubmit">
 						Guardar
 					</button>
 					<button type="button" class="btn btn-danger" ng-click="cambiarVentanaSinCambios()">
-						Volver
+						Deshacer cambios
 					</button>
 				</div>
 			</div>
