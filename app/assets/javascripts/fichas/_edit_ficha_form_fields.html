@@ -1,7 +1,8 @@
 <script type="text/ng-template" id="medicosTemplate.html">
-  <a>
+  <a class="typeahead-medicos-row">
   		<strong ng-bind-html="match.model.rut+'-'+match.model.rutdv | typeaheadHighlight:query"></strong> - 
-  		<span ng-bind-html="match.model.nombre+' '+match.model.apellido_paterno+' '+match.model.apellido_materno | typeaheadHighlight:query">
+  		<span ng-bind-html="match.model.nombre"></span>
+  		<span ng-bind-html="match.model.apellido_paterno+' '+match.model.apellido_materno | typeaheadHighlight:query">
   		</span>
   </a>
 </script>
@@ -76,7 +77,7 @@
 		<tr>
 			<td><strong>Médico</strong></td>
 			<td colspan="3">
-				<input type="text" ng-model="medico.selected" typeahead="medico as medico.nombre+' '+ medico.apellido_paterno+' '+medico.apellido_materno for medico in medicosArray | medicoFilter:$viewValue | limitTo: 10" typeahead-template-url="medicosTemplate.html" class="form-control">
+				<input type="text" ng-model="medico.selected" typeahead="medico as medico.nombre+' '+ medico.apellido_paterno+' '+medico.apellido_materno for medico in medicosArray | medicoFilter:$viewValue" typeahead-template-url="medicosTemplate.html" class="form-control">
 			</td>
 			<td colspan="2">
 				<button ng-click="borrarMedico()">

@@ -16,7 +16,7 @@ angular.module('lab').filter('medicoFilter', [function($filter) {
 			{
 				if (coincide)
 				{
-					if(item.rut.indexOf(valor) == 0 || item.rutdv.indexOf(valor) == 0 || nombre_completo.indexOf(valor) != -1)
+					if(item.rut.indexOf(valor) == 0 || item.rutdv.indexOf(valor) == 0 || nombre_completo.indexOf(valor) == 0)
 					{
 					}
 					else
