@@ -1,4 +1,4 @@
-angular.module('lab').controller('NavBarController', function($rootScope, $state, $scope, $auth, $stateParams, $aside, Pacientes) {
+angular.module('lab').controller('NavBarController', function($rootScope, $state, $scope, $auth, $stateParams, $aside, Pacientes, Ficha) {
     $scope.globalAlert = {
     	show: false
     };
@@ -120,9 +120,12 @@ angular.module('lab').controller('NavBarController', function($rootScope, $state
     $scope.checkSearchFicha = function(value) {
     	$scope.searchForm.ficha_id = "";
         $scope.searchFormFicha.$setPristine();
-        if (value != null && value.length != 0 && !isNaN(value)) $state.go('loginRequired.fichas.info', {
-            ficha_id: value
-        });
+		
+		Ficha.get({id: value}).$promise.then(function(data) {
+			$state.go('loginRequired.fichas.info', {ficha_id: value});
+		}, function(data) {
+			$scope.$emit('showGlobalAlert', {boldMessage: 'Buscar ficha', message: 'Ficha no existe',class: 'alert-danger'});
+		});
     };
 
     $scope.removeAlert = function()
