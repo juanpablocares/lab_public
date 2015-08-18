@@ -7,6 +7,79 @@
   </a>
 </script>
 
+<script type="text/ng-template" id="create_medico.html">
+	<div class="widget-content padded" >
+		<form class="form-horizontal" name="medico_form" novalidate>
+			<div align="center" class="col-md-12" ng-show="isLoading"><i class="fa fa-spinner fa-pulse"></i></div>
+				<div class="form-group">
+					<div class="row">
+						<label class="control-label col-md-2">Rut</label>
+						<div class="col-md-3">
+							<input ng-rut rut-format="live" ng-model="medico_nuevo.rut" class="form-control" type="text" name="rut">
+							<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.rut_completo.$pristine) && medico_form.rut_completo.$error.required">Debe ingresar rut del medico</label>
+						</div>
+						<label class="control-label col-md-1">Nombres</label>
+						<div class="col-md-3">
+							<input class="form-control" placeholder="Ingrese nombres" type="text" ng-model="medico_nuevo.nombre" name="nombre" required>
+							<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.nombre.$pristine) && medico_form.nombre.$error.required">Debe ingresar nombre</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<label class="control-label col-md-2">Apellido Paterno</label>
+						<div class="col-md-3">
+							<input class="form-control" placeholder="Ingrese apellido paterno" type="text" ng-model="medico_nuevo.apellido_paterno" name="apellido_paterno" required>
+							<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.apellido_paterno.$pristine) && medico_form.apellido_paterno.$error.required">Debe ingresar apellido</label>
+						</div>
+						<label class="control-label col-md-1">Apellido Materno</label>
+						<div class="col-md-3">
+							<input class="form-control" placeholder="Ingrese apellido materno" type="text" ng-model="medico_nuevo.apellido_materno">
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<label class="control-label col-md-2">Dirección</label>
+						<div class="col-md-3">
+							<input class="form-control" placeholder="Ingrese dirección" type="text" ng-model="medico_nuevo.direccion" name="direccion">
+						</div>
+						<label class="control-label col-md-1">Teléfono</label>
+						<div class="col-md-3">
+							<input class="form-control" placeholder="Ingrese teléfono" type="text" ng-model="medico_nuevo.telefono">
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<label class="control-label col-md-2">Especialidad</label>
+						<div class="col-md-3">
+							<select class="form-control" ng-model="medico_nuevo.especialidad" ng-options="e.nombre for e in especialidades track by e.id | orderBy:'nombre'" name="especialidad">
+								<option value=""></option>
+							</select>
+							<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.especialidad.$pristine) && medico_form.especialidad.$error.required">Debe ingresar especialidad</label>
+						</div>
+						<label class="control-label col-md-1">Institución</label>
+						<div class="col-md-3">
+							<select class="form-control" ng-model="medico_nuevo.institucion" ng-options="i.nombre for i in instituciones track by i.id | orderBy:'nombre'" name="institucion"></select>
+							<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.institucion.$pristine) && medico_form.institucion.$error.required">Debe ingresar institucion</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-11 text-right">
+						<button type="button" class="btn btn-primary" ng-click="guardar_medico(medico_nuevo) && closeThisDialog()">
+							Guardar
+						</button>
+						<button type="button" class="btn btn-danger" ng-click="closeThisDialog()">
+							Volver
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+</script>
+
 <div ng-init="!ficha_edit?ficha_edit=ficha:ficha=ficha"> </div>
 <table class="table table-condensed">
 	<tbody>
@@ -80,8 +153,11 @@
 				<input type="text" ng-model="medico.selected" typeahead="medico as medico.nombre+' '+ medico.apellido_paterno+' '+medico.apellido_materno for medico in medicosArray | medicoFilter:$viewValue" typeahead-template-url="medicosTemplate.html" class="form-control">
 			</td>
 			<td colspan="2">
-				<button ng-click="borrarMedico()">
+				<button type="button" ng-click="borrarMedico()">
 					<i class="fa fa-close text-danger"></i>
+				</button>
+				<button type="button" ng-click="crearMedico()">
+					<i class="fa fa-plus text-success"></i>
 				</button>
 			</td>
 		</tr>

@@ -1,6 +1,6 @@
 angular.module('lab').controller('FichasIndexController', function(
 	$scope, $auth, $state, $http, $stateParams, 
-	Fichas, Previsiones, Perfiles, Medicos, 
+	Fichas, Previsiones, Perfiles, Medicos, Medico, ngDialog,
 	Procedencias, Examenes, DetallesPagoFicha, 
 	Ficha, previsionesService, examenesService, medicosService,
 	procedenciasService, perfilesService) {
@@ -43,6 +43,19 @@ angular.module('lab').controller('FichasIndexController', function(
 		$state.go('loginRequired.busqueda_ficha');
 	}
 
+	
+	$http.get('/api/especialidades').success(function(data) {
+		$scope.especialidades = data.especialidades;
+	}).error(function(data) {
+		// log error
+	});
+	
+	$http.get('/api/instituciones').success(function(data) {
+		$scope.instituciones = data.instituciones;
+	}).error(function(data) {
+		// log error
+	});
+	
 	Ficha.get({
         id : $stateParams.ficha_id
 		}).$promise.then(function(datos) {
@@ -631,12 +644,24 @@ angular.module('lab').controller('FichasIndexController', function(
 			});
 		}
 	}
+	
 	$scope.borrarMedico = function() {
 		$scope.ficha_edit.medico = null;
 		$scope.ficha_edit.medico_id = null;
 		$scope.medico.selected = null;
-	}
-
+	};
+	
+	$scope.crearMedico = function() {
+		var modal = ngDialog.open({
+				template: "create_medico.html",
+				scope: $scope
+			});
+	};
+	
+	$scope.guardar_medico = function(data){
+		console.log(data);
+	};
+	
 	$scope.validate_form = function(ficha_form) {
 		var mensaje = '<ul>';
 		if(ficha_form.$valid)
