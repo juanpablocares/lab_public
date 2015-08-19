@@ -38,26 +38,25 @@
 						</tr>
 					</table>
 				</div>
-				<div >
-					<div class="form-group">
-						<div >
-							<label for="observaciones" class="control-label"><strong>Observaciones pagos</strong></label>
-							<div >
-								<textarea ng-model="nuevoPago.observaciones_pagos" type="text" class="form-control" name="observaciones" placeholder="Observaciones"></textarea>
-							</div>
-							<div>
-								<button type="submit" ui-sref="loginRequired.fichas.info({ficha_id: ficha.id})" class="btn btn-warning">
-								Informacion ficha
-								</button>
-								<button type="submit" ng-click="submitIngresarPagoForm(ingresarPagoForm)" class="btn btn-success">
-								Ingresar pago
-								</button>
-								<button type="button" ng-click="resetIngresarPagoForm(ingresarPagoForm)" class="btn btn-primary">
-								Limpiar formulario
-								</button>
-							</div>
-						</div>
+				<div>
+					<button type="submit" ng-click="submitIngresarPagoForm(ingresarPagoForm)" class="btn btn-success">
+						Ingresar
+					</button>
+					<button type="button" ng-click="resetIngresarPagoForm(ingresarPagoForm)" class="btn btn-primary">
+						Limpiar
+					</button>
+				</div>
+				<div class="form-group">
+					<label for="observaciones" class="control-label"><strong>Observaciones pagos</strong></label>
+					<div >
+						<textarea ng-model="nuevoPago.observaciones_pagos" type="text" class="form-control" name="observaciones" placeholder="Ingresar observaciones"></textarea>
 					</div>
+					<button type="button" ng-click="guardar_observacion(nuevoPago.observaciones_pagos)" class="btn btn-warning">
+						Guardar
+					</button>
+					<button type="button" ui-sref="loginRequired.fichas.info({ficha_id: ficha.id})" class="btn btn-danger">
+						Volver
+					</button>
 				</div>
 			</form>
 		</div>

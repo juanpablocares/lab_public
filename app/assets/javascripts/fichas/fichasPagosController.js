@@ -126,6 +126,21 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 		f.$setUntouched();
 	}
 
+	$scope.guardar_observacion = function(obs){
+		console.log($stateParams.ficha_id);
+		Fichas.observaciones.update({
+			id: $stateParams.ficha_id,
+			observaciones_pagos: obs
+		}).$promise.then(function(response) {
+			console.log("Ingresada la obs de pagos");
+			console.log(response);
+		}, function(response) {
+			console.log("Error actualizando observaciones pagos");
+		});
+		
+		console.log(obs);
+	}
+	
 	$scope.submitIngresarPagoForm = function(f) {
 		data = {
 			ficha_id : $stateParams.ficha_id,

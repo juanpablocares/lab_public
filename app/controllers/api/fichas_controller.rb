@@ -80,6 +80,29 @@ class Api::FichasController < ApplicationController
     end
   end
   
+  def observaciones
+	ficha = Ficha.find(params[:id])
+	
+	if ficha == nil
+      render json:
+      {
+        success: false,
+        message: 'Ficha no encontrado',
+      }, status: 500
+      return false
+    end
+	
+	ficha.observaciones_pagos = params[:observaciones_pagos]
+	ficha.save
+	
+	render json:
+      {
+        success: true,
+        message: 'Ficha actualizada',
+      }, status: 200
+      return true
+  end
+  
   def cantidades
 	@result = Hash.new
 	@annos = Ficha.all.group_by{|m| m.creado.year}

@@ -858,6 +858,10 @@ angular.module('lab').controller('FichasIndexController', function(
 		};
 	}
 
+	$scope.volver = function(){
+		window.history.back();
+	};
+	
 	$scope.getPDF = function(){
 		console.log($scope.ficha_edit);
 		console.log($scope.examenesSeleccionados);

@@ -61,6 +61,14 @@
 					isArray : false
 				},
 			}),
+			observaciones : $resource("/api/fichas/observaciones/:id/:observaciones_pagos", {
+				id: "@id",
+				observaciones_pagos: "@observaciones_pagos"
+			}, {
+				update : {
+					method : 'POST',
+				},
+			}),
 		};
 	});
 })();
