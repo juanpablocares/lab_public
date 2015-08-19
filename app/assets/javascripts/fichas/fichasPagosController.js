@@ -156,6 +156,9 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 				id : $stateParams.ficha_id
 			}).$promise.then(function(result) {
 				$scope.detallePagos = result.data;
+				for(var i in $scope.detallePagos)
+					$scope.detallePagos[i].fecha_creacion = new Date($scope.detallePagos[i].creado);
+				console.log(result);
 				$scope.resetIngresarPagoForm(f);
 			}).catch(function(response) {
 				console.error("Error al cargar detalle pagos");
