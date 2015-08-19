@@ -92,6 +92,11 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 		$scope.resetPaciente();
 	};
 
+	
+	$scope.volver = function(){
+		window.history.back();
+	};
+	
 	$scope.guardarDatosPersonales = function(paciente) {
 		if($scope.paciente_form.$valid)
 		{
