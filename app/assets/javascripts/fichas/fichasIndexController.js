@@ -636,13 +636,40 @@ angular.module('lab').controller('FichasIndexController', function(
 	
 	$scope.crearMedico = function() {
 		var modal = ngDialog.open({
+				className: 'ngdialog-theme-default',
 				template: "create_medico.html",
 				scope: $scope
 			});
 	};
 	
 	$scope.guardar_medico = function(data){
-		console.log(data);
+		
+		if(data.rut_completo != null){
+			
+			data.rut = parseInt(data.rut_completo / 10);
+			data.rutdv = parseInt(data.rut_completo % 10);
+			
+			console.log(data.rut);
+			console.log(data.rutdv);
+			
+			if(data.especialidad)
+				data.especialidad_id = data.especialidad.id;
+			else
+				data.especialidad_id = null;
+			
+			if(data.institucion)
+				data.institucion_id = data.institucion.id;
+			else
+				data.institucion_id = null;
+			console.log(data);
+			Medico.new(data).$promise.then(function(response) {
+				console.log('Medico creado');
+			}, function(response) {
+				console.log("ERROR creando medico");
+			});
+		}
+		
+		ngDialog.closeAll();
 	};
 	
 	$scope.validate_form = function(ficha_form) {
