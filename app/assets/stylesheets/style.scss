@@ -4987,6 +4987,13 @@ body.fourofour {
 .typeahead-medicos-row
 {
   font-size: 14px;
+  span{
+    width: 20%;
+    display: inline-block;
+  }
+}
+.typeahead-medicos-row strong{
+  color: black;
 }
 
 .dropdown-menu.ng-isolate-scope
@@ -4994,4 +5001,20 @@ body.fourofour {
     max-height: 180px;
     overflow-y: scroll;
     width: 68%;
+}
+
+.typeahead-examenes-row
+{
+  font-size: 14px;
+  span.codigo{
+    width: 20%;
+    display: inline-block;
+  }
+  span.nombre{
+    width: 80%;
+    display: inline-block;
+  }
+}
+.typeahead-examenes-row strong{
+  color: black;
 }

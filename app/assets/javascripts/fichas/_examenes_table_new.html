@@ -1,38 +1,44 @@
+<!--
+TIPO DE PAGO:
+-->
+
 <div class="row padded">
 	<div class="col-sm-12">
 		<table class="table table-bordered">
 			<thead>
-				<th ng-if="ficha.id"><input type="checkbox" ng-change="toggleAllCheckbox(checked)" ng-model="checked"></th>
-				<th>ID</th>
-				<th>Código</th>
+				<th class="text-center" ng-if="ficha.id"><input type="checkbox" ng-change="toggleAllCheckbox(checked)" ng-model="checked"></th>
+				<th class="text-center">ID</th>
+				<th class="text-center">Código</th>
 				<th>Examen</th>
-				<th>Tipo muestra</th>
-				<th>Indicaciones</th>
-				<th>Proceso</th>
-				<th>Dia proceso</th>
-				<th>Demora</th>	
-				<th>Estado</th>
-				<th>Precio</th>
-				<th>Opciones</th>
+				<th class="text-center" title="Tipo de muestra">TM</th>
+				<th class="text-center col-sm-4">Indicaciones</th>
+				<th class="text-center" title='Proceso'>PR</th>
+				<th class="text-center" title="Día proceso">DP</th>
+				<th class="text-center" title='Demora'>DM</th>	
+				<th class="text-center" title='Tipo de pago'>TP</th>
+				<!--th>Estado</th-->
+				<th class="text-center">Precio</th>
+				<th class="text-center"></th>
 			</thead>
 			<tbody ng-repeat="item in examenesSeleccionados_edit track by $index"  ng-if="examenesSeleccionados_edit.length != 0 && !item.perfil">
 				<tr >
-					<td ng-if="ficha.id">
+					<td ng-if="ficha.id" class="text-center">
 						<input type="checkbox" ng-model="item.checked" ng-if="item.valido_impresion">
 					</td>
-					<td>{{item.examen.id}}</td>
-					<td>{{item.examen.codigo_fonasa}}</td>
+					<td class="text-center">{{item.examen.id}}</td>
+					<td class="text-center">{{item.examen.codigo_fonasa}}</td>
 					<td>{{item.examen.nombre}}</td>
-					<td>{{item.examen.tipo_examen.nombre?item.examen.tipo_examen.nombre:'---'}}</td>
-					<td>{{item.examen.indicacion.descripcion?item.examen.indicacion.descripcion:'---'}}</td>
-					<td>{{item.examen.externo!=0?'Interno':'Externo'}}</td>
-					<td>{{item.examen.dia_proceso?item.examen.dia_proceso:'---'}}</td>
-					<td>{{item.examen.demora?item.examen.demora:'---'}}</td>
-					<td><label class="label label-{{item.estado.class}}">{{item.estado.texto}}</label></td>
-					<td>{{item.precio?item.precio:0 }}</td>
+					<td class="text-center">{{item.examen.tipo_examen.nombre?item.examen.tipo_examen.nombre:'---'}}</td>
+					<td class="text-center">{{item.examen.indicacion.descripcion?item.examen.indicacion.descripcion:'---'}}</td>
+					<td class="text-center">{{item.examen.externo!=0?'Interno':'Externo'}}</td>
+					<td class="text-center">{{item.examen.dia_proceso?item.examen.dia_proceso:'---'}}</td>
+					<td class="text-center">{{item.examen.demora?item.examen.demora:'---'}}</td>
+					<td class="text-center">{{item.examen.tipo_pago?item.examen.tipo_pago:'---'}}</td>
+					<!--td><label class="label label-{{item.estado.class}}">{{item.estado.texto}}</label></td-->
+					<td class="text-center">{{item.precio?item.precio:0 }}</td>
 					<td class="text-center"><a ng-if="item.delete" class="clickable text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar examen"><i class="fa fa-trash-o fa-lg"></i></a>
-					<a class="text-primary" ui-sref="loginRequired.examenes.info({examen_id: item.examen.id})" target="_blank" title="Información examen"><i class="fa fa-info-circle fa-lg"></i></a>
-					<a ng-click="mostrarEnConsola(item)"><i class="fa fa-terminal fa-lg"></i></a>
+					<!--a class="text-primary" ui-sref="loginRequired.examenes.info({examen_id: item.examen.id})" target="_blank" title="Información examen"><i class="fa fa-info-circle fa-lg"></i></a-->
+					<!--a ng-click="mostrarEnConsola(item)"><i class="fa fa-terminal fa-lg"></i></a-->
 					</td>
 				</tr>
 			</tbody>
@@ -45,32 +51,38 @@
 					<td ng-if="item.delete" class="text-center"><a class="clickable text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar perfil"><i class="fa fa-trash-o fa-lg"></i></a></td>
 				</tr>
 				<tr ng-repeat="detalle in item.examenes" ng-if="!item.nuevo">
-					<td></td>
-					<td>{{detalle.examen.id}}</td>
-					<td>{{detalle.examen.codigo_fonasa}}</td>
+					<td class="text-center"></td>
+					<td class="text-center">{{detalle.examen.id}}</td>
+					<td class="text-center">{{detalle.examen.codigo_fonasa}}</td>
 					<td>{{detalle.examen.nombre}}</td>
-					<td>{{detalle.examen.tipo_examen.nombre?detalle.examen.tipo_examen.nombre:'---'}}</td>
-					<td>{{detalle.examen.indicacion.descripcion?detalle.examen.indicacion.descripcion:'---'}}</td>
-					<td>{{detalle.examen.externo!=0?'Interno':'Externo'}}</td>
-					<td>{{detalle.examen.dia_proceso?detalle.examen.dia_proceso:'---'}}</td>
-					<td>{{detalle.examen.demora?detalle.examen.demora:'---'}}</td>
-					<td><label class="label label-{{detalle.estado.class}}">{{detalle.estado.texto}}</label></td>
-					<td>{{detalle.precio?detalle.precio:0 }}</td>
-					<td class="text-center"><a class="text-primary" ui-sref="loginRequired.examenes.info({examen_id: detalle.examen.id})" target="_blank"  title="Información examen"><i class="fa fa-info-circle fa-lg"></i></a></td>
+					<td class="text-center">{{detalle.examen.tipo_examen.nombre?detalle.examen.tipo_examen.nombre:'---'}}</td>
+					<td class="text-center">{{detalle.examen.indicacion.descripcion?detalle.examen.indicacion.descripcion:'---'}}</td>
+					<td class="text-center">{{detalle.examen.externo!=0?'Interno':'Externo'}}</td>
+					<td class="text-center">{{detalle.examen.dia_proceso?detalle.examen.dia_proceso:'---'}}</td>
+					<td class="text-center">{{detalle.examen.demora?detalle.examen.demora:'---'}}</td>
+					<td class="text-center">{{detalle.examen.tipo_pago?detalle.examen.tipo_pago:'---'}}</td>
+					<!--td><label class="label label-{{detalle.estado.class}}">{{detalle.estado.texto}}</label></td-->
+					<td class="text-center">{{detalle.precio?detalle.precio:0 }}</td>
+					<td class="text-center">
+						<!--a class="text-primary" ui-sref="loginRequired.examenes.info({examen_id: detalle.examen.id})" target="_blank"  title="Información examen"><i class="fa fa-info-circle fa-lg"></i></a-->
+					</td>
 				</tr>
 				<tr ng-repeat="detalle in item.examenes" ng-if="item.nuevo">
-					<td></td>
-					<td>{{detalle.id}}</td>
-					<td>{{detalle.codigo_fonasa}}</td>
+					<td class="text-center"></td>
+					<td class="text-center">{{detalle.id}}</td>
+					<td class="text-center">{{detalle.codigo_fonasa}}</td>
 					<td>{{detalle.nombre}}</td>
-					<td>{{detalle.tipo_examen.nombre?detalle.tipo_examen.nombre:'---'}}</td>
-					<td>{{detalle.indicacion.descripcion?detalle.indicacion.descripcion:'---'}}</td>
-					<td>{{detalle.externo!=0?'Interno':'Externo'}}</td>
-					<td>{{detalle.dia_proceso?detalle.dia_proceso:'---'}}</td>
-					<td>{{detalle.demora?detalle.demora:'---'}}</td>
-					<td><label class="label label-{{detalle.estado.class}}">{{detalle.estado.texto}}</label></td>
-					<td>{{detalle.precio?detalle.precio:0 }}</td>
-					<td class="text-center"><a class="text-primary" ui-sref="loginRequired.examenes.info({examen_id: detalle.id})" target="_blank"  title="Información examen"><i class="fa fa-info-circle fa-lg"></i></a></td>
+					<td class="text-center">{{detalle.tipo_examen.nombre?detalle.tipo_examen.nombre:'---'}}</td>
+					<td class="text-center">{{detalle.indicacion.descripcion?detalle.indicacion.descripcion:'---'}}</td>
+					<td class="text-center">{{detalle.externo!=0?'Interno':'Externo'}}</td>
+					<td class="text-center">{{detalle.dia_proceso?detalle.dia_proceso:'---'}}</td>
+					<td class="text-center">{{detalle.demora?detalle.demora:'---'}}</td>
+					<td class="text-center">{{detalle.tipo_pago?detalle.tipo_pago:'---'}}</td>
+					<!--td><label class="label label-{{detalle.estado.class}}">{{detalle.estado.texto}}</label></td-->
+					<td class="text-center">{{detalle.precio?detalle.precio:0 }}</td>
+					<td class="text-center">
+						<!--a class="text-primary" ui-sref="loginRequired.examenes.info({examen_id: detalle.id})" target="_blank"  title="Información examen"><i class="fa fa-info-circle fa-lg"></i></a-->
+					</td>
 				</tr>
 			</tbody>
 			<tbody ng-if="examenesSeleccionados_edit.length == 0">
@@ -80,24 +92,24 @@
 			</tbody>
 			<tbody> 
 				<tr>
-					<td colspan="3" ng-if="ficha.id"><strong>Número Arancel</strong></td>
-					<td colspan="2" ng-if="!ficha.id"><strong>Número Arancel</strong></td>
+					<td colspan="2" ng-if="ficha.id"><strong>Arancel</strong></td>
+					<td colspan="1" ng-if="!ficha.id"><strong>Arancel</strong></td>
 					<td colspan="2">{{ficha_edit.prevision.tarifa_id}}</td>
-					<td colspan="5"><strong>Precio Total</strong></td>
-					<td >{{precio_total_edit}}</td>
+					<td colspan="6"><strong>Precio Total</strong></td>
+					<td class="text-center">{{precio_total_edit}}</td>
 					<td></td>
 				</tr> 
 				<tr ng-if="ficha.id">
-					<td colspan="3"><strong>Abonos bonos</strong></td>
-					<td>{{total_pagos_bonos}}</td>
-					<td colspan="2"><strong>Abonos boletas</strong></td>
-					<td>{{total_pagos_boletas}}</td>
-					<td colspan="3"><strong>Pagado</strong></td>
-					<td class="text-success">{{total_pagos}}</td>
+					<td colspan="2"><strong>Abonos bonos</strong></td>
+					<td class="text-center">{{total_pagos_bonos}}</td>
+					<td colspan="1"><strong>Abonos boletas</strong></td>
+					<td class="text-center" colspan="2">{{total_pagos_boletas}}</td>
+					<td colspan="4"><strong>Pagado</strong></td>
+					<td class="text-center text-success">{{total_pagos}}</td>
 				</tr>
 				<tr ng-if="ficha.id">
 					<td colspan="10"><strong>Saldo</strong></td>
-					<td ng-class="{'text-success': precio_total_edit < total_pagos, 'text-danger': precio_total_edit > total_pagos}">{{precio_total_edit - total_pagos}}</td>
+					<td class="text-center" ng-class="{'text-success': precio_total_edit < total_pagos, 'text-danger': precio_total_edit > total_pagos}">{{precio_total_edit - total_pagos}}</td>
 				</tr>
 			</tbody>
 		</table>

@@ -39,7 +39,6 @@ angular.module('lab').controller('FichasIndexController', function(
 	//Sin ficha, enviar al home
 	if ($stateParams.ficha_id == null)
 	{
-		console.log('sin id, redirigiendo a buscar ficha');
 		$state.go('loginRequired.busqueda_ficha');
 	}
 
@@ -51,7 +50,7 @@ angular.module('lab').controller('FichasIndexController', function(
             $scope.precio_total = $scope.precio_total_edit = $scope.ficha.precio_total;
             $scope.ficha.numero_programa = parseInt($scope.ficha.numero_programa, 10);
             if ($scope.ficha.receptor)
-                    $scope.ficha.restringido = true;
+                $scope.ficha.restringido = true;
             $scope.ordenarExamenes();
 
 			if(!medicosService.getMedicos())
@@ -59,7 +58,6 @@ angular.module('lab').controller('FichasIndexController', function(
 				Medicos.buscar.todos().$promise.then(function(data) {
 					medicosService.setMedicos(data.data);
 					$scope.medicosArray = medicosService.getMedicos();
-					$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha.medico);
 				}, function(response) {
 					console.error('ERROR obteniendo medicos');
 				});
@@ -67,7 +65,6 @@ angular.module('lab').controller('FichasIndexController', function(
 			else
 			{
 				$scope.medicosArray = medicosService.getMedicos();
-				$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha.medico);
 			}
 
 			if(!procedenciasService.getProcedencias())
@@ -75,7 +72,6 @@ angular.module('lab').controller('FichasIndexController', function(
 				Procedencias.buscar.todos().$promise.then(function(data) {
 					procedenciasService.setProcedencias(data.data);
 					$scope.procedenciasArray = procedenciasService.getProcedencias();
-					$scope.procedencia.selected = $scope.setProcedenciaSeleccionada($scope.ficha.procedencia);
 				}, function(data) {
 					console.error('ERROR getting procedencias');
 				});
@@ -83,7 +79,6 @@ angular.module('lab').controller('FichasIndexController', function(
 			else
 			{
 				$scope.procedenciasArray = procedenciasService.getProcedencias();
-				$scope.procedencia.selected = $scope.setProcedenciaSeleccionada($scope.ficha.procedencia);
 			}
 
 			if(!previsionesService.getPrevisiones())
@@ -233,15 +228,6 @@ angular.module('lab').controller('FichasIndexController', function(
 		$scope.getPrecioTotal(true);
 	};
 
-	$scope.setProcedenciaSeleccionada = function(ficha_procedencia) {
-		for (var i = 0; i < $scope.procedenciasArray.length; i++) {
-			var value = $scope.procedenciasArray[i];
-			if (value.id == ficha_procedencia.id) {
-				return value;
-			}
-		};
-	};
-
 	$scope.setPrevisionSeleccionada = function(prevision) {
 		for (var i = 0; i < $scope.previsionesArray.length; i++) {
 			var value = $scope.previsionesArray[i];
@@ -249,17 +235,6 @@ angular.module('lab').controller('FichasIndexController', function(
 				return value;
 			}
 		};
-	};
-
-	$scope.setMedicoSeleccionado = function(ficha_medico) {
-		if (ficha_medico != null && $scope.medicosArray.length > 0) {
-			for (var i = 0; i < $scope.medicosArray.length; i++) {
-				var value = $scope.medicosArray[i];
-				if (value.id == ficha_medico.id) {
-					return value;
-				}
-			};
-		}
 	};
 
 	$scope.agruparPerfiles = function(item) {
@@ -276,6 +251,10 @@ angular.module('lab').controller('FichasIndexController', function(
 		$scope.ficha_edit.prevision = prevision;
 		$scope.limpiarTarifas();
 		$scope.getPrecioTotal(true);
+	}
+
+	$scope.seleccionarMedico = function(model) {
+		$scope.ficha_edit.medico = model;
 	}
 
 	$scope.seleccionarExamen = function(model2) {
@@ -575,6 +554,9 @@ angular.module('lab').controller('FichasIndexController', function(
 	}
 	
 	$scope.cancelar_cambios = function() {
+		console.log($scope.prevision);
+		console.log($scope.setPrevisionSeleccionada($scope.ficha.prevision));
+		$scope.prevision = $scope.setPrevisionSeleccionada($scope.ficha.prevision);
 		$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
 		$scope.ordenarExamenes();
 		$scope.limpiarTarifas();
@@ -595,14 +577,16 @@ angular.module('lab').controller('FichasIndexController', function(
 		console.log("guardar_cambios_ficha");
 		if ($scope.validate_form(ficha_form)) {
 
-			if ($scope.medico != undefined && $scope.medico.selected != undefined) {
-				$scope.ficha_edit.medico_id = $scope.medico.selected.id;
+			if ($scope.ficha_edit.medico != undefined) {
+				$scope.ficha_edit.medico_id = $scope.ficha_edit.medico.id;
 			}
 			else {
 				$scope.ficha_edit.medico_id = null;
 			}
 			$scope.ficha_edit.precio_total = $scope.precio_total_edit;
-			$scope.ficha_edit.procedencia_id = $scope.procedencia.selected.id;
+			if ($scope.ficha_edit.procedencia != undefined) {
+				$scope.ficha_edit.procedencia_id = $scope.ficha_edit.procedencia.id;
+			}
 			$scope.ficha_edit.examenesAgregados = $scope.examenesAgregados;
 			$scope.ficha_edit.examenesBorrados = $scope.examenesBorrados;
 			$scope.ficha_edit.detalles_ficha = null;
@@ -634,7 +618,6 @@ angular.module('lab').controller('FichasIndexController', function(
 	$scope.borrarMedico = function() {
 		$scope.ficha_edit.medico = null;
 		$scope.ficha_edit.medico_id = null;
-		$scope.medico.selected = null;
 	}
 
 	$scope.validate_form = function(ficha_form) {
@@ -824,6 +807,10 @@ angular.module('lab').controller('FichasIndexController', function(
 	}
 
 	$scope.getPDF = function(){
+		console.log($scope.ficha_edit);
+		console.log($scope.examenesSeleccionados);
+		return true;
+
 		var examenes_checked = [];
 		for (var i = 0; i < $scope.examenesSeleccionados_edit.length; i++) {
 			var value = $scope.examenesSeleccionados_edit[i];
@@ -863,5 +850,12 @@ angular.module('lab').controller('FichasIndexController', function(
 			//pdfMake.createPdf(docDefinition).print();
 			//pdfMake.createPdf(docDefinition).download('optionalName.pdf');
 		}
+	}
+
+	$scope.counter = 0;
+	$scope.contador = function()
+	{
+		$scope.counter++;
+		return $scope.counter;
 	}
 });

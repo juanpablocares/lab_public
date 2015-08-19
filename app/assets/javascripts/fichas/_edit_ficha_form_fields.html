@@ -1,9 +1,12 @@
 <script type="text/ng-template" id="medicosTemplate.html">
   <a class="typeahead-medicos-row">
-  		<strong ng-bind-html="match.model.rut+'-'+match.model.rutdv | typeaheadHighlight:query"></strong> - 
-  		<span ng-bind-html="match.model.nombre"></span>
-  		<span ng-bind-html="match.model.apellido_paterno+' '+match.model.apellido_materno | typeaheadHighlight:query">
+  		<span>
+	  		<phy-rut ng-bind-html="match.model.rut+'-'+match.model.rutdv | typeaheadHighlight:query" rut="match.model.rut+''+match.model.rutdv"></phy-rut>
   		</span>
+  		-
+  		<span ng-bind-html="match.model.nombre"></span>
+  		<span ng-bind-html="match.model.apellido_paterno | typeaheadHighlight:query"></span>
+  		<span ng-bind-html="match.model.apellido_materno"></span>
   </a>
 </script>
 
@@ -37,7 +40,7 @@
 		<tr>
 			<td><strong>Procedencia</strong></td>
 			<td >
-				<select class="form-control" ng-model="procedencia.selected" ng-options="procedencia.nombre for procedencia in procedenciasArray track by procedencia.id | orderBy:'nombre'" name="procedencia"></select>
+				<select class="form-control" ng-model="ficha_edit.procedencia" ng-options="procedencia.nombre for procedencia in procedenciasArray track by procedencia.id | orderBy:'nombre'" name="procedencia"></select>
 			</td>
 			<td>
 				<strong>
@@ -77,11 +80,11 @@
 		<tr>
 			<td><strong>Médico</strong></td>
 			<td colspan="3">
-				<input type="text" ng-model="medico.selected" typeahead="medico as medico.nombre+' '+ medico.apellido_paterno+' '+medico.apellido_materno for medico in medicosArray | medicoFilter:$viewValue" typeahead-template-url="medicosTemplate.html" class="form-control">
+				<input type="text" ng-model="ficha_edit.medico" typeahead="medico as medico.nombre+' '+ medico.apellido_paterno+' '+medico.apellido_materno for medico in medicosArray | medicoFilter:$viewValue" typeahead-template-url="medicosTemplate.html" class="form-control" typeahead-on-select='seleccionarMedico($model)'>
 			</td>
 			<td colspan="2">
-				<button ng-click="borrarMedico()">
-					<i class="fa fa-close text-danger"></i>
+				<button type="button" class="btn btn-danger" ng-click="borrarMedico()">
+					<i class="fa fa-close" style="margin: 0px 0px 0px 0px;"></i>
 				</button>
 			</td>
 		</tr>
