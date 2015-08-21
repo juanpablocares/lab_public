@@ -10,6 +10,8 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 	$scope.detallePagos = [];
 	$scope.nuevoPago = {};
 	$scope.tiposPagoArray = [];
+	$scope.total_bonos = 0;
+	$scope.total_otros = 0;
 	
 	Ficha.get({
         id : $stateParams.ficha_id
@@ -210,10 +212,17 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 	$scope.getTotalPagos = function() {
 		var total = 0;
 		var i = 0;
+		$scope.total_bonos = 0;
+		$scope.total_otros = 0;
 		while (i < $scope.detallePagos.length) {
+			
+			if($scope.detallePagos[i].tipo_pago.nombre.indexOf("Bono") >= 0)
+				$scope.total_bonos += $scope.detallePagos[i].monto_pagado;
+			
 			total = total + $scope.detallePagos[i].monto_pagado;
 			i++;
 		}
+		$scope.total_otros = total - $scope.total_bonos;
 		return total;
 	}
 });
