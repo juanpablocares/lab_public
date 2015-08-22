@@ -107,20 +107,25 @@ class Api::MedicosController < ApplicationController
 	end
 	
 	def create
-		@medico = Medico.new(medico_params)
-		if @medico.save
-			render json: {
-	          success: true,
-	          message: 'Medico successfully created',
-	          data: @medico,
-	        }, status: 200
-		else
-			render json: {
+		medico = Medico.new(medico_params)
+	      
+		begin
+			medico.save
+		    rescue ActiveRecord::RecordInvalid => invalid
+	    	render json: {
 	          success: false,
 	          message: 'Medico cannot be created',
-	          data: @medico.errors,
-	        }, status: 500
-		end
+	          data: medico,
+	          error: invalid.record.errors
+	      	}.to_json, status: 500
+	      	return false
+	    end
+		render json: {
+          success: true,
+          message: 'Medico successfully created',
+          data: medico,
+        }.to_json, status: 200
+        return true
 	end
 	
 	def medico_params

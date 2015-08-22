@@ -5018,3 +5018,30 @@ body.fourofour {
 .typeahead-examenes-row strong{
   color: black;
 }
+
+.ngdialog.ngdialog-theme-laboratorios {
+    padding-bottom: 160px;
+    padding-top: 160px;
+}
+
+.ngdialog-theme-laboratorios .ngdialog-content
+{  
+  -webkit-animation: ngdialog-flyin .5s;
+  animation: ngdialog-flyin .5s;
+  background: #f0f0f0;
+  border-radius: 0px;
+  margin: 0 auto;
+  max-width: 60%;
+  padding: 1em;
+  position: relative;
+  width: auto;
+}
+
+.ngdialog .ngdialog-close {
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  padding: 5px;
+}

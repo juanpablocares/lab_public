@@ -14,6 +14,12 @@
             },
             setMedicos: function(value) {
                 medicos = value;
+            },
+            addMedico: function(medico)
+            {
+                var medicos = this.getMedicos();
+                medicos.push(medico);
+                this.setMedicos(medicos);
             }
         };
     });

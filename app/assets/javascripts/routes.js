@@ -36,8 +36,8 @@
 
 		$stateProvider.state('loginRequired.index', {
 			url : '/',
-			templateUrl : "recepcion/recepcion.html",
-			controller : 'RecepcionController',
+			templateUrl : "index.html",
+			controller : 'IndexController',
 			resolve : {
 				test : function() {
 					console.log("Index test");

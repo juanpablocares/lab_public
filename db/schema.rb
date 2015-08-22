@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150730221039) do
+ActiveRecord::Schema.define(version: 20150822122726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,6 +215,8 @@ ActiveRecord::Schema.define(version: 20150730221039) do
     t.integer  "institucion_id"
     t.string   "telefono"
     t.string   "direccion"
+    t.integer  "genero",                       default: 1
+    t.string   "titulo"
   end
 
   create_table "modificacion_examenes", force: :cascade do |t|

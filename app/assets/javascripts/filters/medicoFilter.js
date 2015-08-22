@@ -7,6 +7,7 @@ angular.module('lab').filter('medicoFilter', [function($filter) {
 		texto = texto.trim().toLowerCase();
 		texto = texto.split(' ');
 		angular.forEach(inputArray, function(item){
+			if (!item.apellido_materno)item.apellido_materno = '';		//Si no tiene apellido, que sea ''
 			var nombre_completo = item.apellido_paterno.trim()+" "+
 			item.apellido_materno.trim();
 			nombre_completo = nombre_completo.toLowerCase();
@@ -16,7 +17,7 @@ angular.module('lab').filter('medicoFilter', [function($filter) {
 			{
 				if (coincide)
 				{
-					if(item.rut.indexOf(valor) == 0 || item.rutdv.indexOf(valor) == 0 || nombre_completo.indexOf(valor) == 0)
+					if(item.rut.indexOf(valor) == 0 || item.rutdv.indexOf(valor) == 0 || nombre_completo.indexOf(valor) != -1)
 					{
 					}
 					else
