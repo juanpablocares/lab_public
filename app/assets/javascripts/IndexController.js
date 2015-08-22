@@ -48,10 +48,45 @@ function($scope, Pacientes, Medicos,
 		name: 'link-muestra',
 		text: 'Muestras',
 		url: '',
-		ui_ref: 'loginRequired.busqueda_muestra',
+		ui_ref: 'loginRequired.busqueda_muestras',
 		icon: 'stethoscope',
 		iconRaw: '',
 	});
+
+	$scope.linkList.push({
+		name: 'link-ingreso-resultados',
+		text: 'Ingreso de resultados',
+		url: '',
+		ui_ref: 'loginRequired.busqueda_ingreso_resultados',
+		icon: 'edit',
+		iconRaw: '',
+	});
+
+	$scope.linkList.push({
+		name: 'link-muestra',
+		text: 'Muestras',
+		url: '',
+		ui_ref: 'loginRequired.busqueda_muestras',
+		icon: 'stethoscope',
+		iconRaw: '',
+	});
+	$scope.linkList.push({
+		name: 'link-muestra',
+		text: 'Muestras',
+		url: '',
+		ui_ref: 'loginRequired.busqueda_muestras',
+		icon: 'stethoscope',
+		iconRaw: '',
+	});
+	$scope.linkList.push({
+		name: 'link-muestra',
+		text: 'Muestras',
+		url: '',
+		ui_ref: 'loginRequired.busqueda_muestras',
+		icon: 'stethoscope',
+		iconRaw: '',
+	});
+
 
 	if(!medicosService.getMedicos())
 	{
