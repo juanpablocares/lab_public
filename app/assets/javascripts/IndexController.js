@@ -13,6 +13,7 @@ function($scope, Pacientes, Medicos,
 		ui_ref: '',		//loginRequired.bla
 		icon: '',		//si es fa-user, usar sólo user.
 		iconRaw: '',	//si el ícono es mas complejo, ingresar el html
+		class: '',		//en caso de necesitar agregar clase al objeto completo
 		parametros: {}	//en caso de necesitar parametros
 	});
 	*/
@@ -20,71 +21,72 @@ function($scope, Pacientes, Medicos,
 	$scope.linkList.push({
 		name: 'link-pacientes',
 		text: 'Pacientes',
-		url: '',
 		ui_ref: 'loginRequired.busqueda_paciente',
 		icon: 'user',
-		iconRaw: '',
 	});
 
 	$scope.linkList.push({
 		name: 'link-fichas',
 		text: 'Fichas',
-		url: '',
 		ui_ref: 'loginRequired.busqueda_ficha',
 		icon: 'file-text-o',
-		iconRaw: '',
 	});
 
 	$scope.linkList.push({
 		name: 'link-examenes',
 		text: 'Examenes',
-		url: '',
 		ui_ref: 'loginRequired.busqueda_examen',
 		icon: 'heartbeat',
-		iconRaw: '',
 	});
 
 	$scope.linkList.push({
 		name: 'link-muestra',
 		text: 'Muestras',
-		url: '',
 		ui_ref: 'loginRequired.busqueda_muestras',
 		icon: 'stethoscope',
-		iconRaw: '',
 	});
 
 	$scope.linkList.push({
 		name: 'link-ingreso-resultados',
 		text: 'Ingreso de resultados',
-		url: '',
 		ui_ref: 'loginRequired.busqueda_ingreso_resultados',
 		icon: 'edit',
-		iconRaw: '',
 	});
 
 	$scope.linkList.push({
-		name: 'link-muestra',
-		text: 'Muestras',
-		url: '',
-		ui_ref: 'loginRequired.busqueda_muestras',
-		icon: 'stethoscope',
-		iconRaw: '',
+		name: 'link-estadisticas',
+		text: 'Estadísticas',
+		ui_ref: 'loginRequired.estadisticas.fichas',
+		icon: 'pie-chart',
+		class: 'list-group-item-danger'
 	});
 	$scope.linkList.push({
-		name: 'link-muestra',
-		text: 'Muestras',
-		url: '',
-		ui_ref: 'loginRequired.busqueda_muestras',
-		icon: 'stethoscope',
-		iconRaw: '',
+		name: 'link-facturas',
+		text: 'Facturas',
+		ui_ref: 'loginRequired.facturas.asignar',
+		icon: 'file-text-o',
+		class: 'list-group-item-danger'
 	});
 	$scope.linkList.push({
-		name: 'link-muestra',
-		text: 'Muestras',
-		url: '',
-		ui_ref: 'loginRequired.busqueda_muestras',
-		icon: 'stethoscope',
-		iconRaw: '',
+		name: 'link-parametros',
+		text: 'Parametros',
+		ui_ref: 'loginRequired.parametros',
+		icon: 'list-alt',
+		class: 'list-group-item-danger'
+	});
+	$scope.linkList.push({
+		name: 'link-usuarios',
+		text: 'Usuarios',
+		ui_ref: 'loginRequired.users.editar',
+		icon: 'users',
+		class: 'list-group-item-danger'
+	});
+	$scope.linkList.push({
+		name: 'link-otros',
+		text: 'Otros',
+		ui_ref: 'loginRequired.otros.procesos',
+		icon: 'cogs',
+		class: 'list-group-item-danger'
 	});
 
 

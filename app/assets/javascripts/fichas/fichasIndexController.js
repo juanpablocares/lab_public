@@ -35,6 +35,8 @@ angular.module('lab').controller('FichasIndexController', function(
 	$scope.examenesSeleccionados_edit = [];
 	$scope.paciente = {};
 	$scope.selectModel = {};
+	$scope.countExamenes = 0;
+	$scope.total_prevision = 0;
 
 	//Sin ficha, enviar al home
 	if ($stateParams.ficha_id == null)
@@ -272,6 +274,7 @@ angular.module('lab').controller('FichasIndexController', function(
 
 	$scope.seleccionarExamen = function(model2) {
 
+		console.log(model2);
 		var model = angular.copy(model2);
 		$scope.selectModel.selected = null;
 		model.nuevo = true;
@@ -481,11 +484,12 @@ angular.module('lab').controller('FichasIndexController', function(
 
 	$scope.limpiarTarifas = function() {
 		//De examenes ya seleccionados al cargar ficha
+
 		for (var i = 0; i < $scope.examenesSeleccionados_edit.length; i++) {
 			var temp1 = $scope.examenesSeleccionados_edit[i];
 			if (!temp1.perfil)
 			{
-				var temp3 = temp1.examen;
+				var temp3 = temp1.examen?temp1.examen:temp1;
 				var temp = null;
 				for (var j = 0; j < temp3.tarifas_examen.length; j++) {
 					var value = temp3.tarifas_examen[j];
@@ -507,7 +511,7 @@ angular.module('lab').controller('FichasIndexController', function(
 				{
 					var detalle = temp1.examenes[i];
 					var temp = null;
-					var value = detalle.examen;
+					var value = detalle.examen?detalle.examen:detalle;
 					for (var j = 0; j < value.tarifas_examen.length; j++) {
 						var value2 = value.tarifas_examen[j];
 						if (value2.tarifa_id == $scope.ficha_edit.prevision.tarifa_id)
@@ -567,8 +571,6 @@ angular.module('lab').controller('FichasIndexController', function(
 	}
 	
 	$scope.cancelar_cambios = function() {
-		console.log($scope.prevision);
-		console.log($scope.setPrevisionSeleccionada($scope.ficha.prevision));
 		$scope.prevision = $scope.setPrevisionSeleccionada($scope.ficha.prevision);
 		$scope.examenesSeleccionados_edit = angular.copy($scope.examenesSeleccionados);
 		$scope.ordenarExamenes();
@@ -581,13 +583,7 @@ angular.module('lab').controller('FichasIndexController', function(
 		$scope.precio_total_edit = angular.copy($scope.precio_total);
 	}
 
-	$scope.mostrarEnConsola = function(item){
-		console.log(item);
-	}
-
-
 	$scope.guardar_cambios_ficha = function(ficha_form) {
-		console.log("guardar_cambios_ficha");
 		if ($scope.validate_form(ficha_form)) {
 
 			if ($scope.ficha_edit.medico != undefined) {
@@ -911,5 +907,10 @@ angular.module('lab').controller('FichasIndexController', function(
 	{
 		$scope.counter++;
 		return $scope.counter;
+	}
+
+	$scope.printExamenesConsola = function()
+	{
+		console.log($scope.examenesSeleccionados_edit);
 	}
 });

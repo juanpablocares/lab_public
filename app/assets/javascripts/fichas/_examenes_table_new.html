@@ -1,7 +1,7 @@
 <!--
 TIPO DE PAGO:
 -->
-
+<button ng-click="printExamenesConsola()">Consola</button>
 <div class="row padded">
 	<div class="col-sm-12">
 		<table class="table table-bordered">
@@ -14,18 +14,18 @@ TIPO DE PAGO:
 				<th class="text-center col-sm-4">Indicaciones</th>
 				<th class="text-center" title='Proceso'>PR</th>
 				<th class="text-center" title="Día proceso">DP</th>
-				<th class="text-center" title='Demora'>DM</th>	
+				<th class="text-center" title='Demora'>DM</th>
 				<th class="text-center" title='Tipo de pago'>TP</th>
 				<!--th>Estado</th-->
-				<th class="text-center">Precio</th>
+				<th class="text-center">Valor</th>
 				<th class="text-center"></th>
 			</thead>
-			<tbody ng-repeat="item in examenesSeleccionados_edit track by $index"  ng-if="examenesSeleccionados_edit.length != 0 && !item.perfil">
-				<tr >
+			<tbody ng-repeat="item in examenes_no_perfil = (examenesSeleccionados_edit | noPerfilFilter) track by $index">
+				<tr>
 					<td ng-if="ficha.id" class="text-center">
 						<input type="checkbox" ng-model="item.checked" ng-if="item.valido_impresion">
 					</td>
-					<td class="text-center">{{$index + 1}}</td>
+					<td class="text-center">{{$index+1}}</td>
 					<td class="text-center">{{item.examen.codigo_fonasa}}</td>
 					<td>{{item.examen.nombre}}</td>
 					<td class="text-center">{{item.examen.tipo_examen.nombre?item.examen.tipo_examen.nombre:'---'}}</td>
@@ -42,17 +42,18 @@ TIPO DE PAGO:
 					</td>
 				</tr>
 			</tbody>
-			<tbody ng-repeat="item in examenesSeleccionados_edit track by $index" ng-if="examenesSeleccionados_edit.length != 0 && item.perfil">
+			<tbody ng-repeat="item in examenes_perfil = (examenesSeleccionados_edit | perfilFilter) track by $index">
 				<tr>
 					<td ng-if="ficha.id">
 						<input type="checkbox" ng-model="item.checked" ng-if="item.valido_impresion">
 					</td>
-					<td colspan="10"><strong>{{item.nombre}}</strong></td>
+					<td class="text-center">{{$index+1+(examenesSeleccionados_edit | noPerfilFilter).length}}</td>
+					<td colspan="9"><strong>{{item.nombre}}</strong></td>
 					<td ng-if="item.delete" class="text-center"><a class="clickable text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar perfil"><i class="fa fa-trash-o fa-lg"></i></a></td>
 				</tr>
 				<tr ng-repeat="detalle in item.examenes" ng-if="!item.nuevo">
 					<td class="text-center"></td>
-					<td class="text-center">{{detalle.examen.id}}</td>
+					<td class="text-center"></td>
 					<td class="text-center">{{detalle.examen.codigo_fonasa}}</td>
 					<td>{{detalle.examen.nombre}}</td>
 					<td class="text-center">{{detalle.examen.tipo_examen.nombre?detalle.examen.tipo_examen.nombre:'---'}}</td>
@@ -69,7 +70,7 @@ TIPO DE PAGO:
 				</tr>
 				<tr ng-repeat="detalle in item.examenes" ng-if="item.nuevo">
 					<td class="text-center"></td>
-					<td class="text-center">{{detalle.id}}</td>
+					<td class="text-center"></td>
 					<td class="text-center">{{detalle.codigo_fonasa}}</td>
 					<td>{{detalle.nombre}}</td>
 					<td class="text-center">{{detalle.tipo_examen.nombre?detalle.tipo_examen.nombre:'---'}}</td>
@@ -94,15 +95,23 @@ TIPO DE PAGO:
 				<tr>
 					<td colspan="2" ng-if="ficha.id"><strong>Arancel</strong></td>
 					<td colspan="1" ng-if="!ficha.id"><strong>Arancel</strong></td>
-					<td colspan="2">{{ficha_edit.prevision.tarifa_id}}</td>
-					<td colspan="6"><strong>Precio Total</strong></td>
-					<td class="text-center">{{precio_total_edit}}</td>
+					<td colspan="1" class="text-center">{{ficha_edit.prevision.tarifa_id}}</td>
+					<td colspan="1 ">Total Prevision</td>
+					<td class="text-center">{{getTotalPrevision}}</td>
+					<td colspan="1">Total Particular</td>
+					<td class="text-center">{{getTotalParticular()}}</td>
+					<td colspan="1">Total Copago</td>
+					<td class="text-center">{{getTotalCopago()}}</td>
+					<td colspan="1">Total Cancelar</td>
+					<td class="text-center">{{getTotalCancelar()}}</td>
+					<!--td colspan="7 text-right"><strong>Precio Total</strong></td>
+					<td class="text-center">{{precio_total_edit}}</td-->
 					<td></td>
 				</tr> 
 				<tr ng-if="ficha.id">
 					<td colspan="2"><strong>Abonos bonos</strong></td>
 					<td class="text-center">{{total_pagos_bonos}}</td>
-					<td colspan="1"><strong>Abonos boletas</strong></td>
+					<td colspan="1" class="text-center"><strong>Abonos boletas</strong></td>
 					<td class="text-center" colspan="2">{{total_pagos_boletas}}</td>
 					<td colspan="4"><strong>Pagado</strong></td>
 					<td class="text-center text-success">{{total_pagos}}</td>
@@ -115,3 +124,5 @@ TIPO DE PAGO:
 		</table>
 	</div>
 </div>
+
+
