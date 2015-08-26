@@ -12,7 +12,7 @@
 
 angular.module('lab').controller('FichasNewController', function($scope, $auth, $state,
  $http, $resource, $stateParams, Previsiones, Examenes, Perfiles,
-  Cotizaciones, Cotizacion, Procedencias, Ficha,
+  Cotizaciones, Cotizacion, Procedencias, Ficha, ngDialog,
    Fichas, Medicos, medicosService, previsionesService, examenesService, procedenciasService, perfilesService) {
 
 	$scope.edit = true;
@@ -332,6 +332,46 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		console.log("END limpiarTarifas");
 	}
 
+	$scope.crearMedico = function() {
+		var modal = ngDialog.open({
+			className: 'ngdialog-theme-laboratorios',
+			template: "create_medico.html",
+			scope: $scope
+		});
+	};
+	
+	$scope.guardar_medico = function(medico_form, data){
+		if(medico_form.$valid)
+		{
+			if(data.rut_completo != null){
+				
+				data.rut = parseInt(data.rut_completo / 10);
+				data.rutdv = parseInt(data.rut_completo % 10);
+				if(data.especialidad)
+					data.especialidad_id = data.especialidad.id;
+				else
+					data.especialidad_id = null;
+				if(data.institucion)
+					data.institucion_id = data.institucion.id;
+				else
+					data.institucion_id = null;
+				Medico.new(data).$promise.then(function(response) {
+					$scope.$emit('showGlobalAlert', {boldMessage: 'Nuevo médico', message: 'Medico creado satisfactoriamente.',class: 'alert-success'});
+					var medico_creado = response.data;
+					medicosService.addMedico(medico_creado );
+					$scope.ficha_edit.medico = medico_creado ;
+					$scope.ficha_edit.medico_id = medico_creado .id;
+
+
+				}, function(response) {
+					$scope.$emit('showGlobalAlert', {boldMessage: 'Nuevo médico', message: 'Creación de médico fallida.',class: 'alert-danger'});
+					console.log("ERROR creando medico");
+				});
+			}
+			ngDialog.closeAll();
+		}	
+	};
+	
 	$scope.validate_form = function(ficha_form)
 	{
 		return $scope.examenesSeleccionados_edit.length > 0 && ficha_form.$valid;

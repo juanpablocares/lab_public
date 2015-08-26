@@ -3,7 +3,7 @@
 		<thead>
 			<tr>
 				<th>#</th>
-				<th >ID</th>
+				<th >Rut</th>
 				<th >Apellido Paterno</th>
 				<th >Apellido Materno</th>
 				<th >Nombre</th>
@@ -12,7 +12,7 @@
 			<tr>
 				<th></th>
 				<th>
-					<input st-search="id" class="input-sm form-control"/>
+					<input ng-rut rut-format="live" ng-model="rut_completo" st-search="rut" class="input-sm form-control"/>
 				</th>
 				<th>
 					<input st-search="apellido_paterno" class="input-sm form-control"/>
@@ -33,7 +33,7 @@
 		<tbody ng-show="!isLoading">
 			<tr ng-repeat="row in displayed track by $index">
 				<td>{{$index + 1 + comienzo_tabla}}</td>
-				<td>{{row.id}}</td>
+				<td >{{row.rut}}{{row.rutdv}}</td>
 				<td><a class="text-primary" ui-sref="loginRequired.pacientes.info({paciente_id: row.id})" title="Información paciente">{{row.apellido_paterno}}</a></td>
 				<td><a class="text-primary" ui-sref="loginRequired.pacientes.info({paciente_id: row.id})" title="Información paciente">{{row.apellido_materno}}</a></td>
 				<td><a class="text-primary" ui-sref="loginRequired.pacientes.info({paciente_id: row.id})" title="Información paciente">{{row.nombre}}</a></td>

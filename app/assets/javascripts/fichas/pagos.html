@@ -80,13 +80,13 @@
 						</thead>
 						<tbody>
 							<tr ng-if="detallePagos.length != 0" ng-repeat="pago in detallePagos track by $index">
-								<td><input type="checkbox" ng-model="pago.estado"></td>
+								<td><input ng-checked="true" type="checkbox" ng-model="pago.estado"></td>
 								<td>{{$index + 1 }}</td>
 								<td><select class="form-control" ng-model="pago.tipo_pago" ng-options="tipoPago.nombre for tipoPago in tiposPagoArray track by tipoPago.id | orderBy:'nombre'" name="tipo_pago" ng-change="setPagoChanged(pago,true)" required></select></td>
 								<td><input ng-model="pago.n_documento" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>
 								<td><input ng-model="pago.factura" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>
 								<td >
-									<input class="form-control" type="date" ng-model="pago.fecha_creacion" ng-change="setPagoChanged(pago,true)"/>
+									<input class="form-control" type="datetime-local" id="fecha_creacion" ng-model="pago.fecha_creacion" ng-change="setPagoChanged(pago,true)"/>
 								</td>
 								<td>{{pago.user.nombre}} {{pago.user.apellido_paterno}}</td>
 								<td><input type="number" ng-model="pago.monto_pagado" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>

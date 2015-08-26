@@ -9,9 +9,11 @@
 		</tr>
 		<tr>
 			<td><strong>Genero</strong></td>
-			<td colspan="3">
+			<td >
 				{{paciente.genero == 0?'Femenino':'Masculino'}}
 			</td>
+			<td><strong>Email</strong></td>
+			<td >{{paciente.email?paciente.correo:'Sin correo'}}</td>
 		</tr>
 		<tr>
 			<td><strong>Fecha Nac.</strong></td>
@@ -33,13 +35,9 @@
 		</tr>
 		<tr ng-if="edit">
 			<td><strong>Prevision</strong></td>
-			<td colspan="3">
+			<td colspan="2">
 				<select class="form-control" ng-model="prevision" ng-options="prevision.nombre for prevision in previsionesArray track by prevision.id | orderBy:'nombre'" name="prevision" ng-change="seleccionarPrevision(prevision)" required></select>
 			</td>
-		</tr>
-		<tr>
-			<td><strong>Email</strong></td>
-			<td colspan="3">{{paciente.email?paciente.correo:'Sin correo electrónico'}}</td>
 		</tr>
 		<tr>
 			<td><strong>Obs.</strong></td>

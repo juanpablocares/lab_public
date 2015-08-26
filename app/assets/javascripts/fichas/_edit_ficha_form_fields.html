@@ -97,7 +97,7 @@
 				<strong>Fecha</strong>
 			</td>
 			<td >
-				{{ficha_edit.creado | date:'dd/MM/yyyy hh::mm'}} 
+				{{ficha_edit.creado | date:'dd/MM/yyyy hh:mm'}} 
 			</td>
 			<td >
 				<strong>
@@ -131,34 +131,28 @@
 			<td>
 				<input class="form-control" type="checkbox" ng-model="ficha_edit.mandar_email" style="height:20px; width:20px;">
 			</td>
-		</tr>
-		<tr>
-			<td><strong>Restringido</strong></td>
-			<td>
-			<input class="form-control" type="checkbox" ng-change="ficha_edit.receptor = ''" ng-checked="ficha_edit.receptor" ng-model="ficha_edit.restringido" style="height:20px; width:20px;">
-			</td>
-			<td><strong>Entregar a</strong></td>
-			<td>
-			<input class="form-control" type="text" ng-model="ficha_edit.receptor" ng-disabled="!ficha_edit.restringido">
-			</td>
 			<td><strong>Urgente</strong></td>
 			<td>
 				<input class="form-control" type="checkbox" ng-model="ficha_edit.urgente" style="height:20px; width:20px;">
 			</td>
 		</tr>
 		<tr>
+			<td><strong>Entregar a</strong></td>
+			<td>
+			<input class="form-control" type="text" ng-model="ficha_edit.receptor">
+			</td>
 			<td><strong>Programa</strong></td>
 			<td>
 			<input class="form-control" placeholder="Ingrese programa" type="text" ng-model="ficha_edit.programa" required>
 			</td>
-			<td><strong>N°</strong></td>
+			<td colspan="2"><strong>N°</strong></td>
 			<td>
 			<input class="form-control" placeholder="Ingrese número" type="number" ng-model="ficha_edit.numero_programa" required>
 			</td>
 		</tr>
 		<tr>
 			<td><strong>Médico</strong></td>
-			<td colspan="3">
+			<td colspan="2">
 				<input type="text" ng-model="ficha_edit.medico" typeahead="medico as medico.nombre+' '+ medico.apellido_paterno+' '+medico.apellido_materno for medico in medicosArray | medicoFilter:$viewValue" typeahead-template-url="medicosTemplate.html" class="form-control" typeahead-on-select='seleccionarMedico($model)'>
 			</td>
 			<td colspan="2">
@@ -171,10 +165,10 @@
 			</td>
 		</tr>
 		<tr>
-		<td><strong>Observaciones</strong></td>
-			<td colspan="5">
-			<input ng-model="ficha_edit.observaciones" class="form-control">
-			</input>
+			<td><strong>Observaciones</strong></td>
+			<td colspan="6">
+				<input ng-model="ficha_edit.observaciones" class="form-control">
+				</input>
 			</td>
 		</tr>
 	</tbody>
