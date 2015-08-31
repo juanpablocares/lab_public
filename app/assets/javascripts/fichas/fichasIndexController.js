@@ -23,8 +23,15 @@ angular.module('lab').controller('FichasIndexController', function(
 	$scope.prevision = {};
 	$scope.examenes = {};
 	$scope.perfiles = {};
+	
 	$scope.precio_total = 0;
+	$scope.copago_total = 0;
+	$scope.precio_particular_total_edit = 0;
+
 	$scope.precio_total_edit = 0;
+	$scope.copago_total_edit = 0;
+	$scope.precio_particular_total= 0;
+
 	$scope.total_pagos = 0;
 	$scope.total_pagos_bonos = 0;
 	$scope.total_pagos_boletas = 0;
@@ -484,22 +491,42 @@ angular.module('lab').controller('FichasIndexController', function(
 
 	$scope.limpiarTarifas = function() {
 		//De examenes ya seleccionados al cargar ficha
+		//Calcular los precios a pagar de acuerdo a la previsión seleccionada 
+		//Precio copago = precio - precio_fonasa
+		//Precio es el precio completo del examen, lo que se cobra en caso de que sea particular.
+		//Para las tarifas de la prevision "Sin prevision" los precio_fonasa DEBEN ser 0 o NULL
 
 		for (var i = 0; i < $scope.examenesSeleccionados_edit.length; i++) {
+
 			var temp1 = $scope.examenesSeleccionados_edit[i];
 			if (!temp1.perfil)
 			{
 				var temp3 = temp1.examen?temp1.examen:temp1;
 				var temp = null;
+
+				//Revisar todas las tarifas para ver cual calza con esta prevision.
 				for (var j = 0; j < temp3.tarifas_examen.length; j++) {
 					var value = temp3.tarifas_examen[j];
 					if (value.tarifa_id == $scope.ficha_edit.prevision.tarifa_id) {
+						//Prevision calza
 						temp3.tarifa_prevision = angular.copy(value);
+
+						if(value.precio_fonasa && value.precio_fonasa != 0)
+						{
+							//precio fonasa es distinto de 0, por lo que el copago es = precio - precio_fonasa
+							temp1.copago = value.precio - value.precio_fonasa;
+							console.log("valor precio copago " + temp1.copago);
+						}
+						else{
+							temp1.precio_particular = value.precio;
+							console.log("valor precio particular " + temp1.precio_particular);
+						}
 						temp1.precio = value.precio;
 						break;
 					}
 					else
 					{
+						//No existe una tarifa que tenga relacion con esta prevision
 						temp3.tarifa_prevision = null;
 						temp1.precio = 0;
 					}
@@ -517,6 +544,17 @@ angular.module('lab').controller('FichasIndexController', function(
 						if (value2.tarifa_id == $scope.ficha_edit.prevision.tarifa_id)
 						{
 							value.tarifa_prevision = angular.copy(value2);
+							if(value2.precio_fonasa && value2.precio_fonasa != 0)
+							{
+								//precio fonasa es distinto de 0, por lo que el copago es = precio - precio_fonasa
+								value.copago = value2.precio - value2.precio_fonasa;
+								console.log("valor precio copago " + temp1.copago);
+							}
+							else
+							{
+								value.precio_particular = value2.precio;
+								console.log("valor precio particular " + value.precio_particular);
+							}
 							value.precio = value2.precio;
 							break;
 						}
@@ -528,11 +566,17 @@ angular.module('lab').controller('FichasIndexController', function(
 					}
 				}
 			}
+			console.log($scope.examenesSeleccionados_edit);
 		}
+		$scope.getPrecioTotal(true);
 	}		
 
 	$scope.getPrecioTotal = function(edit) {
+		console.log("getPrecioTotal");
 		var total = 0;
+		var copago = 0;
+		var precio_particular = 0;
+
 		var examenes = [];
 		if (edit) {
 			examenes = $scope.examenesSeleccionados_edit;
@@ -550,23 +594,33 @@ angular.module('lab').controller('FichasIndexController', function(
 					else
 						examen = perfil.examenes[j].examen;
 					if (examen.tarifa_prevision != null && examen.tarifa_prevision != null) {
-						examen.precio = examen.tarifa_prevision.precio;
-						total = total + examen.tarifa_prevision.precio;
+						var precio_particular_temp = examen.precio_particular?examen.precio_particular:0;
+						var copago_temp = examen.copago?examen.copago:0;
+						total = total + examen.precio;
+						copago = copago + copago_temp;
+						precio_particular = precio_particular + precio_particular_temp;
 					}
 				}
 			}
 			else {
 				if (examenes[i].examen.tarifa_prevision) {
-					examenes[i].precio = examenes[i].examen.tarifa_prevision.precio;
-					total = total + examenes[i].examen.tarifa_prevision.precio;
+					var precio_particular_temp = examenes[i].precio_particular?examenes[i].precio_particular:0;
+					var copago_temp = examenes[i].copago?examenes[i].copago:0;
+					total = total + examenes[i].precio;
+					copago = copago + copago_temp;
+					precio_particular = precio_particular + precio_particular_temp;
 				}
 			}
 		}
 		if (edit) {
 			$scope.precio_total_edit = total;
+			$scope.copago_total_edit = copago;
+			$scope.precio_particular_total_edit = precio_particular;
 		}
 		else {
 			$scope.precio_total = total;
+			$scope.copago_total = copago;
+			$scope.precio_particular_total = precio_particular;
 		}
 	}
 	
