@@ -30,13 +30,14 @@ TIPO DE PAGO:
 					<td>{{item.examen.nombre}}</td>
 					<td class="text-center">{{item.examen.tipo_examen.nombre?item.examen.tipo_examen.nombre:'---'}}</td>
 					<td class="text-center">{{item.examen.indicacion.descripcion?item.examen.indicacion.descripcion:'---'}}</td>
-					<td class="text-center">{{item.examen.externo!=0?'Interno':'Externo'}}</td>
+					<td class="text-center">{{item.examen.externo!=0?'IN':'DE'}}</td>
 					<td class="text-center">{{item.examen.dia_proceso?item.examen.dia_proceso:'---'}}</td>
 					<td class="text-center">{{item.examen.demora?item.examen.demora:'---'}}</td>
-					<td class="text-center">{{item.examen.tipo_pago?item.examen.tipo_pago:'---'}}</td>
+					<td class="text-center">{{item.tipo_pago?item.tipo_pago:'---'}}</td>
 					<!--td><label class="label label-{{item.estado.class}}">{{item.estado.texto}}</label></td-->
 					<td class="text-center" ng-if="item.copago">{{item.copago?item.copago:0 }}</td>
 					<td class="text-center" ng-if="item.precio_particular">{{item.precio_particular?item.precio_particular:0 }}</td>
+					<td class="text-center" ng-if="!item.copago && !item.precio_particular">{{item.precio?item.precio:0 }}</td>
 					<td class="text-center"><a ng-if="item.delete" class="clickable text-danger" ng-click="quitarExamenSeleccionado(item)" title="Quitar examen"><i class="fa fa-trash-o fa-lg"></i></a>
 					<!--a class="text-primary" ui-sref="loginRequired.examenes.info({examen_id: item.examen.id})" target="_blank" title="Información examen"><i class="fa fa-info-circle fa-lg"></i></a-->
 					<!--a ng-click="mostrarEnConsola(item)"><i class="fa fa-terminal fa-lg"></i></a-->
@@ -59,13 +60,14 @@ TIPO DE PAGO:
 					<td>{{detalle.examen.nombre}}</td>
 					<td class="text-center">{{detalle.examen.tipo_examen.nombre?detalle.examen.tipo_examen.nombre:'---'}}</td>
 					<td class="text-center">{{detalle.examen.indicacion.descripcion?detalle.examen.indicacion.descripcion:'---'}}</td>
-					<td class="text-center">{{detalle.examen.externo!=0?'Interno':'Externo'}}</td>
+					<td class="text-center">{{detalle.examen.externo!=0?'IN':'DE'}}</td>
 					<td class="text-center">{{detalle.examen.dia_proceso?detalle.examen.dia_proceso:'---'}}</td>
 					<td class="text-center">{{detalle.examen.demora?detalle.examen.demora:'---'}}</td>
-					<td class="text-center">{{detalle.examen.tipo_pago?detalle.examen.tipo_pago:'---'}}</td>
+					<td class="text-center">{{detalle.tipo_pago?detalle.tipo_pago:'---'}}</td>
 					<!--td><label class="label label-{{detalle.estado.class}}">{{detalle.estado.texto}}</label></td-->
 					<td class="text-center" ng-if="detalle.copago">{{detalle.copago?detalle.copago:0 }}</td>
 					<td class="text-center" ng-if="detalle.precio_particular">{{detalle.precio_particular?detalle.precio_particular:0 }}</td>
+					<td class="text-center" ng-if="!detalle.copago && !detalle.precio_particular">{{detalle.precio?detalle.precio:0 }}</td>
 					<td class="text-center">
 						<!--a class="text-primary" ui-sref="loginRequired.examenes.info({examen_id: detalle.examen.id})" target="_blank"  title="Información examen"><i class="fa fa-info-circle fa-lg"></i></a-->
 					</td>
@@ -77,13 +79,14 @@ TIPO DE PAGO:
 					<td>{{detalle.nombre}}</td>
 					<td class="text-center">{{detalle.tipo_examen.nombre?detalle.tipo_examen.nombre:'---'}}</td>
 					<td class="text-center">{{detalle.indicacion.descripcion?detalle.indicacion.descripcion:'---'}}</td>
-					<td class="text-center">{{detalle.externo!=0?'Interno':'Externo'}}</td>
+					<td class="text-center">{{detalle.externo!=0?'IN':'DE	'}}</td>
 					<td class="text-center">{{detalle.dia_proceso?detalle.dia_proceso:'---'}}</td>
 					<td class="text-center">{{detalle.demora?detalle.demora:'---'}}</td>
 					<td class="text-center">{{detalle.tipo_pago?detalle.tipo_pago:'---'}}</td>
 					<!--td><label class="label label-{{detalle.estado.class}}">{{detalle.estado.texto}}</label></td-->
 					<td class="text-center" ng-if="detalle.copago">{{detalle.copago?detalle.copago:0 }}</td>
 					<td class="text-center" ng-if="detalle.precio_particular" >{{detalle.precio_particular?detalle.precio_particular:0 }}</td>
+					<td class="text-center" ng-if="!detalle.copago && !detalle.precio_particular">{{detalle.precio?detalle.precio:0 }}</td>
 					<td class="text-center">
 						<!--a class="text-primary" ui-sref="loginRequired.examenes.info({examen_id: detalle.id})" target="_blank"  title="Información examen"><i class="fa fa-info-circle fa-lg"></i></a-->
 					</td>
@@ -98,7 +101,7 @@ TIPO DE PAGO:
 				<tr>
 					<td colspan="2" ng-if="ficha.id"><strong>Arancel</strong></td>
 					<td colspan="1" ng-if="!ficha.id"><strong>Arancel</strong></td>
-					<td colspan="1" class="text-center">{{ficha_edit.prevision.tarifa_id}}</td>
+					<td colspan="1" class="text-center">{{ficha_edit.prevision.tarifa_id?ficha_edit.prevision.tarifa_id:'N/A'}}</td>
 					<td colspan="1 ">Total Prevision</td>
 					<td class="text-center">{{precio_total_edit}}</td>
 					<td colspan="1">Total Particular</td>
@@ -121,7 +124,7 @@ TIPO DE PAGO:
 				</tr>
 				<tr ng-if="ficha.id">
 					<td colspan="10"><strong>Saldo</strong></td>
-					<td class="text-center" ng-class="{'text-success': precio_total_edit < total_pagos, 'text-danger': precio_total_edit > total_pagos}">{{precio_total_edit - total_pagos}}</td>
+					<td class="text-center" ng-class="{'text-success': precio_particular_total_edit + copago_total_edit < total_pagos, 'text-danger': precio_particular_total_edit + copago_total_edit > total_pagos}">{{precio_particular_total_edit + copago_total_edit - total_pagos}}</td>
 				</tr>
 			</tbody>
 		</table>

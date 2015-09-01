@@ -280,8 +280,6 @@ angular.module('lab').controller('FichasIndexController', function(
 	}
 
 	$scope.seleccionarExamen = function(model2) {
-
-		console.log(model2);
 		var model = angular.copy(model2);
 		$scope.selectModel.selected = null;
 		model.nuevo = true;
@@ -495,40 +493,43 @@ angular.module('lab').controller('FichasIndexController', function(
 		//Precio copago = precio - precio_fonasa
 		//Precio es el precio completo del examen, lo que se cobra en caso de que sea particular.
 		//Para las tarifas de la prevision "Sin prevision" los precio_fonasa DEBEN ser 0 o NULL
-
 		for (var i = 0; i < $scope.examenesSeleccionados_edit.length; i++) {
-
 			var temp1 = $scope.examenesSeleccionados_edit[i];
 			if (!temp1.perfil)
 			{
 				var temp3 = temp1.examen?temp1.examen:temp1;
 				var temp = null;
-
 				//Revisar todas las tarifas para ver cual calza con esta prevision.
 				for (var j = 0; j < temp3.tarifas_examen.length; j++) {
 					var value = temp3.tarifas_examen[j];
 					if (value.tarifa_id == $scope.ficha_edit.prevision.tarifa_id) {
 						//Prevision calza
 						temp3.tarifa_prevision = angular.copy(value);
-
 						if(value.precio_fonasa && value.precio_fonasa != 0)
 						{
 							//precio fonasa es distinto de 0, por lo que el copago es = precio - precio_fonasa
 							temp1.copago = value.precio - value.precio_fonasa;
-							console.log("valor precio copago " + temp1.copago);
+							temp1.tipo_pago = 'IS';
+							if($scope.ficha_edit.prevision.tarifa_id == 11)
+								temp1.tipo_pago = 'FF';
+
 						}
 						else{
 							temp1.precio_particular = value.precio;
-							console.log("valor precio particular " + temp1.precio_particular);
+							temp1.tipo_pago = 'PP';
 						}
 						temp1.precio = value.precio;
+						if(temp1.precio == 0)temp1.tipo_pago = 'SC';
 						break;
 					}
 					else
 					{
 						//No existe una tarifa que tenga relacion con esta prevision
+						temp1.tipo_pago = 'NO';
 						temp3.tarifa_prevision = null;
 						temp1.precio = 0;
+						temp1.precio_particular = null;
+						temp1.copago = null;
 					}
 				}
 			}
@@ -548,35 +549,39 @@ angular.module('lab').controller('FichasIndexController', function(
 							{
 								//precio fonasa es distinto de 0, por lo que el copago es = precio - precio_fonasa
 								value.copago = value2.precio - value2.precio_fonasa;
-								console.log("valor precio copago " + temp1.copago);
+								value.tipo_pago = 'IS';
+								if($scope.ficha_edit.prevision.tarifa_id == 11)
+									value.tipo_pago = 'FF';
 							}
 							else
 							{
 								value.precio_particular = value2.precio;
-								console.log("valor precio particular " + value.precio_particular);
+								value.tipo_pago = 'PP';
+								
 							}
 							value.precio = value2.precio;
+							if(value.precio == 0)value.tipo_pago = 'SC';
 							break;
 						}
 						else
 						{
+							temp1.tipo_pago = 'NO';
 							value.tarifa_prevision = null;
 							value.precio = 0;
+							value.copago = null;
+							value.precio_particular = null;
 						}
 					}
 				}
 			}
-			console.log($scope.examenesSeleccionados_edit);
 		}
 		$scope.getPrecioTotal(true);
 	}		
 
 	$scope.getPrecioTotal = function(edit) {
-		console.log("getPrecioTotal");
 		var total = 0;
 		var copago = 0;
 		var precio_particular = 0;
-
 		var examenes = [];
 		if (edit) {
 			examenes = $scope.examenesSeleccionados_edit;
@@ -713,8 +718,6 @@ angular.module('lab').controller('FichasIndexController', function(
 					medicosService.addMedico(medico_creado );
 					$scope.ficha_edit.medico = medico_creado ;
 					$scope.ficha_edit.medico_id = medico_creado .id;
-
-
 				}, function(response) {
 					$scope.$emit('showGlobalAlert', {boldMessage: 'Nuevo médico', message: 'Creación de médico fallida.',class: 'alert-danger'});
 					console.log("ERROR creando medico");
@@ -911,10 +914,6 @@ angular.module('lab').controller('FichasIndexController', function(
 	};
 	
 	$scope.getPDF = function(){
-		console.log($scope.ficha_edit);
-		console.log($scope.examenesSeleccionados);
-		return true;
-
 		var examenes_checked = [];
 		for (var i = 0; i < $scope.examenesSeleccionados_edit.length; i++) {
 			var value = $scope.examenesSeleccionados_edit[i];
@@ -961,10 +960,5 @@ angular.module('lab').controller('FichasIndexController', function(
 	{
 		$scope.counter++;
 		return $scope.counter;
-	}
-
-	$scope.printExamenesConsola = function()
-	{
-		console.log($scope.examenesSeleccionados_edit);
 	}
 });
