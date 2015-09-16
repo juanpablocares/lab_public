@@ -26,7 +26,7 @@ angular.module('lab').controller('OtrosPrevisionesController', function($scope, 
 		Previsiones.all.get().$promise.then(function(data) {
 			previsionesService.setPrevisiones(data.previsiones);
 			$scope.setPrevisiones();
-		}).error(function(data) {
+		}, function(data) {
 			console.log('Error getting previsiones');
 		});
 	}

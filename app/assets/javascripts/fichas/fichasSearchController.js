@@ -1,5 +1,18 @@
 (function() {
 	angular.module('lab').controller('FichasSearchController', function($scope, $auth, $state, $http, $stateParams, Fichas) {
+		
+		$http.get('/api/procedencias').success(function(data) {
+			$scope.procedencias = data.data;
+		}).error(function(data) {
+			// log error
+		});
+		
+		$http.get('/api/previsiones').success(function(data) {
+			$scope.previsiones = data.previsiones;
+		}).error(function(data) {
+			// log error
+		});
+		
 		$scope.comienzo_tabla = 0;
 		$scope.resultadosBusqueda = null;
 

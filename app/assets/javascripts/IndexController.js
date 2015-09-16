@@ -19,54 +19,42 @@ function($scope, Pacientes, Medicos,
 	*/
 
 	$scope.linkList.push({
-		name: 'link-pacientes',
-		text: 'Pacientes',
-		ui_ref: 'loginRequired.busqueda_paciente',
-		icon: 'user',
+		name: 'link-consultas',
+		text: 'Consultas',
+		ui_ref: 'loginRequired.menu_consultas',
+		icon: 'search',
 	});
-
-	$scope.linkList.push({
-		name: 'link-fichas',
-		text: 'Fichas',
-		ui_ref: 'loginRequired.busqueda_ficha',
-		icon: 'file-text-o',
-	});
-
-	$scope.linkList.push({
-		name: 'link-examenes',
-		text: 'Examenes',
-		ui_ref: 'loginRequired.busqueda_examen',
-		icon: 'heartbeat',
-	});
-
+	
 	$scope.linkList.push({
 		name: 'link-muestra',
-		text: 'Muestras',
+		text: 'Toma de Muestras',
 		ui_ref: 'loginRequired.busqueda_muestras',
 		icon: 'stethoscope',
 	});
-
+	
 	$scope.linkList.push({
 		name: 'link-ingreso-resultados',
 		text: 'Ingreso de resultados',
 		ui_ref: 'loginRequired.busqueda_ingreso_resultados',
 		icon: 'edit',
 	});
-
+	
+	$scope.linkList.push({
+		name: 'link-configuración',
+		text: 'Configuración',
+		ui_ref: 'loginRequired.menu_configuracion',
+		icon: 'cogs',
+		class: 'list-group-item-danger'
+	});
+	
 	$scope.linkList.push({
 		name: 'link-estadisticas',
-		text: 'Estadísticas',
-		ui_ref: 'loginRequired.estadisticas.fichas',
+		text: 'Administración',
+		ui_ref: 'loginRequired.menu_administracion',
 		icon: 'pie-chart',
 		class: 'list-group-item-danger'
 	});
-	$scope.linkList.push({
-		name: 'link-facturas',
-		text: 'Facturas',
-		ui_ref: 'loginRequired.facturas.asignar',
-		icon: 'file-text-o',
-		class: 'list-group-item-danger'
-	});
+	/*
 	$scope.linkList.push({
 		name: 'link-parametros',
 		text: 'Parametros',
@@ -81,13 +69,14 @@ function($scope, Pacientes, Medicos,
 		icon: 'users',
 		class: 'list-group-item-danger'
 	});
+	
 	$scope.linkList.push({
 		name: 'link-otros',
 		text: 'Otros',
 		ui_ref: 'loginRequired.otros.procesos',
 		icon: 'cogs',
 		class: 'list-group-item-danger'
-	});
+	});*/
 
 
 	if(!medicosService.getMedicos())

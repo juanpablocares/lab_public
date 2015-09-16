@@ -45,6 +45,39 @@
 			}
 		});
 
+		$stateProvider.state('loginRequired.menu_consultas', {
+			url : '/menu_consultas',
+			templateUrl : "index.html",
+			controller : 'IndexMenuConsultasController',
+			resolve : {
+				test : function() {
+					console.log("menu consultas");
+				}
+			}
+		});
+		
+		$stateProvider.state('loginRequired.menu_configuracion', {
+			url : '/menu_configuracion',
+			templateUrl : "index.html",
+			controller : 'IndexMenuConfiguracionController',
+			resolve : {
+				test : function() {
+					console.log("menu configuracion");
+				}
+			}
+		});
+		
+		$stateProvider.state('loginRequired.menu_administracion', {
+			url : '/menu_administracion',
+			templateUrl : "index.html",
+			controller : 'IndexMenuAdministracionController',
+			resolve : {
+				test : function() {
+					console.log("menu administracion");
+				}
+			}
+		});
+		
 		$stateProvider.state('loginRequired.account', {
 			url : '/miCuenta',
 			templateUrl : "sessions/cuenta/menu.html",
@@ -384,10 +417,16 @@
 		});
 		
 		$stateProvider.state('loginRequired.previsiones', {
+			url : '/previsiones/',
+			templateUrl : "otros/previsiones.html",
+			controller : 'OtrosPrevisionesController',
+		});
+		
+		/*$stateProvider.state('loginRequired.previsiones', {
 			url : '/previsiones/:prevision_id',
 			templateUrl : "previsiones/menu.html",
 			controller : 'PrevisionesMenuController',
-		});
+		});*/
 		
 		$stateProvider.state('loginRequired.nueva_prevision', {
 			url : '/previsiones/nuevo',

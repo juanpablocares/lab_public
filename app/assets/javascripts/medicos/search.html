@@ -2,21 +2,13 @@
 	<table st-table="displayed" class="table table-striped" st-pipe="callServer">
 		<thead>
 			<tr>
-				<th >Apellido Paterno</th>
-				<th >Apellido Materno</th>
-				<th >Nombre</th>
+				<th >Apellido</th>
 				<th >Especialidad</th>
 				<th >Opciones</th>
 			</tr>
 			<tr>
 				<th>
 					<input st-search="apellido_paterno" class="input-sm form-control"/>
-				</th>
-				<th>
-					<input st-search="apellido_materno" class="input-sm form-control"/>
-				</th>
-				<th>
-					<input st-search="nombre" class="input-sm form-control"/>
 				</th>
 				<th>
 					<select st-search="especialidad" class="form-control" ng-model="especialidad" ng-options="e.nombre for e in especialidades track by e.id | orderBy:'nombre'" name="especialidad">
@@ -30,9 +22,7 @@
 		</thead>
 		<tbody ng-show="!isLoading">
 			<tr ng-repeat="row in displayed" >
-				<td>{{row.apellido_paterno}}</td>
-				<td>{{row.apellido_materno}}</td>
-				<td>{{row.nombre}}</td>
+				<td>{{row.apellido_paterno}} {{row.apellido_materno}}, {{row.nombre}}</td>
 				<td>{{row.especialidad.nombre}}</td>
 				<td align="center">
 					<a class="text-primary" ui-sref="loginRequired.medicos.info({medico_id: row.id})" title="Información médico" ><i class="fa fa-info-circle fa-lg"></i></a>

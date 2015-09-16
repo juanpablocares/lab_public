@@ -221,7 +221,7 @@ class Api::FichasController < ApplicationController
   end
 
   def range
-    results = Ficha.joins(:paciente).all.order(id: :desc)
+    results = Ficha.joins(:paciente).joins(:procedencia).all.order(id: :desc)
 
     if(params.has_key?(:search))
       if(params[:search].has_key?(:predicateObject))
@@ -233,6 +233,9 @@ class Api::FichasController < ApplicationController
         end
         if(params[:search][:predicateObject].has_key?(:nombre))
           results = results.where("lower(nombre) like ?", "#{params[:search][:predicateObject][:nombre].downcase}%")
+        end
+		if(params[:search][:predicateObject].has_key?(:procedencia))
+          results = results.where(procedencia_id: params[:search][:predicateObject][:procedencia].to_i)
         end
         if(params[:search][:predicateObject].has_key?(:apellido_paterno))
 			results = results.where("lower(apellido_paterno) like ?", "#{params[:search][:predicateObject][:apellido_paterno].downcase}%")
@@ -254,7 +257,7 @@ class Api::FichasController < ApplicationController
       message: 'Fichas encontradas',
       numberOfPages: numberOfPages,
       data: results,
-    }, status: 200, include: [:paciente, :medico]
+    }, status: 200, include: [:paciente, :medico, :procedencia, :prevision]
   end
 
   def update

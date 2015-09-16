@@ -4,9 +4,7 @@
 			<tr>
 				<th>#</th>
 				<th >Rut</th>
-				<th >Apellido Paterno</th>
-				<th >Apellido Materno</th>
-				<th >Nombre</th>
+				<th >Apellido</th>
 				<th >Prevision</th>
 			</tr>
 			<tr>
@@ -16,12 +14,6 @@
 				</th>
 				<th>
 					<input st-search="apellido_paterno" class="input-sm form-control"/>
-				</th>
-				<th>
-					<input st-search="apellido_materno" class="input-sm form-control"/>
-				</th>
-				<th>
-					<input st-search="nombre" class="input-sm form-control"/>
 				</th>
 				<th>
 					<select st-search="prevision" class="form-control" ng-model="prevision" ng-options="plan.nombre for plan in plans track by plan.id | orderBy:'nombre'" name="prevision">
@@ -34,9 +26,7 @@
 			<tr ng-repeat="row in displayed track by $index">
 				<td>{{$index + 1 + comienzo_tabla}}</td>
 				<td >{{row.rut}}{{row.rutdv}}</td>
-				<td><a class="text-primary" ui-sref="loginRequired.pacientes.info({paciente_id: row.id})" title="Información paciente">{{row.apellido_paterno}}</a></td>
-				<td><a class="text-primary" ui-sref="loginRequired.pacientes.info({paciente_id: row.id})" title="Información paciente">{{row.apellido_materno}}</a></td>
-				<td><a class="text-primary" ui-sref="loginRequired.pacientes.info({paciente_id: row.id})" title="Información paciente">{{row.nombre}}</a></td>
+				<td><a class="text-primary" ui-sref="loginRequired.pacientes.info({paciente_id: row.id})" title="Información paciente">{{row.apellido_paterno}} {{row.apellido_materno}}, {{row.nombre}}</a></td>
 				<td>{{row.prevision.nombre}}</td>
 			</tr>
 		</tbody>

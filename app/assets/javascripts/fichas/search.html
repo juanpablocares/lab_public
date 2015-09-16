@@ -4,10 +4,10 @@
 			<tr>
 				<th > #</th>
 				<th >Ficha</th>
-				<th >Apellido Paterno</th>
-				<th >Apellido Materno</th>
-				<th >Nombre paciente</th>
-				<th >Fecha creación</th>
+				<th >Fecha</th>
+				<th >Apellido</th>
+				<th >Procedencia</th>
+				<th >Previsión</th>
 			</tr>
 			<tr>
 				<th>
@@ -16,19 +16,21 @@
 				<th>
 					<input st-search="id" class="input-sm form-control"/>
 				</th>
+				<th width="3%">
+						<input st-search="fecha" class="input-sm form-control" type="date" id="fecha" name="fecha" ng-model="fecha" name="fecha"/>
+				</th>
 				<th>
 					<input st-search="apellido_paterno" class="input-sm form-control"/>
 				</th>
 				<th>
-					<input st-search="apellido_materno" class="input-sm form-control"/>
+					<select st-search="procedencia" class="form-control" ng-model="procedencia" ng-options="p.nombre for p in procedencias track by p.id | orderBy:'nombre'" name="procedencia">
+						<option value=""></option>
+					</select>
 				</th>
 				<th>
-					<input st-search="nombre" class="input-sm form-control"/>
-				</th>
-				<th>
-					<div class="input-group date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
-						<input st-search="fecha" class="input-sm form-control" type="date" id="fecha" name="fecha" ng-model="fecha" name="fecha"/>
-					</div>
+					<select st-search="prevision" class="form-control" ng-model="prevision" ng-options="p.nombre for p in previsiones track by p.id | orderBy:'nombre'" name="prevision">
+						<option value=""></option>
+					</select>
 				</th>
 			</tr>
 		</thead>
@@ -36,10 +38,10 @@
 			<tr ng-repeat="row in displayed track by $index" >
 				<td>{{$index + 1 + comienzo_tabla}}</td>
 				<td><a class="text-primary" ui-sref="loginRequired.fichas.info({ficha_id: row.id})" title="Información ficha">{{row.id}}</a></td>
-				<td>{{row.paciente.apellido_paterno}}</td>
-				<td>{{row.paciente.apellido_materno}}</td>
-				<td>{{row.paciente.nombre}}</td>
 				<td>{{row.creado | date:'dd-MM-yyyy'}}</td>
+				<td>{{row.paciente.apellido_paterno}} {{row.paciente.apellido_materno}}, {{row.paciente.nombre}}</td>
+				<td>{{row.procedencia.nombre}}</td>
+				<td>{{row.prevision.nombre}}</td>
 			</tr>
 		</tbody>
 		<tbody ng-show="isLoading">

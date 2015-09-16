@@ -4,7 +4,46 @@
 <div class="widget-container fluid-height" ng-if="!loading">
 	<div class="row widget-content padded">
 		<div class="col-md-3">
-			<ng-include src="'fichas/_informacion_paciente.html'"></ng-include>
+			<table class="table table-condensed">
+				<tbody>
+					<tr>
+						<td><strong>Rut</strong></td>
+						<td ><a ui-sref="loginRequired.pacientes.info({paciente_id: paciente.id})"><phy-rut rut='paciente.rut_completo'></phy-rut></a></td>
+						<td><strong>Genero</strong></td>
+						<td >
+							{{paciente.genero == 0?'Femenino':'Masculino'}}
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Paciente</strong></td>
+						<td colspan="3"><a ui-sref="loginRequired.pacientes.info({paciente_id: paciente.id})">{{paciente.nombre}} {{paciente.apellido_paterno}}</a></td>
+					</tr>
+					<tr>
+						<td><strong>Fecha Nac.</strong></td>
+						<td colspan="3">{{paciente.fecha_nacimiento | date:'dd/MM/yyyy'}} - {{paciente.getEdad()}}</td>
+					</tr>
+					<tr>
+						<td><strong>Teléfono</strong></td>
+						<td>{{paciente.telefono}}</td>
+						<td><strong>Celular</strong></td>
+						<td>{{paciente.celular}}</td>
+					</tr>
+					<tr ng-if="!edit">
+						<td><strong>Prevision</strong></td>
+						<td >{{paciente.prevision.nombre}}</td>
+					</tr>
+					<tr ng-if="edit">
+						<td><strong>Prevision</strong></td>
+						<td colspan="2">
+							<select class="form-control" ng-model="prevision" ng-options="prevision.nombre for prevision in previsionesArray track by prevision.id | orderBy:'nombre'" name="prevision" ng-change="seleccionarPrevision(prevision)" required></select>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Obs.</strong></td>
+						<td colspan="3">{{paciente.observaciones?paciente.observaciones:'Sin observaciones'}}</td>
+					</tr>
+				</tbody>
+			</table>
 				<form class="form-horizontal" name="ingresarPagoForm" novalidate>
 				<div >
 					<h4>Ingresar Documentos</h4>
