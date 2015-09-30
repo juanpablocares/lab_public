@@ -97,36 +97,23 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 		item.estado.class = 'info';
 		item.estado.text = 'Cargando';
 
-		DetalleFicha.get({
+		DetallesFicha.switch_muestra.put({
 			id : item.id
 		}).$promise.then(function(results) {
-			tmp = results.data;
+			detalle_ficha = results.data;
 
-			if (tmp.usuario_muestra_id == null) {
-				tmp.fecha_muestra = Date();
-				tmp.usuario_muestra_id = $auth.user.id;
+			if (detalle_ficha.usuario_muestra_id != null) {
+				item.estado.class = 'success';
+				item.estado.text = 'Muestra realizada';
+				item.nombre_completo = detalle.usuario_muestra.nombre + " " + detalle.usuario_muestra.apellido_paterno;
 			}
 			else {
-				tmp.fecha_muestra = null;
-				tmp.usuario_muestra_id = null;
-			}
-
-			DetallesFicha.id.update({
-				id :  item.id
-			}, tmp).$promise.then(function(results) {
-				if (results.data.usuario_muestra_id != null) {
-					item.estado.class = 'success';
-					item.estado.text = 'Muestra realizada';
-					item.nombre_completo = $auth.user.nombre + " " + $auth.user.apellido_paterno;
-				}
-				else {
-					item.estado.class = 'warning';
-					item.estado.text = 'Muestra pendiente';
-					item.nombre_completo = "";
-				}
-			}).catch(function(results) {
-				item.estado = estado;
-			});
+				item.estado.class = 'warning';
+				item.estado.text = 'Muestra pendiente';
+				item.nombre_completo = "";
+		}}).catch(function(results) {
+			console.log('Error cambiando el estado de la toma de muestra');
+			item.estado = estado;
 		});
 	}
 

@@ -13,6 +13,14 @@
 					method : 'GET',
 				},
 			}),
+			switch_muestra : $resource("/api/detalles_ficha/cambiar_estado_muestra/:id", {
+				id : "@id"
+			}, {
+				put : {
+					method : 'PUT',
+					isArray : false,
+				}
+			}),
 			muestras_tomadas : $resource("/api/detalles_ficha/muestras_tomadas/:start/:number", {
 				start : "@start",
 				number : "@number",

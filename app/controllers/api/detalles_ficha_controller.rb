@@ -131,6 +131,27 @@ class Api::DetallesFichaController < ApplicationController
 		        }, status: 500
 		end
 	end
+	
+	def switch_muestra
+		detalle = DetalleFicha.find(params[:id])
+		if detalle != nil
+			if detalle.fecha_muestra != nil
+				detalle.fecha_muestra = nil
+				detalle.usuario_muestra_id = nil
+			else
+				detalle.fecha_muestra = Time.now
+				detalle.usuario_muestra_id = current_user.id
+			end
+			detalle.save
+			
+			render json: {
+				  success: true,
+				  message: 'Estado de ingreso de muestra cambiado',
+				  data: detalle,
+				}, status: 200, include: [:usuario_muestra
+				]
+		end
+	end
 
 	def detalles_ficha_params
 		params.permit(:examen_id, :perfil_id, :usuario_muestra_id, :fecha_muestra, :tipo_muestra_id, :urgente)
