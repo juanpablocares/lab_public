@@ -380,14 +380,16 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	$scope.crearFicha = function(ficha_form) {
 		if ($scope.validate_form(ficha_form)) {
 			$scope.ficha.paciente_id = $scope.paciente.id;
-			if ($scope.medico != undefined && $scope.medico.selected != undefined) {
-				$scope.ficha.medico_id = $scope.medico.selected.id;
+			console.log($scope);
+			if ($scope.medico != undefined) {
+				$scope.ficha.medico_id = $scope.ficha.medico.id;
 			}
 			else {
 				$scope.ficha.medico_id = null;
 			}
 			$scope.ficha.precio_total = $scope.precio_total_edit;
-			$scope.ficha.procedencia_id = $scope.procedencia.selected.id;
+
+			$scope.ficha.procedencia_id = $scope.ficha.procedencia.id;
 			$scope.ficha.examenesAgregados = $scope.examenesAgregados;
 			$scope.ficha.prevision_id = $scope.prevision.selected.id;
 			$scope.ficha.detalles_ficha = null;
@@ -399,6 +401,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 				$scope.$emit('showGlobalAlert', {message: 'Ficha creada satisfactoriamente.',boldMessage: 'Ficha N° '+response.data.id ,class: 'alert-success'});
 			}, function(response) {
 				console.log("ERROR creando ficha");
+				console.log(response);
 			});
 		}
 	}
