@@ -89,7 +89,7 @@
 	</form>
 </script>
 
-<div ng-init="!ficha_edit?ficha_edit=ficha:ficha=ficha"> </div>
+<div ng-init="!ficha_edit?ficha_edit=ficha:ficha=ficha"> </div>qw
 <table class="table table-condensed">
 	<tbody>
 		<tr ng-if="ficha_edit && ficha_edit.id">	
@@ -156,10 +156,10 @@
 				<input type="text" ng-model="ficha_edit.medico" typeahead="medico as medico.nombre+' '+ medico.apellido_paterno+' '+medico.apellido_materno for medico in medicosArray | medicoFilter:$viewValue" typeahead-template-url="medicosTemplate.html" class="form-control" typeahead-on-select='seleccionarMedico($model)'>
 			</td>
 			<td colspan="2">
-				<button type="button" class="btn btn-danger" ng-click="borrarMedico()">
+				<button type="button" class="btn btn-danger" ng-click="borrarMedico()" tabindex = "-1" >
 					<i class="fa fa-close" style="margin: 0px 0px 0px 0px;"></i>
 				</button>
-				<button type="button" class="btn btn-success" ng-click="crearMedico()">
+				<button type="button" class="btn btn-success" ng-click="crearMedico()" tabindex = "-1" >
 					<i class="fa fa-plus" style="margin: 0px 0px 0px 0px;"></i>
 				</button>
 			</td>

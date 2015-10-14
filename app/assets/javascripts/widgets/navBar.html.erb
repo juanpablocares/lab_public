@@ -23,7 +23,7 @@
 
 </style>
 <script type="text/ng-template" id="aside.html">
-	<button type="button" class="btn-default open-side-nav-button right" ng-click="cancel($event)">
+	<button type="button" class="btn-default open-side-nav-button right" ng-click="cancel($event)" tabindex = "-1" >
 		<i class="fa fa-angle-double-left"></i>
 	</button>
 	<div class="modal-header">
@@ -95,7 +95,7 @@
 		</div>
 	</div>
 </script>
-<button type="button" class="btn-default open-side-nav-button left" ng-click="openAside('left')">
+<button type="button" class="btn-default open-side-nav-button left" ng-click="openAside('left')" tabindex = "-1" >
 	<i class="fa fa-angle-double-right"></i>
 </button>
 <div id="navbar-menu" ng-show="user.signedIn">
@@ -120,18 +120,18 @@
 				<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 			</button>
 			<a class="logo" ui-sref="loginRequired.index">se7en</a>
-			<form class="navbar-form form-inline col-lg-4" name="searchFormTemp" ng-show="showSearchTempForm">
-				<input class="form-control" placeholder="Buscar/ingresar paciente/Rut" id="searchBoxTemp" ng-model="searchForm.valor" type="text">
+			<form class="navbar-form form-inline col-lg-4" name="searchFormTemp" ng-show="showSearchTempForm"> 
+				<input class="form-control" placeholder="Buscar/ingresar paciente/Rut" id="searchBoxTemp" ng-model="searchForm.valor" type="text" tabindex = "-1" >
 			</form>
 			<form class="navbar-form form-inline col-lg-4 hidden-xs" name="searchTextForm" ng-submit="searchByText(searchForm.text_value)" ng-show="showSearchTextForm">
-				<input class="form-control" placeholder="Buscar paciente" id="searchBoxText" ng-model="searchForm.text_value" type="text" >
+				<input class="form-control" placeholder="Buscar paciente" id="searchBoxText" ng-model="searchForm.text_value" type="text" tabindex = "-1" >
 			</form>
 			<form class="navbar-form form-inline col-lg-4 hidden-xs"  name="searchRutForm" ng-submit="searchByRut(searchForm.rut_value)" ng-show="showSearchRutForm">
-				<input class="form-control" placeholder="Buscar paciente" id="searchBoxRut" ng-rut rut-format="live" ng-model="searchForm.rut_value" type="text">
+				<input class="form-control" placeholder="Buscar paciente" id="searchBoxRut" ng-rut rut-format="live" ng-model="searchForm.rut_value" type="text" tabindex = "-1" >
 			</form>
 
 			<form class="navbar-form form-inline col-lg-2" name="searchFormFicha" ng-submit="checkSearchFicha(searchForm.ficha_id)">
-				<input class="form-control" placeholder="Buscar ficha" id="searchFormFicha" ng-model="searchForm.ficha_id" type="text">
+				<input class="form-control" placeholder="Buscar ficha" id="searchFormFicha" ng-model="searchForm.ficha_id" type="text" tabindex = "-1" >
 			</form>
 		</div>
 	</div>

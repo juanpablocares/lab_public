@@ -65,6 +65,11 @@ html {
   height: 100%;
 }
 
+input:focus ,select:focus
+{
+	background: pink;
+}
+
 body {
   font-family: "Lato", sans-serif !important;
   color: black;

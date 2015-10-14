@@ -30,11 +30,11 @@
 			<ng-include src="'fichas/_examenes_table_new.html'" id="ignore"></ng-include>
 			<div class="row form-group padded">
 				<div class="col-sm-11 text-right">
-					<a class="btn btn-warning" ui-sref="loginRequired.fichas.pagos({ficha_id: ficha.id})">Realizar pago</a>
-					<button class="btn btn-success">Guardar cambios a ficha</button>
-					<button type="button" class="btn btn-primary" ng-click="cancelar_cambios()">Cancelar cambios</button>
-					<button type="button" class="btn btn-info" ng-click="getPDF()">Imprimir</button>
-					<button type="button" class="btn btn-danger" ng-click="volver()">Volver</button>
+					<a class="btn btn-warning" ui-sref="loginRequired.fichas.pagos({ficha_id: ficha.id})" tabindex = "-1">Realizar pago</a>
+					<button class="btn btn-success" tabindex = "-1">Guardar cambios a ficha</button>
+					<button type="button" class="btn btn-primary" ng-click="cancelar_cambios()" tabindex = "-1">Cancelar cambios</button>
+					<button type="button" class="btn btn-info" ng-click="getPDF()" tabindex = "-1">Imprimir</button>
+					<button type="button" class="btn btn-danger" ng-click="volver()" tabindex = "-1">Volver</button>
 				</div>
 			</div>
 		</div>

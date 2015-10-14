@@ -33,12 +33,15 @@
 			<ng-include src="'fichas/_examenes_table_new.html'"></ng-include>
 			<div class="row form-group padded">
 				<div class="col-sm-11 text-right">
-					<button type="submit" ng-click="crearCotizacion(form)" class="btn btn-primary">
+					<button type="submit" ng-click="crearCotizacion(form)" class="btn btn-primary" tabindex = "-1" >
 						Cotizar
 					</button>
-					<button type="submit" ng-click="crearFicha(form)" class="btn btn-danger">
+					<button type="submit" ng-click="crearFicha(form)" class="btn btn-danger" tabindex = "-1" >
 						Procesar
 					</button>
+					<a ui-sref='loginRequired.index' type="button" class="btn btn-default" tabindex = "-1" >
+						Cancelar
+					</a>
 				</div>
 			</div>
 		</div>
