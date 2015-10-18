@@ -24,6 +24,12 @@ Rails.application.routes.draw do
 		
 		##########################Controladores de fichas##########################
 		get 'fichas/pagos/:id', to: 'fichas#pagos', defaults: {format: 'json'}
+		namespace :fichas do 
+			get 'show/:id', to: 'show#index', defaults: {format: 'json'}
+			put 'update/:id', to: 'update#index', defaults: {format: 'json'}
+			post 'new', to: 'create#index', defaults: {format: 'json'}
+			delete 'delete/:id', to: 'delete#index', defaults: {format: 'json'}
+		end
 		get 'fichas/:id/input_resultados/', to: 'fichas#input_resultados', defaults: {format: 'json'}
 		get 'fichas/paciente/:id', to: 'fichas#show_bypaciente', defaults: {format: 'json'}
 		post 'fichas/observaciones/:id/:observaciones_pagos', to: 'fichas#observaciones', defaults: {format: 'json'}

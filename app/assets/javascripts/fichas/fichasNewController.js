@@ -372,10 +372,25 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		}	
 	};
 	
-	$scope.validate_form = function(ficha_form)
-	{
-		return $scope.examenesSeleccionados_edit.length > 0 && ficha_form.$valid;
+	$scope.validate_form = function(ficha_form) {
+		var mensaje = '<ul>';
+		if(ficha_form.$valid)
+			mensaje = mensaje + '<li>Debe completar la información mínima</li>';
+		if($scope.examenesSeleccionados_edit.length == 0)
+			mensaje = mensaje + '<li>Debe agregar un examen</li>';
+		mensaje = mensaje + '</ul>';
+
+		if($scope.examenesSeleccionados_edit.length > 0 && ficha_form.$valid)
+		{
+			return true;
+		}
+		else
+		{
+			$scope.$emit('showGlobalAlert', {boldMessage: 'Editar Ficha',message: mensaje,class: 'alert-danger'});
+			return false;
+		}
 	}
+
 
 	$scope.crearFicha = function(ficha_form) {
 		if ($scope.validate_form(ficha_form)) {

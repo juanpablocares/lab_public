@@ -138,7 +138,7 @@
 </div>
 <span class="global-alert-span animated" ng-if="globalAlert.show" ng-click="removeAlert()"> 
 	<div class="alert" ng-class="globalAlert.class">
-		<strong>{{globalAlert.boldMessage}} </strong>{{globalAlert.message}}
+		<strong><span ng-bind-html='globalAlert.boldMessage'></span> </strong><span ng-bind-html='globalAlert.message'></span>
 	</div>
 </span>
 <div ui-view class="main-view"></div>

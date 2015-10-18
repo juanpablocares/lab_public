@@ -89,7 +89,7 @@
 	</form>
 </script>
 
-<div ng-init="!ficha_edit?ficha_edit=ficha:ficha=ficha"> </div>qw
+<div ng-init="!ficha_edit?ficha_edit=ficha:ficha=ficha"> </div>
 <table class="table table-condensed">
 	<tbody>
 		<tr ng-if="ficha_edit && ficha_edit.id">	
@@ -135,6 +135,8 @@
 				<strong>Urgente</strong>
 				<input class="form-control" type="checkbox" ng-model="ficha_edit.urgente" style="height:20px; width:20px;">
 			</td>
+			<td>
+			</td>
 		</tr>
 		<tr>
 			<td><strong>Entregar a</strong></td>
@@ -162,6 +164,10 @@
 				<button type="button" class="btn btn-success" ng-click="crearMedico()" tabindex = "-1" >
 					<i class="fa fa-plus" style="margin: 0px 0px 0px 0px;"></i>
 				</button>
+			</td>
+			<td>
+			</td>
+			<td>
 			</td>
 		</tr>
 		<tr>
