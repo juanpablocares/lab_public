@@ -297,6 +297,7 @@ angular.module('lab').controller('FichasIndexController', function(
 			};
 		}
 
+/* 		//No permitir examenes duplicados
 		for (var i = 0; i < $scope.examenesSeleccionados_edit.length; i++) {
 			var value = $scope.examenesSeleccionados_edit[i];
 			if (perfil && value.perfil) {
@@ -313,6 +314,8 @@ angular.module('lab').controller('FichasIndexController', function(
 				}
 			}
 		};
+
+*/
 
 		if (perfil) {
 			$scope.examenesAgregados.push(model);
