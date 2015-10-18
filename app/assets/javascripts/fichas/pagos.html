@@ -45,6 +45,7 @@
 				</tbody>
 			</table>
 				<form class="form-horizontal" name="ingresarPagoForm" novalidate>
+				<!--
 				<div >
 					<h4>Ingresar Documentos</h4>
 					<table class="table">
@@ -85,6 +86,7 @@
 						Limpiar
 					</button>
 				</div>
+				-->
 				<div class="form-group">
 					<label for="observaciones" class="control-label"><strong>Observaciones pagos</strong></label>
 					<div >
@@ -118,6 +120,22 @@
 							<th class="text-center"> </th>
 						</thead>
 						<tbody>
+							<tr>
+								<td></td>
+								<td></td>
+								<td><select class="form-control" ng-model="input_pago.tipo_pago" ng-options="tipoPago.nombre for tipoPago in tiposPagoArray track by tipoPago.id | orderBy:'nombre'" name="tipo_pago" required></select></td>
+								<td><input ng-model="input_pago.n_documento" class="form-control" /></td>
+								<td><input ng-model="input_pago.factura" class="form-control" /></td>
+								<td >
+									<input class="form-control" type="datetime-local" id="fecha_creacion" ng-model="input_pago.fecha_creacion"/>
+								</td>
+								<td>{{input_pago.nombre}}</td>
+								<td><input type="number" ng-model="input_pago.monto_pagado" class="form-control" /></td>
+								<td class="text-center">
+									<a class="clickable" ng-click="submitIngresarPagoForm(input_pago)"><i class="fa fa-save fa-fw"></i></a>
+								</td>
+							</tr>
+							
 							<tr ng-if="detallePagos.length != 0" ng-repeat="pago in detallePagos track by $index">
 								<td><input ng-checked="true" type="checkbox" ng-model="pago.estado"></td>
 								<td>{{$index + 1 }}</td>

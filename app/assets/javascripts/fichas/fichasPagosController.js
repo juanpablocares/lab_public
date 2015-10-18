@@ -8,10 +8,18 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 	$scope.examenesSeleccionados = [];
 	$scope.ficha = {};
 	$scope.detallePagos = [];
+	$scope.input_pago = {};
 	$scope.nuevoPago = {};
 	$scope.tiposPagoArray = [];
 	$scope.total_bonos = 0;
 	$scope.total_otros = 0;
+	
+	//inicializar input_pago
+	$scope.inicializar_pago = function(){
+		$scope.input_pago = {};
+		$scope.input_pago.fecha_creacion = new Date();
+		$scope.input_pago.nombre = $auth.user.nombre + " " + $auth.user.apellido_paterno;
+	}
 	
 	Ficha.get({
         id : $stateParams.ficha_id
@@ -116,6 +124,7 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 		{
 			$scope.detallePagos[i].fecha_creacion = new Date($scope.detallePagos[i].creado);
 		}
+		$scope.inicializar_pago();
 		$scope.loading = false;
 	}).
 	catch(function(response) {
@@ -144,15 +153,31 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 	}
 	
 	$scope.submitIngresarPagoForm = function(f) {
+		console.log(f);
+		
+		var mssg = "Falta ingresar:\n";
+		
+		if(!f.tipo_pago)
+			mssg += "Tipo de Pago\n";
+		if(!f.n_documento)
+			mssg += "N° documento\n";
+		if(!f.monto_pagado)
+			mssg += "Monto\n";
+		
+		if(!f.tipo_pago || !f.n_documento || !f.monto_pagado){
+			console.log(mssg);
+			return ;
+		}
+		
 		data = {
 			ficha_id : $stateParams.ficha_id,
-			tipo_pago_id : $scope.nuevoPago.tipo_pago.id,
-			n_documento : $scope.nuevoPago.numero_documento,
-			monto_pagado : $scope.nuevoPago.monto,
+			tipo_pago_id : f.tipo_pago.id,
+			n_documento : f.n_documento,
+			monto_pagado : f.monto_pagado,
 			user_id : $auth.user.id,
-			observaciones_pagos: $scope.nuevoPago.observaciones_pagos,
-			factura: $scope.nuevoPago.factura,
+			factura: f.factura,
 		};
+		
 		DetallesPagoFicha.root.new(data).$promise.then(function(response) {
 			DetallesPagoFicha.by_ficha_id.all({
 				id : $stateParams.ficha_id
@@ -161,7 +186,8 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 				for(var i in $scope.detallePagos)
 					$scope.detallePagos[i].fecha_creacion = new Date($scope.detallePagos[i].creado);
 				console.log(result);
-				$scope.resetIngresarPagoForm(f);
+				//$scope.resetIngresarPagoForm(f);
+				$scope.inicializar_pago();
 			}).catch(function(response) {
 				console.error("Error al cargar detalle pagos");
 			});
