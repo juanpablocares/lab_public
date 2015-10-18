@@ -137,9 +137,22 @@ angular.module('lab').controller('NavBarController', function($rootScope, $state
 
     $scope.$on('showGlobalAlert', function(event, data)
     {
-        $scope.globalAlert.show = false;
+		$scope.$emit('closeGlobalAlert');
     	$scope.globalAlert = data;
     	$scope.globalAlert.show = true;
 	});
+	
+	$scope.$on('closeGlobalAlert', function(event, data)
+    {
+        $scope.globalAlert.show = false;
+	});
+	
+	$rootScope.$on('$stateChangeStart', 
+	function(event, toState, toParams, fromState, fromParams){ 	
+		$scope.$emit('closeGlobalAlert');
+
+		// transitionTo() promise will be rejected with 
+		// a 'transition prevented' error
+	})
 
 });

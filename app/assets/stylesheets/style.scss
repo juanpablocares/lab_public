@@ -4958,13 +4958,15 @@ body.fourofour {
     }
   }
 
-
 .global-alert-span
 {
+	
     position: fixed;
     margin: 1% 10%;
     z-index: 1029;
     min-width: 80%;
+    opacity: 1;
+    filter: alpha(opacity=100); /* For IE8 and earlier */
 }
 .global-alert-span{
   .alert{

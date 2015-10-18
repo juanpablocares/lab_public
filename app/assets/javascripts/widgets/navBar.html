@@ -21,6 +21,7 @@
 	right: 0px;
 }	
 
+
 </style>
 <script type="text/ng-template" id="aside.html">
 	<button type="button" class="btn-default open-side-nav-button right" ng-click="cancel($event)" tabindex = "-1" >
@@ -136,6 +137,7 @@
 		</div>
 	</div>
 </div>
+
 <span class="global-alert-span animated" ng-if="globalAlert.show" ng-click="removeAlert()"> 
 	<div class="alert" ng-class="globalAlert.class">
 		<strong><span ng-bind-html='globalAlert.boldMessage'></span> </strong><span ng-bind-html='globalAlert.message'></span>
