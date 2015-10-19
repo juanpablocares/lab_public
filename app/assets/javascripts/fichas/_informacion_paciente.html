@@ -13,7 +13,7 @@
 				{{paciente.genero == 0?'Femenino':'Masculino'}}
 			</td>
 			<td><strong>Email</strong></td>
-			<td >{{paciente.email?paciente.correo:'Sin correo'}}</td>
+			<td >{{paciente.correo?paciente.correo:'Sin correo'}}</td>
 		</tr>
 		<tr>
 			<td><strong>Fecha Nac.</strong></td>
@@ -28,9 +28,6 @@
 		<tr>
 		<td><strong>Dirección</strong></td>
 			<td colspan="3"> {{paciente.direccion}}, {{paciente.comuna.nombre}}</td>
-		</tr>
-		<td><strong>E-mail</strong></td>
-			<td colspan="3"> {{paciente.correo}}</td>
 		</tr>
 		<tr ng-if="!edit">
 			<td><strong>Prevision</strong></td>
