@@ -12,14 +12,9 @@ class Api::PacientesController < ApplicationController
 				if(params[:search][:predicateObject].has_key?(:id))
 					results = results.where(id: params[:search][:predicateObject][:id].to_i)
 				end
-				if(params[:search][:predicateObject].has_key?(:nombre))
-					results = results.where(Paciente.arel_table[:nombre].matches("#{params[:search][:predicateObject][:nombre]}%"))
-				end
 				if(params[:search][:predicateObject].has_key?(:apellido_paterno))
-					results = results.where(Paciente.arel_table[:apellido_paterno].matches("#{params[:search][:predicateObject][:apellido_paterno]}%"))
-				end
-				if(params[:search][:predicateObject].has_key?(:apellido_materno))
-					results = results.where(Paciente.arel_table[:apellido_materno].matches("#{params[:search][:predicateObject][:apellido_materno]}%"))
+					valor = params[:search][:predicateObject][:apellido_paterno]
+					results = results.where("lower(nombre) LIKE ? OR lower(apellido_paterno) LIKE ? OR lower(apellido_materno) LIKE ? ","#{valor}%","#{valor}%","#{valor}%")
 				end
 				if(params[:search][:predicateObject].has_key?(:prevision))
 					results = results.where(prevision_id: params[:search][:predicateObject][:prevision])
@@ -27,7 +22,7 @@ class Api::PacientesController < ApplicationController
 			end
 		end
 		
-		numberOfPages = results.count / params[:number].to_i
+		numberOfPages = (results.count.to_f / params[:number].to_f).ceil
 		results = results.order(id: :asc).limit(params[:number].to_i).offset(params[:start].to_i)
 		render json: {
 			  success: true,
@@ -91,9 +86,20 @@ class Api::PacientesController < ApplicationController
 		end
 	end
 
-	def search
-		@results = Paciente.find_by(rut: params[:rut])
-		render json: @results
+	def search	
+		valor = params[:valor]
+		if valor[0..-2].is_number?
+			valor = valor[0..-2]
+			results = Paciente.find_by(rut: valor)
+		else
+			valor = valor.downcase
+			results = Paciente.where("lower(nombre) LIKE ? OR lower(apellido_paterno) LIKE ? OR lower(apellido_materno) LIKE ? ","#{valor}%","#{valor}%","#{valor}%")
+		end
+		render json: {
+		  success: true,
+		  message: 'Search paciente complete',
+		  data: results,
+		}, status: 200
 	end
 
 	def search_texto

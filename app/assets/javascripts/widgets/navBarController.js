@@ -98,6 +98,7 @@ angular.module('lab').controller('NavBarController', function($rootScope, $state
     $scope.searchByRut = function(value) {
         $scope.searchForm.rut_value = "";
         $scope.searchFormTemp.$setPristine();
+        console.log(value);
         if($scope.searchRutForm.$valid)
         {
             $state.go('loginRequired.busqueda_paciente', {

@@ -41,6 +41,10 @@
 					method : 'GET',
 					isArray: false,
 				},
+				all : {
+					method : 'GET',
+					isArray: false,
+				},
 				by_text : {
 					method : 'GET',
 					isArray: true,
