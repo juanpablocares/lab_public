@@ -47,6 +47,10 @@ class Api::Fichas::UpdateController < Api::FichasController
       end
     end
     
+	if params.has_key? :email
+	  ficha.email = params[:email]
+	end
+    
     if params.has_key? :numero_procedencia and !params[:numero_procedencia].nil?
   		ficha.numero_procedencia = params[:numero_procedencia]
     end

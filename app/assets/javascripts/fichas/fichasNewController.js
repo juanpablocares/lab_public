@@ -17,6 +17,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 
 	$scope.edit = true;
 	$scope.ficha = {};
+	$scope.ficha_edit = {};
 	$scope.selectModel = {};
 	$scope.procedencia = {};
 	$scope.medico = {};
@@ -37,6 +38,8 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	$http.get('/api/pacientes/' + $stateParams.paciente_id).success(function(data) {
 		//Set of received data to parent paciente object.
 		$scope.paciente = data.data;
+		$scope.ficha_edit.email = $scope.paciente.correo;	
+		
 		//Functions of paciente object
 		$scope.paciente.getNombreCompleto = function() {
 			return this.nombre + " " + this.apellido_paterno + " " + this.apellido_materno;
@@ -69,7 +72,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 			Medicos.buscar.todos().$promise.then(function(data) {
 				medicosService.setMedicos(data.data);
 				$scope.medicosArray = medicosService.getMedicos();
-				$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha.medico);
+				$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha_edit.medico);
 			}, function(response) {
 				console.log("ERROR obteniendo medicos");
 			});
@@ -77,7 +80,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		else
 		{
 			$scope.medicosArray = medicosService.getMedicos();
-			$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha.medico);
+			$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha_edit.medico);
 		}
 
 		if(!procedenciasService.getProcedencias())
@@ -266,8 +269,8 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	};
 
 	$scope.borrarMedico = function() {
-		$scope.ficha.medico = null;
-		$scope.ficha.medico_id = null;
+		$scope.ficha_edit.medico = null;
+		$scope.ficha_edit.medico_id = null;
 		$scope.medico.selected = null;
 	}
 
@@ -374,7 +377,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	
 	$scope.validate_form = function(ficha_form) {
 		var mensaje = '<ul>';
-		if(ficha_form.$valid)
+		if(!ficha_form.$valid)
 			mensaje = mensaje + '<li>Debe completar la información mínima</li>';
 		if($scope.examenesSeleccionados_edit.length == 0)
 			mensaje = mensaje + '<li>Debe agregar un examen</li>';
@@ -394,22 +397,22 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 
 	$scope.crearFicha = function(ficha_form) {
 		if ($scope.validate_form(ficha_form)) {
-			$scope.ficha.paciente_id = $scope.paciente.id;
-			console.log($scope);
+			$scope.ficha_edit.paciente_id = $scope.paciente.id;
+			console.log($scope.ficha_edit);
 			if ($scope.medico != undefined) {
-				$scope.ficha.medico_id = $scope.ficha.medico.id;
+				$scope.ficha_edit.medico_id = $scope.ficha_edit.medico.id;
 			}
 			else {
-				$scope.ficha.medico_id = null;
+				$scope.ficha_edit.medico_id = null;
 			}
-			$scope.ficha.precio_total = $scope.precio_total_edit;
+			$scope.ficha_edit.precio_total = $scope.precio_total_edit;
 
-			$scope.ficha.procedencia_id = $scope.ficha.procedencia.id;
-			$scope.ficha.examenesAgregados = $scope.examenesAgregados;
-			$scope.ficha.prevision_id = $scope.prevision.selected.id;
-			$scope.ficha.detalles_ficha = null;
+			$scope.ficha_edit.procedencia_id = $scope.ficha_edit.procedencia.id;
+			$scope.ficha_edit.examenesAgregados = $scope.examenesAgregados;
+			$scope.ficha_edit.prevision_id = $scope.prevision.selected.id;
+			$scope.ficha_edit.detalles_ficha = null;
 			console.log("Antes de update");
-			Ficha.new($scope.ficha).$promise.then(function(response) {
+			Ficha.new($scope.ficha_edit).$promise.then(function(response) {
 				$state.go('loginRequired.fichas.info', {
 					ficha_id : response.data.id
 				});
@@ -423,20 +426,20 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	
 	$scope.crearCotizacion = function(ficha_form) {
 		if ($scope.validate_form(ficha_form)) {
-			$scope.ficha.paciente_id = $scope.paciente.id;
+			$scope.ficha_edit.paciente_id = $scope.paciente.id;
 			if ($scope.medico != undefined && $scope.medico.selected != undefined) {
-				$scope.ficha.medico_id = $scope.medico.selected.id;
+				$scope.ficha_edit.medico_id = $scope.medico.selected.id;
 			}
 			else {
-				$scope.ficha.medico_id = null;
+				$scope.ficha_edit.medico_id = null;
 			}
-			$scope.ficha.precio_total = $scope.precio_total_edit;
-			$scope.ficha.procedencia_id = $scope.procedencia.selected.id;
-			$scope.ficha.examenesAgregados = $scope.examenesAgregados;
-			$scope.ficha.prevision_id = $scope.prevision.selected.id;
-			$scope.ficha.detalles_ficha = null;
+			$scope.ficha_edit.precio_total = $scope.precio_total_edit;
+			$scope.ficha_edit.procedencia_id = $scope.procedencia.selected.id;
+			$scope.ficha_edit.examenesAgregados = $scope.examenesAgregados;
+			$scope.ficha_edit.prevision_id = $scope.prevision.selected.id;
+			$scope.ficha_edit.detalles_ficha = null;
 			console.log("Antes de update");
-			Cotizacion.new($scope.ficha).$promise.then(function(response) {
+			Cotizacion.new($scope.ficha_edit).$promise.then(function(response) {
 				$state.go('loginRequired.cotizaciones.info', {
 					cotizacion_id : response.data.id
 				});

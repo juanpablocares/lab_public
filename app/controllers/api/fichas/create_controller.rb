@@ -32,6 +32,10 @@ class Api::Fichas::CreateController < Api::FichasController
 		if params.has_key? :receptor
 		  ficha.receptor = params[:receptor]
 		end
+		
+		if params.has_key? :email
+		  ficha.email = params[:email]
+		end
 
 		if params.has_key? :mandar_email
 		  ficha.mandar_email = params[:mandar_email]

@@ -174,7 +174,7 @@ angular.module('lab').controller('FichasIndexController', function(
 	$scope.setPaciente = function(ficha)
 	{
 		$scope.paciente = ficha.paciente;
-		if(ficha == null || ficha.email == null || trim(ficha.email) == '')
+		if(ficha == null || ficha.email == null || ficha.email.trim() == '')
 		{
 			ficha.email = $scope.paciente.correo;	
 		} 
@@ -737,7 +737,7 @@ angular.module('lab').controller('FichasIndexController', function(
 	
 	$scope.validate_form = function(ficha_form) {
 		var mensaje = '<ul>';
-		if(ficha_form.$valid)
+		if(!ficha_form.$valid)
 			mensaje = mensaje + '<li>Debe completar la información mínima</li>';
 		if($scope.examenesSeleccionados_edit.length == 0)
 			mensaje = mensaje + '<li>Debe agregar un examen</li>';
