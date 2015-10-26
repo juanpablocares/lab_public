@@ -174,6 +174,11 @@ angular.module('lab').controller('FichasIndexController', function(
 	$scope.setPaciente = function(ficha)
 	{
 		$scope.paciente = ficha.paciente;
+		if(ficha == null || ficha.email == null || trim(ficha.email) == '')
+		{
+			ficha.email = $scope.paciente.correo;	
+		} 
+		
         $scope.paciente.rut_completo = $scope.paciente.rut+''+$scope.paciente.rutdv;
         $scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
         $scope.paciente.getEdad = function() {

@@ -13,7 +13,8 @@
 				{{paciente.genero == 0?'Femenino':'Masculino'}}
 			</td>
 			<td><strong>Email</strong></td>
-			<td >{{paciente.correo?paciente.correo:'Sin correo'}}</td>
+			<td ng-if='!edit' >{{paciente.correo?paciente.correo:'Sin correo'}}</td>
+			<td ng-if='edit' ><input class='form-control' ng-model='ficha_edit.email'/></td>
 		</tr>
 		<tr>
 			<td><strong>Fecha Nac.</strong></td>
