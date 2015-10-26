@@ -35,6 +35,10 @@ angular.module('lab').controller('PacientesNewController', function($scope, $aut
 				$state.go('loginRequired.pacientes.info',{paciente_id: results.data.id});
 			});
 		}
+		else
+		{
+			console.log($scope.paciente_form.correo.$error);
+		}
 	};
 
 	$scope.setRegiones = function(regiones)

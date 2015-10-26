@@ -2,7 +2,7 @@
 <div class="form-group">
 	<label class="control-label col-md-1">Rut</label>
 	<div class="col-md-4 col-sm-8">
-		<input ng-rut rut-format="live" ng-model="paciente.rut_completo" class="form-control" type="text" ng-disabled="true" name="rut_completo">
+		<input ng-rut rut-format="live" ng-model="paciente.rut_completo" class="form-control" type="text" ng-disabled="!paciente_form.rut_completo.$touched && paciente.rut_completo" name="rut_completo">
 		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.rut_completo.$pristine) && paciente_form.rut_completo.$error.required">Debe ingresar rut del paciente</label>
 	</div>
 </div>
@@ -27,12 +27,13 @@
 <div class="form-group">
 	<label class="control-label col-md-1">Email</label>
 	<div class="col-md-3">
-		<input class="form-control" placeholder="Ingrese correo electrónico" type="email" ng-model="paciente.correo" lowercase>
+		<input class="form-control" name='correo' placeholder="Ingrese correo electrónico" type="email" ng-model="paciente.correo" lowercase>
+		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.correo.$pristine) && paciente_form.correo.$error.email">Correo electrónico invalido</label>
+
 	</div>
 	<label class="control-label col-md-1">Celular</label>
 	<div class="col-md-3">
-		<input class="form-control" type="text" ui-mask="(9) 999-9999" ng-model="paciente.celular" name="celular" required>
-		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.celular.$pristine) && paciente_form.celular.$error.required">Debe ingresar celular</label>
+		<input class="form-control" type="text" ui-mask="(9) 999-9999" ng-model="paciente.celular" name="celular">
 	</div>
 	<label class="control-label col-md-1">Teléfono fijo</label>
 	<div class="col-md-3">
