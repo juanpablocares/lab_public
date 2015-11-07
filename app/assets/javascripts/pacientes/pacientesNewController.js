@@ -12,6 +12,7 @@ angular.module('lab').controller('PacientesNewController', function($scope, $aut
 	}; 
 
 	$scope.paciente.clean = function() {
+		console.log('clean paciente');
 		$scope.paciente = {
 			rut_completo : $stateParams.rut_completo
 		};
@@ -20,8 +21,8 @@ angular.module('lab').controller('PacientesNewController', function($scope, $aut
 	$scope.saveNewPaciente = function(value) {
 		if($scope.paciente_form.$valid)
 		{
-			$scope.paciente.rut = parseInt(($scope.paciente.rut_completo) / 10);
-			$scope.paciente.rutdv = parseInt(($scope.paciente.rut_completo) % 10);
+			$scope.paciente.rut = $scope.paciente.rut_completo.substring(0,$scope.paciente.rut_completo.length-1);
+			$scope.paciente.rutdv = $scope.paciente.rut_completo.substring($scope.paciente.rut_completo.length-1,$scope.paciente.rut_completo.length);
 			$scope.paciente.prevision_id = $scope.paciente.prevision.id;
 			$scope.paciente.prevision = null;
 			$scope.paciente.comuna_id = $scope.paciente.comuna.id;
@@ -68,7 +69,6 @@ angular.module('lab').controller('PacientesNewController', function($scope, $aut
 	else {
 		$scope.setRegiones();
 	}
-
 
 	if(!previsionesService.getPrevisiones())
 	{
