@@ -155,7 +155,21 @@
 		<tr>
 			<td><strong>Médico</strong></td>
 			<td colspan="2">
-				<input type="text" ng-model="ficha_edit.medico" typeahead="medico as medico.nombre+' '+ medico.apellido_paterno+' '+medico.apellido_materno for medico in medicosArray | medicoFilter:$viewValue" typeahead-template-url="medicosTemplate.html" class="form-control" typeahead-on-select='seleccionarMedico($model)' required/>
+				<div class="list-group list-medicos-search">
+					<li class="list-group-item">
+						<input class='form-control' ng-model="ficha_edit.medico_input" placeholder='{{ficha_edit.medico.apellido_paterno+" "+ficha_edit.medico.apellido_materno+" "+ficha_edit.medico.nombre}}'/>
+					</li>
+				<div class='list-group' style="overflow-y:scroll; height: 100px;">
+					<a class="list-group-item pointer" ng-class='{active: ficha_edit.medico.id == medico.id}' ng-repeat='medico in medicosArray | medicoFilter:ficha_edit.medico_input | limitTo: limit ' ng-click='seleccionarMedico(medico)'>
+						<span style='height: 25em;'>
+							<phy-rut rut="medico.rut+''+medico.rutdv"></phy-rut>
+				  		</span>
+				  		-
+				  		<span>{{medico.apellido_paterno}}</span>
+				  		<span ng-if="medico.apellido_materno">{{medico.apellido_materno}}</span>
+				  		<span > {{medico.nombre}}</span>
+					</a>
+				</div>
 			</td>
 			<td colspan="2">
 				<button type="button" class="btn btn-danger" ng-click="borrarMedico()" tabindex = "-1" >
@@ -164,6 +178,11 @@
 				<button type="button" class="btn btn-success" ng-click="crearMedico()" tabindex = "-1" >
 					<i class="fa fa-plus" style="margin: 0px 0px 0px 0px;"></i>
 				</button>
+				<button type="button" class="btn btn-warning" ng-click="moreMedicos()" tabindex = "-1" >
+					<i class="fa fa-close" style="margin: 0px 0px 0px 0px;"></i>
+				</button>
+
+
 			</td>
 			<td>
 			</td>

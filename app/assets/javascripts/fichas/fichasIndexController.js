@@ -45,12 +45,15 @@ angular.module('lab').controller('FichasIndexController', function(
 	$scope.countExamenes = 0;
 	$scope.total_prevision = 0;
 
+	var limitStep = 100;
+	$scope.limit = limitStep;
+	$scope.ficha_edit.medico_input = '';
+
 	//Sin ficha, enviar al home
 	if ($stateParams.ficha_id == null)
 	{
 		$state.go('loginRequired.busqueda_ficha');
 	}
-
 	
 	$http.get('/api/especialidades').success(function(data) {
 		$scope.especialidades = data.especialidades;
@@ -281,8 +284,12 @@ angular.module('lab').controller('FichasIndexController', function(
 	}
 
 	$scope.seleccionarMedico = function(model) {
+		console.log('medico seleccionado');
 		$scope.ficha_edit.medico = model;
+		$scope.ficha_edit.medico_input = '';
+
 	}
+
 
 	$scope.seleccionarExamen = function(model2) {
 		var model = angular.copy(model2);
@@ -968,5 +975,10 @@ angular.module('lab').controller('FichasIndexController', function(
 	{
 		$scope.counter++;
 		return $scope.counter;
+	}
+
+	$scope.moreMedicos = function()
+	{
+		$scope.limit  += 100;
 	}
 });

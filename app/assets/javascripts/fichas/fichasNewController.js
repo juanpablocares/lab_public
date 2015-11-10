@@ -34,7 +34,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	$scope.examenesSeleccionados_edit = [];
 	$scope.editExamenes = true;
 	$scope.examenesAgregados = [];
-
+	
 	$http.get('/api/pacientes/' + $stateParams.paciente_id).success(function(data) {
 		//Set of received data to parent paciente object.
 		$scope.paciente = data.data;
@@ -69,9 +69,12 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 
 		if(!medicosService.getMedicos())
 		{
+			console.log('fallo getMedicos');
 			Medicos.buscar.todos().$promise.then(function(data) {
+				console.log(data);
 				medicosService.setMedicos(data.data);
 				$scope.medicosArray = medicosService.getMedicos();
+				console.log($scope.medicosArray);
 				$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha_edit.medico);
 			}, function(response) {
 				console.log("ERROR obteniendo medicos");
@@ -79,6 +82,9 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		}
 		else
 		{
+			console.log('no fallo segun esta wea');
+			console.log($scope.medicosArray);
+
 			$scope.medicosArray = medicosService.getMedicos();
 			$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha_edit.medico);
 		}
