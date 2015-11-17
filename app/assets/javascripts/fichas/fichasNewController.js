@@ -35,6 +35,11 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	$scope.editExamenes = true;
 	$scope.examenesAgregados = [];
 	
+	var limitStep = 100;
+	$scope.limit = limitStep;
+	$scope.ficha_edit.medico_input = '';
+
+
 	$http.get('/api/pacientes/' + $stateParams.paciente_id).success(function(data) {
 		//Set of received data to parent paciente object.
 		$scope.paciente = data.data;
@@ -69,12 +74,9 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 
 		if(!medicosService.getMedicos())
 		{
-			console.log('fallo getMedicos');
 			Medicos.buscar.todos().$promise.then(function(data) {
-				console.log(data);
 				medicosService.setMedicos(data.data);
 				$scope.medicosArray = medicosService.getMedicos();
-				console.log($scope.medicosArray);
 				$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha_edit.medico);
 			}, function(response) {
 				console.log("ERROR obteniendo medicos");
@@ -82,9 +84,6 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		}
 		else
 		{
-			console.log('no fallo segun esta wea');
-			console.log($scope.medicosArray);
-
 			$scope.medicosArray = medicosService.getMedicos();
 			$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha_edit.medico);
 		}
@@ -290,6 +289,12 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		$scope.getPrecioTotal(true);
 	}
 
+	$scope.seleccionarMedico = function(model) {
+		$scope.ficha_edit.medico = model;
+		$scope.ficha_edit.medico_input = '';
+	}
+
+
 	$scope.limpiarTarifas = function() {
 		console.log("limpiarTarifas");
 		console.log($scope.examenesSeleccionados_edit);
@@ -480,6 +485,11 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 			}
 		}
 		$scope.precio_total_edit = total;
+	}
+
+	$scope.moreMedicos = function()
+	{
+		$scope.limit  += 100;
 	}
 });
 

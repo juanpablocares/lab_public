@@ -1,18 +1,24 @@
-angular-aside ![bower version](http://img.shields.io/bower/v/angular-aside.svg)
+angular-aside ![bower version](http://img.shields.io/bower/v/angular-aside.svg) [![npm version](https://badge.fury.io/js/angular-aside.svg)](https://www.npmjs.com/package/angular-aside)
 =============
 
-Off canvas side menu to use with ui-bootstrap. Extends ui-bootstrap's $modal provider.
+Off canvas side menu for use with ui-bootstrap 0.14+. Extends ui-bootstrap's `$uibModal` provider.
+
+:information_desk_person: Please use v1.2.x for ui-bootstrap versions 0.13 and below.
 
 ###[Live Demo](http://plnkr.co/edit/G7vMSv?p=preview)
 
 ##Install
 
-- Install with bower:
+#### Bower:
 ```bash
  $ bower install angular-aside
 ```
-- Include css/js in html.
+Then, include css/js in html.
 
+#### NPM
+```bash
+ $ npm install angular-aside
+```
 
 ##Usage
 
@@ -32,7 +38,7 @@ angular.module('myApp')
   });
 ```
 
-Supports all configuration that `$modal` has. Can be used with both `template` and `templateUrl`. For more info hit **Modal** section on [angular-ui bootstrap](http://angular-ui.github.io/bootstrap) documentation.
+Supports all configuration that `$uibModal` has. Can be used with both `template` and `templateUrl`. For more info hit **Modal** section on [angular-ui bootstrap](http://angular-ui.github.io/bootstrap) documentation.
 
 
 ##Additional Config

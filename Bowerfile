@@ -30,6 +30,9 @@ asset 'pdfmake'
 #font awesome
 asset 'fontawesome'
 
+#event scroll bottom
+asset 'lrInfiniteScroll'
+
 #Agregadas por JP
 #Libreria para el manejo de rut
 asset 'angular-rut'

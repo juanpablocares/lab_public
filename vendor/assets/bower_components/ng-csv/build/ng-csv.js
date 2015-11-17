@@ -27,6 +27,11 @@ angular.module('ngCsv',
         'ngCsv.directives',
         'ngSanitize'
     ]);
+
+// Common.js package manager support (e.g. ComponentJS, WebPack)
+if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.exports === exports) {
+  module.exports = 'ngCsv';
+}
 /**
  * Created by asafdav on 15/05/14.
  */
@@ -125,6 +130,18 @@ angular.module('ngCsv.services').
           arrData = responseData();
         }
 
+        // Check if using keys as labels
+        if (angular.isDefined(options.label) && options.label && typeof options.label === 'boolean') {
+            var labelArray, labelString;
+
+            labelArray = [];
+            angular.forEach(arrData[0], function(value, label) {
+                this.push(that.stringifyField(label, options));
+            }, labelArray);
+            labelString = labelArray.join(options.fieldSep ? options.fieldSep : ",");
+            csvContent += labelString + EOL;
+        }
+
         angular.forEach(arrData, function (oldRow, index) {
           var row = angular.copy(arrData[index]);
           var dataString, infoArray;
@@ -203,7 +220,8 @@ angular.module('ngCsv.directives').
         lazyLoad: '@lazyLoad',
         addByteOrderMarker: "@addBom",
         ngClick: '&',
-        charset: '@charset'
+        charset: '@charset',
+        label: '&csvLabel'
       },
       controller: [
         '$scope',
@@ -234,6 +252,7 @@ angular.module('ngCsv.directives').
             };
             if (angular.isDefined($attrs.csvHeader)) options.header = $scope.$eval($scope.header);
             if (angular.isDefined($attrs.csvColumnOrder)) options.columnOrder = $scope.$eval($scope.columnOrder);
+            if (angular.isDefined($attrs.csvLabel)) options.label = $scope.$eval($scope.label);
 
             options.fieldSep = $scope.fieldSep ? $scope.fieldSep : ",";
 
@@ -274,12 +293,13 @@ angular.module('ngCsv.directives').
             navigator.msSaveBlob(blob, scope.getFilename());
           } else {
 
-            var downloadLink = angular.element('<a></a>');
+            var downloadContainer = angular.element('<div data-tap-disabled="true"><a></a></div>');
+            var downloadLink = angular.element(downloadContainer.children()[0]);
             downloadLink.attr('href', window.URL.createObjectURL(blob));
             downloadLink.attr('download', scope.getFilename());
             downloadLink.attr('target', '_blank');
 
-            $document.find('body').append(downloadLink);
+            $document.find('body').append(downloadContainer);
             $timeout(function () {
               downloadLink[0].click();
               downloadLink.remove();

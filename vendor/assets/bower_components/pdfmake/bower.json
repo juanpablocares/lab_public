@@ -1,6 +1,5 @@
 {
   "name": "pdfmake",
-  "version": "0.1.18",
   "homepage": "https://bpampuch.github.io/pdfmake",
   "authors": [
     "Bartek Pampuch <bartosz.pampuch@gmail.com>"
@@ -20,6 +19,9 @@
   "ignore": [
     "**/.*",
     "Gruntfile.js",
+    "dev-playground",
+    "gulpfile.js",
+    "webpack.config.js",
     "README.md",
     "bootstrap",
     "bower.json",

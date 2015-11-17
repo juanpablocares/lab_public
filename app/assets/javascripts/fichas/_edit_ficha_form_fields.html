@@ -159,7 +159,7 @@
 					<li class="list-group-item">
 						<input class='form-control' ng-model="ficha_edit.medico_input" placeholder='{{ficha_edit.medico.apellido_paterno+" "+ficha_edit.medico.apellido_materno+" "+ficha_edit.medico.nombre}}'/>
 					</li>
-				<div class='list-group' style="overflow-y:scroll; height: 100px;">
+				<div class='list-group' style="overflow-y:scroll; height: 100px;" lr-infinite-scroll="moreMedicos" scroll-threshold="1000">
 					<a class="list-group-item pointer" ng-class='{active: ficha_edit.medico.id == medico.id}' ng-repeat='medico in medicosArray | medicoFilter:ficha_edit.medico_input | limitTo: limit ' ng-click='seleccionarMedico(medico)'>
 						<span style='height: 25em;'>
 							<phy-rut rut="medico.rut+''+medico.rutdv"></phy-rut>
@@ -178,11 +178,6 @@
 				<button type="button" class="btn btn-success" ng-click="crearMedico()" tabindex = "-1" >
 					<i class="fa fa-plus" style="margin: 0px 0px 0px 0px;"></i>
 				</button>
-				<button type="button" class="btn btn-warning" ng-click="moreMedicos()" tabindex = "-1" >
-					<i class="fa fa-close" style="margin: 0px 0px 0px 0px;"></i>
-				</button>
-
-
 			</td>
 			<td>
 			</td>

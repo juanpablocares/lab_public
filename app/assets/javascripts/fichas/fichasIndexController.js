@@ -284,10 +284,8 @@ angular.module('lab').controller('FichasIndexController', function(
 	}
 
 	$scope.seleccionarMedico = function(model) {
-		console.log('medico seleccionado');
 		$scope.ficha_edit.medico = model;
 		$scope.ficha_edit.medico_input = '';
-
 	}
 
 
@@ -968,13 +966,6 @@ angular.module('lab').controller('FichasIndexController', function(
 			//pdfMake.createPdf(docDefinition).print();
 			//pdfMake.createPdf(docDefinition).download('optionalName.pdf');
 		}
-	}
-
-	$scope.counter = 0;
-	$scope.contador = function()
-	{
-		$scope.counter++;
-		return $scope.counter;
 	}
 
 	$scope.moreMedicos = function()

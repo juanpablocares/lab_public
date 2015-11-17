@@ -1,6 +1,6 @@
-# ui-scrollpoint [![Build Status](https://travis-ci.org/angular-ui/ui-scrollpoint.svg?branch=master)](https://travis-ci.org/angular-ui/ui-scrollpoint)
+# ui-scrollpoint [![Build Status](https://travis-ci.org/angular-ui/ui-scrollpoint.svg?branch=master)](https://travis-ci.org/angular-ui/ui-scrollpoint) [![npm version](https://badge.fury.io/js/angular-ui-scrollpoint.svg)](http://badge.fury.io/js/angular-ui-scrollpoint) [![Bower version](https://badge.fury.io/bo/angular-ui-scrollpoint.svg)](http://badge.fury.io/bo/angular-ui-scrollpoint) [![Join the chat at https://gitter.im/angular-ui/ui-scrollpoint](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/angular-ui/ui-scrollpoint?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Provides an easy way to toggle a checkbox input's special 'scrollpoint' property. This is a visual toggle only and in no way affects the model or value outside of native browser behavior at this time.
+Add a 'ui-scrollpoint' class to elements when the page scrolls past them.
 
 ## Requirements
 
@@ -19,7 +19,7 @@ Load the script files in your application:
 
 ```html
 <script type="text/javascript" src="bower_components/angular/angular.js"></script>
-<script type="text/javascript" src="bower_components/angular-ui-scrollpoint/ui-scrollpoint.js"></script>
+<script type="text/javascript" src="bower_components/angular-ui-scrollpoint/dist/scrollpoint.js"></script>
 ```
 
 Add the specific module to your dependencies:
@@ -47,11 +47,10 @@ The karma task will try to open Firefox and Chrome as browser in which to run th
 
 ### How to release
 
-Use npm to update version and create a tag, then push to GitHub:
+Use gulp to bump version, build and create a tag. Then push to GitHub:
 
 ````sh
-gulp && git commit . # if necessary, build everything and commit latest changes
-npm version [major | minor | patch] # let npm update package.json and create a tag
+gulp release [--patch|--minor|--major]
 git push --tags origin master # push everything to GitHub
 ````
 

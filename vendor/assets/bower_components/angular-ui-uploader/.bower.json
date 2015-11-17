@@ -11,12 +11,12 @@
     "angular-mocks": ">=1.0.5",
     "jquery": ">=1.6"
   },
-  "version": "1.1.1",
-  "_release": "1.1.1",
+  "version": "1.1.2",
+  "_release": "1.1.2",
   "_resolution": {
     "type": "version",
-    "tag": "v1.1.1",
-    "commit": "da3d068df4ff2b744500813e92c8740241c3f24c"
+    "tag": "1.1.2",
+    "commit": "4adffde2e0db254e721cf69b57a3ef2428b85db4"
   },
   "_source": "git://github.com/angular-ui/ui-uploader.git",
   "_target": "*",

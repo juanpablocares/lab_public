@@ -34,3 +34,4 @@
 //= require angular-bootstrap
 //= require angular-animate/angular-animate.min.js
 //= require angular-aside
+//= require lrInfiniteScroll

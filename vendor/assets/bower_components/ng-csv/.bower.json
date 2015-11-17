@@ -1,6 +1,6 @@
 {
   "name": "ng-csv",
-  "version": "0.3.4",
+  "version": "0.3.6",
   "main": "build/ng-csv.min.js",
   "dependencies": {
     "angular": "~1",
@@ -11,11 +11,11 @@
     "angular-scenario": "~1"
   },
   "homepage": "https://github.com/asafdav/ng-csv",
-  "_release": "0.3.4",
+  "_release": "0.3.6",
   "_resolution": {
     "type": "version",
-    "tag": "v0.3.4",
-    "commit": "864c6eef08d7f33f7a02eb9785ebaf2087a79ae9"
+    "tag": "v0.3.6",
+    "commit": "6ad5e86785cbc585824268ba065b8a37e7526458"
   },
   "_source": "git://github.com/asafdav/ng-csv.git",
   "_target": "*",
