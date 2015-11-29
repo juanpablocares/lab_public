@@ -24,9 +24,20 @@ class Api::FichasController < ApplicationController
       }, status: 500
       return false
     end
+
+      #check prevision
+  if params.has_key? :prevision
+    if params[:prevision][:id] != ficha.prevision_id
+      paciente = Paciente.find(ficha.paciente_id)
+      paciente.prevision_id = params[:prevision][:id]
+      paciente.save
+      ficha.prevision_id = params[:prevision][:id]
+    end
+  end	
 	
-	ficha.observaciones_pagos = params[:observaciones_pagos]
-	ficha.save
+  ficha.observaciones_pagos = params[:observaciones_pagos]
+	
+  ficha.save
 	
 	render json:
       {

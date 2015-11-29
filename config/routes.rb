@@ -32,7 +32,7 @@ Rails.application.routes.draw do
 		end
 		get 'fichas/:id/input_resultados/', to: 'fichas#input_resultados', defaults: {format: 'json'}
 		get 'fichas/paciente/:id', to: 'fichas#show_bypaciente', defaults: {format: 'json'}
-		post 'fichas/observaciones/:id/:observaciones_pagos', to: 'fichas#observaciones', defaults: {format: 'json'}
+		post 'fichas/observaciones/:id', to: 'fichas#observaciones', defaults: {format: 'json'}
 		post 'fichas/range/:start/:number', to: 'fichas#range', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		post 'fichas/muestras/:start/:number', to: 'fichas#muestras', defaults: {format: 'json'}, constraints: { :start=> /[0-9]+/, :number=> /[0-9]+/ } 
 		get 'fichas/cantidades', to: 'fichas#cantidades', defaults: {format: 'json'}

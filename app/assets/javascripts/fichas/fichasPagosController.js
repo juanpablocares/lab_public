@@ -1,6 +1,6 @@
 angular.module('lab').controller('FichasPagosController', function($scope, 
 	$auth, $state, $http, $stateParams, Ficha, 
-	TiposPagos, Fichas, Perfiles, DetallesPagoFicha, DetallePagoFicha) {
+	TiposPagos, Fichas, Perfiles, DetallesPagoFicha, previsionesService, DetallePagoFicha, Previsiones) {
 	
 	$scope.loading = true;	
 	$scope.precio_total=0;
@@ -13,6 +13,7 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 	$scope.tiposPagoArray = [];
 	$scope.total_bonos = 0;
 	$scope.total_otros = 0;
+	$scope.edit = true;
 	
 	//inicializar input_pago
 	$scope.inicializar_pago = function(){
@@ -42,6 +43,23 @@ angular.module('lab').controller('FichasPagosController', function($scope,
             };
             $scope.nuevoPago.observaciones_pagos = $scope.ficha.observaciones_pagos;
             $scope.paciente = $scope.ficha.paciente;
+            
+            if(!previsionesService.getPrevisiones())
+			{
+				Previsiones.all.get().$promise.then(function(data) {
+					previsionesService.setPrevisiones(data.previsiones);
+					$scope.previsionesArray = previsionesService.getPrevisiones();
+					$scope.prevision = $scope.setPrevisionSeleccionada($scope.ficha.prevision);
+				}, function(data) {
+					console.error('ERROR getting previsiones');
+				});
+			}
+			else
+			{
+				$scope.previsionesArray = previsionesService.getPrevisiones();
+				$scope.prevision = $scope.setPrevisionSeleccionada($scope.ficha.prevision);
+			}
+
 			$scope.ordenarExamenes();
 	});
 
@@ -72,6 +90,11 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 			}
 		}
 		return 0;
+	}
+
+	$scope.seleccionarPrevision = function(prevision)
+	{
+		$scope.prevision = prevision;
 	}
 	
 	$scope.ordenarExamenes = function(tarifa_id) {
@@ -137,19 +160,27 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 		f.$setUntouched();
 	}
 
+	$scope.setPrevisionSeleccionada = function(prevision) {
+		for (var i = 0; i < $scope.previsionesArray.length; i++) {
+			var value = $scope.previsionesArray[i];
+			if (value.id == prevision.id) {
+				return value;
+			}
+		};
+	};
+
 	$scope.guardar_observacion = function(obs){
-		console.log($stateParams.ficha_id);
+		$scope.post = {};
+		$scope.post.observaciones_pagos = obs;
+		$scope.post.prevision = $scope.prevision;
+
 		Fichas.observaciones.update({
-			id: $stateParams.ficha_id,
-			observaciones_pagos: obs
-		}).$promise.then(function(response) {
-			console.log("Ingresada la obs de pagos");
-			console.log(response);
+			id: $stateParams.ficha_id
+		},$scope.post).$promise.then(function(response) {
+			$scope.$emit('showGlobalAlert', {boldMessage: 'Editar Pagos', message: 'Cambios guardados satisfactoriamente.',class: 'alert-success'});
 		}, function(response) {
 			console.log("Error actualizando observaciones pagos");
 		});
-		
-		console.log(obs);
 	}
 	
 	$scope.submitIngresarPagoForm = function(f) {

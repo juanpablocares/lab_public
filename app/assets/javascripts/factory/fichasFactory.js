@@ -61,12 +61,11 @@
 					isArray : false
 				},
 			}),
-			observaciones : $resource("/api/fichas/observaciones/:id/:observaciones_pagos", {
-				id: "@id",
-				observaciones_pagos: "@observaciones_pagos"
+			observaciones : $resource("/api/fichas/observaciones/:id", {
+				id: "@id"
 			}, {
 				update : {
-					method : 'POST',
+					method : 'POST'
 				},
 			}),
 		};
