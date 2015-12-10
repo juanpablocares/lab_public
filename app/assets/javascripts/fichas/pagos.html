@@ -146,7 +146,7 @@
 									<input class="form-control" type="datetime-local" id="fecha_creacion" ng-model="pago.fecha_creacion" ng-change="setPagoChanged(pago,true)"/>
 								</td>
 								<td>{{pago.user.nombre}} {{pago.user.apellido_paterno}}</td>
-								<td><input type="number" ng-model="pago.monto_pagado" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>
+								<td><input type="number" ng-model="pago.monto_pagado" class="form-control text-right" ng-change="setPagoChanged(pago,true)"/></td>
 								<td class="text-center">
 									<a ng-disabled="pago.saving" class="clickable" ng-if="pago.changed" ng-click="pagoUpdate(pago)"><i ng-class="{'text-danger' : pago.saving}" class="fa fa-save fa-fw"></i></a>
 									<a ng-disabled="pago.deleting" class="clickable" ng-click="pagoDelete(pago)"><i ng-class="{'text-danger' : pago.deleting}" class="fa fa-trash-o fa-fw text-danger"></i></a>

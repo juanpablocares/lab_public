@@ -228,8 +228,6 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 
 	$scope.pagoUpdate = function(pago)
 	{
-		console.log(pago.creado);
-
 		pago.tipo_pago_id = pago.tipo_pago.id;
 		pago.saving = true;
 		pago.creado = pago.fecha_creacion.toJSON();
