@@ -184,19 +184,21 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 	}
 	
 	$scope.submitIngresarPagoForm = function(f) {
-		console.log(f);
 		
-		var mssg = "Falta ingresar:\n";
+		var mssg = "Falta ingresar: <ul>";
 		
 		if(!f.tipo_pago)
-			mssg += "Tipo de Pago\n";
+			mssg += "<li>Tipo de Pago</li>";
 		if(!f.n_documento)
-			mssg += "N° documento\n";
+			mssg += "<li>N° documento</li>";
 		if(!f.monto_pagado)
-			mssg += "Monto\n";
+			mssg += "<li>Monto</li>";
 		
+		mssg += "</ul>";
+
 		if(!f.tipo_pago || !f.n_documento || !f.monto_pagado){
 			console.log(mssg);
+			$scope.$emit('showGlobalAlert', {boldMessage: 'Nuevo Pago ', message: mssg,class: 'alert-danger'});
 			return ;
 		}
 		
@@ -210,20 +212,13 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 		};
 		
 		DetallesPagoFicha.root.new(data).$promise.then(function(response) {
-			DetallesPagoFicha.by_ficha_id.all({
-				id : $stateParams.ficha_id
-			}).$promise.then(function(result) {
-				$scope.detallePagos = result.data;
-				for(var i in $scope.detallePagos)
-					$scope.detallePagos[i].fecha_creacion = new Date($scope.detallePagos[i].creado);
-				console.log(result);
-				//$scope.resetIngresarPagoForm(f);
-				$scope.inicializar_pago();
-			}).catch(function(response) {
-				console.error("Error al cargar detalle pagos");
-			});
+			var nuevo_pago = response.data;
+			nuevo_pago.fecha_creacion = new Date(nuevo_pago.creado);
+			nuevo_pago.nuevo = true;
+			$scope.detallePagos.unshift(nuevo_pago);
+			$scope.inicializar_pago();
 		}, function(response) {
-			alert("Error creando el pago");
+			$scope.$emit('showGlobalAlert', {boldMessage: 'Nuevo Pago', message: 'Error al guardar el pago.',class: 'alert-danger'});
 		});
 	}
 

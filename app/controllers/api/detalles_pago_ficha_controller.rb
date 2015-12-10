@@ -13,15 +13,18 @@ class Api::DetallesPagoFichaController < ApplicationController
     end
 
     if params.has_key? :monto_pagado and params[:monto_pagado]
-      if(DetallePagoFicha.create(detalle_pago_ficha_params))
+        results = DetallePagoFicha.new(detalle_pago_ficha_params)
+      if results.save  
         render json: {
           success: true,
           message: 'Detalle pago ficha creado',
-        }, status: 200
+          data: results
+        }, status: 200,  include: [:tipo_pago, {:ficha => { include: [:prevision, :paciente, :procedencia, :medico]}}]
       else
         render json: {
           success: false,
           message: 'Error al crear detalle ficha',
+          data: results.errors
         }, status: 500
       end
     end
