@@ -127,7 +127,7 @@
 								<td><input ng-model="input_pago.n_documento" class="form-control" /></td>
 								<td><input ng-model="input_pago.factura" class="form-control" /></td>
 								<td >
-									<input class="form-control" type="datetime-local" id="fecha_creacion" ng-model="input_pago.fecha_creacion"/>
+									<input class="form-control" ng-model="input_pago.fecha_creacion" type="datetime-local" id="exampleInput" name="input" ng-model="example.value" placeholder="yyyy-MM-ddTHH:mm:ss" />
 								</td>
 								<td>{{input_pago.nombre}}</td>
 								<td><input type="number" ng-model="input_pago.monto_pagado" class="form-control" /></td>
@@ -143,7 +143,7 @@
 								<td><input ng-model="pago.n_documento" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>
 								<td><input ng-model="pago.factura" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>
 								<td >
-									<input class="form-control" type="datetime-local" id="fecha_creacion" ng-model="pago.fecha_creacion" ng-change="setPagoChanged(pago,true)"/>
+									<input class="form-control" type="datetime-local" step="60.0" id="fecha_creacion" ng-model="pago.fecha_creacion" ng-change="setPagoChanged(pago,true)"/>
 								</td>
 								<td>{{pago.user.nombre}} {{pago.user.apellido_paterno}}</td>
 								<td><input type="number" ng-model="pago.monto_pagado" class="form-control text-right" ng-change="setPagoChanged(pago,true)"/></td>
@@ -157,17 +157,17 @@
 							</tr>
 							<tr>
 								<td colspan="7" align="right"><strong>Total Bonos</strong></td>
-								<td class="text-success" align="right">{{total_bonos}}</td>
+								<td class="text-primary" align="right">{{total_bonos}}</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td colspan="7" align="right"><strong>Total Otros</strong></td>
-								<td class="text-success" align="right">{{total_otros}}</td>
+								<td class="text-primary" align="right">{{total_otros}}</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td colspan="7" align="right"><strong>Total Abonos</strong></td>
-								<td class="text-success" align="right">{{getTotalPagos()}}</td>
+								<td class="text-primary" align="right">{{getTotalPagos()}}</td>
 								<td></td>
 							</tr>
 							<tr>
@@ -177,7 +177,7 @@
 							</tr>
 							<tr>
 								<td colspan="7" align="right"><strong>Diferencia</strong></td>
-								<td ng-class="{'text-success': precio_total < getTotalPagos(), 'text-danger': precio_total > getTotalPagos()}" align="right">{{precio_total - getTotalPagos()}}</td>
+								<td ng-class="{'text-primary': precio_total <= getTotalPagos(), 'text-danger': precio_total > getTotalPagos()}" align="right">{{precio_total - getTotalPagos()}}</td>
 								<td></td>
 							</tr>
 						</tbody>

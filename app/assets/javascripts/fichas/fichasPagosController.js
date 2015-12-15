@@ -1,5 +1,5 @@
 angular.module('lab').controller('FichasPagosController', function($scope, 
-	$auth, $state, $http, $stateParams, Ficha, 
+	$auth, $state, $http, $stateParams, Ficha, $interval,
 	TiposPagos, Fichas, Perfiles, DetallesPagoFicha, previsionesService, DetallePagoFicha, Previsiones) {
 	
 	$scope.loading = true;	
@@ -18,10 +18,11 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 	//inicializar input_pago
 	$scope.inicializar_pago = function(){
 		$scope.input_pago = {};
-		$scope.input_pago.fecha_creacion = new Date();
+		var now = new Date();
+		$scope.input_pago.fecha_creacion =  new Date((now.getMonth()+1)+"/"+(now.getDate()<10?"0"+now.getDate():now.getDate())+"/"+now.getFullYear()+" "+now.getHours()+":"+now.getMinutes());
 		$scope.input_pago.nombre = $auth.user.nombre + " " + $auth.user.apellido_paterno;
 	}
-	
+
 	Ficha.get({
         id : $stateParams.ficha_id
 		}, function(datos) {
@@ -144,8 +145,9 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 	}).$promise.then(function(result) {
 		$scope.detallePagos = result.data;
 		for (var i = 0; i < $scope.detallePagos.length; i++)
-		{
-			$scope.detallePagos[i].fecha_creacion = new Date($scope.detallePagos[i].creado);
+		{	
+			var now = new Date($scope.detallePagos[i].creado);
+			$scope.detallePagos[i].fecha_creacion =  new Date((now.getMonth()+1)+"/"+(now.getDate()<10?"0"+now.getDate():now.getDate())+"/"+now.getFullYear()+" "+now.getHours()+":"+now.getMinutes());
 		}
 		$scope.inicializar_pago();
 		$scope.loading = false;
