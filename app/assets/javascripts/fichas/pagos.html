@@ -44,59 +44,14 @@
 					</tr>
 				</tbody>
 			</table>
-				<form class="form-horizontal" name="ingresarPagoForm" novalidate>
-				<!--
-				<div >
-					<h4>Ingresar Documentos</h4>
-					<table class="table">
-						<tr>
-							<th>Tipo de pago</th>
-							<td>
-								<div ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_tipo_pago.$error.required)}">
-									<select class="form-control" ng-model="nuevoPago.tipo_pago" ng-options="tipoPago.nombre for tipoPago in tiposPagoArray track by tipoPago.id | orderBy:'nombre'" name="tipo_pago" required></select>
-									<label class="error" ng-if="(ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_tipo_pago.$error.required)">Seleccione un tipo de pago.</label>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th>N° Documento</th>
-							<td>
-								<div ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_numero_documento.$error.required)}">
-									<input class="form-control" ng-model="nuevoPago.numero_documento" name="nuevo_pago_numero_documento" type="number" required>
-									<label class="error" ng-if="(ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_numero_documento.$error.required)">Ingrese el número del documento.</label>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th>Monto</th>
-							<td>
-								<div ng-class="{'has-error' : (ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_monto.$error.required)}">
-									<input class="form-control" ng-model="nuevoPago.monto" name="nuevo_pago_monto" type="number" required>
-									<label class="error" ng-if="(ingresarPagoForm.$submitted && ingresarPagoForm.nuevo_pago_monto.$error.required)">Ingrese el monto pagado.</label>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<div>
-					<button type="submit" ng-click="submitIngresarPagoForm(ingresarPagoForm)" class="btn btn-success">
-						Ingresar
-					</button>
-					<button type="button" ng-click="resetIngresarPagoForm(ingresarPagoForm)" class="btn btn-primary">
-						Limpiar
-					</button>
-				</div>
-				-->
+			<form class="form-horizontal" name="ingresarPagoForm" novalidate>
 				<div class="form-group">
 					<label for="observaciones" class="control-label"><strong>Observaciones pagos</strong></label>
-					<div >
+					<div>
 						<textarea ng-model="nuevoPago.observaciones_pagos" type="text" class="form-control" name="observaciones" placeholder="Ingresar observaciones"></textarea>
 					</div>
-					<button type="button" ng-click="guardar_observacion(nuevoPago.observaciones_pagos)" class="btn btn-warning">
+					<button type="button" ng-click="guardar_observacion(nuevoPago.observaciones_pagos)" class="btn btn-warning pull-right">
 						Guardar
-					</button>
-					<button type="button" ui-sref="loginRequired.fichas.info({ficha_id: ficha.id})" class="btn btn-danger">
-						Volver
 					</button>
 				</div>
 			</form>
@@ -106,7 +61,7 @@
 				Pagos realizados
 			</div>
 			<div class="row widget-content padded">
-				<div >
+				<div class="form-group" >
 					<table class="table">
 						<thead>
 							<th> </th>
@@ -115,9 +70,9 @@
 							<th > N° Doc.</th>
 							<th > Factura</th>
 							<th> Fecha </th>
-							<th> Recaudador </th>
 							<th> Monto </th>
-							<th class="text-center"> </th>
+							<th> Recaudador </th>
+							<th class="text-center"></th>
 						</thead>
 						<tbody>
 							<tr>
@@ -129,8 +84,8 @@
 								<td >
 									<input class="form-control" ng-model="input_pago.fecha_creacion" type="datetime-local" id="exampleInput" name="input" ng-model="example.value" placeholder="yyyy-MM-ddTHH:mm:ss" />
 								</td>
-								<td>{{input_pago.nombre}}</td>
 								<td><input type="number" ng-model="input_pago.monto_pagado" class="form-control" /></td>
+								<td>{{input_pago.nombre}}</td>
 								<td class="text-center">
 									<a class="clickable" ng-click="submitIngresarPagoForm(input_pago)"><i class="fa fa-save fa-fw"></i></a>
 								</td>
@@ -145,8 +100,8 @@
 								<td >
 									<input class="form-control" type="datetime-local" step="60.0" id="fecha_creacion" ng-model="pago.fecha_creacion" ng-change="setPagoChanged(pago,true)"/>
 								</td>
-								<td>{{pago.user.nombre}} {{pago.user.apellido_paterno}}</td>
 								<td><input type="number" ng-model="pago.monto_pagado" class="form-control text-right" ng-change="setPagoChanged(pago,true)"/></td>
+								<td>{{pago.user.nombre}} {{pago.user.apellido_paterno}}</td>
 								<td class="text-center">
 									<a ng-disabled="pago.saving" class="clickable" ng-if="pago.changed" ng-click="pagoUpdate(pago)"><i ng-class="{'text-danger' : pago.saving}" class="fa fa-save fa-fw"></i></a>
 									<a ng-disabled="pago.deleting" class="clickable" ng-click="pagoDelete(pago)"><i ng-class="{'text-danger' : pago.deleting}" class="fa fa-trash-o fa-fw text-danger"></i></a>
@@ -156,36 +111,42 @@
 								<td colspan="9"><h4>No hay pagos realizados aún.</h4></td>
 							</tr>
 							<tr>
-								<td colspan="7" align="right"><strong>Total Bonos</strong></td>
+								<td colspan="6" align="right"><strong>Total Bonos</strong></td>
 								<td class="text-primary" align="right">{{total_bonos}}</td>
-								<td></td>
+								<td colspan="2"></td>
 							</tr>
 							<tr>
-								<td colspan="7" align="right"><strong>Total Otros</strong></td>
+								<td colspan="6" align="right"><strong>Total Otros</strong></td>
 								<td class="text-primary" align="right">{{total_otros}}</td>
-								<td></td>
+								<td colspan="2"></td>
 							</tr>
 							<tr>
-								<td colspan="7" align="right"><strong>Total Abonos</strong></td>
+								<td colspan="6" align="right"><strong>Total Abonos</strong></td>
 								<td class="text-primary" align="right">{{getTotalPagos()}}</td>
-								<td></td>
+								<td colspan="2"></td>
 							</tr>
 							<tr>
-								<td colspan="7" align="right"><strong>Total exámenes</strong></td>
+								<td colspan="6" align="right"><strong>Total exámenes</strong></td>
 								<td class="text-danger" align="right">{{precio_total}}</td>
-								<td></td>
+								<td colspan="2"></td>
 							</tr>
 							<tr>
-								<td colspan="7" align="right"><strong>Diferencia</strong></td>
+								<td colspan="6" align="right"><strong>Diferencia</strong></td>
 								<td ng-class="{'text-primary': precio_total <= getTotalPagos(), 'text-danger': precio_total > getTotalPagos()}" align="right">{{precio_total - getTotalPagos()}}</td>
-								<td></td>
+								<td colspan="2"></td>
 							</tr>
 						</tbody>
 					</table>
+					<div class="form-group text-center">
+						<button type="button" ui-sref="loginRequired.fichas.info({ficha_id: ficha.id})" class="btn btn-danger">
+							Volver
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 </div>
 <div ng-if="loading" class="row text-center">
 	<i class="fa fa-spinner fa-pulse fa-2x"></i>
