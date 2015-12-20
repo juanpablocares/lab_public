@@ -10,7 +10,7 @@
 
  */
 
-angular.module('lab').controller('FichasNewController', function($scope, $auth, $state,
+angular.module('lab').controller('FichasNewController', function($scope, $auth, $state, $filter,
  $http, $resource, $stateParams, Previsiones, Examenes, Perfiles,
   Cotizaciones, Cotizacion, Procedencias, Ficha, ngDialog,
    Fichas, Medicos, medicosService, previsionesService, examenesService, procedenciasService, perfilesService) {
@@ -34,6 +34,19 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	$scope.examenesSeleccionados_edit = [];
 	$scope.editExamenes = true;
 	$scope.examenesAgregados = [];
+
+	$scope.medicosFiltered = [];
+	$scope.medicoDisplayStyle = {
+		apellido_paterno : 0,
+		apellido_materno : 0,
+		nombre : 0,
+		especialidad : 0,
+		apellido_paterno_style : 'display: inline-block; width: 6ex;',
+		apellido_materno_style : 'display: inline-block; width: 6ex;',
+		nombre_style : 'display: inline-block; width: 6ex;',
+		especialidad_style : 'display: inline-block; width: 6ex;'
+	};
+
 	
 	var limitStep = 100;
 	$scope.limit = limitStep;
@@ -87,6 +100,9 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 			$scope.medicosArray = medicosService.getMedicos();
 			$scope.medico.selected = $scope.setMedicoSeleccionado($scope.ficha_edit.medico);
 		}
+
+		$scope.medicosFiltered = $filter('medicoFilter')($scope.medicosArray, $scope.ficha_edit.medico_input);
+		$scope.medicosFiltered = $filter('limitTo')($scope.medicosArray, $scope.limit);
 
 		if(!procedenciasService.getProcedencias())
 		{
@@ -490,6 +506,37 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	$scope.moreMedicos = function()
 	{
 		$scope.limit  += 100;
+		$scope.medicosFiltered = $filter('medicoFilter')($scope.medicosArray, $scope.ficha_edit.medico_input);
+		$scope.medicosFiltered = $filter('limitTo')($scope.medicosArray, $scope.limit);		
 	}
+
+	// watch medicosArray
+	// watch medico_input
+	$scope.$watch('medicosArray',function(newQuery,oldQuery){
+		$scope.medicosFiltered = $filter('medicoFilter')(newQuery, $scope.ficha_edit.medico_input);
+		$scope.medicosFiltered = $filter('limitTo')(newQuery, $scope.limit);
+	});
+	$scope.$watch('ficha_edit.medico_input',function(newQuery,oldQuery){
+		$scope.medicosFiltered = $filter('medicoFilter')($scope.medicosArray, newQuery);
+		$scope.medicosFiltered = $filter('limitTo')($scope.medicosArray, $scope.limit);	
+	});
+
+	$scope.$watch('medicosFiltered',function(newQuery,oldQuery){
+		console.log('medicosFiltered');
+		for (var i = newQuery.length - 1; i >= 0; i--) {
+			var medicoFiltrado = newQuery[i];
+			if (medicoFiltrado.apellido_paterno.length > $scope.medicoDisplayStyle.apellido_paterno) $scope.medicoDisplayStyle.apellido_paterno = medicoFiltrado.apellido_paterno.length;
+			if (medicoFiltrado.apellido_materno && medicoFiltrado.apellido_materno.length > $scope.medicoDisplayStyle.apellido_materno) $scope.medicoDisplayStyle.apellido_materno = medicoFiltrado.apellido_materno.length;
+			if (medicoFiltrado.nombre.length > $scope.medicoDisplayStyle.nombre) $scope.medicoDisplayStyle.nombre = medicoFiltrado.nombre.length;
+			if (medicoFiltrado.especialidad && medicoFiltrado.especialidad.nombre.length > $scope.medicoDisplayStyle.especialidad) $scope.medicoDisplayStyle.especialidad = medicoFiltrado.especialidad.nombre.length;
+		};
+
+		var ratio = 2;
+
+		$scope.medicoDisplayStyle.apellido_paterno_style = 'display: inline-block; width: '+$scope.medicoDisplayStyle.apellido_paterno/ratio+'em;';
+		$scope.medicoDisplayStyle.apellido_materno_style = 'display: inline-block; width: '+$scope.medicoDisplayStyle.apellido_materno/ratio+'em;';
+		$scope.medicoDisplayStyle.nombre_style = 'display: inline-block; width: '+$scope.medicoDisplayStyle.nombre/ratio+'em;';
+		$scope.medicoDisplayStyle.especialidad_style = 'display: inline-block; width: '+$scope.medicoDisplayStyle.especialidad/ratio+'em;';
+	});
 });
 
