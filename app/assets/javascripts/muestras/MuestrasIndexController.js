@@ -1,6 +1,10 @@
-angular.module('lab').controller('MuestrasIndexController', function($scope, $auth, $state, $http, $stateParams, Ficha, Fichas, DetallesFicha, ngDialog, Examen, DetalleFicha) {
-	
-	console.log("ngDialog example");
+angular.module('lab').controller('MuestrasIndexController', 
+	function($scope, $auth, $state, $http, 
+		$stateParams, Ficha, Fichas, DetallesFicha, 
+		ngDialog, Examen, DetalleFicha) {
+
+	$scope.examenesSeleccionados = [];
+	$scope.ficha = {};
 
 	$scope.showModal = function(examen_id)
 	{
@@ -40,6 +44,15 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 			return ~~anios + " Años " + ~~meses + " meses";
 		}
 	};
+	
+	//console.log("Muestra Examenes");
+	$scope.$on('fichaFromMenu', function(event, data) {
+		$scope.ficha = data;
+		$scope.ficha.paciente.fecha_nacimiento = new Date($scope.ficha.paciente.fecha_nacimiento);
+		$scope.ficha.paciente.fecha_nacimiento =  new Date($scope.ficha.paciente.fecha_nacimiento.getUTCFullYear(), $scope.ficha.paciente.fecha_nacimiento.getUTCMonth(), $scope.ficha.paciente.fecha_nacimiento.getUTCDate());
+		$scope.ficha.paciente.edad = $scope.getEdad($scope.ficha.paciente.fecha_nacimiento);
+		$scope.masterFicha = angular.copy($scope.ficha);
+	});
 
 	//Obtener ficha buscada
 	Ficha.get({
@@ -55,6 +68,7 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 		console.error('Error al obtener ficha');
 		$state.go('loginRequired.index');
 	});
+
 	//console.log($scope.ficha);
 	//Falta colocar info si se cambia de tab
 	
@@ -63,33 +77,11 @@ angular.module('lab').controller('MuestrasIndexController', function($scope, $au
 		$scope.ficha.paciente.edad = $scope.getEdad(ficha.paciente.fecha_nacimiento);
 		$scope.masterFicha = angular.copy($scope.ficha);
 	}
-	
-	//console.log("Muestra Examenes");
-	$scope.$on('fichaFromMenu', function(event, data) {
-		$scope.ficha = data;
-		$scope.ficha.paciente.fecha_nacimiento = new Date($scope.ficha.paciente.fecha_nacimiento);
-		$scope.ficha.paciente.fecha_nacimiento =  new Date($scope.ficha.paciente.fecha_nacimiento.getUTCFullYear(), $scope.ficha.paciente.fecha_nacimiento.getUTCMonth(), $scope.ficha.paciente.fecha_nacimiento.getUTCDate());
-		$scope.ficha.paciente.edad = $scope.getEdad($scope.ficha.paciente.fecha_nacimiento);
-		$scope.masterFicha = angular.copy($scope.ficha);
-	});
 
 	//Sin ficha, enviar al home
 	if ($stateParams.ficha_id == null)
 		$state.go('loginRequired.index');
 
-	//Obtener ficha buscada
-	Fichas.id.get({
-		id : $stateParams.ficha_id
-	}).$promise.then(function(result) {
-		//console.log("getficha");
-		$scope.ficha = result.data;
-		$scope.ordenarExamenes();
-	}).catch(function(response) {
-		$state.go('loginRequired.index');
-	});
-
-	$scope.examenesSeleccionados = [];
-	$scope.ficha = {};
 	
 	$scope.cambiarEstadoBoton = function(item) {
 		//console.log("Definitivo");

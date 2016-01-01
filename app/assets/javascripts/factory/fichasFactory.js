@@ -10,7 +10,7 @@
 					isArray : false,
 				},
 			}),
-			id : $resource("/api/fichas/:id", {
+			id : $resource("/api/fichas/show/:id", {
 				id : '@id'
 			}, {
 				get : {

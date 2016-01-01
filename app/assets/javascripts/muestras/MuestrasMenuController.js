@@ -1,4 +1,4 @@
-angular.module('lab').controller('MuestrasMenuController', function($scope, $http, $stateParams, $auth, $state) {
+angular.module('lab').controller('MuestrasMenuController', function($scope, $http, $stateParams, $auth, $state, Ficha) {
 
 	$scope.state = $state;
 
@@ -15,11 +15,14 @@ angular.module('lab').controller('MuestrasMenuController', function($scope, $htt
 	$scope.$on('fichaFromEdit', function(event, data) {
 		$scope.ficha = data;
 	});
-	
-	$http.get('/api/fichas/' + $stateParams.ficha_id).success(function(data) {
+
+	Ficha.get({
+		id : $stateParams.ficha_id
+	}).$promise.then(function(data) {
 		$scope.ficha = data.data;
 		$scope.$broadcast('fichaFromMenu', $scope.ficha);
-	}).error(function(data) {
+	}).catch(function(data) {
+		console.log("Error obteniendo ficha desde MuestrasMenuController");
 		$state.go('loginRequired.index');
 	});
 });
