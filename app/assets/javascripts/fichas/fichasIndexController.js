@@ -725,6 +725,46 @@ angular.module('lab').controller('FichasIndexController', function(
 		});
 	};
 	
+	$scope.editarMedico = function(medico) {
+		$scope.medico_edit = medico;
+		$scope.medico_edit.rut_completo = $scope.medico_edit.rut + "" + $scope.medico_edit.rutdv;
+		var modal = ngDialog.open({
+			className: 'ngdialog-theme-laboratorios',
+			template: "editar_medico.html",
+			scope: $scope
+		});
+	};
+	
+	$scope.editar_medico = function(data){
+		if(data.rut_completo != null){
+			data.rut = parseInt(data.rut_completo / 10);
+			data.rutdv = parseInt(data.rut_completo % 10);
+			if(data.especialidad)
+				data.especialidad_id = data.especialidad.id;
+			else
+				data.especialidad_id = null;
+			if(data.institucion)
+				data.institucion_id = data.institucion.id;
+			else
+				data.institucion_id = null;
+			
+			console.log(data);
+			
+			Medico.update({id:data.id}, data).$promise.then(function(response) {
+				$scope.$emit('showGlobalAlert', {boldMessage: 'Médico editado', message: 'Medico editado satisfactoriamente.',class: 'alert-success'});
+				
+				for(var i = 0; i < $scope.medicosArray.length; i++)
+					if($scope.medicosArray[i].id == data.id)
+						$scope.medicosArray[i] = data;
+				
+			}, function(response) {
+				$scope.$emit('showGlobalAlert', {boldMessage: 'Médico editado', message: 'Modificación fallida.',class: 'alert-danger'});
+				console.log("ERROR editando medico");
+			});
+		}
+		ngDialog.closeAll();
+	};
+	
 	$scope.guardar_medico = function(medico_form, data){
 		if(medico_form.$valid)
 		{

@@ -1,6 +1,6 @@
 class Api::MedicosController < ApplicationController
 	def index
-		medicos = Medico.all
+		medicos = Medico.all.order(:apellido_paterno)
 		render json: {
 		          success: true,
 		          message: 'Listado de medicos encontrado',
@@ -129,6 +129,6 @@ class Api::MedicosController < ApplicationController
 	end
 	
 	def medico_params
-		params.permit(:rut, :rutdv, :nombre, :apellido_paterno, :apellido_paterno, :direccion, :especialidad_id, :institucion_id, :telefono)
+		params.permit(:rut, :rutdv, :nombre, :apellido_paterno, :apellido_paterno, :direccion, :especialidad_id, :institucion_id, :telefono, :genero, :titulo)
 	end
 end
