@@ -8,6 +8,20 @@ class Api::InstitucionesController < ApplicationController
 				}, status: 200
 	end
 	
+	def delete
+		if Institucion.find(params[:id]).destroy
+			render json: {
+				  success: true,
+				  message: 'Institucion successfully deleted',
+				}, status: 200
+		else
+			render json: {
+				  success: false,
+				  message: 'Error eliminando Institucion',
+				}, status: 500
+		end
+	end
+	
 	def update_all
 		@result = params[:instituciones]
 		@result.each do |r|
@@ -29,5 +43,41 @@ class Api::InstitucionesController < ApplicationController
 			  success: true,
 			  message: 'Instituciones successfully modified',
 			}, status: 200
+	end
+	
+	def show
+		if @results = Institucion.find(params[:id])
+			render json: {
+				  success: true,
+				  message: 'Institucion encontrada',
+				  institucion: @results,
+				}, status: 200, include: [:especialidad]
+		end
+	end
+	
+	def create
+		institucion = Institucion.new(institucion_params)
+	      
+		begin
+			institucion.save
+		    rescue ActiveRecord::RecordInvalid => invalid
+	    	render json: {
+	          success: false,
+	          message: 'Institucion cannot be created',
+	          institucion: institucion,
+	          error: invalid.record.errors
+	      	}.to_json, status: 500
+	      	return false
+	    end
+		render json: {
+          success: true,
+          message: 'Institucion successfully created',
+          institucion: institucion,
+        }.to_json, status: 200
+        return true
+	end
+	
+	def institucion_params
+		params.permit(:codigo, :nombre, :descripcion)
 	end
 end

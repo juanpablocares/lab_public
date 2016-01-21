@@ -68,8 +68,10 @@ Rails.application.routes.draw do
 		put 'indicaciones_muestra/', to: 'indicaciones_muestra#update_all', defaults: {format: 'json'}
 		delete 'indicaciones_muestra/:id', to: 'indicaciones_muestra#delete', defaults: {format: 'json'}
 		#Controladores instituciones
-		put 'instituciones/update_all/', to: 'instituciones#update_all', defaults: {format: 'json'}
+		post 'instituciones/', to: 'instituciones#create', defaults: {format: 'json'}
+		put 'instituciones/update_all', to: 'instituciones#update_all', defaults: {format: 'json'}
 		delete 'instituciones/:id', to: 'instituciones#delete', defaults: {format: 'json'}
+		get 'instituciones/:id', to: 'instituciones#show', defaults: {format: 'json'}
 		#Controladores de hora preoceso examenes
 		get 'horaproceso_examenes/examen/:examen_id', to: 'horaproceso_examenes#by_examen', defaults: {format: 'json'}
 		put 'horaproceso_examenes/', to: 'horaproceso_examenes#update_all', defaults: {format: 'json'}

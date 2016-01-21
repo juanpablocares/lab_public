@@ -510,7 +510,21 @@
 			templateUrl : "medicos/index.html",
 			controller : 'MedicosNuevoController',
 			params: {medico: null}
-		});			
+		});
+		
+		$stateProvider.state('loginRequired.medicos.instituciones', {
+			url : '/instituciones',
+			templateUrl : "medicos/instituciones.html",
+			controller : 'MedicosInstitucionesController',
+			params: {medico: null}
+		});	
+		
+		$stateProvider.state('loginRequired.medicos.especialidades', {
+			url : '/especialidades',
+			templateUrl : "medicos/especialidades.html",
+			controller : 'MedicosEspecialidadesController',
+			params: {medico: null}
+		});	
 		
 		/*Estadisticas*/
 		$stateProvider.state('loginRequired.estadisticas', {

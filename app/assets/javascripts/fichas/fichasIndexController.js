@@ -748,8 +748,14 @@ angular.module('lab').controller('FichasIndexController', function(
 			else
 				data.institucion_id = null;
 			
+			console.log(data);
+			
 			Medico.update({id:data.id}, data).$promise.then(function(response) {
 				$scope.$emit('showGlobalAlert', {boldMessage: 'Médico editado', message: 'Medico editado satisfactoriamente.',class: 'alert-success'});
+				
+				for(var i = 0; i < $scope.medicosArray.length; i++)
+					if($scope.medicosArray[i].id == data.id)
+						$scope.medicosArray[i] = data;
 				
 			}, function(response) {
 				$scope.$emit('showGlobalAlert', {boldMessage: 'Médico editado', message: 'Modificación fallida.',class: 'alert-danger'});

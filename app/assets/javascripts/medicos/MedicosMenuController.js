@@ -10,6 +10,14 @@ angular.module('lab').controller('MedicosMenuController', function($scope, $http
 		name : 'Nuevo',
 		state : 'loginRequired.medicos.nuevo',
 		id : 'loginRequired.medicos.nuevo',
+	},{
+		name : 'Instituciones',
+		state : 'loginRequired.medicos.instituciones',
+		id : 'loginRequired.medicos.instituciones',
+	},{
+		name : 'Especialidades',
+		state : 'loginRequired.medicos.especialidades',
+		id : 'loginRequired.medicos.especialidades',
 	}];
 	
 });

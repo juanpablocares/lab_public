@@ -10,6 +10,42 @@
   </a>
 </script>
 
+<script type="text/ng-template" id="create_institucion.html">
+	<h3>Crear institución</h3>
+	<form class="form-horizontal" name="medico_form" ng-submit="guardar_institucion(institucion_nueva) && closeThisDialog()" novalidate>
+		<div class="form-group">
+			<label class="control-label col-md-2">Código</label>
+			<div class="col-md-4">
+				<input class="form-control" placeholder="Ingrese código" type="text" ng-model="institucion_nueva.codigo" name="codigo" required>
+				<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.nombre.$pristine) && medico_form.nombre.$error.required">Debe ingresar codigo</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">Institución</label>
+			<div class="col-md-4">
+				<input class="form-control" placeholder="Ingrese Institución" type="text" ng-model="institucion_nueva.nombre" name="apellido_paterno" required>
+				<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.apellido_paterno.$pristine) && medico_form.apellido_paterno.$error.required">Debe ingresar nombre</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">Descripción</label>
+			<div class="col-md-4">
+				<input class="form-control" placeholder="Ingrese descripcion" type="text" ng-model="institucion_nueva.descripcion">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-11 text-right">
+				<button type="submit" class="btn btn-primary">
+					Guardar
+				</button>
+				<button type="button" class="btn btn-danger" ng-click="closeThisDialog()">
+					Volver
+				</button>
+			</div>
+		</div>
+	</form>
+</script>
+
 <script type="text/ng-template" id="create_medico.html">
 	<h3>Ingreso información nuevo médico</h3>
 	<form class="form-horizontal" name="medico_form" ng-submit="guardar_medico(medico_form, medico_nuevo) && closeThisDialog()" novalidate>
@@ -22,8 +58,8 @@
 			<label class="control-label col-md-2 col-sm-6">Género</label>
 			<div class="col-sm-4">
 				<select class="form-control" ng-model="medico_nuevo.genero" ng-init="medico_nuevo.genero = 1">
-					<option value='0'> Femenino</option>
-					<option value='1'> Masculino</option>
+					<option value=0> Femenino</option>
+					<option value=1> Masculino</option>
 				</select>
 			</div>
 		</div>
@@ -31,8 +67,8 @@
 			<label class="control-label col-md-2">Nombres</label>
 			<div class="col-md-2">
 				<select class="form-control" ng-model="medico_nuevo.titulo" ng-init="medico_nuevo.titulo = 1">
-					<option value='0'> Dra. </option>
-					<option value='1'> Dr. </option>
+					<option value=0> Dra. </option>
+					<option value=1> Dr. </option>
 				</select>
 			</div>
 			<div class="col-md-8">
@@ -74,6 +110,9 @@
 			<div class="col-md-4">
 				<select class="form-control" ng-model="medico_nuevo.institucion" ng-options="i.nombre for i in instituciones track by i.id | orderBy:'nombre'" name="institucion"></select>
 				<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.institucion.$pristine) && medico_form.institucion.$error.required">Debe ingresar institucion</label>
+				<button type="button" class="btn btn-success" ng-click="crearInstitucion()" tabindex = "-1" >
+					<i class="fa fa-plus" style="margin: 0px 0px 0px 0px;"></i>
+				</button>
 			</div>
 		</div>
 		<div class="form-group">
@@ -100,8 +139,8 @@
 			<label class="control-label col-md-2 col-sm-6">Género</label>
 			<div class="col-sm-4">
 				<select class="form-control" ng-model="medico_edit.genero" ng-init="medico_edit.genero = 1">
-					<option value='0'> Femenino</option>
-					<option value='1'> Masculino</option>
+					<option value=0> Femenino</option>
+					<option value=1> Masculino</option>
 				</select>
 			</div>
 		</div>
@@ -109,8 +148,8 @@
 			<label class="control-label col-md-2">Nombres</label>
 			<div class="col-md-2">
 				<select class="form-control" ng-model="medico_edit.titulo" ng-init="medico_edit.titulo = 1">
-					<option value='0'> Dra. </option>
-					<option value='1'> Dr. </option>
+					<option value=0> Dra. </option>
+					<option value=1> Dr. </option>
 				</select>
 			</div>
 			<div class="col-md-8">
@@ -152,6 +191,9 @@
 			<div class="col-md-4">
 				<select class="form-control" ng-model="medico_edit.institucion" ng-options="i.nombre for i in instituciones track by i.id | orderBy:'nombre'" name="institucion"></select>
 				<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.institucion.$pristine) && medico_form.institucion.$error.required">Debe ingresar institucion</label>
+				<button type="button" class="btn btn-success" ng-click="crearInstitucion()" tabindex = "-1" >
+					<i class="fa fa-plus" style="margin: 0px 0px 0px 0px;"></i>
+				</button>
 			</div>
 		</div>
 		<div class="form-group">
