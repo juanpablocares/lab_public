@@ -9,6 +9,13 @@
 					method : 'PUT',
 				},
 			}),
+			buscar : $resource("/api/instituciones", {
+			}, {
+				todos : {
+					method : 'GET',
+					isArray: false,
+				},
+			}),
 		};
 	});
 	

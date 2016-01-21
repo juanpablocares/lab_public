@@ -4,7 +4,7 @@ class Api::InstitucionesController < ApplicationController
 		render json: {
 				  success: true,
 				  message: 'Instituciones encontradas',
-				  instituciones: @results,
+				  data: @results,
 				}, status: 200
 	end
 	
@@ -50,7 +50,7 @@ class Api::InstitucionesController < ApplicationController
 			render json: {
 				  success: true,
 				  message: 'Institucion encontrada',
-				  institucion: @results,
+				  data: @results,
 				}, status: 200, include: [:especialidad]
 		end
 	end
@@ -64,7 +64,7 @@ class Api::InstitucionesController < ApplicationController
 	    	render json: {
 	          success: false,
 	          message: 'Institucion cannot be created',
-	          institucion: institucion,
+	          data: institucion,
 	          error: invalid.record.errors
 	      	}.to_json, status: 500
 	      	return false
@@ -72,7 +72,7 @@ class Api::InstitucionesController < ApplicationController
 		render json: {
           success: true,
           message: 'Institucion successfully created',
-          institucion: institucion,
+          data: institucion,
         }.to_json, status: 200
         return true
 	end

@@ -1,8 +1,9 @@
 angular.module('lab').controller('FichasIndexController', function(
+
 	$scope, $auth, $state, $http, $stateParams, $filter,
-	Fichas, Previsiones, Perfiles, Medicos, Medico, ngDialog,
+	Fichas, Previsiones, Perfiles, Medicos, Medico, ngDialog, Instituciones, Institucion,
 	Procedencias, Examenes, DetallesPagoFicha, 
-	Ficha, previsionesService, examenesService, medicosService,
+	Ficha, previsionesService, examenesService, medicosService, institucionesService, 
 	procedenciasService, perfilesService) {
 
 	//Esta vista tiene campos editables, con $scope.edit aviso a las vistas si mostrar algunos campos editables o fijos.
@@ -23,6 +24,7 @@ angular.module('lab').controller('FichasIndexController', function(
 	$scope.prevision = {};
 	$scope.examenes = {};
 	$scope.perfiles = {};
+	$scope.institucionesArray = [];
 	
 	$scope.precio_total = 0;
 	$scope.copago_total = 0;
@@ -73,12 +75,6 @@ angular.module('lab').controller('FichasIndexController', function(
 		// log error
 	});
 	
-	$http.get('/api/instituciones').success(function(data) {
-		$scope.instituciones = data.instituciones;
-	}).error(function(data) {
-		// log error
-	});
-	
 	Ficha.get({
         id : $stateParams.ficha_id
 		}).$promise.then(function(datos) {
@@ -106,6 +102,20 @@ angular.module('lab').controller('FichasIndexController', function(
 
 			$scope.medicosFiltered = $filter('medicoFilter')($scope.medicosArray, $scope.ficha_edit.medico_input);
 			$scope.medicosFiltered = $filter('limitTo')($scope.medicosArray, $scope.limit);
+
+			if(!institucionesService.getInstituciones())
+			{
+				Instituciones.buscar.todos().$promise.then(function(data) {
+					institucionesService.setInstituciones(data.data);
+					$scope.institucionesArray = institucionesService.getInstituciones();
+				}, function(data) {
+					console.error('ERROR getting instituciones');
+				});
+			}
+			else
+			{
+				$scope.instituciones = institucionesService.getInstituciones();
+			}
 
 			if(!procedenciasService.getProcedencias())
 			{
@@ -724,6 +734,14 @@ angular.module('lab').controller('FichasIndexController', function(
 			scope: $scope
 		});
 	};
+
+	$scope.crearInstitucion = function() {
+		var modal = ngDialog.open({
+			className: 'ngdialog-theme-laboratorios',
+			template: "create_institucion.html",
+			scope: $scope
+		});
+	};
 	
 	$scope.editarMedico = function(medico) {
 		$scope.medico_edit = medico;
@@ -785,7 +803,7 @@ angular.module('lab').controller('FichasIndexController', function(
 					var medico_creado = response.data;
 					medicosService.addMedico(medico_creado );
 					$scope.ficha_edit.medico = medico_creado ;
-					$scope.ficha_edit.medico_id = medico_creado .id;
+					$scope.ficha_edit.medico_id = medico_creado.id;
 				}, function(response) {
 					$scope.$emit('showGlobalAlert', {boldMessage: 'Nuevo médico', message: 'Creación de médico fallida.',class: 'alert-danger'});
 					console.log("ERROR creando medico");
@@ -793,6 +811,21 @@ angular.module('lab').controller('FichasIndexController', function(
 			}
 			ngDialog.closeAll();
 		}	
+	};
+
+	$scope.guardar_institucion = function(institucion_form, data){
+		if(institucion_form.$valid)
+		{
+			Institucion.new(data).$promise.then(function(response) {
+				var institucion_creada = response.data;
+				institucionesService.addInstitucion(institucion_creada);
+				}, 
+			function(response) {
+				$scope.$emit('showGlobalAlert', {boldMessage: 'Nuevo institucion', message: 'Creación de institucion fallida.',class: 'alert-danger'});
+				console.log("ERROR creando institucion");
+			});
+			ngDialog.closeAll();
+		}
 	};
 	
 	$scope.validate_form = function(ficha_form) {
