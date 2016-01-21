@@ -51,10 +51,10 @@ angular.module('lab').controller('FichasIndexController', function(
 		apellido_materno : 0,
 		nombre : 0,
 		especialidad : 0,
-		apellido_paterno_style : 'display: inline-block; width: 6ex;',
-		apellido_materno_style : 'display: inline-block; width: 6ex;',
-		nombre_style : 'display: inline-block; width: 6ex;',
-		especialidad_style : 'display: inline-block; width: 6ex;'
+		apellido_paterno_style : 'display: inline-block; width: 5ex;',
+		apellido_materno_style : 'display: inline-block; width: 5ex;',
+		nombre_style : 'display: inline-block; width: 5ex;',
+		especialidad_style : 'display: inline-block; width: 5ex;'
 	};
 
 	var limitStep = 100;
@@ -1013,10 +1013,10 @@ angular.module('lab').controller('FichasIndexController', function(
 
 		var ratio = 2;
 
-		$scope.medicoDisplayStyle.apellido_paterno_style = 'display: inline-block; width: '+$scope.medicoDisplayStyle.apellido_paterno/ratio+'em;';
-		$scope.medicoDisplayStyle.apellido_materno_style = 'display: inline-block; width: '+$scope.medicoDisplayStyle.apellido_materno/ratio+'em;';
-		$scope.medicoDisplayStyle.nombre_style = 'display: inline-block; width: '+$scope.medicoDisplayStyle.nombre/ratio+'em;';
-		$scope.medicoDisplayStyle.especialidad_style = 'display: inline-block; width: '+$scope.medicoDisplayStyle.especialidad/ratio+'em;';
+		$scope.medicoDisplayStyle.apellido_paterno_style = 'display: inline-block; width: '+($scope.medicoDisplayStyle.apellido_paterno/ratio)+'em;';
+		$scope.medicoDisplayStyle.apellido_materno_style = 'display: inline-block; width: '+($scope.medicoDisplayStyle.apellido_materno/ratio)+'em;';
+		$scope.medicoDisplayStyle.nombre_style = 'display: inline-block; width: '+($scope.medicoDisplayStyle.nombre/ratio)+'em;';
+		$scope.medicoDisplayStyle.especialidad_style = 'display: inline-block; width: '+($scope.medicoDisplayStyle.especialidad/ratio)+'em;';
 	});
 
 });

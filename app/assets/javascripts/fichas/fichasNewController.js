@@ -443,7 +443,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 				$state.go('loginRequired.fichas.info', {
 					ficha_id : response.data.id
 				});
-				$scope.$emit('showGlobalAlert', {message: 'Ficha creada satisfactoriamente.',boldMessage: 'Ficha N° '+response.data.id ,class: 'alert-success'});
+				//$scope.$emit('showGlobalAlert', {message: 'Ficha creada satisfactoriamente.',boldMessage: 'Ficha N° '+response.data.id ,class: 'alert-success'});
 			}, function(response) {
 				console.log("ERROR creando ficha");
 				console.log(response);
