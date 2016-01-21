@@ -3,7 +3,7 @@ angular.module('lab').controller('MedicosInstitucionesController', function($sco
 	$scope.isLoading = true;
 
 	$http.get('/api/instituciones').success(function(data) {
-		$scope.instituciones = data.instituciones;
+		$scope.instituciones = data.data;
 		for(i = 0; i < $scope.instituciones.length; i++)
 			$scope.instituciones[i].boton_agregar = true;
 		$scope.isLoading = false;
@@ -44,7 +44,7 @@ angular.module('lab').controller('MedicosInstitucionesController', function($sco
 			});
 			
 		$http.get('/api/instituciones').success(function(data) {
-			$scope.instituciones = data.instituciones;
+			$scope.instituciones = data.data;
 			for(i = 0; i < $scope.instituciones.length; i++)
 				$scope.instituciones[i].boton_agregar = true;
 			$scope.isLoading = false;
