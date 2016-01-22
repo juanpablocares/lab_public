@@ -809,7 +809,7 @@ angular.module('lab').controller('FichasIndexController', function(
 					console.log("ERROR creando medico");
 				});
 			}
-			ngDialog.closeAll();
+			return true;
 		}	
 	};
 
@@ -824,7 +824,7 @@ angular.module('lab').controller('FichasIndexController', function(
 				$scope.$emit('showGlobalAlert', {boldMessage: 'Nuevo institucion', message: 'Creación de institucion fallida.',class: 'alert-danger'});
 				console.log("ERROR creando institucion");
 			});
-			ngDialog.closeAll();
+			return true;
 		}
 	};
 	
