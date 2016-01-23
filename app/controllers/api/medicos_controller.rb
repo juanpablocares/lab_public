@@ -5,7 +5,7 @@ class Api::MedicosController < ApplicationController
 		          success: true,
 		          message: 'Listado de medicos encontrado',
 		          data: medicos,
-		        }, status: 200,  include: [:especialidad]
+		        }, status: 200,  include: [:especialidad, :institucion]
 	end
 	
 	def cantidades_ficha
@@ -18,7 +18,7 @@ class Api::MedicosController < ApplicationController
 				success: true,
 				message: '[cantidades] Fichas por medico encontradas',
 				data: @result,
-			}, status: 200,   include: [:especialidad]
+			}, status: 200,   include: [:especialidad, :institucion]
 		end
 	end
   
@@ -31,7 +31,7 @@ class Api::MedicosController < ApplicationController
 				success: true,
 				message: '[cantidades] Medicos encontradas',
 				data: @result,
-			}, status: 200,  include: [:especialidad]
+			}, status: 200,  include: [:especialidad, :institucion]
 		end
 	end
 	
@@ -62,7 +62,7 @@ class Api::MedicosController < ApplicationController
 			  message: 'Medicos encontrados',
 			  numberOfPages: numberOfPages,
 			  data: results,
-			}, status: 200, include: [:especialidad]
+			}, status: 200, include: [:especialidad , :institucion]
 	end
 	
 	def show
@@ -71,7 +71,7 @@ class Api::MedicosController < ApplicationController
 				  success: true,
 				  message: 'Medico encontrado',
 				  medico: @results,
-				}, status: 200, include: [:especialidad]
+				}, status: 200, include: [:especialidad , :institucion]
 		end
 	end
 	
@@ -82,7 +82,7 @@ class Api::MedicosController < ApplicationController
 		          success: true,
 		          message: 'Medico successfully modified',
 		          medico: @results,
-		        }, status: 200 ,  include: [:especialidad]
+		        }, status: 200 ,  include: [:especialidad, :institucion]
 		else
 			render json: {
 		          success: false,
