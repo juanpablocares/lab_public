@@ -12,7 +12,7 @@
 
 angular.module('lab').controller('FichasNewController', function($scope, $auth, $state, $filter,
  $http, $resource, $stateParams, Previsiones, Examenes, Perfiles,
-  Cotizaciones, Cotizacion, Procedencias, Ficha, Medicos, Medico, Instituciones, ngDialog,
+  Cotizaciones, Cotizacion, Procedencias, Ficha, Medicos, Medico, Instituciones, ngDialog,Especialidades, Especialidad, especialidadesService,
    Fichas, Medicos, medicosService, institucionesService, previsionesService, examenesService, procedenciasService, perfilesService) {
 
 	$scope.edit = true;
@@ -143,6 +143,8 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 			$scope.procedenciasArray = procedenciasService.getProcedencias();
 		}
 
+
+
 		if(!examenesService.getExamenes())
 		{
 			Examenes.all.index({
@@ -158,6 +160,19 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		{
 			$scope.examenes = examenesService.getExamenes();
 			$scope.crearExamenesArray();
+		}
+		if(!especialidadesService.getEspecialidades())
+		{
+			Especialidades.buscar.todos().$promise.then(function(data) {
+				especialidadesService.setEspecialidades(data.data);
+				$scope.especialidadesArray = especialidadesService.getEspecialidades();
+			}, function(data) {
+				console.error('ERROR getting especialidades');
+			});
+		}
+		else
+		{
+			$scope.especialidadesArray = especialidadesService.getEspecialidades();
 		}
 
 		if(!previsionesService.getPrevisiones())
@@ -477,6 +492,30 @@ $scope.crearMedico = function() {
 				$scope.$emit('showGlobalAlert', {boldMessage: 'Nuevo institucion', message: 'Creación de institucion fallida.',class: 'alert-danger'});
 				console.log("ERROR creando institucion");
 			});
+		}
+	};
+
+	$scope.crearEspecialidad = function() {
+		var modal = ngDialog.open({
+			className: 'ngdialog-theme-laboratorios',
+			template: "fichas/templates/create_especialidad.html",
+			scope: $scope
+		});
+	};
+
+	$scope.guardar_especialidad = function(especialidad_form, data){
+		if(especialidad_form.$valid)
+		{
+			Especialidad.new(data).$promise.then(function(response) {
+				var especialidad_nuevo = response.data;
+				especialidadesService.addEspecialidad(especialidad_nuevo);
+				
+			}, 
+			function(response) {
+				$scope.$emit('showGlobalAlert', {boldMessage: 'Nueva especialidad', message: 'Creación de especialidad fallida.',class: 'alert-danger'});
+				console.log("ERROR creando especialidad");
+			});
+			return true;
 		}
 	};
 	

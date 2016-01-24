@@ -16,6 +16,9 @@
 				delete : {
 					method : 'DELETE',
 				},
+				new : {
+					method: 'POST',
+				}
 			});
 	});
 	

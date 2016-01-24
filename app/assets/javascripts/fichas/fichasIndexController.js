@@ -2,8 +2,8 @@ angular.module('lab').controller('FichasIndexController', function(
 
 	$scope, $auth, $state, $http, $stateParams, $filter,
 	Fichas, Previsiones, Perfiles, Medicos, Medico, ngDialog, Instituciones, Institucion,
-	Procedencias, Examenes, DetallesPagoFicha, 
-	Ficha, previsionesService, examenesService, medicosService, institucionesService, 
+	Procedencias, Examenes, DetallesPagoFicha, Especialidades, Especialidad,
+	Ficha, previsionesService, examenesService, medicosService, institucionesService, especialidadesService,
 	procedenciasService, perfilesService) {
 
 	//Esta vista tiene campos editables, con $scope.edit aviso a las vistas si mostrar algunos campos editables o fijos.
@@ -25,6 +25,7 @@ angular.module('lab').controller('FichasIndexController', function(
 	$scope.examenes = {};
 	$scope.perfiles = {};
 	$scope.institucionesArray = [];
+	$scope.especialidadesArray = [];
 	
 	$scope.precio_total = 0;
 	$scope.copago_total = 0;
@@ -114,7 +115,21 @@ angular.module('lab').controller('FichasIndexController', function(
 			}
 			else
 			{
-				$scope.instituciones = institucionesService.getInstituciones();
+				$scope.institucionesArray = institucionesService.getInstituciones();
+			}
+
+			if(!especialidadesService.getEspecialidades())
+			{
+				Especialidades.buscar.todos().$promise.then(function(data) {
+					especialidadesService.setEspecialidades(data.data);
+					$scope.especialidadesArray = especialidadesService.getEspecialidades();
+				}, function(data) {
+					console.error('ERROR getting especialidades');
+				});
+			}
+			else
+			{
+				$scope.especialidadesArray = especialidadesService.getEspecialidades();
 			}
 
 			if(!procedenciasService.getProcedencias())
@@ -816,6 +831,31 @@ angular.module('lab').controller('FichasIndexController', function(
 				$scope.$emit('showGlobalAlert', {boldMessage: 'Nuevo institucion', message: 'Creación de institucion fallida.',class: 'alert-danger'});
 				console.log("ERROR creando institucion");
 			});
+		}
+	};
+	
+
+	$scope.crearEspecialidad = function() {
+		var modal = ngDialog.open({
+			className: 'ngdialog-theme-laboratorios',
+			template: "fichas/templates/create_especialidad.html",
+			scope: $scope
+		});
+	};
+
+	$scope.guardar_especialidad = function(especialidad_form, data){
+		if(especialidad_form.$valid)
+		{
+			Especialidad.new(data).$promise.then(function(response) {
+				var especialidad_nuevo = response.data;
+				especialidadesService.addEspecialidad(especialidad_nuevo);
+				
+			}, 
+			function(response) {
+				$scope.$emit('showGlobalAlert', {boldMessage: 'Nueva especialidad', message: 'Creación de especialidad fallida.',class: 'alert-danger'});
+				console.log("ERROR creando especialidad");
+			});
+			return true;
 		}
 	};
 	

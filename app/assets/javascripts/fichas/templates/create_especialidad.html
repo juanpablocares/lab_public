@@ -1,0 +1,33 @@
+<h3>Crear especialidad</h3>
+<form class="form-horizontal" name="especialidad_form" ng-submit="guardar_especialidad(especialidad_form, especialidad_nueva) && closeThisDialog()" novalidate>
+	<div class="form-group">
+		<label class="control-label col-md-2">Código</label>
+		<div class="col-md-4">
+			<input class="form-control" placeholder="Ingrese código" type="text" ng-model="especialidad_nueva.codigo" name="codigo" required>
+			<label class="text-danger" ng-if="(especialidad_form.$submitted || !especialidad_form.codigo.$pristine) && especialidad_form.codigo.$error.required">Debe ingresar codigo</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-md-2">Especialidad</label>
+		<div class="col-md-4">
+			<input class="form-control" placeholder="Ingrese especialidad" type="text" ng-model="especialidad_nueva.nombre" name="nombre" required>
+			<label class="text-danger" ng-if="(especialidad_form.$submitted || !especialidad_form.nombre.$pristine) && especialidad_form.nombre.$error.required">Debe ingresar nombre</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-md-2">Descripción</label>
+		<div class="col-md-4">
+			<input class="form-control" placeholder="Ingrese descripcion" type="text" ng-model="especialidad_nueva.descripcion">
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-11 text-right">
+			<button type="submit" class="btn btn-primary">
+				Guardar
+			</button>
+			<button type="button" class="btn btn-danger" ng-click="closeThisDialog()">
+				Volver
+			</button>
+		</div>
+	</div>
+</form>

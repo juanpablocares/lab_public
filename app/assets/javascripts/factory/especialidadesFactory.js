@@ -9,6 +9,13 @@
 					method : 'PUT',
 				},
 			}),
+			buscar : $resource("/api/especialidades", {
+			}, {
+				todos : {
+					method : 'GET',
+					isArray: false,
+				},
+			}),
 		};
 	});
 	

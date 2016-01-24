@@ -4,8 +4,22 @@ class Api::EspecialidadesController < ApplicationController
 		render json: {
 				  success: true,
 				  message: 'Especialidades encontradas',
-				  especialidades: @results,
+				  data: @results,
 				}, status: 200
+	end
+	
+	def delete
+		if Especialidad.find(params[:id]).destroy
+			render json: {
+				  success: true,
+				  message: 'Especialidad successfully deleted',
+				}, status: 200
+		else
+			render json: {
+				  success: false,
+				  message: 'Error eliminando Especialidad',
+				}, status: 500
+		end
 	end
 	
 	def update_all
@@ -29,5 +43,41 @@ class Api::EspecialidadesController < ApplicationController
 			  success: true,
 			  message: 'Especialidades successfully modified',
 			}, status: 200
+	end
+	
+	def show
+		if @results = Especialidad.find(params[:id])
+			render json: {
+				  success: true,
+				  message: 'Especialidad encontrada',
+				  data: @results,
+				}, status: 200, include: [:especialidad]
+		end
+	end
+	
+	def create
+		especialidad = Especialidad.new(especialidad_params)
+	      
+		begin
+			especialidad.save
+		    rescue ActiveRecord::RecordInvalid => invalid
+	    	render json: {
+	          success: false,
+	          message: 'Especialidad cannot be created',
+	          data: especialidad,
+	          error: invalid.record.errors
+	      	}.to_json, status: 500
+	      	return false
+	    end
+		render json: {
+          success: true,
+          message: 'Especialidad successfully created',
+          data: especialidad,
+        }.to_json, status: 200
+        return true
+	end
+	
+	def especialidad_params
+		params.permit(:codigo, :nombre, :descripcion)
 	end
 end

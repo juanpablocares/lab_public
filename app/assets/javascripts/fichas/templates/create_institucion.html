@@ -4,14 +4,14 @@
 		<label class="control-label col-md-2">Código</label>
 		<div class="col-md-4">
 			<input class="form-control" placeholder="Ingrese código" type="text" ng-model="institucion_nueva.codigo" name="codigo" required>
-			<label class="text-danger" ng-if="(institucion_form.$submitted || !institucion_form.nombre.$pristine) && institucion_form.nombre.$error.required">Debe ingresar codigo</label>
+			<label class="text-danger" ng-if="(institucion_form.$submitted || !institucion_form.codigo.$pristine) && institucion_form.codigo.$error.required">Debe ingresar codigo</label>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-md-2">Institución</label>
 		<div class="col-md-4">
-			<input class="form-control" placeholder="Ingrese Institución" type="text" ng-model="institucion_nueva.nombre" name="apellido_paterno" required>
-			<label class="text-danger" ng-if="(institucion_form.$submitted || !institucion_form.apellido_paterno.$pristine) && institucion_form.apellido_paterno.$error.required">Debe ingresar nombre</label>
+			<input class="form-control" placeholder="Ingrese Institución" type="text" ng-model="institucion_nueva.nombre" name="nombre" required>
+			<label class="text-danger" ng-if="(institucion_form.$submitted || !institucion_form.nombre.$pristine) && institucion_form.nombre.$error.required">Debe ingresar nombre</label>
 		</div>
 	</div>
 	<div class="form-group">

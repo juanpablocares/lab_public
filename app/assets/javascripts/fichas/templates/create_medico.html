@@ -52,10 +52,13 @@
 		<div class="form-group">
 			<label class="control-label col-md-2">Especialidad</label>
 			<div class="col-md-4">
-				<select class="form-control" ng-model="medico_nuevo.especialidad" ng-options="e.nombre for e in especialidades track by e.id | orderBy:'nombre'" name="especialidad" required>
+				<select class="form-control" ng-model="medico_nuevo.especialidad" ng-options="e.nombre for e in especialidadesArray track by e.id | orderBy:'nombre'" name="especialidad" required>
 					<option value=""></option>
 				</select>
 				<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.especialidad.$pristine) && medico_form.especialidad.$error.required">Debe ingresar especialidad</label>
+				<button type="button" class="btn btn-success" ng-click="crearEspecialidad()" tabindex = "-1" >
+					<i class="fa fa-plus" style="margin: 0px 0px 0px 0px;"></i>
+				</button>
 			</div>
 			<label class="control-label col-md-2">Institución</label>
 			<div class="col-md-4">
