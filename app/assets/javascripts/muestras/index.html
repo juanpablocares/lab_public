@@ -83,7 +83,7 @@
 				<th >Demora</th>
 			</thead>
 			<tbody>
-				<tr ng-repeat="item in examenesSeleccionados track by $index">
+				<tr ng-repeat="item in examenesSeleccionados track by $index | orderBy:'item.examen.nombre'">
 					<td>{{$index + 1}}</td>
 					<td>{{item.codigo}}</td>
 					<td ng-click="showModal(item.examen.id)" style="cursor: pointer;">{{item.examen.nombre}}</td>

@@ -94,11 +94,10 @@ angular.module('lab').controller('MuestrasIndexController',
 			id : item.id
 		}).$promise.then(function(results) {
 			detalle_ficha = results.data;
-
 			if (detalle_ficha.usuario_muestra_id != null) {
 				item.estado.class = 'success';
 				item.estado.text = 'Muestra realizada';
-				item.nombre_completo = detalle.usuario_muestra.nombre + " " + detalle.usuario_muestra.apellido_paterno;
+				item.nombre_completo = detalle_ficha.usuario_muestra.nombre + " " + detalle_ficha.usuario_muestra.apellido_paterno;
 			}
 			else {
 				item.estado.class = 'warning';
@@ -112,6 +111,7 @@ angular.module('lab').controller('MuestrasIndexController',
 
 	$scope.ordenarExamenes = function() {
 		var i = 0;
+		console.log($scope.ficha.detalles_ficha);
 		while (i < $scope.ficha.detalles_ficha.length) {
 			value = $scope.ficha.detalles_ficha[i];
 			if (value.perfil_id != null) {
@@ -141,6 +141,7 @@ angular.module('lab').controller('MuestrasIndexController',
 					}
 					else
 						j++;
+					$scope.ficha.detalles_ficha[j] = value2;
 				}
 			}
 			else {
