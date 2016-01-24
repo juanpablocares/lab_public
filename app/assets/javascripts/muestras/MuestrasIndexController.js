@@ -63,7 +63,8 @@ angular.module('lab').controller('MuestrasIndexController',
 			$scope.ficha.paciente.fecha_nacimiento =  new Date(result.data.paciente.fecha_nacimiento.getUTCFullYear(), result.data.paciente.fecha_nacimiento.getUTCMonth(), result.data.paciente.fecha_nacimiento.getUTCDate());
 			$scope.ficha.paciente.edad = $scope.getEdad(result.data.paciente.fecha_nacimiento);
 			$scope.masterFicha = angular.copy($scope.ficha);
-			//console.log($scope.masterFicha);
+			console.log('ordenar');
+			$scope.ordenarExamenes();
 	}).catch(function(response) {
 		console.error('Error al obtener ficha');
 		$state.go('loginRequired.index');
