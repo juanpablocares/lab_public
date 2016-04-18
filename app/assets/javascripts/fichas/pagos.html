@@ -58,7 +58,18 @@
 		</div>
 		<div class="widget-container fluid-height col-md-9" ng-if="!loading">
 			<div class="heading">
-				Pagos realizados
+				<table class="table table-condensed">
+					<tbody>
+						<tr ng-if="ficha.id">	
+							<td>Pagos realizados</td>
+							<td class="success"><strong>N° Ficha
+							</strong></td>
+							<td class="success">
+								{{ficha.id}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 			<div class="row widget-content padded">
 				<div class="form-group" >
