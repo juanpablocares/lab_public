@@ -20,6 +20,17 @@
                 var medicos = this.getMedicos();
                 medicos.push(medico);
                 this.setMedicos(medicos);
+            },
+            removeMedico: function(medico)
+            {
+                var medicos = this.getMedicos();
+                for (var i = medicos.length - 1; i >= 0; i--) {
+                    if(medicos[i].id == medico.id)
+                    {
+                        medicos.splice(i,1);
+                    } 
+                };
+                this.setMedicos(medicos);
             }
         };
     });

@@ -330,10 +330,29 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 	};
 
 	$scope.borrarMedico = function() {
+
+		if($scope.ficha_edit.medico != null)
+		{
+			Medico.delete($scope.ficha_edit.medico).$promise.then(function(response) {
+				$scope.$emit('showGlobalAlert', {boldMessage: 'Borrar médico', message: 'Medico eliminado satisfactoriamente.',class: 'alert-warning'});
+				medicosService.removeMedico($scope.ficha_edit.medico);
+				$scope.limpiarMedico();
+			}, function(response) {	
+				$scope.$emit('showGlobalAlert', {boldMessage: 'Nuevo médico', message: 'Eliminacion de médico fallida.',class: 'alert-danger'});
+				console.log("ERROR borrando medico");
+			});
+		}
+		else
+		{
+			console.log("Medico no existe");
+		}
+	};
+
+	$scope.limpiarMedico = function() {
 		$scope.ficha_edit.medico = null;
 		$scope.ficha_edit.medico_id = null;
 		$scope.medico.selected = null;
-	}
+	};
 
 	$scope.seleccionarPrevision = function(prevision, select)
 	{
