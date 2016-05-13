@@ -31,6 +31,16 @@
                     } 
                 };
                 this.setMedicos(medicos);
+            },
+            getMedicoByRut: function(rut)
+            {
+                var medicos = this.getMedicos();
+                for (var i = medicos.length - 1; i >= 0; i--) {
+                    if(medicos[i].rut == rut)
+                    {
+                        return medicos[i];
+                    } 
+                };
             }
         };
     });

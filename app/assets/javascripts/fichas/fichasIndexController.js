@@ -756,6 +756,23 @@ angular.module('lab').controller('FichasIndexController', function(
 		}
 	};
 
+	$scope.buscarMedicoPorRut = function(medico_nuevo)
+	{
+		console.log(medico_nuevo);
+		console.log($scope.medico_nuevo);
+		var data = {};
+		data.rut = parseInt(medico_nuevo.rut_completo / 10);
+		data.rutdv = parseInt(medico_nuevo.rut_completo % 10);
+		
+		var medico = medicosService.getMedicoByRut(data.rut);
+		if(medico != null)
+		{
+			$scope.medico_nuevo = medico;
+			$scope.medico_nuevo.rut_completo = $scope.medico_nuevo.rut + "" + $scope.medico_nuevo.rutdv;
+		}
+		console.log($scope.medico_nuevo);
+	}
+
 	$scope.limpiarMedico = function() {
 		$scope.ficha_edit.medico = null;
 		$scope.ficha_edit.medico_id = null;
@@ -778,7 +795,8 @@ angular.module('lab').controller('FichasIndexController', function(
 		var modal = ngDialog.open({
 			className: 'ngdialog-theme-laboratorios',
 			template: "fichas/templates/create_medico.html",
-			scope: $scope
+			scope: $scope,
+			disableAnimation: true
 		});
 	};
 	

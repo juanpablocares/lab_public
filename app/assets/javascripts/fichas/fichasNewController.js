@@ -420,7 +420,7 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 		}
 		console.log("END limpiarTarifas");
 	}
-$scope.crearMedico = function() {
+	$scope.crearMedico = function() {
 		$scope.medico_nuevo = {};
 		var modal = ngDialog.open({
 			className: 'ngdialog-theme-laboratorios',
@@ -428,6 +428,19 @@ $scope.crearMedico = function() {
 			scope: $scope
 		});
 	};
+
+	$scope.buscarMedicoPorRut = function(medico_nuevo)
+	{
+		var data = {};
+		data.rut = parseInt(medico_nuevo.rut_completo / 10);
+		data.rutdv = parseInt(medico_nuevo.rut_completo % 10);
+		
+		var medico = medicosService.getMedicoByRut(data.rut);
+		if(medico != null)
+		{
+			$scope.medico_nuevo = medico;
+		}
+	}
 	
 	$scope.editarMedico = function(medico) {
 
