@@ -96,20 +96,22 @@ angular.module('lab').controller('NavBarController', function($rootScope, $state
         }
     };
     $scope.searchByRut = function(value) {
-        $scope.searchForm.rut_value = "";
         $scope.searchFormTemp.$setPristine();
-        console.log(value);
         if($scope.searchRutForm.$valid)
         {
+            $scope.searchForm.rut_value = "";
+        
             $state.go('loginRequired.busqueda_paciente', {
                 rut_completo: value
             });
+
         }
         else
         {
             $scope.$emit('showGlobalAlert', {boldMessage: 'Buscar paciente', message: 'Formato de rut inválido.',class: 'alert-danger'});
         }
     };
+
     $scope.searchByText = function(value) {
         $scope.searchForm.text_value = "";
         $scope.searchFormTemp.$setPristine();
