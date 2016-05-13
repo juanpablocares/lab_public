@@ -5,6 +5,7 @@
 			<div class="col-sm-4">
 				<input ng-rut rut-format="live" ng-model="medico_nuevo.rut_completo" class="form-control" type="text" name="rut_completo" ng-change="buscarMedicoPorRut(medico_nuevo)" required>
 				<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.rut_completo.$pristine) && medico_form.rut_completo.$error.required">Debe ingresar rut del medico</label>
+				<label class="text-danger" ng-if="!medico_form.rut_completo.$pristine && !medico_form.rut_completo.$valid &&!medico_form.rut_completo.$error.required">Rut invalido</label>
 			</div>
 			<label class="control-label col-md-2 col-sm-6">Género</label>
 			<div class="col-sm-4">
