@@ -1,7 +1,7 @@
 <h3>Ingreso información nuevo médico</h3>
 	<form class="form-horizontal" name="medico_form" ng-submit="guardar_medico(medico_form, medico_nuevo) && closeThisDialog()" novalidate>
 		<div class="form-group">
-			<label class="control-label col-md-2 col-sm-6">Rut</label>
+			<label class="control-label col-md-2 col-sm-6">Rut(*)</label>
 			<div class="col-sm-4">
 				<input ng-rut rut-format="live" ng-model="medico_nuevo.rut_completo" class="form-control" type="text" name="rut_completo" ng-change="buscarMedicoPorRut(medico_nuevo)" required>
 				<label class="text-danger" ng-if="(medico_form.$submitted || !medico_form.rut_completo.$pristine) && medico_form.rut_completo.$error.required">Debe ingresar rut del medico</label>
@@ -17,11 +17,9 @@
 		</div>
 		<div class="form-group">
 			<label class="control-label col-md-2">Nombres</label>
-			<div class="col-md-2">
-				<select class="form-control" ng-model="medico_nuevo.titulo">
-					<option value=0> Dra. </option>
-					<option value=1> Dr. </option>
-				</select>
+			<div class="col-md-1">
+				<div ng-if="medico_nuevo.genero == 0">Dra.</div>
+				<div ng-if="medico_nuevo.genero == 1">Dr.</div>
 			</div>
 			<div class="col-md-8">
 				<input class="form-control" placeholder="Ingrese nombres" type="text" ng-model="medico_nuevo.nombre" name="nombre" required>

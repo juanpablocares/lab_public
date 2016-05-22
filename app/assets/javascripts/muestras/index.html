@@ -76,6 +76,7 @@
 				<th >Muestra</th>
 				<th >Indicaciones</th>
 				<th >Opciones</th>
+				<th >Fecha</th>
 				<th >Urgente</th> 
 				<th >Flebotomista</th>
 				<th >Proceso</th>
@@ -92,6 +93,9 @@
 					<td data-toggle="tooltip" data-placement="top" title="{{item.examen.indicacion.descripcion}}">{{item.examen.indicacion.codigo}}</td>
 					<td>
 						<button type="button" class="btn btn-{{item.estado.class}}" ng-click="cambiarEstadoBoton(item)"><i class="fa fa-pulse fa-spinner" ng-if="item.estado.class=='info'"></i> {{item.estado.text}}</button>
+					</td>
+					<td >
+						{{item.fecha_muestra| date:'dd-MM-yyyy HH:mm'}}
 					</td>
 					<td style="text-align:center;"><input type="checkbox" ng-model="item.urgente" ng-change="actualizar_urgencia(item)"></td>
 					<td>{{item.nombre_completo}}</td>

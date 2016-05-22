@@ -89,7 +89,7 @@ angular.module('lab').controller('MuestrasIndexController',
 		estado = item.estado;
 		item.estado.class = 'info';
 		item.estado.text = 'Cargando';
-
+		item.fecha = new Date();
 		DetallesFicha.switch_muestra.put({
 			id : item.id
 		}).$promise.then(function(results) {
@@ -97,12 +97,14 @@ angular.module('lab').controller('MuestrasIndexController',
 			if (detalle_ficha.usuario_muestra_id != null) {
 				item.estado.class = 'success';
 				item.estado.text = 'Muestra realizada';
+				item.fecha_muestra = results.data.fecha_muestra;
 				item.nombre_completo = detalle_ficha.usuario_muestra.nombre + " " + detalle_ficha.usuario_muestra.apellido_paterno;
 			}
 			else {
 				item.estado.class = 'warning';
 				item.estado.text = 'Muestra pendiente';
 				item.nombre_completo = "";
+				item.fecha_muestra = "";
 		}}).catch(function(results) {
 			console.log('Error cambiando el estado de la toma de muestra');
 			item.estado = estado;
