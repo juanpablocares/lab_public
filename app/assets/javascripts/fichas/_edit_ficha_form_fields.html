@@ -102,11 +102,21 @@
 										<phy-rut rut="medico.rut+''+medico.rutdv"></phy-rut>
 							  		</span>
 							  		-
+							  		<span >{{medico.apellido_paterno}} </span>
+							  		<span >{{medico.apellido_materno}} </span>
+							  		<span >{{medico.nombre}} </span>
+							  		-
+							  		<span >{{medico.especialidad.nombre}}</span>
+									<!-- LISTA DE MEDICOS SEPARADOS POR ESPACIO FIJO, DESPUES DE QUE SE PIDIO QUE TUVIERAN ESPACIO FIJO SE PIDE QUE SE SEPAREN POR ESPACIO DE NUEVO -->
+									<!--span style='display: inline-block; width: 7em;' class="text-right">
+										<phy-rut rut="medico.rut+''+medico.rutdv"></phy-rut>
+							  		</span>
+							  		-
 							  		<span style="{{medicoDisplayStyle.apellido_paterno_style}}">{{medico.apellido_paterno}}</span>
 							  		<span style='{{medicoDisplayStyle.apellido_materno_style}}'>{{medico.apellido_materno}}</span>
 							  		<span style='{{medicoDisplayStyle.nombre_style}}'>{{medico.nombre}}</span>
 							  		-
-							  		<span style='{{medicoDisplayStyle.especialidad_style}}'>{{medico.especialidad.nombre}}</span>
+							  		<span style='{{medicoDisplayStyle.especialidad_style}}'>{{medico.especialidad.nombre}}</span!-->
 								</a>
 							</div>
 						</div>
