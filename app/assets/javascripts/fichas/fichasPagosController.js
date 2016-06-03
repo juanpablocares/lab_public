@@ -66,6 +66,7 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 
 
 	$scope.setPreciosExamenes = function() {
+		$scope.precio_total = 0;
 		angular.forEach($scope.examenesSeleccionados, function(value, key) {
 			if (value.perfil) { 
 				value.precio_total = 0;
@@ -80,7 +81,6 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 				$scope.precio_total += value.precio;
 			}
 		});
-		$scope.precio_total = $scope.ficha.precio_total;
 	}
 
 	$scope.getPrecioDetalleFicha = function(tarifa_id, examen) {
@@ -95,7 +95,11 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 
 	$scope.seleccionarPrevision = function(prevision)
 	{
+		//Se cambia la prevision. Debe cambiar en el registro del paciente, de la ficha
+		//y actualizar los precios de los examenes realizados a la tarifa de la nueva prevision.
 		$scope.prevision = prevision;
+		$scope.ficha.paciente.prevision = prevision;
+		$scope.setPreciosExamenes();
 	}
 	
 	$scope.ordenarExamenes = function(tarifa_id) {
@@ -233,7 +237,6 @@ angular.module('lab').controller('FichasPagosController', function($scope,
 		pago.tipo_pago_id = pago.tipo_pago.id;
 		pago.saving = true;
 		pago.creado = pago.fecha_creacion.toJSON();
-		console.log(pago.creado);
 		DetallePagoFicha.update({id: pago.id}, pago).$promise.then(function(response){
 			pago.changed = false;
 			pago.saving = false;
