@@ -235,7 +235,7 @@ angular.module('lab').controller('FichasIndexController', function(
                     else
                             meses = Math.abs($scope.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth());
                     var birthday = +new Date($scope.paciente.fecha_nacimiento);
-                    var anios = ((Date.now() - birthday) / (31556926000));
+                    var anios = ((d - birthday) / (31556926000));
                     return ~~anios + ' Años ' + ~~meses + ' meses';
             }
         };
