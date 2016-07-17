@@ -227,7 +227,8 @@ angular.module('lab').controller('FichasIndexController', function(
         $scope.paciente.getEdad = function() {
             $scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
             if ($scope.paciente != null) {
-                    var d = new Date();
+					//la ficha debe almacenar la fecha de nacimiento al momento que se creó
+                    var d = new Date($scope.ficha.creado);
                     var meses = 0;
                     if ($scope.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth() > 0)
                             meses += 12 - $scope.paciente.fecha_nacimiento.getUTCMonth() + d.getMonth();
