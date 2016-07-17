@@ -49,6 +49,26 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label class="control-label col-md-2">E-mail</label>
+			<div class="col-md-4">
+				<input class="form-control" placeholder="Ingrese correo electrónico" type="text" ng-model="medico_nuevo.correo" name="correo">
+			</div>
+			<label class="control-label col-md-2">Celular</label>
+			<div class="col-md-4">
+				<input class="form-control" type="text" ui-mask="(9) 999-9999" placeholder="Ingrese celular" type="text" ng-model="medico_nuevo.celular" name="celular">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2">Región</label>
+			<div class="col-md-4">
+				<select class="form-control" ng-model="medico_nuevo.region" ng-selected="medico_nuevo.region_id" ng-options="r.nombre for r in regiones track by r.id| orderBy:'nombre'" name="region"></select>
+			</div>
+			<label class="control-label col-md-2">Comuna</label>
+			<div class="col-md-4">
+				<select class="form-control" ng-model="medico_nuevo.comuna" ng-options="c.nombre for c in medico_nuevo.region.comunas track by c.id| orderBy:'nombre'" name="comuna" ></select>
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="control-label col-md-2">Especialidad</label>
 			<div class="col-md-4">
 				<select class="form-control" ng-model="medico_nuevo.especialidad" ng-options="e.nombre for e in especialidadesArray track by e.id | orderBy:'nombre'" name="especialidad" required>

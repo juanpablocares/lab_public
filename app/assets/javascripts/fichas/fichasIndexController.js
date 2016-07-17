@@ -4,7 +4,7 @@ angular.module('lab').controller('FichasIndexController', function(
 	Fichas, Previsiones, Perfiles, Medicos, Medico, ngDialog, Instituciones, Institucion,
 	Procedencias, Examenes, DetallesPagoFicha, Especialidades, Especialidad,
 	Ficha, previsionesService, examenesService, medicosService, institucionesService, especialidadesService,
-	procedenciasService, perfilesService) {
+	procedenciasService, perfilesService, regionesService) {
 
 	//Esta vista tiene campos editables, con $scope.edit aviso a las vistas si mostrar algunos campos editables o fijos.
 	$scope.edit = true;
@@ -779,7 +779,25 @@ angular.module('lab').controller('FichasIndexController', function(
 		$scope.ficha_edit.medico_id = null;
 	};
 	
+	$scope.setRegiones = function()
+	{
+		$scope.regiones = regionesService.getRegiones();
+	}
+	
 	$scope.crearMedico = function() {
+		if(!regionesService.getRegiones())
+		{
+			$http.get('/api/regiones').success(function(data) {
+				regionesService.setRegiones(data);
+				$scope.setRegiones();
+			}).error(function(data) {
+				console.log('Error getting regiones');
+			});
+		}
+		else {
+			$scope.setRegiones();
+		}
+			
 		$scope.medico_nuevo = {};
 		var modal = ngDialog.open({
 			className: 'ngdialog-theme-laboratorios',
@@ -818,6 +836,11 @@ angular.module('lab').controller('FichasIndexController', function(
 				else
 					data.institucion_id = null;
 
+				if(data.comuna != null)
+				{
+					data.comuna_id = data.comuna.id;
+				}
+				
 				if(data.id == null)
 				{
 					Medico.new(data).$promise.then(function(response) {
