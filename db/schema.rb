@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151018094623) do
+ActiveRecord::Schema.define(version: 20160725113327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,21 +53,21 @@ ActiveRecord::Schema.define(version: 20151018094623) do
   end
 
   create_table "detalles_ficha", force: :cascade do |t|
-    t.integer  "ficha_id",           limit: 8,                                 null: false
-    t.integer  "examen_id",          limit: 8,                                 null: false
+    t.integer  "ficha_id",           limit: 8,                   null: false
+    t.integer  "examen_id",          limit: 8,                   null: false
     t.integer  "perfil_id",          limit: 8
     t.integer  "usuario_muestra_id", limit: 8
     t.datetime "fecha_muestra"
-    t.datetime "creado",                       default: '2016-05-27 10:52:34', null: false
+    t.datetime "creado",                       default: "now()", null: false
     t.integer  "precio"
     t.boolean  "urgente"
   end
 
   create_table "detalles_pagos_ficha", force: :cascade do |t|
-    t.integer  "ficha_id",     limit: 8,                                 null: false
-    t.integer  "tipo_pago_id", limit: 8,                                 null: false
-    t.integer  "monto_pagado", limit: 8,                                 null: false
-    t.datetime "creado",                 default: '2016-05-27 10:52:34', null: false
+    t.integer  "ficha_id",     limit: 8,                   null: false
+    t.integer  "tipo_pago_id", limit: 8,                   null: false
+    t.integer  "monto_pagado", limit: 8,                   null: false
+    t.datetime "creado",                 default: "now()", null: false
     t.integer  "user_id"
     t.integer  "n_documento"
     t.integer  "factura"
@@ -78,6 +78,8 @@ ActiveRecord::Schema.define(version: 20151018094623) do
     t.string "codigo"
     t.text   "descripcion"
   end
+
+  add_index "especialidades", ["codigo"], name: "index_especialidades_on_codigo", unique: true, using: :btree
 
   create_table "examenes", force: :cascade do |t|
     t.string   "codigo_fonasa",          limit: 10
@@ -147,20 +149,20 @@ ActiveRecord::Schema.define(version: 20151018094623) do
   add_index "examenes_perfil", ["examen_id", "perfil_id"], name: "examenes_perfil_examen_id_perfil_id_key", unique: true, using: :btree
 
   create_table "fichas", force: :cascade do |t|
-    t.integer  "paciente_id",           limit: 8,                                 null: false
-    t.integer  "procedencia_id",        limit: 8,                                 null: false
+    t.integer  "paciente_id",           limit: 8,                   null: false
+    t.integer  "procedencia_id",        limit: 8,                   null: false
     t.integer  "orden_medica_id",       limit: 8
-    t.integer  "user_id",               limit: 8,                                 null: false
-    t.datetime "creado",                          default: '2016-05-27 10:52:34', null: false
+    t.integer  "user_id",               limit: 8,                   null: false
+    t.datetime "creado",                          default: "now()", null: false
     t.string   "observaciones"
-    t.integer  "prevision_id",                                                    null: false
-    t.integer  "precio_total",                                                    null: false
+    t.integer  "prevision_id",                                      null: false
+    t.integer  "precio_total",                                      null: false
     t.string   "receptor"
     t.string   "programa"
     t.string   "numero_programa"
     t.boolean  "mandar_email",                    default: false
     t.boolean  "urgente",                         default: false
-    t.integer  "medico_id",                                                       null: false
+    t.integer  "medico_id",                                         null: false
     t.string   "observaciones_muestra"
     t.string   "diagnostico"
     t.integer  "numero_procedencia"
@@ -200,18 +202,20 @@ ActiveRecord::Schema.define(version: 20151018094623) do
     t.text   "descripcion"
   end
 
+  add_index "instituciones", ["codigo"], name: "index_instituciones_on_codigo", unique: true, using: :btree
+
   create_table "laboratorios", force: :cascade do |t|
     t.string   "nombre", limit: 100,                                 null: false
     t.datetime "creado",             default: '2015-02-20 15:08:40', null: false
   end
 
   create_table "medicos", force: :cascade do |t|
-    t.string   "rut",              limit: 20,                                  null: false
-    t.string   "rutdv",            limit: 1,                                   null: false
-    t.string   "nombre",           limit: 100,                                 null: false
-    t.string   "apellido_paterno", limit: 100,                                 null: false
+    t.string   "rut",              limit: 20,                    null: false
+    t.string   "rutdv",            limit: 1,                     null: false
+    t.string   "nombre",           limit: 100,                   null: false
+    t.string   "apellido_paterno", limit: 100,                   null: false
     t.string   "apellido_materno", limit: 100
-    t.datetime "creado",                       default: '2016-05-27 10:52:34'
+    t.datetime "creado",                       default: "now()"
     t.integer  "especialidad_id"
     t.integer  "institucion_id"
     t.string   "telefono"
@@ -221,9 +225,9 @@ ActiveRecord::Schema.define(version: 20151018094623) do
   end
 
   create_table "modificacion_examenes", force: :cascade do |t|
-    t.integer  "user_id",                                   null: false
-    t.integer  "examen_id",                                 null: false
-    t.datetime "creacion",  default: '2016-05-27 10:52:34', null: false
+    t.integer  "user_id",                     null: false
+    t.integer  "examen_id",                   null: false
+    t.datetime "creacion",  default: "now()", null: false
   end
 
   create_table "ordenes_medicas", force: :cascade do |t|
@@ -254,7 +258,7 @@ ActiveRecord::Schema.define(version: 20151018094623) do
   create_table "parametros", force: :cascade do |t|
     t.string   "nombre",         limit: 100
     t.string   "unidad",         limit: 20
-    t.datetime "creado",                     default: '2016-05-27 10:52:34', null: false
+    t.datetime "creado",                     default: "now()", null: false
     t.string   "codigo"
     t.string   "nombre_visible"
     t.string   "tipo"
@@ -293,8 +297,8 @@ ActiveRecord::Schema.define(version: 20151018094623) do
   end
 
   create_table "procedencias", force: :cascade do |t|
-    t.string   "nombre", limit: 100,                                 null: false
-    t.datetime "creado",             default: '2016-05-27 10:52:34', null: false
+    t.string   "nombre", limit: 100,                   null: false
+    t.datetime "creado",             default: "now()", null: false
   end
 
   create_table "procesadores_examenes", force: :cascade do |t|
@@ -312,11 +316,11 @@ ActiveRecord::Schema.define(version: 20151018094623) do
   end
 
   create_table "resultados_examen", force: :cascade do |t|
-    t.integer  "detalle_ficha_id",     limit: 8,                                 null: false
-    t.string   "cantidad",                                                       null: false
-    t.datetime "creado",                         default: '2016-05-27 10:52:34', null: false
-    t.integer  "examen_parametro_id",                                            null: false
-    t.integer  "user_id",                                                        null: false
+    t.integer  "detalle_ficha_id",     limit: 8,                   null: false
+    t.string   "cantidad",                                         null: false
+    t.datetime "creado",                         default: "now()", null: false
+    t.integer  "examen_parametro_id",                              null: false
+    t.integer  "user_id",                                          null: false
     t.integer  "usuario_valida_id"
     t.datetime "fecha_usuario_valida"
   end
@@ -346,16 +350,16 @@ ActiveRecord::Schema.define(version: 20151018094623) do
   end
 
   create_table "tarifas", force: :cascade do |t|
-    t.string   "nombre", limit: 100,                                 null: false
-    t.boolean  "alerta",                                             null: false
-    t.datetime "creado",             default: '2016-05-27 10:52:34', null: false
+    t.string   "nombre", limit: 100,                   null: false
+    t.boolean  "alerta",                               null: false
+    t.datetime "creado",             default: "now()", null: false
   end
 
   create_table "tarifas_examen", force: :cascade do |t|
-    t.integer  "tarifa_id",     limit: 8,                                 null: false
-    t.integer  "examen_id",     limit: 8,                                 null: false
+    t.integer  "tarifa_id",     limit: 8,                   null: false
+    t.integer  "examen_id",     limit: 8,                   null: false
     t.integer  "precio"
-    t.datetime "creado",                  default: '2016-05-27 10:52:34'
+    t.datetime "creado",                  default: "now()"
     t.integer  "precio_fonasa"
   end
 
@@ -372,9 +376,9 @@ ActiveRecord::Schema.define(version: 20151018094623) do
   end
 
   create_table "tipos_muestras", force: :cascade do |t|
-    t.string   "muestra", limit: 200,                                 null: false
-    t.string   "codigo",  limit: 100,                                 null: false
-    t.datetime "creado",              default: '2016-05-27 10:52:34', null: false
+    t.string   "muestra", limit: 200,                   null: false
+    t.string   "codigo",  limit: 100,                   null: false
+    t.datetime "creado",              default: "now()", null: false
   end
 
   create_table "tipos_pago", force: :cascade do |t|
@@ -426,10 +430,10 @@ ActiveRecord::Schema.define(version: 20151018094623) do
   add_index "users_sucursal", ["user_id", "sucursal_id"], name: "user_sucursal", unique: true, using: :btree
 
   create_table "valores_parametros", force: :cascade do |t|
-    t.integer  "parametro_id",                                 null: false
+    t.integer  "parametro_id",                   null: false
     t.string   "codigo"
     t.string   "nombre"
-    t.datetime "creacion",     default: '2016-05-27 10:52:34', null: false
+    t.datetime "creacion",     default: "now()", null: false
   end
 
   add_foreign_key "alias_examenes", "examenes"
