@@ -4,7 +4,7 @@ angular.module('lab').controller('FichasIndexController', function(
 	Fichas, Previsiones, Perfiles, Medicos, Medico, ngDialog, Instituciones, Institucion,
 	Procedencias, Examenes, DetallesPagoFicha, Especialidades, Especialidad,
 	Ficha, previsionesService, examenesService, medicosService, institucionesService, especialidadesService,
-	procedenciasService, perfilesService) {
+	procedenciasService, perfilesService, regionesService) {
 
 	//Esta vista tiene campos editables, con $scope.edit aviso a las vistas si mostrar algunos campos editables o fijos.
 	$scope.edit = true;
@@ -227,14 +227,15 @@ angular.module('lab').controller('FichasIndexController', function(
         $scope.paciente.getEdad = function() {
             $scope.paciente.fecha_nacimiento = new Date($scope.paciente.fecha_nacimiento);
             if ($scope.paciente != null) {
-                    var d = new Date();
+					//la ficha debe almacenar la fecha de nacimiento al momento que se creó
+                    var d = new Date($scope.ficha.creado);
                     var meses = 0;
                     if ($scope.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth() > 0)
                             meses += 12 - $scope.paciente.fecha_nacimiento.getUTCMonth() + d.getMonth();
                     else
                             meses = Math.abs($scope.paciente.fecha_nacimiento.getUTCMonth() - d.getMonth());
                     var birthday = +new Date($scope.paciente.fecha_nacimiento);
-                    var anios = ((Date.now() - birthday) / (31556926000));
+                    var anios = ((d - birthday) / (31556926000));
                     return ~~anios + ' Años ' + ~~meses + ' meses';
             }
         };
@@ -778,7 +779,25 @@ angular.module('lab').controller('FichasIndexController', function(
 		$scope.ficha_edit.medico_id = null;
 	};
 	
+	$scope.setRegiones = function()
+	{
+		$scope.regiones = regionesService.getRegiones();
+	}
+	
 	$scope.crearMedico = function() {
+		if(!regionesService.getRegiones())
+		{
+			$http.get('/api/regiones').success(function(data) {
+				regionesService.setRegiones(data);
+				$scope.setRegiones();
+			}).error(function(data) {
+				console.log('Error getting regiones');
+			});
+		}
+		else {
+			$scope.setRegiones();
+		}
+			
 		$scope.medico_nuevo = {};
 		var modal = ngDialog.open({
 			className: 'ngdialog-theme-laboratorios',
@@ -817,6 +836,11 @@ angular.module('lab').controller('FichasIndexController', function(
 				else
 					data.institucion_id = null;
 
+				if(data.comuna != null)
+				{
+					data.comuna_id = data.comuna.id;
+				}
+				
 				if(data.id == null)
 				{
 					Medico.new(data).$promise.then(function(response) {

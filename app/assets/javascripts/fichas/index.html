@@ -2,6 +2,7 @@
 	<a class="typeahead-examenes-row">
 		<span class='codigo' ng-bind-html="match.model.codigo_fonasa + '' +match.model.codigo | typeaheadHighlight:query"></span>
 		<span class='nombre' ng-bind-html="match.model.nombre | typeaheadHighlight:query"></span>
+		<span class='proceso' ng-bind-html="match.model.externo!=0?'IN':'DE' | typeaheadHighlight:query"></span>
   	</a>
 </script>
 

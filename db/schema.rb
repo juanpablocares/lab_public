@@ -222,6 +222,9 @@ ActiveRecord::Schema.define(version: 20160725113327) do
     t.string   "direccion"
     t.integer  "genero",                       default: 1
     t.string   "titulo"
+    t.string   "email"
+    t.string   "celular"
+    t.integer  "comuna_id"
   end
 
   create_table "modificacion_examenes", force: :cascade do |t|
@@ -473,6 +476,7 @@ ActiveRecord::Schema.define(version: 20160725113327) do
   add_foreign_key "fichas", "users", name: "fichas_usuario_creador_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "horaproceso_examenes", "examenes"
   add_foreign_key "indicadores", "parametros", column: "sustancia_id", name: "indicadores_sustancia_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "medicos", "comunas"
   add_foreign_key "medicos", "especialidades"
   add_foreign_key "medicos", "instituciones"
   add_foreign_key "modificacion_examenes", "examenes"
