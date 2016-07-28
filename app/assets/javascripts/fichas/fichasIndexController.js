@@ -883,15 +883,23 @@ angular.module('lab').controller('FichasIndexController', function(
 	$scope.guardar_institucion = function(institucion_form, data){
 		if(institucion_form.$valid)
 		{
-			Institucion.new(data).$promise.then(function(response) {
-				var institucion_creada = response.data;
-				institucionesService.addInstitucion(institucion_creada);
+			if($filter('getByParam')(institucionesService.getInstituciones(),'codigo',data.codigo,true) == null)
+			{
+				Institucion.new(data).$promise.then(function(response) {
+					var institucion_creada = response.data;
+					institucionesService.addInstitucion(institucion_creada);
+					return true;
+				}, 
+				function(response) {
+					$scope.$emit('showGlobalAlert', {boldMessage: 'Nueva institucion', message: 'Creación de institucion fallida.',class: 'alert-danger'});
+					console.log("ERROR creando institucion");
+				});
+			}
+			else
+			{
+				$scope.$emit('showGlobalAlert', {boldMessage: 'Nueva institucion', message: 'Creación de institucion fallida. Codigo existente',class: 'alert-danger'});
 				return true;
-			}, 
-			function(response) {
-				$scope.$emit('showGlobalAlert', {boldMessage: 'Nuevo institucion', message: 'Creación de institucion fallida.',class: 'alert-danger'});
-				console.log("ERROR creando institucion");
-			});
+			}
 		}
 	};
 	
@@ -907,16 +915,24 @@ angular.module('lab').controller('FichasIndexController', function(
 	$scope.guardar_especialidad = function(especialidad_form, data){
 		if(especialidad_form.$valid)
 		{
-			Especialidad.new(data).$promise.then(function(response) {
-				var especialidad_nuevo = response.data;
-				especialidadesService.addEspecialidad(especialidad_nuevo);
-				
-			}, 
-			function(response) {
-				$scope.$emit('showGlobalAlert', {boldMessage: 'Nueva especialidad', message: 'Creación de especialidad fallida.',class: 'alert-danger'});
-				console.log("ERROR creando especialidad");
-			});
-			return true;
+			if($filter('getByParam')(especialidadesService.getEspecialidades(),'codigo',data.codigo,true) == null)
+			{
+				Especialidad.new(data).$promise.then(function(response) {
+					var especialidad_nuevo = response.data;
+					especialidadesService.addEspecialidad(especialidad_nuevo);
+					
+				}, 
+				function(response) {
+					$scope.$emit('showGlobalAlert', {boldMessage: 'Nueva especialidad', message: 'Creación de especialidad fallida.',class: 'alert-danger'});
+					console.log("ERROR creando especialidad");
+				});
+				return true;
+			}
+			else
+			{
+				$scope.$emit('showGlobalAlert', {boldMessage: 'Nueva especialidad', message: 'Creación de especialidad fallida. Codigo existente',class: 'alert-danger'});
+				return true;
+			}
 		}
 	};
 	

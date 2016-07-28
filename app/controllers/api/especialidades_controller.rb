@@ -32,11 +32,13 @@ class Api::EspecialidadesController < ApplicationController
 				@tmp.descripcion = r["descripcion"]
 				@tmp.save
 			else
-				especialidad = Especialidad.new
-				especialidad.nombre = r["nombre"]
-				especialidad.codigo = r["codigo"]
-				especialidad.descripcion = r["descripcion"]
-				especialidad.save
+				if !Especialidad.exists?("lower(codigo) = ? ",r["codigo"].downcase)
+					especialidad = Especialidad.new
+					especialidad.nombre = r["nombre"]
+					especialidad.codigo = r["codigo"]
+					especialidad.descripcion = r["descripcion"]
+					especialidad.save
+				end
 			end
 		end
 		render json: {
@@ -57,7 +59,14 @@ class Api::EspecialidadesController < ApplicationController
 	
 	def create
 		especialidad = Especialidad.new(especialidad_params)
-	      
+	    if Especialidad.exists?("lower(codigo) = ? ",r["codigo"].downcase)
+	    	render json: {
+	          success: false,
+	          message: 'codigo_existe',
+	          data: especialidad,
+	      	}.to_json, status: 500
+	      	return false
+	    end
 		begin
 			especialidad.save
 		    rescue ActiveRecord::RecordInvalid => invalid

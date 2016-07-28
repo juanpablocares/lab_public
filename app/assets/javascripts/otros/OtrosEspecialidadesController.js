@@ -44,7 +44,7 @@ angular.module('lab').controller('OtrosEspecialidadesController', function($scop
 			});
 			
 		$http.get('/api/especialidades').success(function(data) {
-			$scope.especialidades = data.especialidades;
+			$scope.especialidades = data.data;
 			for(i = 0; i < $scope.especialidades.length; i++)
 				$scope.especialidades[i].boton_agregar = true;
 			$scope.isLoading = false;
