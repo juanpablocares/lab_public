@@ -391,9 +391,15 @@
 		
 		$stateProvider.state('loginRequired.muestras.info', {
 			url : '/informacion',
-			templateUrl : "muestras/index.html",
-			controller : 'MuestrasIndexController',
-			params: {muestra: null}
+			templateUrl: 'sessions/pedir_password.html',
+			controller: 'PedirPasswordController',
+			params: {}
+		});
+
+		$stateProvider.state('loginRequired.muestras.info_password_validado',{
+			url: '/informacion',
+			templateUrl: "muestras/index.html",
+			controller: 'MuestrasIndexController'
 		});
 		
 		$stateProvider.state('loginRequired.muestras.examenes', {

@@ -55,8 +55,26 @@ module Overrides
 			        }, status: 422
 			end
 		end
+
+		def validar_password
+			unless current_user.valid_password?(params[:password])
+				return render json: {
+			          success: false,
+			          errors: ['Password check failed'],
+			        }, status: 401
+			else
+				return render json: {
+		          success: true,
+		          data: {
+		            message: "Your password has been validated."
+		          }, status: 200
+		        }
+			end
+		end
+
 	end
-	
+
+
 	def resource_params
 		params.permit(:email, :password, :password_confirmation, :reset_password_token, :current_password)
 	end

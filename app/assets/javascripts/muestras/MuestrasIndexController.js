@@ -1,8 +1,27 @@
+angular.module('lab').controller('PedirPasswordController', 
+	function($scope, $auth, $state, $http, 
+		$stateParams, Password) {
+
+	$scope.errorMessage = false;
+	$scope.password = '';
+
+	$scope.validarPassword = function(pass){	
+		event.preventDefault();
+		Password.validarPassword({
+			password: pass
+		}).$promise.then(function(result){
+			$state.go('loginRequired.muestras.info_password_validado');
+		}).catch(function(response){
+			$scope.password = '';
+			$scope.errorMessage = true;
+		});
+	}
+});
+
 angular.module('lab').controller('MuestrasIndexController', 
 	function($scope, $auth, $state, $http, 
 		$stateParams, Ficha, Fichas, DetallesFicha, 
 		ngDialog, Examen, DetalleFicha) {
-
 	$scope.examenesSeleccionados = [];
 	$scope.ficha = {};
 
@@ -202,4 +221,7 @@ angular.module('lab').controller('MuestrasIndexController',
 					console.log("ERROR editando ficha");
 				});
 	};
+
 });
+
+

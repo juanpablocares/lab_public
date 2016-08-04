@@ -186,6 +186,10 @@ Rails.application.routes.draw do
 		end
 	end
 
+	as :user do
+		post 'auth/validar_password', to: 'overrides/passwords#validar_password', defaults: {format: 'json'}
+	end
+	
 	mount_devise_token_auth_for 'User', at: '/auth', skip: [:omniauth_callbacks], controllers: {
 		sessions: 			'overrides/sessions',
 		passwords:          'overrides/passwords',
