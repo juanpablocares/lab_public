@@ -3,47 +3,6 @@
 	<div class="form-group">
 		<div class="row">
 			<div class="col-md-1">
-				<label class="control-label"><strong>Creada por</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.creador?examen.creador:'---'}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Fecha</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.fecha_creada?examen.fecha_creada:'---'}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Última modificación</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.ultimo_modifidor?examen.ultimo_modifidor:'---'}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Fecha</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.fecha_ultima_modificacion?examen.fecha_ultima_modificacion:'---'}}</div>
-		</div>
-		<div class="row">
-			<div class="col-md-1">
-				<label class="control-label"><strong>Examen</strong></label>
-			</div>{{examen.nombre}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Título impresión</strong></label>
-			</div>
-			<div class="col-md-5">{{examen.nombre_impreso}}	</div>
-		</div>
-		<div class="row">
-			<div class="col-md-1">
-				<label class="control-label col-md-2"><strong>Código Interno</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.codigo}}</div>
-			<div class="col-md-1">
-				<label class="control-label col-md-2"><strong>Código Fonasa</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.codigo_fonasa}}</div>
-			<div class="col-md-1">
-				<label class="control-label col-md-2"><strong>Sigla</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.sigla}}</div>
-		</div>
-		<div class="row">
-			<div class="col-md-1">
 				<label class="control-label"><strong>Proceso</strong></label>
 			</div>
 			<div class="col-md-2">{{examen.proceso}}</div>
@@ -51,19 +10,15 @@
 				<label class="control-label"><strong>Procesador</strong></label>
 			</div>
 			<div class="col-md-2">{{examen.procesador}}</div>
+		<div class="row">
 			<div class="col-md-1">
 				<label class="control-label"><strong>Tipo muestra</strong></label>
 			</div>
 			<div class="col-md-2">{{examen.tipo_examen.nombre}}</div>
-		<div class="row">
 			<div class="col-md-1">
 				<label class="control-label"><strong>Tipo examen</strong></label>
 			</div>
 			<div class="col-md-2">{{examen.tipo_muestra}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Área trabajo</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.area_trabajo}}</div>
 		</div>
 		<div class="row">
 			<div class="col-md-1">
@@ -80,18 +35,6 @@
 				<label class="control-label"><strong>Tipo Envase</strong></label>
 			</div>
 			<div class="col-md-2">{{examen.tipo_envase}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Volumen Mínimo</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.volumen_minimo}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Tiempo máximo</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.maximo_toma_muestra}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Unidad medida</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.unidad_medida}}</div>
 		</div>
 		<div class="row">
 			<div class="col-md-1">
@@ -105,78 +48,15 @@
 		</div>
 		<div class="row">
 			<div class="col-md-1">
-				<label class="control-label"><strong>Método</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.metodo}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Método abreviado</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.metodo_abreviado}}</div>
-			<div class="col-md-1">
 				<label class="control-label"><strong>Demora</strong></label>
 			</div>
 			<div class="col-md-2">{{examen.demora}}</div>
 		</div>
 		<div class="row">
 			<div class="col-md-1">
-				<label class="control-label"><strong>Principio del método</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.principio_metodo}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Interferentes</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.interferentes}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Cálculos</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.calculos}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Propósito</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.proposito}}</div>
-		</div>
-		<div class="row">
-			<div class="col-md-1">
-				<label class="control-label"><strong>Analista Responsable</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.analista_responsable}}</div>
-		</div>
-		<div class="heading">
-			Rechazos
-		</div>
-		<div class="row">
-			<div class="col-md-1">
-				<label class="control-label"><strong>Hemolisis</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.rechazo_hemolisis}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Protección luz</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.rechazo_proteccion_luz}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Lipemia</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.rechazo_lipemia}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Ictericia</strong></label>
-			</div>
-			<div class="col-md-2">{{examen.rechazo_ictericia}}</div>
-		</div>
-		<div class="row">
-			<div class="col-md-1">
 				<label class="control-label"><strong>Tubo vidrio</strong></label>
 			</div>
 			<div class="col-md-2">{{examen.rechazo_tubo}}</div>
-			<div class="col-md-1">
-				<label class="control-label"><strong>Otros rechazos</strong></label>
-			</div>
-			<div class="col-md-5">{{examen.rechazo_otros}}</div>
-		</div>
-		<div class="row">
-			<div class="col-md-1">
-				<label class="control-label"><strong>Observaciones</strong></label>
-			</div>
-			<div class="col-md-11">{{examen.observaciones}}</div>
 		</div>
 	</div>
 </script>

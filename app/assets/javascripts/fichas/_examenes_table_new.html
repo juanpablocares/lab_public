@@ -1,3 +1,44 @@
+<script type="text/ng-template" id="templateId">
+	<h3>{{examen.nombre}}</h3>
+	<div class="form-group">
+		<div class="row">
+			<div class="col-md-1">
+				<label class="control-label"><strong>Proceso</strong></label>
+			</div>
+			<div class="col-md-2">{{examen.proceso}}</div>
+			<div class="col-md-1">
+				<label class="control-label"><strong>Procesador</strong></label>
+			</div>
+			<div class="col-md-2">{{examen.procesador}}</div>
+		<div class="row">
+			<div class="col-md-1">
+				<label class="control-label"><strong>Tipo muestra</strong></label>
+			</div>
+			<div class="col-md-2">{{examen.tipo_examen.nombre}}</div>
+			<div class="col-md-1">
+				<label class="control-label"><strong>Tipo examen</strong></label>
+			</div>
+			<div class="col-md-2">{{examen.tipo_muestra}}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-1">
+				<label class="control-label"><strong>Preparación paciente</strong></label>
+			</div>
+			<div class="col-md-2">{{examen.indicacion.descripcion}}</div>
+			<div class="col-md-1">
+				<label class="control-label"><strong>Indicaciones muestra</strong></label>
+			</div>
+			<div class="col-md-2">{{examen.indicacion_muestra.descripcion}}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-1">
+				<label class="control-label"><strong>Demora</strong></label>
+			</div>
+			<div class="col-md-2">{{examen.demora}}</div>
+		</div>
+	</div>
+</script>
+
 <!--
 TIPO DE PAGO:
 -->
@@ -27,7 +68,7 @@ TIPO DE PAGO:
 					</td>
 					<td class="text-center">{{$index+1}}</td>
 					<td class="text-center">{{item.examen.codigo_fonasa}}</td>
-					<td>{{item.examen.nombre}}</td>
+					<td ng-click="showModal(item.examen.id)" style="cursor: pointer;">{{item.examen.nombre}}</td>
 					<td class="text-center">{{item.examen.tipo_examen.nombre?item.examen.tipo_examen.nombre:'---'}}</td>
 					<td class="text-center">{{item.examen.indicacion.descripcion?item.examen.indicacion.descripcion:'---'}}</td>
 					<td class="text-center">{{item.examen.externo!=0?'IN':'DE'}}</td>

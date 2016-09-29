@@ -4,7 +4,7 @@ angular.module('lab').controller('FichasIndexController', function(
 	Fichas, Previsiones, Perfiles, Medicos, Medico, ngDialog, Instituciones, Institucion,
 	Procedencias, Examenes, DetallesPagoFicha, Especialidades, Especialidad,
 	Ficha, previsionesService, examenesService, medicosService, institucionesService, especialidadesService,
-	procedenciasService, perfilesService, regionesService) {
+	procedenciasService, perfilesService, regionesService, Examen) {
 
 	//Esta vista tiene campos editables, con $scope.edit aviso a las vistas si mostrar algunos campos editables o fijos.
 	$scope.edit = true;
@@ -75,6 +75,22 @@ angular.module('lab').controller('FichasIndexController', function(
 	}).error(function(data) {
 		// log error
 	});
+	
+	$scope.showModal = function(examen_id)
+	{
+		Examen.get({
+			id : examen_id
+		}).$promise.then(function(result) {
+				$scope.examen = result.examen;
+				var modal = ngDialog.open({
+					template: "templateId",
+					scope: $scope
+				});
+		}).catch(function(response) {
+			console.error('Error al obtener examen');
+			$state.go('loginRequired.index');
+		});
+	}
 	
 	Ficha.get({
         id : $stateParams.ficha_id
