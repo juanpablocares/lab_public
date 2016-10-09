@@ -83,7 +83,8 @@ angular.module('lab').controller('FichasIndexController', function(
 		}).$promise.then(function(result) {
 				$scope.examen = result.examen;
 				var modal = ngDialog.open({
-					template: "templateId",
+					className: 'ngdialog-theme-laboratorios',
+					template: "modal/modal_informacion_examen.html",
 					scope: $scope
 				});
 		}).catch(function(response) {

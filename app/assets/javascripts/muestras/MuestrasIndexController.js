@@ -30,11 +30,10 @@ angular.module('lab').controller('MuestrasIndexController',
 		Examen.get({
 			id : examen_id
 		}).$promise.then(function(result) {
-				console.log('Examen');
 				$scope.examen = result.examen;
-				console.log($scope.examen)
 				var modal = ngDialog.open({
-					template: "templateId",
+					className: 'ngdialog-theme-laboratorios',
+					template: "modal/modal_informacion_examen.html",
 					scope: $scope
 				});
 		}).catch(function(response) {
