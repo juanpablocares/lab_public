@@ -87,6 +87,12 @@
 		<div class="col-md-2">
 			<input ng-model="examen.area_trabajo" class="form-control" type="text">
 		</div>
+		<div class="col-md-1">
+			<label class="control-label"><strong>Tipo de pago</strong></label>
+		</div>
+		<div class="col-md-2">
+			<select class="form-control" ng-model="examen.tipo_pago" ng-selected="examen.tipo_pago.codigo" ng-options="t.nombre for t in tipos_pago track by t.codigo "></select>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-1">

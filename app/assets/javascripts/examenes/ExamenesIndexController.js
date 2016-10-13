@@ -1,9 +1,123 @@
 angular.module('lab').controller('ExamenesIndexController', function($scope, $auth, $state, $http, $stateParams, Examen, AliasExamenes, HoraprocesoExamenes, ModificacionExamenes) {
 
 	$scope.historial_modificaciones = false;
+	
+	$scope.add = function () {
+		
+          $scope.alias_examen.push({
+            examen_id: parseInt($stateParams.examen_id),
+			nombre: '',
+			descripcion: '',
+          });
+        };
+	
+	$scope.add_hora = function () {
+          $scope.horaproceso_examen.push({
+            examen_id: parseInt($stateParams.examen_id),
+			hora: '',
+			descripcion: '',
+          });
+        };
+	
+	$scope.examenEditing = false;
+	
+	if ($stateParams.examen != null) {
+		$scope.examen = $stateParams.examen;
+		$scope.masterExamen = angular.copy($scope.examen);
+	}
+	
+	$scope.resetExamen = function() {
+		$scope.examenEditingForm.$setPristine();
+		$scope.examen = angular.copy($scope.masterExamen);
+	};
+
+	$scope.cambiarVentanaSinCambios = function() {
+		$scope.examenEditing = !$scope.examenEditing;
+		$scope.resetExamen();
+	};
+
+	$scope.updateExamen = function() { 
+		$scope.masterExamen = angular.copy($scope.examen);
+		$scope.$emit('examenFromEdit',$scope.examen);
+	};
+
+	$scope.guardarDatosExamen = function(examen) {
+		//examen.procedencia = examen.procesa.label;
+		examen.tipo_envase_id = examen.tipo_envase.id;
+		examen.tapa_tubo_id = examen.tapa_tubo.id;
+		examen.tipo_pago = examen.tipo_pago.codigo;
+		examen.procesador_examen_id = examen.procesador_examen.id;
+		examen.proceso_examen_id = examen.proceso_examen.id;
+		
+		console.log(examen);
+
+		if(examen.indicacion_muestra)
+			examen.indicacion_muestra_id = examen.indicacion_muestra.id;
+		else
+			examen.indicacion_muestra_id = null;
+		
+		if(examen.tipo_muestra)
+			examen.tipo_muestra_id = examen.tipo_muestra.id;
+		else
+			examen.tipo_muestra_id = null;
+		
+		if(examen.tipo_examen)
+			examen.tipo_examen_id = examen.tipo_examen.id;
+		else
+			examen.tipo_examen_id = null;
+		
+		if(examen.indicacion)
+			examen.indicacion_id = examen.indicacion.id;
+		else
+			examen.indicacion_id = null;
+		
+		HoraprocesoExamenes.all.update({
+				horaproceso_examen : $scope.horaproceso_examen,
+			}).
+			$promise.then(function(result) {
+				console.log('update horaproceso examenes');
+				console.log(result);
+			});
+		
+		AliasExamenes.all.update({
+				alias_examen : $scope.alias_examen,
+			}).
+			$promise.then(function(result) {
+				console.log('update alias examenes');
+				console.log(result);
+			});
+		
+		Examen.update({id:examen.id}, examen).
+		$promise.then(function(response) {
+			$scope.masterExamen = angular.copy($scope.examen);
+			$scope.$emit('examenFromEdit',$scope.examen);
+			$scope.examennEditing = !$scope.examenEditing;
+		}, function(response) {
+			$scope.resetExamen();
+			console.log("ERROR editando examen");
+		});
+		
+		ModificacionExamenes.root.nuevo({
+			examen_id : $stateParams.examen_id,
+			user_id   : $auth.user.id
+		}).$promise.then(function(response) {
+			console.log('Modificacion examen creado');
+			$http.get('/api/modificacion_examenes/examen/' + $stateParams.examen_id).success(function(data) {
+				$scope.modificacion_examen = data.modificaciones;
+				//console.log($scope.modificacion_examen);
+			}).error(function(data) {
+				// log error
+			});
+		}, function(response) {
+			console.log("ERROR creando modificacion examen");
+		});
+	};
+	
+	$scope.mostrar_historial = function(){
+		$scope.historial_modificaciones = !$scope.historial_modificaciones;
+	};
 
 	$scope.$on('examenFromMenu', function(event, data) {
-		console.log(data);
 		$scope.alias_examen = data.alias_examenes;
 		$scope.horaproceso_examen = data.horaproceso_examenes;
 		$scope.examen = data;
@@ -13,6 +127,14 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 				$scope.masterExamen = angular.copy($scope.examen);
 			}
 		});
+
+		angular.forEach($scope.tipos_pago, function(tipo_pago, key) {
+			if(tipo_pago.codigo == $scope.examen.tipo_pago){
+				$scope.examen.tipo_pago = tipo_pago;
+				$scope.masterExamen = angular.copy($scope.examen);
+			}
+		});
+		console.log(data);
 		
 		$scope.masterExamen = angular.copy($scope.examen);
 		
@@ -118,6 +240,11 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 	}).error(function(data) {
 		// log error
 	});
+
+	$scope.tipos_pago = [{'codigo': 'P', 'nombre': 'Particular'},
+						 {'codigo': 'F', 'nombre': 'Fonasa e Isapres'},
+						 {'codigo': 'SC', 'nombre': 'Sin Costo'},
+						 {'codigo': 'NO', 'nombre': 'No se hace'}];
 	
 	$http.get('/api/modificacion_examenes/examen/' + $stateParams.examen_id).success(function(data) {
 		$scope.modificacion_examen = data.modificaciones;
@@ -125,124 +252,4 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 	}).error(function(data) {
 		// log error
 	});
-	
-	$scope.add = function () {
-		
-          $scope.alias_examen.push({
-            examen_id: parseInt($stateParams.examen_id),
-			nombre: '',
-			descripcion: '',
-          });
-        };
-	
-	$scope.add_hora = function () {
-          $scope.horaproceso_examen.push({
-            examen_id: parseInt($stateParams.examen_id),
-			hora: '',
-			descripcion: '',
-          });
-        };
-	
-	$scope.examenEditing = false;
-	
-	if ($stateParams.examen != null) {
-		$scope.examen = $stateParams.examen;
-		$scope.masterExamen = angular.copy($scope.examen);
-	}
-	
-	$scope.resetExamen = function() {
-		$scope.examenEditingForm.$setPristine();
-		$scope.examen = angular.copy($scope.masterExamen);
-	};
-
-	$scope.cambiarVentanaSinCambios = function() {
-		$scope.examenEditing = !$scope.examenEditing;
-		$scope.resetExamen();
-	};
-
-	$scope.updateExamen = function() { 
-		$scope.masterExamen = angular.copy($scope.examen);
-		$scope.$emit('examenFromEdit',$scope.examen);
-	};
-
-	$scope.guardarDatosExamen = function(examen) {
-		//examen.procedencia = examen.procesa.label;
-		examen.tipo_envase_id = examen.tipo_envase.id;
-		examen.tapa_tubo_id = examen.tapa_tubo.id;
-		
-		examen.procesador_examen_id = examen.procesador_examen.id;
-		examen.proceso_examen_id = examen.proceso_examen.id;
-		console.log(examen);
-		
-		if(examen.indicacion_muestra)
-			examen.indicacion_muestra_id = examen.indicacion_muestra.id;
-		else
-			examen.indicacion_muestra_id = null;
-		
-		if(examen.tipo_muestra)
-			examen.tipo_muestra_id = examen.tipo_muestra.id;
-		else
-			examen.tipo_muestra_id = null;
-		
-		if(examen.tipo_examen)
-			examen.tipo_examen_id = examen.tipo_examen.id;
-		else
-			examen.tipo_examen_id = null;
-		
-		if(examen.indicacion)
-			examen.indicacion_id = examen.indicacion.id;
-		else
-			examen.indicacion_id = null;
-		
-		console.log($scope.alias_examen);
-		console.log($scope.horaproceso_examen);
-		
-		HoraprocesoExamenes.all.update({
-				horaproceso_examen : $scope.horaproceso_examen,
-			}).
-			$promise.then(function(result) {
-				console.log('update horaproceso examenes');
-				console.log(result);
-			});
-		
-		AliasExamenes.all.update({
-				alias_examen : $scope.alias_examen,
-			}).
-			$promise.then(function(result) {
-				console.log('update alias examenes');
-				console.log(result);
-			});
-		
-		Examen.update({id:examen.id}, examen).
-			$promise.
-				then(function(response) {
-					$scope.masterExamen = angular.copy($scope.examen);
-					$scope.$emit('examenFromEdit',$scope.examen);
-					$scope.examenEditing = !$scope.examenEditing;
-				}, function(response) {
-					$scope.resetExamen();
-					console.log("ERROR editando examen");
-				});
-		
-		ModificacionExamenes.root.nuevo({
-			examen_id : $stateParams.examen_id,
-			user_id   : $auth.user.id
-		}).
-			$promise.
-				then(function(response) {
-					console.log('Modificacion examen creado');
-					$http.get('/api/modificacion_examenes/examen/' + $stateParams.examen_id).success(function(data) {
-						$scope.modificacion_examen = data.modificaciones;
-						//console.log($scope.modificacion_examen);
-					}).error(function(data) {
-						// log error
-					});
-				}, function(response) {
-					console.log("ERROR creando modificacion examen");
-				});
-	};
-	
-	$scope.mostrar_historial = function(){
-		$scope.historial_modificaciones = !$scope.historial_modificaciones;
-	};
 });
