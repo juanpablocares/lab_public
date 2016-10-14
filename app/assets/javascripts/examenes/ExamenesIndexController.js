@@ -43,11 +43,12 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 
 	$scope.guardarDatosExamen = function(examen) {
 		//examen.procedencia = examen.procesa.label;
-		examen.tipo_envase_id = examen.tipo_envase.id;
-		examen.tapa_tubo_id = examen.tapa_tubo.id;
-		examen.tipo_pago = examen.tipo_pago.codigo;
-		examen.procesador_examen_id = examen.procesador_examen.id;
-		examen.proceso_examen_id = examen.proceso_examen.id;
+		examen.tipo_envase_id = examen.tipo_envase?examen.tipo_envase.id:null;
+		examen.tapa_tubo_id = examen.tapa_tubo?examen.tapa_tubo.id:null;
+		examen.tipo_pago = examen.tipo_pago?examen.tipo_pago.codigo:null;
+		examen.interno = examen.interno?examen.interno.codigo:null;
+		examen.procesador_examen_id = examen.procesador_examen?examen.procesador_examen.id:null;
+		examen.proceso_examen_id = examen.proceso_examen?examen.proceso_examen.id:null;
 		
 		console.log(examen);
 
@@ -134,8 +135,15 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 				$scope.masterExamen = angular.copy($scope.examen);
 			}
 		});
+
+		angular.forEach($scope.codigos_interno, function(inter, key) {
+			if(inter.codigo == $scope.examen.interno){
+				$scope.examen.interno = inter;
+				$scope.masterExamen = angular.copy($scope.examen);
+			}
+		});
+
 		console.log(data);
-		
 		$scope.masterExamen = angular.copy($scope.examen);
 		
 	});
@@ -245,6 +253,10 @@ angular.module('lab').controller('ExamenesIndexController', function($scope, $au
 						 {'codigo': 'F', 'nombre': 'Fonasa e Isapres'},
 						 {'codigo': 'SC', 'nombre': 'Sin Costo'},
 						 {'codigo': 'NO', 'nombre': 'No se hace'}];
+
+	$scope.codigos_interno = [{'codigo': 'CF', 'nombre': 'CF'},
+				      {'codigo': '500', 'nombre': '500'},
+				      {'codigo': 'FV2', 'nombre': 'FV2'}];
 	
 	$http.get('/api/modificacion_examenes/examen/' + $stateParams.examen_id).success(function(data) {
 		$scope.modificacion_examen = data.modificaciones;

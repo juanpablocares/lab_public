@@ -27,7 +27,7 @@
 			<input ng-model="examen.codigo_fonasa" class="form-control" type="text">
 		</div>
 		<div class="col-md-1">
-			<label class="control-label col-md-2"><strong>Autrizado Fonasa</strong></label>
+			<label class="control-label col-md-2"><strong>Autorizado Fonasa</strong></label>
 		</div>
 		<div class="checkbox col-md-1">
 			<label>
@@ -70,6 +70,12 @@
 			<select class="form-control" ng-model="examen.tipo_examen" ng-selected="examen.tipo_examen_id" ng-options="t.nombre for t in tipo_examenes track by t.id| orderBy:'codigo'">
 			<option value=""></option>
 			</select>
+		</div>
+		<div class="col-md-1">
+			<label class="control-label"><strong>Interno</strong></label>
+		</div>
+		<div class="col-md-2">
+			<select class="form-control" ng-model="examen.interno" ng-selected="examen.interno.codigo" ng-options="t.nombre for t in codigos_interno track by t.codigo">
 		</div>
 	</div>
 	<div class="row">
