@@ -82,6 +82,25 @@ class Api::TarifasExamenController < ApplicationController
 				@tmp.nombre = r["nombre"]
 				@tmp.codigo = r["codigo"]
 				@tmp.codigo_fonasa = r["codigo_fonasa"]
+				@tmp.tipo_pago = r["tipo_pago"]
+				proceso_examen = ProcesoExamen.where("codigo like ?", r["proceso_examen"]).first
+				if proceso_examen != nil
+					@tmp.proceso_examen_id = proceso_examen.id
+				else 
+					@tmp.proceso_examen_id = nil
+				end
+				procesador_examen = ProcesadorExamen.where("codigo like ?", r["procesador_examen"]).first
+				if procesador_examen != nil
+					@tmp.procesador_examen_id = procesador_examen.id
+				else 
+					@tmp.procesador_examen_id = nil
+				end
+				autorizado_fonasa = r["autorizado_fonasa"] 
+				if autorizado_fonasa.downcase! == 'si'
+					@tmp.autorizado_fonasa = true
+				else
+					@tmp.autorizado_fonasa = false
+				end
 				@tmp.save
 			else
 				examen = Examen.new

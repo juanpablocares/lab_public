@@ -10,6 +10,10 @@ angular.module('lab').controller('TarifasExamenesController', function($scope, $
 	$scope.header.push("codigo_fonasa");
 	$scope.header.push("codigo");
 	$scope.header.push("nombre");
+	$scope.header.push("proceso");
+	$scope.header.push("procesador");
+	$scope.header.push("tipo_pago");
+	$scope.header.push("autorizado_fonasa");
 	
 	$scope.processCSV = function(){
 		
@@ -23,22 +27,26 @@ angular.module('lab').controller('TarifasExamenesController', function($scope, $
 		console.log($scope.fileReader);
 		for(var i in $scope.fileReader)
 			if(i > 0){
-				tarifas = ($scope.fileReader[i].length - 4) / 2;
+				tarifas = ($scope.fileReader[i].length - 8) / 2;
 				//console.log(tarifas);
 				var tmp = new Object;
 				tmp.id = $scope.fileReader[i][0];
 				tmp.codigo_fonasa = $scope.fileReader[i][1];
 				tmp.codigo = $scope.fileReader[i][2];
 				tmp.nombre = $scope.fileReader[i][3];
+				tmp.proceso_examen = $scope.fileReader[i][4];
+				tmp.procesador_examen = $scope.fileReader[i][5];
+				tmp.tipo_pago = $scope.fileReader[i][6];
+				tmp.autorizado_fonasa = $scope.fileReader[i][7];
 				count = 1;
 				for(j = 0; j < tarifas * 2; j+=2)
 					if(i > 0){
 						var tarifa = new Object;
 						tarifa.tarifa_id = count;
 						tarifa.examen_id = $scope.fileReader[i][0];
-						tarifa.precio = $scope.fileReader[i][4 + j];
+						tarifa.precio = $scope.fileReader[i][8 + j];
 						//console.log(tarifa.precio);
-						tarifa.precio_fonasa = $scope.fileReader[i][4 + j + 1];
+						tarifa.precio_fonasa = $scope.fileReader[i][8 + j + 1];
 						//console.log(tarifa.precio_fonasa);
 						tarifas_update.push(tarifa);
 						count++;
@@ -71,6 +79,10 @@ angular.module('lab').controller('TarifasExamenesController', function($scope, $
 				tmp.push($scope.examenes[i].codigo_fonasa);
 				tmp.push($scope.examenes[i].codigo);
 				tmp.push($scope.examenes[i].nombre);
+				tmp.push($scope.examenes[i].proceso_examen?$scope.examenes[i].proceso_examen.codigo:'');
+				tmp.push($scope.examenes[i].procesador_examen?$scope.examenes[i].procesador_examen.codigo:'');
+				tmp.push($scope.examenes[i].tipo_pago);
+				tmp.push($scope.examenes[i].autorizado_fonasa?'Si':'No');
 				//console.log(tmp);
 				for(var j = 0; j < tarifas; j++){
 					/*if(tarifas < $scope.examenes[i].tarifas_examen.length)

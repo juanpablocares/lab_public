@@ -15,7 +15,19 @@ class Api::TarifasController < ApplicationController
   
 	def examenes
 		
-		sql = "select tarifas.id as tarifa_id, tarifas_examen.precio, tarifas_examen.precio_fonasa, examenes.id as examen_id, examenes.codigo_fonasa, examenes.codigo, examenes.nombre from tarifas FULL JOIN tarifas_examen ON tarifas_examen.tarifa_id = tarifas.id FULL JOIN examenes ON examenes.id = tarifas_examen.examen_id ORDER BY tarifa_id"
+		sql = "SELECT tarifas.id as tarifa_id,
+					  tarifas_examen.precio,
+					  tarifas_examen.precio_fonasa, 
+					  examenes.id as examen_id, 
+					  examenes.codigo_fonasa, 
+					  examenes.codigo, 
+					  examenes.nombre
+			     FROM tarifas 
+			     FULL JOIN 
+			     	  tarifas_examen 		ON tarifas_examen.tarifa_id = tarifas.id 
+			     FULL JOIN 	
+			     	  examenes 		 		ON examenes.id = tarifas_examen.examen_id 
+			    ORDER BY tarifa_id"
 		
 		render json: ActiveRecord::Base.connection.execute(sql)
 		
