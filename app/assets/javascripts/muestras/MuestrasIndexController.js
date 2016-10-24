@@ -33,7 +33,7 @@ angular.module('lab').controller('MuestrasIndexController',
 				$scope.examen = result.examen;
 				var modal = ngDialog.open({
 					className: 'ngdialog-theme-laboratorios',
-					template: "modal/modal_informacion_examen.html",
+					template: "modal/modal_informacion_examen_toma_muestras.html",
 					scope: $scope
 				});
 		}).catch(function(response) {

@@ -22,16 +22,6 @@
 	</div>
 	<div class="row">
 		<div class="col-md-3">
-			<label class="control-label"><strong>Preparación paciente</strong></label>
-		</div>
-		<div class="col-md-3">{{examen.indicacion.descripcion}}</div>
-		<div class="col-md-3">
-			<label class="control-label"><strong>Indicaciones muestra</strong></label>
-		</div>
-		<div class="col-md-3">{{examen.indicacion_muestra.descripcion}}</div>
-	</div>
-	<div class="row">
-		<div class="col-md-3">
 			<label class="control-label"><strong>Dia de proceso</strong></label>
 		</div>
 		<div class="col-md-3">
@@ -58,5 +48,30 @@
 			<label class="control-label"><strong>Demora</strong></label>
 		</div>
 		<div class="col-md-3">{{examen.demora}}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<label class="control-label"><strong>Preparación paciente</strong></label>
+		</div>
+		<div class="col-md-3">{{examen.indicacion.descripcion}}</div>
+		<div class="col-md-3">
+			<label class="control-label"><strong>Tubo vidrio</strong></label>
+		</div>
+		<div class="col-md-3">{{examen.rechazo_tubo}}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<label class="control-label"><strong>Tipo Envase</strong></label>
+		</div>
+		<div class="col-md-3">{{examen.tipo_envase}}</div>
+		<div class="col-md-3">
+			<label class="control-label"><strong>Tapa Tubo</strong></label>
+		</div>
+	</div>		
+	<div class="row">
+		<div class="col-md-3">
+			<label class="control-label"><strong>Condición transporte</strong></label>
+		</div>
+		<div class="col-md-3">{{examen.condiciones_transporte}}</div>
 	</div>
 </div>
