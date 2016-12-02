@@ -125,6 +125,12 @@ class Api::Fichas::UpdateController < Api::FichasController
                 else
                   detalle.precio = 0
                 end
+
+                examen = Examen.find(detalle.examen_id);
+                if examen != nil and examen.codigo_fonasa.length > 3 and examen.codigo_fonasa[1,2] == "07"
+                  detalle.usuario_muestra_id = current_user.id
+                end
+
                 if !detalle.save
                 end
               end
@@ -138,6 +144,11 @@ class Api::Fichas::UpdateController < Api::FichasController
                 detalle.precio = ex[:tarifas_examen][0][:precio]
               else
                 detalle.precio = 0
+              end
+
+              examen = Examen.find(detalle.examen_id);
+              if examen != nil and examen.codigo_fonasa.length > 3 and examen.codigo_fonasa[1,2] == "07"
+                 detalle.usuario_muestra_id = current_user.id
               end
 
               if !detalle.save

@@ -84,6 +84,9 @@ class Api::Fichas::CreateController < Api::FichasController
 					detalle.precio = 0
 				  end
 
+				  if exa[:codigo_fonasa][1,1] == "07"
+					detalle.usuario_muestra_id = current_user.id
+				  end
 				  if !detalle.save
 					raise "Error saving detalle_ficha"
 				  end
@@ -98,6 +101,10 @@ class Api::Fichas::CreateController < Api::FichasController
 				  detalle.precio = ex[:tarifa_prevision][:precio]
 				else
 				  detalle.precio = 0
+				end
+
+				if ex[:codigo_fonasa][1,1] == "07"
+				  	detalle.usuario_muestra_id = current_user.id
 				end
 
 				if !detalle.save
