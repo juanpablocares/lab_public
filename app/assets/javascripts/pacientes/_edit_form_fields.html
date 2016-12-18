@@ -74,8 +74,13 @@
 <!-- Nueva linea -->
 <div class="form-group">
 	<label class="control-label col-md-1">Género</label>
-	<div class="col-md-3" ng-repeat="genero in generos_options">
-		<input type="radio" ng-model="paciente.genero" ng-value="genero.id" id="{{genero.id}}"/>{{genero.text}}
+	<div class="col-md-3">
+		<label class="radio">
+			<input ng-model="paciente.genero" name="seleccionar_genero" type="radio" value="1" required>
+			<span>Masculino</span></label>
+		<label class="radio">
+			<input ng-model="paciente.genero" name="seleccionar_genero" type="radio" value="0" required>
+			<span>Femenino</span> </label>
 		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.genero.$pristine) && paciente_form.genero.$error.required">Debe seleccionar género</label>
 	</div>
 	<label class="control-label col-md-1">Previsión</label>
