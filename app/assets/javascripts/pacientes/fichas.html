@@ -27,7 +27,7 @@
 				<td>{{row.id}}</td>
 				<td>{{row.procedencia.nombre}}</td>
 				<td>{{row.orden_medica_id == null ? 'Sin orden médica': row.orden_medica_id}}</td>
-				<td>{{row.creado}}</td>
+				<td>{{row.creado | date:'dd-MM-yyyy HH:mm'}}</td>
 			</tr>
 		</tbody>
 		<tbody ng-show="isLoading">

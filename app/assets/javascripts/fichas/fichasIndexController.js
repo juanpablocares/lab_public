@@ -764,8 +764,9 @@ angular.module('lab').controller('FichasIndexController', function(
 				medicosService.removeMedico($scope.ficha_edit.medico);
 				$scope.limpiarMedico();
 			}, function(response) {
-				$scope.$emit('showGlobalAlert', {boldMessage: 'Nuevo médico', message: 'Eliminacion de médico fallida.',class: 'alert-danger'});
-				console.log("ERROR borrando medico");
+				console.log(response);
+				$scope.$emit('showGlobalAlert', {boldMessage: 'Nuevo médico', message: 'No se puede eliminar médico.',class: 'alert-danger'});
+				console.log("ERROR no se puede eliminar médico");
 			});
 		}
 		else

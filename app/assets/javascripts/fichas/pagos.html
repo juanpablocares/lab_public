@@ -78,11 +78,11 @@
 							<th> </th>
 							<th > # </th>
 							<th > Tipo de pago </th>
+							<th > Fecha </th>
 							<th > N° Doc.</th>
+							<th > Monto </th>
+							<th > Recaudador </th>
 							<th > Factura</th>
-							<th> Fecha </th>
-							<th> Monto </th>
-							<th> Recaudador </th>
 							<th class="text-center"></th>
 						</thead>
 						<tbody>
@@ -90,13 +90,13 @@
 								<td></td>
 								<td></td>
 								<td><select class="form-control" ng-model="input_pago.tipo_pago" ng-options="tipoPago.nombre for tipoPago in tiposPagoArray track by tipoPago.id | orderBy:'nombre'" name="tipo_pago" required></select></td>
-								<td><input ng-model="input_pago.n_documento" class="form-control" /></td>
-								<td><input ng-model="input_pago.factura" class="form-control" /></td>
 								<td >
 									<input class="form-control" ng-model="input_pago.fecha_creacion" type="datetime-local" id="exampleInput" name="input" ng-model="example.value" placeholder="yyyy-MM-ddTHH:mm:ss" />
 								</td>
+								<td><input ng-model="input_pago.n_documento" class="form-control" /></td>
 								<td><input type="number" ng-model="input_pago.monto_pagado" class="form-control" /></td>
 								<td>{{input_pago.nombre}}</td>
+								<td><input ng-model="input_pago.factura" class="form-control" /></td>
 								<td class="text-center">
 									<a class="clickable" ng-click="submitIngresarPagoForm(input_pago)"><i class="fa fa-save fa-fw"></i></a>
 								</td>
@@ -106,13 +106,13 @@
 								<td><input ng-checked="true" type="checkbox" ng-model="pago.estado"></td>
 								<td>{{$index + 1 }}</td>
 								<td><select class="form-control" ng-model="pago.tipo_pago" ng-options="tipoPago.nombre for tipoPago in tiposPagoArray track by tipoPago.id | orderBy:'nombre'" name="tipo_pago" ng-change="setPagoChanged(pago,true)" required></select></td>
-								<td><input ng-model="pago.n_documento" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>
-								<td><input ng-model="pago.factura" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>
 								<td >
 									<input class="form-control" type="datetime-local" step="60.0" id="fecha_creacion" ng-model="pago.fecha_creacion" ng-change="setPagoChanged(pago,true)"/>
 								</td>
+								<td><input ng-model="pago.n_documento" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>
 								<td><input type="number" ng-model="pago.monto_pagado" class="form-control text-right" ng-change="setPagoChanged(pago,true)"/></td>
 								<td>{{pago.user.nombre}} {{pago.user.apellido_paterno}}</td>
+								<td><input ng-model="pago.factura" class="form-control" ng-change="setPagoChanged(pago,true)"/></td>
 								<td class="text-center">
 									<a ng-disabled="pago.saving" class="clickable" ng-if="pago.changed" ng-click="pagoUpdate(pago)"><i ng-class="{'text-danger' : pago.saving}" class="fa fa-save fa-fw"></i></a>
 									<a ng-disabled="pago.deleting" class="clickable" ng-click="pagoDelete(pago)"><i ng-class="{'text-danger' : pago.deleting}" class="fa fa-trash-o fa-fw text-danger"></i></a>
