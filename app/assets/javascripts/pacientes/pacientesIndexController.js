@@ -3,6 +3,9 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 	$scope.masterPaciente = {};
 	$scope.paciente = {};
 
+	$scope.generos_options = [{'id':1, 'text':'Masculino'},
+	                          {'id':0, 'text':'Femenino'}];
+	
 	$scope.setRegiones = function()
 	{
 		$scope.regiones = regionesService.getRegiones();
