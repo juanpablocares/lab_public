@@ -155,7 +155,7 @@ angular.module('lab').controller('MuestrasIndexController',
 							value2.nombre_completo = value2.usuario_muestra.nombre + " " + value2.usuario_muestra.apellido_paterno;
 						}
 
-						if (value2.examen.codigo_fonasa.substr(1,2) != "07")
+						if (value2.examen.codigo_fonasa.substr(2,2) != "07")
 							$scope.examenesSeleccionados.push(value2);
 
 
@@ -183,7 +183,7 @@ angular.module('lab').controller('MuestrasIndexController',
 					value.nombre_completo = value.usuario_muestra.nombre + " " + value.usuario_muestra.apellido_paterno;
 				}
 				//console.log(value);
-				if (value.examen.codigo_fonasa.substr(1,2) != "07")
+				if (value.examen.codigo_fonasa.substr(2,2) != "07")
 					$scope.examenesSeleccionados.push(value);
 			}
 			i++;

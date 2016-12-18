@@ -127,7 +127,7 @@ class Api::Fichas::UpdateController < Api::FichasController
                 end
 
                 examen = Examen.find(detalle.examen_id);
-                if examen != nil and examen.codigo_fonasa.length > 3 and examen.codigo_fonasa[1,2] == "07"
+                if examen != nil and examen.codigo_fonasa.length > 3 and examen.codigo_fonasa[2,2] == "07"
                   detalle.usuario_muestra_id = current_user.id
                 end
 
@@ -147,7 +147,7 @@ class Api::Fichas::UpdateController < Api::FichasController
               end
 
               examen = Examen.find(detalle.examen_id);
-              if examen != nil and examen.codigo_fonasa.length > 3 and examen.codigo_fonasa[1,2] == "07"
+              if examen != nil and examen.codigo_fonasa.length > 3 and examen.codigo_fonasa[2,2] == "07"
                  detalle.usuario_muestra_id = current_user.id
               end
 
