@@ -62,7 +62,7 @@
 	<label class="control-label col-md-1">Fecha de nacimiento</label>
 	<div class="col-md-3">
 		<div class="date datepicker" data-date-autoclose="true" data-date-format="dd.mm.yyyy" data-date-start-view="2">
-			<input class="form-control" type="date" id="exampleInput" name="input" ng-model="paciente.fecha_nacimiento" ng-change="paciente.edad = paciente.getEdad()" name="fecha_nacimiento" required/>
+			<input class="form-control" type="date" id="exampleInput" name="input" ng-model="paciente.fecha_nacimiento" ng-change="paciente.edad = paciente.getEdad()" name="fecha_nacimiento" ng-required="!paciente.fecha_nacimiento"/>
 		</div>
 		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.fecha_nacimiento.$pristine) && paciente_form.fecha_nacimiento.$error.required">Debe ingresar fecha nacimiento</label>
 	</div>
@@ -76,10 +76,10 @@
 	<label class="control-label col-md-1">Género</label>
 	<div class="col-md-3">
 		<label class="radio">
-			<input ng-model="paciente.genero" name="seleccionar_genero" type="radio" value="1" required>
+			<input ng-model="paciente.genero" name="seleccionar_genero" type="radio" value="1" ng-required="!paciente.genero">
 			<span>Masculino</span></label>
 		<label class="radio">
-			<input ng-model="paciente.genero" name="seleccionar_genero" type="radio" value="0">
+			<input ng-model="paciente.genero" name="seleccionar_genero" type="radio" value="0" ng-required="!paciente.genero">
 			<span>Femenino</span> </label>
 		<label class="text-danger" ng-if="(paciente_form.$submitted || !paciente_form.genero.$pristine) && paciente_form.genero.$error.required">Debe seleccionar género</label>
 	</div>
