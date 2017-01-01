@@ -306,15 +306,13 @@ angular.module('lab').controller('FichasNewController', function($scope, $auth, 
 			var value = $scope.examenesSeleccionados_edit[i];
 			if (perfil && value.perfil) {
 				if (model.id == value.id) {
-					alert("Perfil ya agregado");
-					return;
+					if(!confirm("Perfil ya agregado. Desea agregarlo nuevamente?"))return;
 				}
 			}
 			else
 			if (!perfil && !value.perfil) {
 				if (model.examen.id == value.examen.id) {
-					alert("Examen ya agregado");
-					return;
+					if(!confirm("Examen ya agregado. Desea agregarlo nuevamente?"))return;
 				}
 			}
 		};

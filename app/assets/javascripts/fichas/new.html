@@ -1,10 +1,11 @@
 <script type="text/ng-template" id="examenTemplate.html">
-	<a>
-		<strong ng-bind-html="match.model.codigo_fonasa | typeaheadHighlight:query"></strong>
-		<strong ng-bind-html="match.model.codigo | typeaheadHighlight:query"></strong>
-		 - <span ng-bind-html="match.model.nombre | typeaheadHighlight:query"></span>
+	<a class="typeahead-examenes-row">
+		<span class='codigo' ng-bind-html="match.model.codigo_fonasa + '' +match.model.codigo | typeaheadHighlight:query"></span>
+		<span class='nombre' ng-bind-html="match.model.nombre | typeaheadHighlight:query"></span>
+		<span class='proceso' ng-bind-html="match.model.externo!=0?'IN':'DE' | typeaheadHighlight:query"></span>
   	</a>
 </script>
+
 <div ng-if="loading" class="row text-center">
 	<i class="fa fa-spinner fa-pulse fa-2x"></i>
 </div>

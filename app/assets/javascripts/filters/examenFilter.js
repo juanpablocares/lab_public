@@ -5,7 +5,8 @@ angular.module('lab').filter('examenFilter', [function($filter) {
 		}
 		var data=[];
 		texto = texto.trim().toLowerCase();
-		texto = texto.split(' ');
+		//texto = texto.split(' ');
+		texto = [texto];
 		angular.forEach(inputArray, function(item){
 			var codigo = '';
 			var codigo_fonasa = '';

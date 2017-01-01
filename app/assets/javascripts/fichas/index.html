@@ -25,7 +25,7 @@
 			<div class="form-group padded">
 				<label class="col-sm-2 control-label"><strong>Examenes</strong></label>
 				<div class="col-sm-9">
-					<input type="text" ng-model="selectModel.selected" typeahead="examen for examen in examenesArray | examenFilter:$viewValue" typeahead-min-length="2" typeahead-template-url="examenTemplate.html" class="form-control" typeahead-on-select='seleccionarExamen($model)' typeahead-input-formatter=""/>
+					<input type="text" ng-model="selectModel.selected" uib-typeahead="examen for examen in examenesArray | examenFilter:$viewValue" typeahead-min-length="2" typeahead-template-url="examenTemplate.html" class="form-control" typeahead-on-select='seleccionarExamen($model)' typeahead-input-formatter=""/>
 				</div>
 			</div>
 			<ng-include src="'fichas/_examenes_table_new.html'" id="ignore"></ng-include>
