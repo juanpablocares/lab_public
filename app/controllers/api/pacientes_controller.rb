@@ -88,8 +88,16 @@ class Api::PacientesController < ApplicationController
 
 	def search	
 		valor = params[:valor]
-		if valor[0..-2].is_number?
-			valor = valor[0..-2]
+		rut = params[:rut]
+
+		if rut!= nil
+			valor = rut
+		end
+
+		if (valor != nil and valor[0..-2].is_number?)
+			if valor.include? "-"
+				valor = valor[0..-2]
+			end
 			results = Paciente.find_by(rut: valor)
 		else
 			valor = valor.downcase

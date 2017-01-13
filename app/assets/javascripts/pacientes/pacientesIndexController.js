@@ -106,7 +106,7 @@ angular.module('lab').controller('PacientesIndexController', function($scope, $a
 				rut : paciente.rut
 			}, function(datos) {
 				Pacientes.by_rut.update({
-					rut : datos.rut
+					rut : datos.data.rut
 				}, paciente).$promise.then(function(response) {
 					$scope.updatePaciente();
 					$scope.pacienteEditing = !$scope.pacienteEditing;
